@@ -1,0 +1,104 @@
+{
+  "name": "HermitCrab",
+  "translation": "寄居蟹",
+  "translation_key": "Text_DesignData_Monster_Monster_HermitCrab",
+  "coords": [
+    {
+      "x": -122.0,
+      "y": 69.0,
+      "z": 566.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "HermitCrab"
+    },
+    {
+      "x": -482.0,
+      "y": 769.0,
+      "z": 106.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "HermitCrab"
+    },
+    {
+      "x": 525.0,
+      "y": 666.0,
+      "z": 148.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "HermitCrab"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_HermitCrab",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_HermitCrab",
+      "translation": "寄居蟹",
+      "translation_key": "Text_DesignData_Monster_Monster_HermitCrab",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "HardCrabShell",
+          "page": "HardCrabShell",
+          "translation": "坚硬的蟹壳",
+          "translation_key": "Text_DesignData_Item_Item_HardCrabShell",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Starfish",
+          "page": "Starfish",
+          "translation": "海星",
+          "translation_key": "Text_DesignData_Item_Item_Starfish",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "ConchShell",
+          "page": "ConchShell",
+          "translation": "海螺壳",
+          "translation_key": "Text_DesignData_Item_Item_ConchShell",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "CoralFragment",
+          "page": "CoralFragment",
+          "translation": "珊瑚碎块",
+          "translation_key": "Text_DesignData_Item_Item_CoralFragment",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Seashell",
+          "page": "Seashell",
+          "translation": "贝壳",
+          "translation_key": "Text_DesignData_Item_Item_Seashell",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "寄居蟹",
+        "translation_key": "Text_DesignData_Monster_Monster_HermitCrab",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 12.8571,
+          "普通": 12.8571,
+          "豪客赛": 12.0,
+          "逆袭赛": 12.0
+        }
+      }
+    ]
+  }
+}

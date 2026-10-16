@@ -1,0 +1,145 @@
+{
+  "name": "FrostGiantShielder",
+  "translation": "冰霜持盾巨人",
+  "translation_key": "Text_DesignData_Monster_Monster_FrostGiantShielder",
+  "coords": [
+    {
+      "x": 150.0,
+      "y": 1100.0,
+      "z": -550.0,
+      "yaw": 270.0,
+      "map": "IceCave_CaveSwamp",
+      "file": "IceCave_CaveSwamp_D.json",
+      "version": "(D)",
+      "label": "FrostGiantShielder"
+    },
+    {
+      "x": 161.0,
+      "y": -112.0,
+      "z": -198.9999,
+      "yaw": 180.0,
+      "map": "IceCave_CaveSwamp",
+      "file": "IceCave_CaveSwamp_HR_D.json",
+      "version": "",
+      "label": "FrostGiantShielder"
+    },
+    {
+      "x": -254.0,
+      "y": 1038.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "IceCave_IcicleCave",
+      "file": "IceCave_IcicleCave_HR_D.json",
+      "version": "",
+      "label": "FrostGiantShielder"
+    },
+    {
+      "x": 289.0,
+      "y": -40.0,
+      "z": -399.999895,
+      "yaw": 180.0,
+      "map": "IceCave_Spiral",
+      "file": "IceCave_Spiral_HR_D.json",
+      "version": "",
+      "label": "FrostGiantShielder",
+      "group_parent": "BP_GameSpawner_C_29",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonCrossbowman",
+          "name": "冰霜骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostGiantBerserker",
+          "name": "冰霜巨人狂战士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostGiantShielder",
+          "name": "冰霜持盾巨人"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_FrostGiantSheilder",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_FrostGiantSheilder",
+      "translation": "冰霜持盾巨人",
+      "translation_key": "Text_DesignData_Monster_Monster_FrostGiantShielder",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "Gjermundbu_7001",
+          "page": "Gjermundbu",
+          "translation": "北境战盔",
+          "translation_key": "Text_DesignData_Item_Item_Gjermundbu_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "NorthernFullTunic_7001",
+          "page": "NorthernFullTunic",
+          "translation": "北境战袍",
+          "translation_key": "Text_DesignData_Item_Item_NorthernFullTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pavise_7001",
+          "page": "Pavise",
+          "translation": "巨盾",
+          "translation_key": "Text_DesignData_Item_Item_Pavise_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingHelm_7001",
+          "page": "VikingHelm",
+          "translation": "维京战盔",
+          "translation_key": "Text_DesignData_Item_Item_VikingHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyLeatherLeggings_7001",
+          "page": "HeavyLeatherLeggings",
+          "translation": "重皮护腿",
+          "translation_key": "Text_DesignData_Item_Item_HeavyLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "GiantToe",
+          "page": "GiantToe",
+          "translation": "巨人脚趾",
+          "translation_key": "Text_DesignData_Item_Item_GiantToe",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "IceCavern": [
+      {
+        "translation": "冰霜持盾巨人",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostGiantShielder",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 20.0
+        }
+      }
+    ]
+  }
+}

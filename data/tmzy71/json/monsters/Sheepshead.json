@@ -1,0 +1,95 @@
+{
+  "name": "Sheepshead",
+  "translation": "羊头鲷",
+  "translation_key": "Text_DesignData_Monster_Monster_Sheepshead",
+  "coords": [
+    {
+      "x": -500.0,
+      "y": 60.0,
+      "z": -595.0,
+      "yaw": 270.0,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    },
+    {
+      "x": -500.0,
+      "y": 165.0,
+      "z": -595.0,
+      "yaw": 270.0,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    },
+    {
+      "x": -500.0,
+      "y": 165.0,
+      "z": -520.0,
+      "yaw": 270.0,
+      "map": "EmptyModule_1F_15",
+      "file": "EmptyModule_1F_15_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    },
+    {
+      "x": -1110.0,
+      "y": -505.0,
+      "z": -1130.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_UnderSeaCave_01",
+      "file": "ShipGraveyard_UnderSeaCave_01_D.json",
+      "version": "(D)",
+      "label": "Sheepshead"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "Emerald_6001",
+          "page": "Emerald",
+          "translation": "翡翠（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Emerald_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "AquaglowLantern_3001",
+          "page": "AquaglowLantern",
+          "translation": "水光灯笼",
+          "translation_key": "Text_DesignData_Item_Item_AquaglowLantern_3001",
+          "suffix": "3001",
+          "luck_grade": 2
+        },
+        {
+          "name": "Seashell",
+          "page": "Seashell",
+          "translation": "贝壳",
+          "translation_key": "Text_DesignData_Item_Item_Seashell",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "羊头鲷",
+        "translation_key": "Text_DesignData_Monster_Monster_Sheepshead",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 42.8571,
+          "普通": 42.8571,
+          "豪客赛": 60.0,
+          "逆袭赛": 60.0
+        }
+      }
+    ]
+  }
+}

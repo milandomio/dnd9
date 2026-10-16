@@ -1,0 +1,301 @@
+{
+  "name": "SeaWalker",
+  "translation": "深海行尸",
+  "translation_key": "Text_DesignData_Monster_Monster_SeaWalker",
+  "coords": [
+    {
+      "x": 805.0,
+      "y": -1790.0,
+      "z": 530.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    },
+    {
+      "x": -945.0,
+      "y": 825.0,
+      "z": 525.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    },
+    {
+      "x": 2755.0,
+      "y": -1210.0,
+      "z": 200.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    },
+    {
+      "x": 1415.0,
+      "y": 795.0,
+      "z": 295.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    },
+    {
+      "x": 1820.0,
+      "y": -2830.0,
+      "z": 100.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "SeaWalker"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_SeaWalker",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_SeaWalker",
+      "translation": "深海行尸",
+      "translation_key": "Text_DesignData_Monster_Monster_SeaWalker",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "AdventurerBoots_6001",
+          "page": "AdventurerBoots",
+          "translation": "冒险者长靴",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LavishShirt_6001",
+          "page": "LavishShirt",
+          "translation": "华丽衬衫",
+          "translation_key": "Text_DesignData_Item_Item_LavishShirt_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Cutlass_6001",
+          "page": "Cutlass",
+          "translation": "海盗弯刀",
+          "translation_key": "Text_DesignData_Item_Item_Cutlass_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LowBoots_6001",
+          "page": "LowBoots",
+          "translation": "短靴",
+          "translation_key": "Text_DesignData_Item_Item_LowBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "SturdyBoots_6001",
+          "page": "SturdyBoots",
+          "translation": "粗厚皮靴",
+          "translation_key": "Text_DesignData_Item_Item_SturdyBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LacedTurnshoe_6001",
+          "page": "LacedTurnshoe",
+          "translation": "系带翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_LacedTurnshoe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Poupoint_6001",
+          "page": "Poupoint",
+          "translation": "紧身棉外套",
+          "translation_key": "Text_DesignData_Item_Item_Poupoint_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ButtonedBoots_6001",
+          "page": "ButtonedBoots",
+          "translation": "纽扣长靴",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CuffedBoots_6001",
+          "page": "CuffedBoots",
+          "translation": "翻边皮靴",
+          "translation_key": "Text_DesignData_Item_Item_CuffedBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Turnshoe_6001",
+          "page": "Turnshoe",
+          "translation": "翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_Turnshoe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RegalGambeson_6001",
+          "page": "RegalGambeson",
+          "translation": "豪华棉甲",
+          "translation_key": "Text_DesignData_Item_Item_RegalGambeson_0001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LightAketon_6001",
+          "page": "LightAketon",
+          "translation": "轻型布面甲",
+          "translation_key": "Text_DesignData_Item_Item_LightAketon_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "HeavyGambeson_6001",
+          "page": "HeavyGambeson",
+          "translation": "重型棉甲",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGambeson_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_SeaWalker_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_SeaWalker_Spoils",
+      "translation": "深海行尸",
+      "translation_key": "Text_DesignData_Monster_Monster_SeaWalker",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "SealedLetter",
+          "page": "SealedLetter",
+          "translation": "密封信函",
+          "translation_key": "Text_DesignData_Item_Item_SealedLetter",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "GraveEssence",
+          "page": "GraveEssence",
+          "translation": "坟墓精华",
+          "translation_key": "Text_DesignData_Item_Item_GraveEssence",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "OldNauticalChartFragment",
+          "page": "OldNauticalChartFragment",
+          "translation": "旧航海图残页",
+          "translation_key": "Text_DesignData_Item_Item_OldNauticalChartFragment",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "AquaglowLantern_3001",
+          "page": "AquaglowLantern",
+          "translation": "水光灯笼",
+          "translation_key": "Text_DesignData_Item_Item_AquaglowLantern_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "NavigationalCompass",
+          "page": "NavigationalCompass",
+          "translation": "航海罗盘",
+          "translation_key": "Text_DesignData_Item_Item_NavigationalCompass",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "WantedPoster",
+          "page": "WantedPoster",
+          "translation": "悬赏告示",
+          "translation_key": "Text_DesignData_Item_Item_WantedPoster",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "OldCloth",
+          "page": "OldCloth",
+          "translation": "旧布",
+          "translation_key": "Text_DesignData_Item_Item_OldCloth",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "SailorsJournal",
+          "page": "SailorsJournal",
+          "translation": "水手日记",
+          "translation_key": "Text_DesignData_Item_Item_SailorsJournal",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Eyepatch",
+          "page": "Eyepatch",
+          "translation": "眼罩",
+          "translation_key": "Text_DesignData_Item_Item_Eyepatch",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Maggots",
+          "page": "Maggots",
+          "translation": "蛆虫",
+          "translation_key": "Text_DesignData_Item_Item_Maggots",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Torch_1001",
+          "page": "Torch",
+          "translation": "火把",
+          "translation_key": "Text_DesignData_Item_Item_Torch_1001",
+          "suffix": "1001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "SeaweedNecklace",
+          "page": "SeaweedNecklace",
+          "translation": "海藻项链",
+          "translation_key": "Text_DesignData_Item_Item_SeaweedNecklace",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "深海行尸",
+        "translation_key": "Text_DesignData_Monster_Monster_SeaWalker",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 30.0,
+          "普通": 30.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

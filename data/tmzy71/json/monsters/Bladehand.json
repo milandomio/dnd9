@@ -1,0 +1,303 @@
+{
+  "name": "Bladehand",
+  "translation": "钉手船长",
+  "translation_key": "Text_DesignData_Monster_Monster_Bladehand",
+  "coords": [
+    {
+      "x": 617.8426999999999,
+      "y": 512.8426999999999,
+      "z": 580.0,
+      "yaw": 45.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "Bladehand",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "artifact",
+      "kind": "artifact",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "Quarterstaff_8001",
+          "page": "Quarterstaff_8001",
+          "translation": "恶臭长棍",
+          "translation_key": "Text_DesignData_Item_Item_Quarterstaff_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "RoundShield_8001",
+          "page": "RoundShield_8001",
+          "translation": "树妖之怒",
+          "translation_key": "Text_DesignData_Item_Item_RoundShield_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Buckler_8001",
+          "page": "Buckler_8001",
+          "translation": "狂乱",
+          "translation_key": "Text_DesignData_Item_Item_Buckler_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "MorningStar_8001",
+          "page": "MorningStar_8001",
+          "translation": "粉碎祈祷",
+          "translation_key": "Text_DesignData_Item_Item_MorningStar_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        }
+      ]
+    },
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "CaptainsCorrodedKey",
+          "page": "CaptainsCorrodedKey",
+          "translation": "船长的锈钥匙",
+          "translation_key": "Text_DesignData_Item_Item_CaptainsCorrodedKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Bladehand",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Bladehand",
+      "translation": "钉手船长",
+      "translation_key": "Text_DesignData_Monster_Monster_Bladehand",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "RuggedBoots_7001",
+          "page": "RuggedBoots",
+          "translation": "加固长靴",
+          "translation_key": "Text_DesignData_Item_Item_RuggedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DashingBoots_7001",
+          "page": "DashingBoots",
+          "translation": "华丽长靴",
+          "translation_key": "Text_DesignData_Item_Item_DashingBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkleafBoots_7001",
+          "page": "DarkleafBoots",
+          "translation": "暗叶靴子",
+          "translation_key": "Text_DesignData_Item_Item_DarkleafBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ForestBoots_7001",
+          "page": "ForestBoots",
+          "translation": "林地靴子",
+          "translation_key": "Text_DesignData_Item_Item_ForestBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Cutlass_7001",
+          "page": "Cutlass",
+          "translation": "海盗弯刀",
+          "translation_key": "Text_DesignData_Item_Item_Cutlass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ProwlerGloves_7001",
+          "page": "ProwlerGloves",
+          "translation": "潜行者手套",
+          "translation_key": "Text_DesignData_Item_Item_ProwlerGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RunestoneGloves_7001",
+          "page": "RunestoneGloves",
+          "translation": "符石手套",
+          "translation_key": "Text_DesignData_Item_Item_RunestoneGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StitchedTurnshoe_7001",
+          "page": "StitchedTurnshoe",
+          "translation": "缝合翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_StitchedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pigache_7001",
+          "page": "Pigache",
+          "translation": "翘头鞋",
+          "translation_key": "Text_DesignData_Item_Item_Pigache_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BloodwovenGloves_7001",
+          "page": "BloodwovenGloves",
+          "translation": "血纹手套",
+          "translation_key": "Text_DesignData_Item_Item_BloodwovenGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightfootBoots_7001",
+          "page": "LightfootBoots",
+          "translation": "轻便长靴",
+          "translation_key": "Text_DesignData_Item_Item_LightfootBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGambeson_7001",
+          "page": "HeavyGambeson",
+          "translation": "重型棉甲",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGambeson_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bycocket_7001",
+          "page": "Bycocket",
+          "translation": "鸟嘴帽",
+          "translation_key": "Text_DesignData_Item_Item_Bycocket_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OnyxGloves_7001",
+          "page": "OnyxGloves",
+          "translation": "黑玉手套",
+          "translation_key": "Text_DesignData_Item_Item_OnyxGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Bladehand_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Bladehand_Spoils",
+      "translation": "钉手船长",
+      "translation_key": "Text_DesignData_Monster_Monster_Bladehand",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "OldNauticalChartFragment",
+          "page": "OldNauticalChartFragment",
+          "translation": "旧航海图残页",
+          "translation_key": "Text_DesignData_Item_Item_OldNauticalChartFragment",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "NavigationalCompass",
+          "page": "NavigationalCompass",
+          "translation": "航海罗盘",
+          "translation_key": "Text_DesignData_Item_Item_NavigationalCompass",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "WantedPoster",
+          "page": "WantedPoster",
+          "translation": "悬赏告示",
+          "translation_key": "Text_DesignData_Item_Item_WantedPoster",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "SailorsJournal",
+          "page": "SailorsJournal",
+          "translation": "水手日记",
+          "translation_key": "Text_DesignData_Item_Item_SailorsJournal",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Eyepatch",
+          "page": "Eyepatch",
+          "translation": "眼罩",
+          "translation_key": "Text_DesignData_Item_Item_Eyepatch",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "translation": "物理披风",
+      "translation_key": "df5.lootpool.Cloak_Physical",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "钉手船长",
+        "translation_key": "Text_DesignData_Monster_Monster_Bladehand",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 15.0,
+          "豪客赛": 13.375,
+          "逆袭赛": 13.375
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,336 @@
+{
+  "name": "DemonExecutioner",
+  "translation": "恶魔处刑者",
+  "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+  "coords": [
+    {
+      "x": 568.3833,
+      "y": 533.7097,
+      "z": 0.0,
+      "yaw": 41.2,
+      "map": "InfernoCastleConner",
+      "file": "InfernoCastleConner_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": 1025.0,
+      "y": -482.0,
+      "z": 14.0,
+      "yaw": 0.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": -665.0,
+      "y": -800.0,
+      "z": 500.0,
+      "yaw": 180.0,
+      "map": "InfernoRooms",
+      "file": "InfernoRooms_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": 670.0,
+      "y": 660.0,
+      "z": 500.0,
+      "yaw": 220.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner"
+    },
+    {
+      "x": -5.0,
+      "y": -10.0,
+      "z": 150.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+          "name": "地狱三头犬"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+          "name": "地狱猎手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+          "name": "憎恶"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        }
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": -375.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "group_parent": "BP_GameSpawnerGroup_C_5",
+      "sub_group_parent": "BP_SubGroup_C_2",
+      "sub_pool_size": 2,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonImp",
+          "name": "恶魔鬼童"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonImp",
+          "name": "恶魔鬼童"
+        }
+      ]
+    },
+    {
+      "x": 0.0,
+      "y": 357.0,
+      "z": 700.0,
+      "yaw": 90.0,
+      "map": "Inferno_Judgementroad",
+      "file": "Inferno_Judgementroad_HR_D.json",
+      "version": "",
+      "label": "DemonExecutioner",
+      "group_parent": "BP_GameSpawnerGroup_C_5",
+      "sub_group_parent": "BP_SubGroup_C_3",
+      "sub_pool_size": 2,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonImp",
+          "name": "恶魔鬼童"
+        }
+      ],
+      "parent_pool_size": 2,
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonImp",
+          "name": "恶魔鬼童"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "SkullKey",
+          "page": "SkullKey",
+          "translation": "骷髅钥匙",
+          "translation_key": "Text_DesignData_Item_Item_SkullKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "translation": "物理披风",
+      "translation_key": "df5.lootpool.Cloak_Physical",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_DemonExecutioner",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_DemonExecutioner",
+      "translation": "恶魔处刑者",
+      "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "CrusaderHelm_7001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Topfhelm_7001",
+          "page": "Topfhelm",
+          "translation": "圣殿巨盔",
+          "translation_key": "Text_DesingData_Item_Item_Topfhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Zweihander_7001",
+          "page": "Zweihander",
+          "translation": "巨剑",
+          "translation_key": "Text_DesignData_Item_Item_Zweihander_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GreatHelm_7001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Armet_7001",
+          "page": "Armet",
+          "translation": "武装盔",
+          "translation_key": "Text_DesignData_Item_Item_Armet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hounskull_7001",
+          "page": "Hounskull",
+          "translation": "狗面盔",
+          "translation_key": "Text_DesignData_Item_Item_Hounskull_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BoneHelm_7001",
+          "page": "BoneHelm",
+          "translation": "骨盔",
+          "translation_key": "Text_DesignData_Item_Item_BoneHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_DemonExecutioner_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_DemonExecutioner_Spoils",
+      "translation": "恶魔处刑者",
+      "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "DemonBlood",
+          "page": "DemonBlood",
+          "translation": "恶魔之血",
+          "translation_key": "Text_DesignData_Item_Item_DemonBlood",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "MisshapenBladeShard",
+          "page": "MisshapenBladeShard",
+          "translation": "畸形刃片",
+          "translation_key": "Text_DesignData_Item_Item_MisshapenBladeShard",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "TwistedAbyssHorn",
+          "page": "TwistedAbyssHorn",
+          "translation": "扭曲的深渊巨角",
+          "translation_key": "Text_DesignData_Item_Item_TwistedAbyssHorn",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔处刑者",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 15.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 20.0
+        }
+      }
+    ]
+  }
+}

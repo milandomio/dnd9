@@ -1,0 +1,188 @@
+{
+  "name": "GiantJellyfish",
+  "translation": "巨型水母",
+  "translation_key": "Text_DesignData_Monster_Monster_GiantJellyfish",
+  "coords": [
+    {
+      "x": -42.660778,
+      "y": -184.62463,
+      "z": -871.3096,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "GiantJellyfish"
+    },
+    {
+      "x": -300.0,
+      "y": 65.0,
+      "z": -380.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "GiantJellyfish",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantJellyfish",
+          "name": "巨型水母"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+          "name": "大白鲨"
+        }
+      ]
+    },
+    {
+      "x": 768.53955,
+      "y": -2019.1057,
+      "z": -653.9147,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SkullIsland",
+      "file": "ShipGraveyard_SkullIsland_D.json",
+      "version": "(D)",
+      "label": "GiantJellyfish"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "CaptainsCorrodedKey",
+          "page": "CaptainsCorrodedKey",
+          "translation": "船长的锈钥匙",
+          "translation_key": "Text_DesignData_Item_Item_CaptainsCorrodedKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Gems",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Gems",
+      "translation": "宝石",
+      "translation_key": "Text_Code_DCDataBlueprintLibrary_Type_Item_Misc_Gem",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "Ruby_6001",
+          "page": "Ruby",
+          "translation": "红宝石（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Ruby_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Emerald_6001",
+          "page": "Emerald",
+          "translation": "翡翠（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Emerald_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "BlueSapphire_6001",
+          "page": "BlueSapphire",
+          "translation": "蓝宝石（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_BlueSapphire_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Diamond_6001",
+          "page": "Diamond",
+          "translation": "钻石（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Diamond_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_WhiteShark_Gear",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_WhiteShark_Gear",
+      "translation": "大白鲨",
+      "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+      "sub_label": "df5.lootpool.Gear",
+      "items": [
+        {
+          "name": "MarauderOutfit_7001",
+          "page": "MarauderOutfit",
+          "translation": "强盗外套",
+          "translation_key": "Text_DesignData_Item_Item_MarauderOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BuckledBoots_7001",
+          "page": "BuckledBoots",
+          "translation": "扣带皮靴",
+          "translation_key": "Text_DesignData_Item_Item_BuckledBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Cutlass_7001",
+          "page": "Cutlass",
+          "translation": "海盗弯刀",
+          "translation_key": "Text_DesignData_Item_Item_Cutlass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Plunderhosen_7001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bycocket_7001",
+          "page": "Bycocket",
+          "translation": "鸟嘴帽",
+          "translation_key": "Text_DesignData_Item_Item_Bycocket_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "JellyfishGlowEssence",
+          "page": "JellyfishGlowEssence",
+          "translation": "水母萤光精华",
+          "translation_key": "Text_DesignData_Item_Item_JellyfishGlowEssence",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "巨型水母",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantJellyfish",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 40.0,
+          "普通": 40.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

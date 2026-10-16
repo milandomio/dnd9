@@ -1,0 +1,328 @@
+{
+  "name": "WhiteShark",
+  "translation": "大白鲨",
+  "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+  "coords": [
+    {
+      "x": 2800.0,
+      "y": 1300.0,
+      "z": -350.0,
+      "yaw": 290.0,
+      "map": "ShipGraveyard_BladehandRefuge",
+      "file": "ShipGraveyard_BladehandRefuge_D.json",
+      "version": "(D)",
+      "label": "WhiteShark"
+    },
+    {
+      "x": 215.0,
+      "y": 65.0,
+      "z": -110.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "WhiteShark",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantJellyfish",
+          "name": "巨型水母"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+          "name": "大白鲨"
+        }
+      ]
+    },
+    {
+      "x": 1004.0,
+      "y": -1230.0,
+      "z": -530.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_SunkenShip_01",
+      "file": "ShipGraveyard_SunkenShip_01_D.json",
+      "version": "(D)",
+      "label": "WhiteShark"
+    },
+    {
+      "x": 501.979454,
+      "y": -1447.4524999999999,
+      "z": -254.0,
+      "yaw": 175.0,
+      "map": "ShipGraveyard_Trench",
+      "file": "ShipGraveyard_Trench_D.json",
+      "version": "(D)",
+      "label": "WhiteShark",
+      "group_parent": "BP_GameSpawnerGroup_C_10",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+          "name": "大白鲨"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Octopus",
+          "name": "章鱼"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cuttlefish",
+          "name": "乌贼"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "CaptainsCorrodedKey",
+          "page": "CaptainsCorrodedKey",
+          "translation": "船长的锈钥匙",
+          "translation_key": "Text_DesignData_Item_Item_CaptainsCorrodedKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Trinkets_NoCoin",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Trinkets_NoCoin",
+      "translation": "饰品（不含金币）",
+      "translation_key": "df5.lootpool.Trinkets_NoCoin",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "GoldBangle1I_5001",
+          "page": "GoldBangle1I",
+          "translation": "三宝石手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1I_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1J_5001",
+          "page": "GoldBangle1J",
+          "translation": "叶形金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1J_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1C_5001",
+          "page": "GoldBangle1C",
+          "translation": "图案金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1C_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1D_5001",
+          "page": "GoldBangle1D",
+          "translation": "圆点金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1D_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GemRing_5001",
+          "page": "GemRing",
+          "translation": "宝石戒指（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GemRing_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GemNecklace_5001",
+          "page": "GemNecklace",
+          "translation": "宝石项链（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GemNecklace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle2G_5001",
+          "page": "GoldBangle2G",
+          "translation": "微光手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2G_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1H_5001",
+          "page": "GoldBangle1H",
+          "translation": "浅金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1H_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "PearlNecklace_5001",
+          "page": "PearlNecklace",
+          "translation": "珍珠项链（完美）",
+          "translation_key": "Text_DesignData_Item_Item_PearlNecklace_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1B_5001",
+          "page": "GoldBangle1B",
+          "translation": "简约金手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1B_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle2D_5001",
+          "page": "GoldBangle2D",
+          "translation": "细长手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2D_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle1E_5001",
+          "page": "GoldBangle1E",
+          "translation": "绿松石宝石手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1E_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBand_5001",
+          "page": "GoldBand",
+          "translation": "金环（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBand_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "MetalCup_5001",
+          "page": "MetalCup",
+          "translation": "银圣杯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_MetalCup_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldBangle2H_5001",
+          "page": "GoldBangle2H",
+          "translation": "闪亮手镯（完美）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2H_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_WhiteShark",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_WhiteShark",
+      "translation": "大白鲨",
+      "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "WhiteSharkTooth",
+          "page": "WhiteSharkTooth",
+          "translation": "大白鲨的利齿",
+          "translation_key": "Text_DesignData_Item_Item_WhiteSharkTooth",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "WhiteSharkHide",
+          "page": "WhiteSharkHide",
+          "translation": "大白鲨的皮",
+          "translation_key": "Text_DesignData_Item_Item_WhiteSharkHide",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_WhiteShark_Gear",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_WhiteShark_Gear",
+      "translation": "大白鲨",
+      "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+      "sub_label": "df5.lootpool.Gear",
+      "items": [
+        {
+          "name": "MarauderOutfit_7001",
+          "page": "MarauderOutfit",
+          "translation": "强盗外套",
+          "translation_key": "Text_DesignData_Item_Item_MarauderOutfit_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BuckledBoots_7001",
+          "page": "BuckledBoots",
+          "translation": "扣带皮靴",
+          "translation_key": "Text_DesignData_Item_Item_BuckledBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Cutlass_7001",
+          "page": "Cutlass",
+          "translation": "海盗弯刀",
+          "translation_key": "Text_DesignData_Item_Item_Cutlass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Plunderhosen_7001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bycocket_7001",
+          "page": "Bycocket",
+          "translation": "鸟嘴帽",
+          "translation_key": "Text_DesignData_Item_Item_Bycocket_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "WhiteSharkFin",
+          "page": "WhiteSharkFin",
+          "translation": "大白鲨的背鳍",
+          "translation_key": "Text_DesignData_Item_Item_WhiteSharkFin",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "大白鲨",
+        "translation_key": "Text_DesignData_Monster_Monster_WhiteShark",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 35.0,
+          "普通": 35.0,
+          "豪客赛": 40.0,
+          "逆袭赛": 40.0
+        }
+      }
+    ]
+  }
+}

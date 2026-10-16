@@ -1,0 +1,259 @@
+{
+  "name": "Slime",
+  "translation": "史莱姆",
+  "translation_key": "Text_DesignData_Monster_Monster_Slime",
+  "coords": [
+    {
+      "x": -250.00002,
+      "y": 650.0,
+      "z": 0.0,
+      "yaw": 70.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": 1340.8682,
+      "y": -39.60041,
+      "z": 0.0,
+      "yaw": 135.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": 1040.0,
+      "y": 1205.9999,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "sub_group_parent": "BP_GameObjectLinker_C_3"
+    },
+    {
+      "x": 1461.0,
+      "y": 889.9999,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "sub_group_parent": "BP_GameObjectLinker_C_3"
+    },
+    {
+      "x": -1350.0,
+      "y": 1065.0001,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": -1099.0,
+      "y": -190.99994,
+      "z": 0.0001,
+      "yaw": 180.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": 210.0,
+      "y": 376.99990000000014,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "sub_group_parent": "BP_GameObjectLinker_C_3"
+    },
+    {
+      "x": -464.0000000000002,
+      "y": -324.00009999999975,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_SlimeForest_01",
+      "file": "Ruins_SlimeForest_01_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "sub_group_parent": "BP_GameObjectLinker_C_3"
+    },
+    {
+      "x": -51.4854,
+      "y": -162.39166,
+      "z": 0.0,
+      "yaw": 145.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": -169.0,
+      "y": 208.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Slime"
+    },
+    {
+      "x": 518.0,
+      "y": 603.00002,
+      "z": 0.0001,
+      "yaw": 35.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Slime",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wisp",
+          "name": "幻灵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Slime",
+          "name": "史莱姆"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_Slime",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Slime",
+      "translation": "史莱姆",
+      "translation_key": "Text_DesignData_Monster_Monster_Slime",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "OldShoes_5001",
+          "page": "OldShoes",
+          "translation": "旧鞋",
+          "translation_key": "Text_DesignData_Item_Item_OldShoes_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "LeatherGloves_5001",
+          "page": "LeatherGloves",
+          "translation": "皮革手套",
+          "translation_key": "Text_DesignData_Item_Item_LeatherGloves_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Slime_Quest",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Slime_Quest",
+      "translation": "史莱姆任务",
+      "translation_key": "df5.lootpool.Slime_Quest",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "BrokenWoodenBarrelFragment",
+          "page": "BrokenWoodenBarrelFragment",
+          "translation": "坏木桶的碎片",
+          "translation_key": "Text_DesignData_Item_Item_BrokenWoodenBarrelFragment",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "RustyBrokenSword",
+          "page": "RustyBrokenSword",
+          "translation": "生锈的断剑",
+          "translation_key": "Text_DesignData_Item_Item_RustyBrokenSword",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Slime_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Slime_Spoils",
+      "translation": "史莱姆",
+      "translation_key": "Text_DesignData_Monster_Monster_Slime",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "Bolt_2001",
+          "page": "Bolt",
+          "translation": "弩矢",
+          "translation_key": "Text_DesignData_Item_Item_Bolt_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        },
+        {
+          "name": "BrokenSkull",
+          "page": "BrokenSkull",
+          "translation": "破碎的头骨",
+          "translation_key": "Text_DesignData_Item_Item_BrokenSkull",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Arrow_2001",
+          "page": "Arrow",
+          "translation": "箭",
+          "translation_key": "Text_DesignData_Item_Item_Arrow_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "HazeBlade_5001",
+          "page": "HazeBlade",
+          "translation": "迷乱之刃",
+          "translation_key": "Text_DesignData_Item_Item_HazeBlade_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "史莱姆",
+        "translation_key": "Text_DesignData_Monster_Monster_Slime",
+        "spawn_rate": 99.9546,
+        "drop_rates": {
+          "PVE": 30.0,
+          "普通": 30.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

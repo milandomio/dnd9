@@ -1,0 +1,99 @@
+{
+  "name": "FireElemental",
+  "translation": "火元素",
+  "translation_key": "Text_DesignData_Monster_Monster_FireElemental",
+  "coords": [
+    {
+      "x": -75.0,
+      "y": 155.0,
+      "z": -110.0,
+      "yaw": 0.0,
+      "map": "Firedeep_BrokenStonebridge",
+      "file": "Firedeep_BrokenStonebridge_D.json",
+      "version": "(D)",
+      "label": "FireElemental"
+    },
+    {
+      "x": 455.0,
+      "y": -405.0,
+      "z": -149.9999,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireElemental",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -470.0,
+      "y": 480.0,
+      "z": -149.9999,
+      "yaw": 0.0,
+      "map": "Firedeep_MoltenPit",
+      "file": "Firedeep_MoltenPit_D.json",
+      "version": "(D)",
+      "label": "FireElemental",
+      "group_parent": "BP_GameSpawnerGroup_C_6",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Ruby_6001",
+          "page": "Ruby",
+          "translation": "红宝石（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Ruby_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "FlickeringEmber",
+          "page": "FlickeringEmber",
+          "translation": "摇曳的余烬",
+          "translation_key": "Text_DesignData_Item_Item_FlickeringEmber",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "CoreofCinder",
+          "page": "CoreofCinder",
+          "translation": "灰烬之核",
+          "translation_key": "Text_DesignData_Item_Item_CoreofCinder",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "火元素",
+        "translation_key": "Text_DesignData_Monster_Monster_FireElemental",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 40.0,
+          "普通": 40.0,
+          "豪客赛": 48.5714,
+          "逆袭赛": 48.5714
+        }
+      }
+    ]
+  }
+}

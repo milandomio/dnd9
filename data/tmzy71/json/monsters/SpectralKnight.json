@@ -1,0 +1,276 @@
+{
+  "name": "SpectralKnight",
+  "translation": "鬼灵骑士",
+  "translation_key": "Text_DesignData_Monster_Monster_SpectralKnight",
+  "coords": [
+    {
+      "x": 2.2906150000000025,
+      "y": -170.85586,
+      "z": -899.9999991037588,
+      "yaw": 270.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "SpectralKnight",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "artifact",
+      "kind": "artifact",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "HeaterShield_8001",
+          "page": "HeaterShield_8001",
+          "translation": "不朽神盾",
+          "translation_key": "Text_DesignData_Item_Item_HeaterShield_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Spear_8001",
+          "page": "Spear_8001",
+          "translation": "冥渊三叉戟",
+          "translation_key": "Text_DesignData_Item_Item_Spear_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Zweihander_8001",
+          "page": "Zweihander_8001",
+          "translation": "嗜血",
+          "translation_key": "Text_DesignData_Item_Item_Zweihander_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "ArmingSword_8001",
+          "page": "ArmingSword_8001",
+          "translation": "库玛龙爪",
+          "translation_key": "Text_DesignData_Item_Item_ArmingSword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Falchion_8001",
+          "page": "Falchion_8001",
+          "translation": "库玛龙牙",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "RoundShield_8001",
+          "page": "RoundShield_8001",
+          "translation": "树妖之怒",
+          "translation_key": "Text_DesignData_Item_Item_RoundShield_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "StilettoDagger_8001",
+          "page": "StilettoDagger_8001",
+          "translation": "死亡之花",
+          "translation_key": "Text_DesignData_Item_Item_StilettoDagger_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Buckler_8001",
+          "page": "Buckler_8001",
+          "translation": "狂乱",
+          "translation_key": "Text_DesignData_Item_Item_Buckler_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Rapier_8001",
+          "page": "Rapier_8001",
+          "translation": "紫罗兰",
+          "translation_key": "Text_DesignData_Item_Item_Rapier_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Longsword_8001",
+          "page": "Longsword_8001",
+          "translation": "雷剑璨光",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        }
+      ]
+    },
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "BrokenWarHorn",
+          "page": "BrokenWarHorn",
+          "translation": "折断的战号",
+          "translation_key": "Text_DesignData_Item_Item_BrokenWarHorn",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "OldRustyKey",
+          "page": "OldRustyKey",
+          "translation": "生锈的旧钥匙",
+          "translation_key": "Text_DesignData_Item_Item_OldRustyKey",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldenKey",
+          "page": "GoldenKey",
+          "translation": "黄金钥匙",
+          "translation_key": "Text_DesignData_Item_Item_GoldenKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "translation": "物理披风",
+      "translation_key": "df5.lootpool.Cloak_Physical",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_SpectralKnight",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_SpectralKnight",
+      "translation": "鬼灵骑士",
+      "translation_key": "Text_DesignData_Monster_Monster_SpectralKnight",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "GreatHelm_7001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlateBoots_7001",
+          "page": "PlateBoots",
+          "translation": "板甲靴",
+          "translation_key": "Text_DesignData_Item_Item_PlateBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightGauntlets_7001",
+          "page": "LightGauntlets",
+          "translation": "轻型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_LightGauntlets_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGauntlet_7001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPlateArmor_7001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "Bloodbound_5001",
+          "page": "Bloodbound",
+          "translation": "血缚",
+          "translation_key": "Text_DesignData_Item_Item_Bloodbound_5001",
+          "suffix": "5001",
+          "luck_grade": 1
+        },
+        {
+          "name": "SpectralFabric",
+          "page": "SpectralFabric",
+          "translation": "冥界织物",
+          "translation_key": "Text_DesignData_Item_Item_SpectralFabric",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "SpectralHilt",
+          "page": "SpectralHilt",
+          "translation": "幽冥剑柄",
+          "translation_key": "Text_DesignData_Item_Item_SpectralHilt",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "鬼灵骑士",
+        "translation_key": "Text_DesignData_Monster_Monster_SpectralKnight",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0,
+          "逆袭赛": 100.0
+        }
+      }
+    ]
+  }
+}

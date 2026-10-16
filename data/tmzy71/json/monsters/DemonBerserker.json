@@ -1,0 +1,218 @@
+{
+  "name": "DemonBerserker",
+  "translation": "恶魔狂战士",
+  "translation_key": "Text_DesignData_Monster_Monster_DemonBerserker",
+  "coords": [
+    {
+      "x": -73.0,
+      "y": -19.0,
+      "z": 100.0,
+      "yaw": 180.0,
+      "map": "DeathAltar",
+      "file": "DeathAltar_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    },
+    {
+      "x": -1046.0,
+      "y": -1029.0,
+      "z": 2.000101,
+      "yaw": 270.0,
+      "map": "DemonDen",
+      "file": "DemonDen_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    },
+    {
+      "x": -749.443,
+      "y": -809.5673,
+      "z": -100.0,
+      "yaw": 210.0,
+      "map": "Inferno_DeathPlatforms",
+      "file": "Inferno_DeathPlatforms_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    },
+    {
+      "x": 0.0,
+      "y": 480.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "DemonBerserker"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "SkullKey",
+          "page": "SkullKey",
+          "translation": "骷髅钥匙",
+          "translation_key": "Text_DesignData_Item_Item_SkullKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "translation": "物理披风",
+      "translation_key": "df5.lootpool.Cloak_Physical",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_DemonBerserker",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_DemonBerserker",
+      "translation": "恶魔狂战士",
+      "translation_key": "Text_DesignData_Monster_Monster_DemonBerserker",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "GrandBrigandine_7001",
+          "page": "GrandBrigandine",
+          "translation": "华丽镶嵌甲",
+          "translation_key": "Text_DesignData_Item_Item_GrandBrigandine_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DoubleAxe_7001",
+          "page": "DoubleAxe",
+          "translation": "双刃斧",
+          "translation_key": "Text_DesignData_Item_Item_DoubleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLeggings_7001",
+          "page": "LeatherLeggings",
+          "translation": "皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLamellar_7001",
+          "page": "LeatherLamellar",
+          "translation": "皮革札甲",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLamellar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherChausses_7001",
+          "page": "LeatherChausses",
+          "translation": "皮革马裤",
+          "translation_key": "Text_DesignData_Item_Item_LeatherChausses_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StuddedLeather_7001",
+          "page": "StuddedLeather",
+          "translation": "镶钉皮甲",
+          "translation_key": "Text_DesignData_Item_Item_StuddedLeather_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ScaledArmor_7001",
+          "page": "ScaledArmor",
+          "translation": "鳞甲",
+          "translation_key": "Text_DesignData_Item_Item_ScaledArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkLeatherLeggings_7001",
+          "page": "DarkLeatherLeggings",
+          "translation": "黑暗皮革护腿",
+          "translation_key": "Text_DesignData_Item_Item_DarkLeatherLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "DemonBlood",
+          "page": "DemonBlood",
+          "translation": "恶魔之血",
+          "translation_key": "Text_DesignData_Item_Item_DemonBlood",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "TwistedAbyssHorn",
+          "page": "TwistedAbyssHorn",
+          "translation": "扭曲的深渊巨角",
+          "translation_key": "Text_DesignData_Item_Item_TwistedAbyssHorn",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔狂战士",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonBerserker",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 15.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 20.0
+        }
+      }
+    ]
+  }
+}

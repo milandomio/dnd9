@@ -1,0 +1,248 @@
+{
+  "name": "DwarfKnight",
+  "translation": "矮人骑士",
+  "translation_key": "Text_DesignData_Monster_Monster_DwarfKnight",
+  "coords": [
+    {
+      "x": -132.0,
+      "y": 1216.0,
+      "z": 6.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ifrit",
+          "name": "火元素"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DwarfKnight",
+          "name": "矮人骑士"
+        }
+      ]
+    },
+    {
+      "x": 660.0,
+      "y": -0.9999945,
+      "z": 1202.0,
+      "yaw": 180.0,
+      "map": "Firedeep_HighCauseway",
+      "file": "Firedeep_HighCauseway_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight"
+    },
+    {
+      "x": 5.0,
+      "y": 0.0,
+      "z": 465.0,
+      "yaw": 0.0,
+      "map": "Firedeep_LavaCrossway",
+      "file": "Firedeep_LavaCrossway_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight"
+    },
+    {
+      "x": -5.0,
+      "y": 52.0,
+      "z": -8.0,
+      "yaw": 85.0,
+      "map": "Firedeep_MoltenValley",
+      "file": "Firedeep_MoltenValley_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight"
+    },
+    {
+      "x": -1212.0,
+      "y": -9.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 1162.0,
+      "y": -92.0,
+      "z": 8.9236765,
+      "yaw": 180.0,
+      "map": "Firedeep_SunderedPassage",
+      "file": "Firedeep_SunderedPassage_D.json",
+      "version": "(D)",
+      "label": "DwarfKnight",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "EmberGem",
+          "page": "EmberGem",
+          "translation": "余烬宝石",
+          "translation_key": "Text_DesignData_Item_Item_EmberGem",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_Physical",
+      "translation": "物理披风",
+      "translation_key": "df5.lootpool.Cloak_Physical",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_DwarfKnight",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_DwarfKnight",
+      "translation": "矮人骑士",
+      "translation_key": "Text_DesignData_Monster_Monster_DwarfKnight",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "BarbutaHelm_7001",
+          "page": "BarbutaHelm",
+          "translation": "尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_BarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeaterShield_7001",
+          "page": "HeaterShield",
+          "translation": "斗盾",
+          "translation_key": "Text_DesignData_Item_Item_HeaterShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlateBoots_7001",
+          "page": "PlateBoots",
+          "translation": "板甲靴",
+          "translation_key": "Text_DesignData_Item_Item_PlateBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArmingSword_7001",
+          "page": "ArmingSword",
+          "translation": "武装剑",
+          "translation_key": "Text_DesignData_Item_Item_ArmingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FineCuirass_7001",
+          "page": "FineCuirass",
+          "translation": "精美胸甲",
+          "translation_key": "Text_DesignData_Item_Item_FineCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingSword_7001",
+          "page": "VikingSword",
+          "translation": "维京剑",
+          "translation_key": "Text_DesignData_Item_Item_VikingSword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "SootyBeardHair",
+          "page": "SootyBeardHair",
+          "translation": "煤灰胡须",
+          "translation_key": "Text_DesignData_Item_Item_SootyBeardHair",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "MeltedPickaxeHead",
+          "page": "MeltedPickaxeHead",
+          "translation": "融化的十字镐头",
+          "translation_key": "Text_DesignData_Item_Item_MeltedPickaxeHead",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "矮人骑士",
+        "translation_key": "Text_DesignData_Monster_Monster_DwarfKnight",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 30.0,
+          "普通": 30.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

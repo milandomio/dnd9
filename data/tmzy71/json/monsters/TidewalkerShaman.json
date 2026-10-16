@@ -1,0 +1,346 @@
+{
+  "name": "TidewalkerShaman",
+  "translation": "踏潮者萨满",
+  "translation_key": "Text_DesignData_Monster_Monster_TidewalkerShaman",
+  "coords": [
+    {
+      "x": -520.0,
+      "y": -204.0,
+      "z": -978.5746,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "TideWalkerShaman"
+    },
+    {
+      "x": 442.0,
+      "y": 532.0,
+      "z": -956.6459,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_CircleIsland",
+      "file": "ShipGraveyard_CircleIsland_D.json",
+      "version": "(D)",
+      "label": "TideWalkerShaman"
+    },
+    {
+      "x": -30.0,
+      "y": -60.0,
+      "z": -650.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_CoralForest_01",
+      "file": "ShipGraveyard_CoralForest_01_D.json",
+      "version": "(D)",
+      "label": "TideWalkerShaman"
+    },
+    {
+      "x": -1035.1244,
+      "y": -1030.0,
+      "z": 397.0,
+      "yaw": 30.0,
+      "map": "ShipGraveyard_FlippedShip",
+      "file": "ShipGraveyard_FlippedShip_D.json",
+      "version": "(D)",
+      "label": "TideWalkerShaman"
+    },
+    {
+      "x": 335.0,
+      "y": 860.0,
+      "z": 203.16948,
+      "yaw": 180.0,
+      "map": "ShipGraveyard_MistWatch",
+      "file": "ShipGraveyard_MistWatch_D.json",
+      "version": "(D)",
+      "label": "TideWalkerShaman"
+    },
+    {
+      "x": -85.0,
+      "y": -105.0,
+      "z": -2985.0,
+      "yaw": 0.0,
+      "map": "Shipgraveyard_TwinChamber",
+      "file": "Shipgraveyard_TwinChamber_D.json",
+      "version": "(D)",
+      "label": "TideWalkerShaman",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_TideWalkerShaman",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_TideWalkerShaman",
+      "translation": "踏潮者萨满",
+      "translation_key": "Text_DesignData_Monster_Monster_TidewalkerShaman",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "Mitre_6001",
+          "page": "Mitre",
+          "translation": "主教冠",
+          "translation_key": "Text_DesignData_Item_Item_Mitre_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CeremonialHeaddress_6001",
+          "page": "CeremonialHeaddress",
+          "translation": "仪式法帽",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialHeaddress_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "RitualRobe_6001",
+          "page": "RitualRobe",
+          "translation": "仪式长袍",
+          "translation_key": "Text_DesignData_Item_Item_RitualRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TimewornRobe_6001",
+          "page": "TimewornRobe",
+          "translation": "古典长袍",
+          "translation_key": "Text_DesignData_Item_Item_TimewornRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OccultistRobe_6001",
+          "page": "OccultistRobe",
+          "translation": "术士长袍",
+          "translation_key": "Text_DesignData_Item_Item_OccultistRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MysticVestments_6001",
+          "page": "MysticVestments",
+          "translation": "神秘法衣",
+          "translation_key": "Text_DesignData_Item_Item_MysticVestments_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "OracleRobe_6001",
+          "page": "OracleRobe",
+          "translation": "神谕长袍",
+          "translation_key": "Text_DesignData_Item_Item_OracleRobe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ElkwoodCrown_6001",
+          "page": "ElkwoodCrown",
+          "translation": "鹿角木头冠",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodCrown_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_TideWalkerShaman_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_TideWalkerShaman_Spoils",
+      "translation": "踏潮者萨满",
+      "translation_key": "Text_DesignData_Monster_Monster_TidewalkerShaman",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AquaglowLantern_3001",
+          "page": "AquaglowLantern",
+          "translation": "水光灯笼",
+          "translation_key": "Text_DesignData_Item_Item_AquaglowLantern_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Spawn_Treasure",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Spawn_Treasure",
+      "translation": "宝藏",
+      "translation_key": "df5.lootpool.Treasure",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "GoldBangle1I_7001",
+          "page": "GoldBangle1I",
+          "translation": "三宝石手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1I_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBangle1J_7001",
+          "page": "GoldBangle1J",
+          "translation": "叶形金手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1J_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBangle1C_7001",
+          "page": "GoldBangle1C",
+          "translation": "图案金手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1C_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBangle1D_7001",
+          "page": "GoldBangle1D",
+          "translation": "圆点金手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1D_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GemRing_7001",
+          "page": "GemRing",
+          "translation": "宝石戒指（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GemRing_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GemNecklace_7001",
+          "page": "GemNecklace",
+          "translation": "宝石项链（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GemNecklace_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBangle2G_7001",
+          "page": "GoldBangle2G",
+          "translation": "微光手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2G_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBangle1H_7001",
+          "page": "GoldBangle1H",
+          "translation": "浅金手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1H_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PearlNecklace_7001",
+          "page": "PearlNecklace",
+          "translation": "珍珠项链（极品）",
+          "translation_key": "Text_DesignData_Item_Item_PearlNecklace_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBangle1B_7001",
+          "page": "GoldBangle1B",
+          "translation": "简约金手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1B_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBangle2D_7001",
+          "page": "GoldBangle2D",
+          "translation": "细长手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2D_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBangle1E_7001",
+          "page": "GoldBangle1E",
+          "translation": "绿松石宝石手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1E_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBand_7001",
+          "page": "GoldBand",
+          "translation": "金环（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBand_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MetalCup_7001",
+          "page": "MetalCup",
+          "translation": "银圣杯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_MetalCup_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GoldBangle2H_7001",
+          "page": "GoldBangle2H",
+          "translation": "闪亮手镯（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2H_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "SeaweedNecklace",
+          "page": "SeaweedNecklace",
+          "translation": "海藻项链",
+          "translation_key": "Text_DesignData_Item_Item_SeaweedNecklace",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "TidewalkerFin",
+          "page": "TidewalkerFin",
+          "translation": "踏潮者的背鳍",
+          "translation_key": "Text_DesignData_Item_Item_TidewalkerFin",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "EtchedWandFragment",
+          "page": "EtchedWandFragment",
+          "translation": "风化的魔杖残片",
+          "translation_key": "Text_DesignData_Item_Item_EtchedWandFragment",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "踏潮者萨满",
+        "translation_key": "Text_DesignData_Monster_Monster_TidewalkerShaman",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 30.0,
+          "普通": 30.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

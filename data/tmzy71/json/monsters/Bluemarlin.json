@@ -1,0 +1,125 @@
+{
+  "name": "Bluemarlin",
+  "translation": "蓝枪鱼",
+  "translation_key": "Text_DesignData_Monster_Monster_Bluemarlin",
+  "coords": [
+    {
+      "x": 357.0,
+      "y": -587.0,
+      "z": -791.9999,
+      "yaw": 90.0,
+      "map": "ShipGraveyard_FloatingIsland",
+      "file": "ShipGraveyard_FloatingIsland_D.json",
+      "version": "(D)",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": -665.0,
+      "y": -328.0,
+      "z": -874.9999,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingIsland",
+      "file": "ShipGraveyard_FloatingIsland_D.json",
+      "version": "(D)",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": 442.0,
+      "y": 532.0,
+      "z": -871.9999,
+      "yaw": 270.0,
+      "map": "ShipGraveyard_FloatingIsland",
+      "file": "ShipGraveyard_FloatingIsland_D.json",
+      "version": "(D)",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": 3125.0,
+      "y": -115.0,
+      "z": -510.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": -3470.0,
+      "y": 335.0,
+      "z": -510.0,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": -1246.6575,
+      "y": 4585.4707,
+      "z": -510.0,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "BlueMarlin"
+    },
+    {
+      "x": -985.38196,
+      "y": -3041.3232,
+      "z": -510.0,
+      "yaw": 265.0,
+      "map": "ShipGraveyard_Hole",
+      "file": "ShipGraveyard_Hole_HR_D.json",
+      "version": "",
+      "label": "BlueMarlin"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "Emerald_6001",
+          "page": "Emerald",
+          "translation": "翡翠（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Emerald_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "AquaglowLantern_3001",
+          "page": "AquaglowLantern",
+          "translation": "水光灯笼",
+          "translation_key": "Text_DesignData_Item_Item_AquaglowLantern_3001",
+          "suffix": "3001",
+          "luck_grade": 2
+        },
+        {
+          "name": "Seashell",
+          "page": "Seashell",
+          "translation": "贝壳",
+          "translation_key": "Text_DesignData_Item_Item_Seashell",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "蓝枪鱼",
+        "translation_key": "Text_DesignData_Monster_Monster_Bluemarlin",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 42.8571,
+          "普通": 42.8571,
+          "豪客赛": 60.0,
+          "逆袭赛": 60.0
+        }
+      }
+    ]
+  }
+}

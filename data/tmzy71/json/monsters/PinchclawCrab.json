@@ -1,0 +1,115 @@
+{
+  "name": "PinchclawCrab",
+  "translation": "钳爪蟹",
+  "translation_key": "Text_DesignData_Monster_Monster_PinchclawCrab",
+  "coords": [
+    {
+      "x": 2943.0,
+      "y": -1206.0,
+      "z": 102.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_AbandonedShip_01",
+      "file": "ShipGraveyard_AbandonedShip_01_HR_D.json",
+      "version": "",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": -9.0,
+      "y": 882.0,
+      "z": 298.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": 693.0,
+      "y": -168.0,
+      "z": 339.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": -1029.0,
+      "y": 422.0,
+      "z": 126.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": -228.0,
+      "y": -889.0,
+      "z": 88.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_Oceanvolcano",
+      "file": "ShipGraveyard_Oceanvolcano_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    },
+    {
+      "x": 142.0,
+      "y": -398.0,
+      "z": 912.0,
+      "yaw": 0.0,
+      "map": "ShipGraveyard_RockIsland",
+      "file": "ShipGraveyard_RockIsland_D.json",
+      "version": "(D)",
+      "label": "PinchclawCrab"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "HardCrabShell",
+          "page": "HardCrabShell",
+          "translation": "坚硬的蟹壳",
+          "translation_key": "Text_DesignData_Item_Item_HardCrabShell",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "ConchShell",
+          "page": "ConchShell",
+          "translation": "海螺壳",
+          "translation_key": "Text_DesignData_Item_Item_ConchShell",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "CoralFragment",
+          "page": "CoralFragment",
+          "translation": "珊瑚碎块",
+          "translation_key": "Text_DesignData_Item_Item_CoralFragment",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "ShipGraveyard": [
+      {
+        "translation": "钳爪蟹",
+        "translation_key": "Text_DesignData_Monster_Monster_PinchclawCrab",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 40.0,
+          "普通": 40.0,
+          "豪客赛": 40.0,
+          "逆袭赛": 40.0
+        }
+      }
+    ]
+  }
+}

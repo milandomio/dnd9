@@ -1,0 +1,248 @@
+{
+  "name": "HellHunter",
+  "translation": "地狱猎手",
+  "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+  "coords": [
+    {
+      "x": -28.0,
+      "y": -25.0,
+      "z": -400.0,
+      "yaw": 270.0,
+      "map": "ConectorDoubleBridge",
+      "file": "ConectorDoubleBridge_HR_D.json",
+      "version": "",
+      "label": "HellHunter"
+    },
+    {
+      "x": 865.9913,
+      "y": -639.45764,
+      "z": 500.0,
+      "yaw": 170.0,
+      "map": "InfernoCastleConner",
+      "file": "InfernoCastleConner_HR_D.json",
+      "version": "",
+      "label": "HellHunter"
+    },
+    {
+      "x": -5.0,
+      "y": -10.0,
+      "z": 150.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "HellHunter",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+          "name": "地狱三头犬"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+          "name": "地狱猎手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+          "name": "憎恶"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        }
+      ]
+    },
+    {
+      "x": -0.924713,
+      "y": -1411.6692,
+      "z": -157.94534,
+      "yaw": 0.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "HellHunter"
+    },
+    {
+      "x": 64.0,
+      "y": 912.0,
+      "z": -700.0,
+      "yaw": 0.0,
+      "map": "Skull",
+      "file": "Skull_HR_D.json",
+      "version": "",
+      "label": "HellHunter"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "SkullKey",
+          "page": "SkullKey",
+          "translation": "骷髅钥匙",
+          "translation_key": "Text_DesignData_Item_Item_SkullKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_HellHunter",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_HellHunter",
+      "translation": "地狱猎手",
+      "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "VisoredSallet_7001",
+          "page": "VisoredSallet",
+          "translation": "半遮面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_VisoredSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GrandBrigandine_7001",
+          "page": "GrandBrigandine",
+          "translation": "华丽镶嵌甲",
+          "translation_key": "Text_DesignData_Item_Item_GrandBrigandine_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BarbutaHelm_7001",
+          "page": "BarbutaHelm",
+          "translation": "尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_BarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OpenSallet_7001",
+          "page": "OpenSallet",
+          "translation": "开面轻盔",
+          "translation_key": "Text_DesingData_Item_Item_OpenSallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Falchion_7001",
+          "page": "Falchion",
+          "translation": "弯刃大刀",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLamellar_7001",
+          "page": "LeatherLamellar",
+          "translation": "皮革札甲",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLamellar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VisoredBarbutaHelm_7001",
+          "page": "VisoredBarbutaHelm",
+          "translation": "覆面尖顶盔",
+          "translation_key": "Text_DesignData_Item_Item_VisoredBarbutaHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Sallet_7001",
+          "page": "Sallet",
+          "translation": "轻盔",
+          "translation_key": "Text_DesingData_Item_Item_Sallet_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StuddedLeather_7001",
+          "page": "StuddedLeather",
+          "translation": "镶钉皮甲",
+          "translation_key": "Text_DesignData_Item_Item_StuddedLeather_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ScaledArmor_7001",
+          "page": "ScaledArmor",
+          "translation": "鳞甲",
+          "translation_key": "Text_DesignData_Item_Item_ScaledArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_HellHunter_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_HellHunter_Spoils",
+      "translation": "地狱猎手",
+      "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "DemonBlood",
+          "page": "DemonBlood",
+          "translation": "恶魔之血",
+          "translation_key": "Text_DesignData_Item_Item_DemonBlood",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "HellHuntersCurvedBlade",
+          "page": "HellHuntersCurvedBlade",
+          "translation": "地狱猎手的弯刀",
+          "translation_key": "Text_DesignData_Item_Item_HellHuntersCurvedBlade",
+          "suffix": null,
+          "luck_grade": 4
+        },
+        {
+          "name": "Bolt_2001",
+          "page": "Bolt",
+          "translation": "弩矢",
+          "translation_key": "Text_DesignData_Item_Item_Bolt_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "BattleWornArmorFragment",
+          "page": "BattleWornArmorFragment",
+          "translation": "战损盔甲碎片",
+          "translation_key": "Text_DesignData_Item_Item_BattleWornArmorFragment",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "地狱猎手",
+        "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 15.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 20.0
+        }
+      }
+    ]
+  }
+}

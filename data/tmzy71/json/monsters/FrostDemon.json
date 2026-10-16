@@ -1,0 +1,237 @@
+{
+  "name": "FrostDemon",
+  "translation": "冰霜恶魔大君",
+  "translation_key": "Text_DesignData_Monster_Monster_FrostDemon",
+  "coords": [
+    {
+      "x": 84.0,
+      "y": -88.0,
+      "z": 200.00044,
+      "yaw": 310.0,
+      "map": "IceAbyss_DemonicDen",
+      "file": "IceAbyss_DemonicDen_D.json",
+      "version": "(D)",
+      "label": "FrostDemon"
+    },
+    {
+      "x": -9.999999992515995e-07,
+      "y": -790.0,
+      "z": -950.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_FalseThrone",
+      "file": "IceAbyss_FalseThrone_D.json",
+      "version": "(D)",
+      "label": "FrostDemon",
+      "sub_group_parent": "BP_GameObjectLinker_C_1"
+    },
+    {
+      "x": 70.0,
+      "y": 210.0,
+      "z": 0.0,
+      "yaw": 245.0,
+      "map": "IceAbyss_Glacivia",
+      "file": "IceAbyss_Glacivia_D.json",
+      "version": "(D)",
+      "label": "FrostDemon"
+    },
+    {
+      "x": 0.0,
+      "y": 955.0,
+      "z": -1300.0,
+      "yaw": 270.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "FrostDemon",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 3.000000000952241e-05,
+      "y": -955.0,
+      "z": -1300.0,
+      "yaw": 90.0,
+      "map": "IceAbyss_HoundVale",
+      "file": "IceAbyss_HoundVale_D.json",
+      "version": "(D)",
+      "label": "FrostDemon",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 525.0,
+      "y": -115.0,
+      "z": -599.9999,
+      "yaw": 180.0,
+      "map": "IceAbyss_IceMaze",
+      "file": "IceAbyss_IceMaze_D.json",
+      "version": "(D)",
+      "label": "FrostDemon",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wendigo",
+          "name": "温迪戈"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostDemon",
+          "name": "冰霜恶魔大君"
+        }
+      ]
+    },
+    {
+      "x": 317.0,
+      "y": 171.0,
+      "z": 5.0,
+      "yaw": 180.0,
+      "map": "IceAbyss_ShallowValley",
+      "file": "IceAbyss_ShallowValley_HR_D.json",
+      "version": "",
+      "label": "FrostDemon"
+    },
+    {
+      "x": 678.0,
+      "y": -37.000004,
+      "z": 602.0001,
+      "yaw": 180.0,
+      "map": "IceAbyss_StaircaseHill",
+      "file": "IceAbyss_StaircaseHill_HR_D.json",
+      "version": "",
+      "label": "FrostDemon"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "FrozenIronKey",
+          "page": "FrozenIronKey",
+          "translation": "寒铁钥匙",
+          "translation_key": "Text_DesignData_Item_Item_FrozenIronKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_Magic",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_Magic",
+      "translation": "魔法披风",
+      "translation_key": "df5.lootpool.Cloak_Magic",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "RadiantCloak_7001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SplendidCloak_7001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WatchmanCloak_7001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_FrostDemon",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_FrostDemon",
+      "translation": "冰霜恶魔大君",
+      "translation_key": "Text_DesignData_Monster_Monster_FrostDemon",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "CeremonialStaff_7001",
+          "page": "CeremonialStaff",
+          "translation": "仪式权杖",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialStaff_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BuckledBoots_7001",
+          "page": "BuckledBoots",
+          "translation": "扣带皮靴",
+          "translation_key": "Text_DesignData_Item_Item_BuckledBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyBoots_7001",
+          "page": "HeavyBoots",
+          "translation": "重型长靴",
+          "translation_key": "Text_DesignData_Item_Item_HeavyBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spellbook_7001",
+          "page": "Spellbook",
+          "translation": "魔法书",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "DemonBlood",
+          "page": "DemonBlood",
+          "translation": "恶魔之血",
+          "translation_key": "Text_DesignData_Item_Item_DemonBlood",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "TwistedAbyssHorn",
+          "page": "TwistedAbyssHorn",
+          "translation": "扭曲的深渊巨角",
+          "translation_key": "Text_DesignData_Item_Item_TwistedAbyssHorn",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "IceAbyss": [
+      {
+        "translation": "冰霜恶魔大君",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostDemon",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 15.0,
+          "普通": 15.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 20.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,348 @@
+{
+  "name": "DemonOverseer",
+  "translation": "恶魔监军",
+  "translation_key": "Text_DesignData_Monster_Monster_DemonOverseer",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 250.0,
+      "yaw": 0.0,
+      "map": "Inferno_DemonOverseersDominion",
+      "file": "Inferno_DemonOverseersDominion_D.json",
+      "version": "(D)",
+      "label": "DemonOverseer",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "artifact",
+      "kind": "artifact",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "ArmingSword_8001",
+          "page": "ArmingSword_8001",
+          "translation": "库玛龙爪",
+          "translation_key": "Text_DesignData_Item_Item_ArmingSword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Falchion_8001",
+          "page": "Falchion_8001",
+          "translation": "库玛龙牙",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "RondelDagger_8001",
+          "page": "RondelDagger_8001",
+          "translation": "影噬",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Halberd_8001",
+          "page": "Halberd_8001",
+          "translation": "灰烬",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Longsword_8001",
+          "page": "Longsword_8001",
+          "translation": "雷剑璨光",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "HorsemansAxe_8001",
+          "page": "HorsemansAxe_8001",
+          "translation": "饥荒",
+          "translation_key": "Text_DesignData_Item_Item_HorsemansAxe_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        }
+      ]
+    },
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "SkullKey",
+          "page": "SkullKey",
+          "translation": "骷髅钥匙",
+          "translation_key": "Text_DesignData_Item_Item_SkullKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_All",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_All",
+      "translation": "披风",
+      "translation_key": "df5.lootpool.Cloak_All",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "RadiantCloak_7001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SplendidCloak_7001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WatchmanCloak_7001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_DemonOverseer",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_DemonOverseer",
+      "translation": "恶魔监军",
+      "translation_key": "Text_DesignData_Monster_Monster_DemonOverseer",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "KrisDagger_7001",
+          "page": "KrisDagger",
+          "translation": "克里斯匕首",
+          "translation_key": "Text_DesignData_Item_Item_KrisDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChampionArmor_7001",
+          "page": "ChampionArmor",
+          "translation": "冠军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_ChampionArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrusaderHelm_7001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CastillonDagger_7001",
+          "page": "CastillonDagger",
+          "translation": "卡斯蒂永匕首",
+          "translation_key": "Text_DesignData_Item_Item_CastillonDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Topfhelm_7001",
+          "page": "Topfhelm",
+          "translation": "圣殿巨盔",
+          "translation_key": "Text_DesingData_Item_Item_Topfhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GreatHelm_7001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MorningStar_7001",
+          "page": "MorningStar",
+          "translation": "晨星",
+          "translation_key": "Text_DesignData_Item_Item_MorningStar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RondelDagger_7001",
+          "page": "RondelDagger",
+          "translation": "朗德尔匕首",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Armet_7001",
+          "page": "Armet",
+          "translation": "武装盔",
+          "translation_key": "Text_DesignData_Item_Item_Armet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Hounskull_7001",
+          "page": "Hounskull",
+          "translation": "狗面盔",
+          "translation_key": "Text_DesignData_Item_Item_Hounskull_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FineCuirass_7001",
+          "page": "FineCuirass",
+          "translation": "精美胸甲",
+          "translation_key": "Text_DesignData_Item_Item_FineCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightGauntlets_7001",
+          "page": "LightGauntlets",
+          "translation": "轻型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_LightGauntlets_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGauntlet_7001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StilettoDagger_7001",
+          "page": "StilettoDagger",
+          "translation": "锥刺匕首",
+          "translation_key": "Text_DesignData_Item_Item_StilettoDagger_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Longsword_7001",
+          "page": "Longsword",
+          "translation": "长剑",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BoneHelm_7001",
+          "page": "BoneHelm",
+          "translation": "骨盔",
+          "translation_key": "Text_DesignData_Item_Item_BoneHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkCuirass_7001",
+          "page": "DarkCuirass",
+          "translation": "黑暗胸甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkCuirass_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "TornWingFragment",
+          "page": "TornWingFragment",
+          "translation": "撕裂的翅膀碎片",
+          "translation_key": "Text_DesignData_Item_Item_TornWingFragment",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "SealofDominion",
+          "page": "SealofDominion",
+          "translation": "统御符印",
+          "translation_key": "Text_DesignData_Item_Item_SealofDominion",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "恶魔监军",
+        "translation_key": "Text_DesignData_Monster_Monster_DemonOverseer",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}
