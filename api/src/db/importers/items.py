@@ -46,6 +46,12 @@ def _item_type_metadata(properties: dict) -> tuple[str, str, list[str]]:
     return item_type, category_key, subtype_keys
 
 
+def _rarity_from_properties(properties: dict) -> str:
+    rarity = properties.get("RarityType")
+    tag = _tag_name(rarity)
+    return tag.rsplit(".", 1)[-1] if tag else ""
+
+
 class ItemsImporter:
     def __init__(self, conn):
         self.conn = conn
@@ -89,6 +95,41 @@ class ItemsImporter:
         self._rebuild_fts("items_fts")
         self.conn.commit()
         return len(deduped)
+
+    def import_lights(self) -> int:
+        """Persist items that carry both FuelSeconds and LightAreaRadius.
+
+        One row per quality variant so the 【灯】 page can show each tier's exact
+        burn time and light radius. Exact duplicates (same item, rarity, fuel and
+        radius) are collapsed so a legacy suffix-less base asset does not shadow a
+        real tier.
+        """
+        c = self.conn.cursor()
+        c.execute("DELETE FROM light_items")
+        files = load_json_dir(ITEM_DIR)
+        rows = []
+        seen: set[tuple] = set()
+        for raw_name, data_list in files.items():
+            if not data_list:
+                continue
+            props = data_list[0].get("Properties", {}) or {}
+            fuel = props.get("FuelSeconds")
+            radius = props.get("LightAreaRadius")
+            if not isinstance(fuel, (int, float)) or not isinstance(radius, (int, float)):
+                continue
+            item_name = extract_item_name(raw_name)
+            rarity = _rarity_from_properties(props)
+            key = (item_name, rarity, float(fuel), float(radius))
+            if key in seen:
+                continue
+            seen.add(key)
+            rows.append((raw_name, item_name, rarity, float(fuel), float(radius)))
+        c.executemany(
+            "INSERT OR REPLACE INTO light_items (raw_name, item_name, rarity, fuel_seconds, light_area_radius) VALUES (?, ?, ?, ?, ?)",
+            rows,
+        )
+        self.conn.commit()
+        return len(rows)
 
     def _rebuild_fts(self, fts_table: str):
         c = self.conn.cursor()

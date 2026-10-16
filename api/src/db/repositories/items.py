@@ -19,9 +19,25 @@ class ItemWithMatches(TypedDict):
     monster_names: list[str]
 
 
+class LightItem(TypedDict):
+    raw_name: str
+    item_name: str
+    rarity: str
+    fuel_seconds: float
+    light_area_radius: float
+
+
 class ItemsRepository:
     def __init__(self, conn):
         self.conn = conn
+
+    def get_lights(self) -> list[LightItem]:
+        c = self.conn.cursor()
+        c.execute(
+            "SELECT raw_name, item_name, rarity, fuel_seconds, light_area_radius "
+            "FROM light_items ORDER BY item_name, rarity, fuel_seconds"
+        )
+        return [dict(r) for r in c.fetchall()]
 
     def get_all(self) -> list[ItemEntity]:
         c = self.conn.cursor()

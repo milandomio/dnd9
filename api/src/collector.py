@@ -15,6 +15,7 @@ from entity_export import export_items, export_monsters, export_props
 from image_utils import sync_webp_images
 from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
 from label_type import GOLDCHEST_SPECIAL, split_goldchest_special_coords
+from light_builder import build_and_save_lights
 from locale_builder import build_locale_files
 from lootdrop_builder import (
     build_and_save_lootdrop_details,
@@ -108,6 +109,14 @@ def run(
             with pipe.phase("import_item_effects", 11) as ctx:
                 count = db.import_item_effects()
                 ctx.set_result(f"{count} items")
+
+            with pipe.phase("import_light_items", 11) as ctx:
+                count = db.import_light_items()
+                ctx.set_result(f"{count} light variants")
+
+            with pipe.phase("import_environment_lights", 11) as ctx:
+                count = db.import_environment_lights()
+                ctx.set_result(f"{count} environment props")
 
             with pipe.phase("import_spawner_entries", 11) as ctx:
                 count = db.import_spawner_entries()
@@ -601,6 +610,20 @@ def run(
             save_shop_data(shop_data, OUTPUT_DIR)
             ctx.set_result(f"{len(shop_data['index']['regions'])} regions")
 
+        with pipe.step("lights export") as ctx:
+            lights_payload = build_and_save_lights(
+                db.get_light_items(),
+                db.get_environment_lights(),
+                items,
+                resolver.resolve,
+                OUTPUT_DIR,
+            )
+            light_count = lights_payload["count"]
+            ctx.set_result(
+                f"{light_count} light items, {len(lights_payload['items'])} variants, "
+                f"{len(lights_payload['environment'])} environment props"
+            )
+
         _lootdrop_enrichment_started = time.perf_counter()
         enrich_all_entities(
             drop_engine,
@@ -643,6 +666,7 @@ def run(
                 OUTPUT_DIR,
                 group_label_resolver=lambda g: _resolve_group_display(g, translations),
                 shop_regions=len(shop_data["index"]["regions"]),
+                light_count=light_count,
             )
             ctx.set_result("DONE")
 

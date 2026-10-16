@@ -19,6 +19,7 @@ import DungeonModuleGroupPage from './pages/DungeonModuleGroupPage';
 import DungeonModuleDetailPage from './pages/DungeonModuleDetailPage';
 import DungeonShopsPage from './pages/DungeonShopsPage';
 import DungeonShopDetailPage from './pages/DungeonShopDetailPage';
+import LightsPage from './pages/LightsPage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import SWUpdateBanner from './components/SWUpdateBanner';
@@ -74,6 +75,7 @@ function AppRoutes() {
         path="/:lang/dungeon_modules/:group/:name"
         element={<DungeonModuleDetailPage />}
       />
+      <Route path="/:lang/lights" element={<LightsPage />} />
       <Route path="/:lang/dungeon_shops" element={<DungeonShopsPage />} />
       <Route
         path="/:lang/dungeon_shops/:region"

@@ -246,6 +246,38 @@ export interface ShopIndex {
   regions: ShopRegionSummary[];
 }
 
+/** One quality variant of a light source with its burn time and light radius. */
+export interface LightItem {
+  name: string;
+  translation: string;
+  translation_key?: string;
+  raw_name: string;
+  /** Poor | Common | Uncommon | Rare | Epic | Legend | Unique | Artifact. */
+  rarity: string;
+  fuel_seconds: number;
+  light_area_radius: number;
+}
+
+export interface LightsPayload {
+  /** Distinct light-source items (variants folded). */
+  count: number;
+  items: LightItem[];
+  /** Distinct light-emitting props (braziers, lamps, ...) on the 环境 tab. */
+  environment_count?: number;
+  environment?: EnvironmentLight[];
+}
+
+export interface EnvironmentLight {
+  name: string;
+  translation: string;
+  translation_key?: string;
+  raw_name: string;
+  fuel_seconds: number;
+  fuel_seconds_max: number;
+  /** True when the prop only burns inside a swarm event. */
+  only_in_swarm: boolean;
+}
+
 export interface ShopDetail {
   region: string;
   label_key?: string;

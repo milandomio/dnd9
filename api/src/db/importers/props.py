@@ -47,3 +47,45 @@ class PropsImporter:
         )
         self.conn.commit()
         return len(rows)
+
+    def import_environment_lights(self) -> int:
+        """Persist light-emitting props (those that carry FuelSeconds).
+
+        Props expose a burn window via ``FuelSeconds`` / ``FuelSecondsMax`` but no
+        ``LightAreaRadius``, so they cannot share the item ``light_items`` table.
+        They back the 【灯】 page's "环境" tab (braziers, wall lamps, candles, ...).
+        """
+        c = self.conn.cursor()
+        c.execute("DELETE FROM environment_lights")
+        files = load_json_dir(PROPS_DIR)
+        rows = []
+        for raw_name, data_list in files.items():
+            if not data_list:
+                continue
+            properties = data_list[0].get("Properties", {}) or {}
+            fuel = properties.get("FuelSeconds")
+            if not isinstance(fuel, (int, float)) or fuel <= 0:
+                continue
+            name = properties.get("Name") or {}
+            name_key = TRANSLATION_KEY_ALIAS_MAP.get(name.get("Key", ""), name.get("Key", ""))
+            fuel_max = properties.get("FuelSecondsMax")
+            if not isinstance(fuel_max, (int, float)):
+                fuel_max = fuel
+            rows.append(
+                (
+                    raw_name,
+                    name.get("LocalizedString", "") or extract_props_name(raw_name),
+                    name_key,
+                    float(fuel),
+                    float(fuel_max),
+                    1 if properties.get("FuelBurnsOnlyInSwarm") else 0,
+                )
+            )
+        c.executemany(
+            "INSERT OR REPLACE INTO environment_lights "
+            "(raw_name, item_name, translation_key, fuel_seconds, fuel_seconds_max, only_in_swarm) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            rows,
+        )
+        self.conn.commit()
+        return len(rows)

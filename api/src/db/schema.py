@@ -93,6 +93,31 @@ class SchemaManager:
                 effect_json TEXT NOT NULL DEFAULT ''
             );
 
+            -- Light sources (lanterns, torches, ...) carry FuelSeconds and
+            -- LightAreaRadius on the item asset. Only the importer may read the
+            -- game extract, so persist one row per quality variant here for the
+            -- DB-only 【灯】 export.
+            CREATE TABLE IF NOT EXISTS light_items (
+                raw_name TEXT PRIMARY KEY,
+                item_name TEXT NOT NULL,
+                rarity TEXT NOT NULL DEFAULT '',
+                fuel_seconds REAL NOT NULL DEFAULT 0,
+                light_area_radius REAL NOT NULL DEFAULT 0
+            );
+
+            -- World props that emit light (braziers, wall lamps, candles, ...).
+            -- They carry a FuelSeconds / FuelSecondsMax burn window but no
+            -- LightAreaRadius, so they surface on the 【灯】 "环境" tab instead of
+            -- the item list. Persisted at import time to keep the export DB-only.
+            CREATE TABLE IF NOT EXISTS environment_lights (
+                raw_name TEXT PRIMARY KEY,
+                item_name TEXT NOT NULL DEFAULT '',
+                translation_key TEXT NOT NULL DEFAULT '',
+                fuel_seconds REAL NOT NULL DEFAULT 0,
+                fuel_seconds_max REAL NOT NULL DEFAULT 0,
+                only_in_swarm INTEGER NOT NULL DEFAULT 0
+            );
+
             CREATE TABLE IF NOT EXISTS spawners (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 keyword TEXT NOT NULL,

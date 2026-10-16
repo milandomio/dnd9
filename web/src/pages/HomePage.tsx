@@ -95,6 +95,14 @@ const CARD_THEME: Record<string, CardTheme> = {
     titleColor: '#FFB74D',
     titleColorLight: '#ef6c00',
   },
+  lights: {
+    border: '#FFD54F',
+    hoverBg: 'linear-gradient(145deg, #4a4a2a, #5a5a3a)',
+    hoverBgLight: 'linear-gradient(145deg, #fffde7, #fff9c4)',
+    icon: '🏮',
+    titleColor: '#FFE082',
+    titleColorLight: '#f9a825',
+  },
 };
 
 const DEFAULT_THEME: CardTheme = {
@@ -237,6 +245,7 @@ export default function HomePage() {
                     ut('ui.home.view_dungeon_modules')}
                   {entry.page === 'dungeon_shops' &&
                     ut('ui.home.view_dungeon_shops')}
+                  {entry.page === 'lights' && ut('ui.home.view_lights')}
                 </div>
               </Link>
             );

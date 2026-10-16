@@ -118,6 +118,12 @@ class DatabaseManager:
     def import_item_effects(self) -> int:
         return self.importers.effects.import_all()
 
+    def import_light_items(self) -> int:
+        return self.importers.items.import_lights()
+
+    def import_environment_lights(self) -> int:
+        return self.importers.props.import_environment_lights()
+
     def import_lootdrops(self, spawner_monster_map: dict[str, list[str]] | None = None) -> int:
         return self.importers.lootdrops.import_all(spawner_monster_map)
 
@@ -155,6 +161,9 @@ class DatabaseManager:
     def get_item_entities(self) -> list[dict]:
         return self.repos.items.get_all()
 
+    def get_light_items(self) -> list[dict]:
+        return self.repos.items.get_lights()
+
     def get_monster_entities(self) -> list[dict]:
         return self.repos.monsters.get_all()
 
@@ -163,6 +172,9 @@ class DatabaseManager:
 
     def get_props_entities(self) -> list[dict]:
         return self.repos.props.get_all()
+
+    def get_environment_lights(self) -> list[dict]:
+        return self.repos.props.get_environment_lights()
 
     def get_props_tag_info(self, tag_name: str) -> dict | None:
         return self.repos.props.get_tag_info(tag_name)

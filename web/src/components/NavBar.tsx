@@ -38,6 +38,7 @@ const NAV_LABEL_KEYS: Record<string, string> = {
   quest_npc: 'ui.nav.quest_npc',
   dungeon_modules: 'ui.nav.dungeon_modules',
   dungeon_shops: 'ui.nav.dungeon_shops',
+  lights: 'ui.nav.lights',
 };
 
 const PAGE_TAG_KEYS: Record<string, string> = {
@@ -50,6 +51,7 @@ const PAGE_TAG_KEYS: Record<string, string> = {
   quest_items: 'ui.search.tag.quest',
   dungeon_modules: 'ui.search.tag.module',
   dungeon_shops: 'ui.search.tag.shop',
+  lights: 'ui.search.tag.light',
   _nav: 'ui.search.tag.nav',
 };
 

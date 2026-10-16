@@ -14,9 +14,26 @@ class PropsTagInfo(TypedDict):
     source_string: str
 
 
+class EnvironmentLight(TypedDict):
+    raw_name: str
+    item_name: str
+    translation_key: str
+    fuel_seconds: float
+    fuel_seconds_max: float
+    only_in_swarm: int
+
+
 class PropsRepository:
     def __init__(self, conn):
         self.conn = conn
+
+    def get_environment_lights(self) -> list[EnvironmentLight]:
+        c = self.conn.cursor()
+        c.execute(
+            "SELECT raw_name, item_name, translation_key, fuel_seconds, fuel_seconds_max, only_in_swarm "
+            "FROM environment_lights ORDER BY translation_key, raw_name"
+        )
+        return [dict(r) for r in c.fetchall()]
 
     def get_all(self) -> list[PropsEntity]:
         c = self.conn.cursor()

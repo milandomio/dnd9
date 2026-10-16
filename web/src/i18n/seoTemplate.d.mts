@@ -12,6 +12,7 @@ export type SeoPageType =
   | 'moduleGroup'
   | 'shops'
   | 'shopRegion'
+  | 'lights'
   | 'module';
 
 export type SeoFacts = Record<string, string | number | undefined>;

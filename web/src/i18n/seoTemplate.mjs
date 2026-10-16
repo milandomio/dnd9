@@ -27,6 +27,8 @@ const COPY = {
       `《越来越黑暗》地牢商店一览${regions ? `，覆盖 ${regions} 个地图` : ''}。查看哥布林走私者在各地图出售的商品、价格与库存。`,
     shopRegion: ({ name, items }) =>
       `${name} 的《越来越黑暗》哥布林走私者商店${items ? `，收录 ${items} 种商品` : ''}，含价格与库存。浏览当地限定商品与不同难度下的货品差异。`,
+    lights: ({ items }) =>
+      `《越来越黑暗》灯具一览${items ? `，收录 ${items} 种灯具` : ''}。查看各品质灯具的燃烧时间与照明范围，规划地牢照明。`,
     categories: {
       items: '物品',
       monsters: '怪物',
@@ -62,6 +64,8 @@ const COPY = {
       `Dark and Darker dungeon shops${regions ? ` across ${regions} maps` : ''}. Browse what the Goblin Smuggler sells on each map, with prices and stock.`,
     shopRegion: ({ name, items }) =>
       `Goblin Smuggler shop in ${name}${items ? ` with ${items} items` : ''}, with prices and stock. See map-exclusive goods and how stock differs by difficulty.`,
+    lights: ({ items }) =>
+      `Dark and Darker light sources${items ? `, ${items} items` : ''}. Compare burn time and light radius across quality tiers to plan your dungeon lighting.`,
     categories: {
       items: 'items',
       monsters: 'monsters',
@@ -97,6 +101,8 @@ const COPY = {
       `Dungeon-Läden in Dark and Darker${regions ? ` in ${regions} Karten` : ''}. Durchsuche das Angebot des Goblin-Schmugglers je Karte mit Preisen und Bestand.`,
     shopRegion: ({ name, items }) =>
       `Goblin-Schmuggler-Laden in ${name}${items ? ` mit ${items} Artikeln` : ''}, mit Preisen und Bestand. Sieh dir kartenspezifische Ware und Unterschiede nach Schwierigkeit an.`,
+    lights: ({ items }) =>
+      `Lichtquellen in Dark and Darker${items ? ` mit ${items} Gegenständen` : ''}. Vergleiche Brenndauer und Lichtradius nach Qualitätsstufe für deine Dungeon-Beleuchtung.`,
     categories: {
       items: 'Gegenstände',
       monsters: 'Monster',
@@ -132,6 +138,8 @@ const COPY = {
       `Tiendas de mazmorra en Dark and Darker${regions ? ` en ${regions} mapas` : ''}. Consulta lo que vende el contrabandista goblin en cada mapa, con precios y existencias.`,
     shopRegion: ({ name, items }) =>
       `Tienda del contrabandista goblin en ${name}${items ? ` con ${items} artículos` : ''}, con precios y existencias. Descubre artículos exclusivos del mapa y diferencias por dificultad.`,
+    lights: ({ items }) =>
+      `Fuentes de luz en Dark and Darker${items ? `, ${items} objetos` : ''}. Compara tiempo de combustión y radio de luz por calidad para planear tu iluminación.`,
     categories: {
       items: 'objetos',
       monsters: 'monstruos',
@@ -167,6 +175,8 @@ const COPY = {
       `Boutiques de donjon dans Dark and Darker${regions ? ` sur ${regions} cartes` : ''}. Découvrez ce que vend le contrebandier gobelin sur chaque carte, avec prix et stock.`,
     shopRegion: ({ name, items }) =>
       `Boutique du contrebandier gobelin à ${name}${items ? ` avec ${items} articles` : ''}, avec prix et stock. Consultez les articles exclusifs à la carte et les différences de difficulté.`,
+    lights: ({ items }) =>
+      `Sources de lumière dans Dark and Darker${items ? `, ${items} objets` : ''}. Comparez durée de combustion et rayon de lumière par qualité pour éclairer vos donjons.`,
     categories: {
       items: 'objets',
       monsters: 'monstres',
@@ -202,6 +212,8 @@ const COPY = {
       `『Dark and Darker』ダンジョンショップ一覧${regions ? `（${regions} マップ）` : ''}。各マップでゴブリン密輸業者が売る商品・価格・在庫を確認できます。`,
     shopRegion: ({ name, items }) =>
       `${name} のゴブリン密輸業者ショップ${items ? `（${items} 種）` : ''}。価格と在庫を掲載。マップ限定品や難易度ごとの差異も確認できます。`,
+    lights: ({ items }) =>
+      `Dark and Darker の灯火${items ? ` ${items} 種` : ''}。品質ごとの燃焼時間と照明範囲を比較してダンジョンの明かりを計画できます。`,
     categories: {
       items: 'アイテム',
       monsters: 'モンスター',
@@ -237,6 +249,8 @@ const COPY = {
       `Dark and Darker 던전 상점 목록${regions ? ` (${regions}개 맵)` : ''}. 각 맵에서 고블린 밀수업자가 파는 상품과 가격, 재고를 확인하세요.`,
     shopRegion: ({ name, items }) =>
       `${name}의 고블린 밀수업자 상점${items ? ` (${items}종)` : ''}. 가격과 재고를 확인하고 맵 한정 품목과 난이도별 차이를 살펴보세요.`,
+    lights: ({ items }) =>
+      `Dark and Darker 광원${items ? ` ${items}종` : ''}. 품질별 연소 시간과 조명 범위를 비교해 던전 조명을 계획하세요.`,
     categories: {
       items: '아이템',
       monsters: '몬스터',
@@ -272,6 +286,8 @@ const COPY = {
       `Lojas de masmorra em Dark and Darker${regions ? ` em ${regions} mapas` : ''}. Veja o que o contrabandista goblin vende em cada mapa, com preços e estoque.`,
     shopRegion: ({ name, items }) =>
       `Loja do contrabandista goblin em ${name}${items ? ` com ${items} itens` : ''}, com preços e estoque. Confira itens exclusivos do mapa e diferenças por dificuldade.`,
+    lights: ({ items }) =>
+      `Fontes de luz em Dark and Darker${items ? `, ${items} itens` : ''}. Compare tempo de combustão e raio de luz por qualidade para planejar sua iluminação.`,
     categories: {
       items: 'itens',
       monsters: 'monstros',
@@ -307,6 +323,8 @@ const COPY = {
       `Магазины подземелий в Dark and Darker${regions ? ` (${regions} карт)` : ''}. Смотрите, что продаёт гоблин-контрабандист на каждой карте, с ценами и запасами.`,
     shopRegion: ({ name, items }) =>
       `Магазин гоблина-контрабандиста в ${name}${items ? ` (${items} предметов)` : ''}, с ценами и запасами. Уникальные для карты товары и различия по сложности.`,
+    lights: ({ items }) =>
+      `Источники света в Dark and Darker${items ? `: ${items} предметов` : ''}. Сравнивайте время горения и радиус освещения по уровням качества для планирования освещения.`,
     categories: {
       items: 'предметы',
       monsters: 'монстров',
@@ -342,6 +360,8 @@ const COPY = {
       `《越來越黑暗》地牢商店一覽${regions ? `，覆蓋 ${regions} 個地圖` : ''}。查看哥布林走私者在各地圖出售的商品、價格與庫存。`,
     shopRegion: ({ name, items }) =>
       `${name} 的《越來越黑暗》哥布林走私者商店${items ? `，收錄 ${items} 種商品` : ''}，含價格與庫存。瀏覽當地限定商品與不同難度下的貨品差異。`,
+    lights: ({ items }) =>
+      `《越來越黑暗》燈具一覽${items ? `，收錄 ${items} 種燈具` : ''}。查看各品質燈具的燃燒時間與照明範圍，規劃地城照明。`,
     categories: {
       items: '物品',
       monsters: '怪物',
