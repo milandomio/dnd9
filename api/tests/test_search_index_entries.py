@@ -210,7 +210,6 @@ class BuildSearchIndexTest(unittest.TestCase):
                 [],
                 [],
                 0,
-                0,
                 1,
                 QUEST_NPCS,
                 root,
@@ -224,9 +223,12 @@ class BuildSearchIndexTest(unittest.TestCase):
         self.assertEqual(pages.count("crafts"), 2)
         # 1 NPC entry + 1 quest objective entry.
         self.assertEqual(pages.count("quest_npc"), 2)
+        # 【任务探索表】已归档，不再进入 index.json / search_index.json。
+        self.assertNotIn("explore", pages)
         counts = {entry["page"]: entry["count"] for entry in index_data if "page" in entry}
         self.assertEqual(counts["dungeon_shops"], 1)
         self.assertEqual(counts["crafts"], 1)
+        self.assertNotIn("explore", counts)
 
 
 if __name__ == "__main__":

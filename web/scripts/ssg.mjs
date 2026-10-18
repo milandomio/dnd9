@@ -251,7 +251,6 @@ const DETAIL_TEMPLATE_PAGES = new Set([
   'quest_items',
 ]);
 const SINGLE = [
-  'explore',
   'quest_items',
   'quest_npc',
   'dungeon_modules',
@@ -453,10 +452,6 @@ for (const g of dmGroups) {
   ssrDataMap[`dungeon_modules/${g}`] = groupMods;
 }
 // Dungeon modules module data is available globally for detail pages
-
-// Explore page needs module data too
-ssrDataMap['explore-modules'] = moduleData;
-ssrDataMap['explore'] = readJSON(join(DATA, 'explore.json'));
 
 // Detail pages — full SSR data (full mode) or minimal SSR data (quick mode)
 for (const p of PAGES) {
@@ -683,7 +678,6 @@ function routeDataKey(path) {
     if (parts.length >= 2) return `dungeon_shops/${parts[1]}`;
     return 'dungeon_shops';
   }
-  if (stripped === '/explore') return 'explore';
   if (stripped === '/lights') return 'lights';
   if (stripped === '/crafts') return 'crafts';
   return `list-${stripped.slice(1)}`;
@@ -1318,7 +1312,6 @@ const dataDateStr = new Date(Number(dataDate) * 1000)
 
 function sitemapPriority(path) {
   if (path === '/') return ['1.0', 'daily'];
-  if (path === '/explore') return ['0.7', 'weekly'];
   if (
     path.startsWith('/items/') ||
     path.startsWith('/monsters/') ||

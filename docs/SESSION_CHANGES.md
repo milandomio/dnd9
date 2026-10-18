@@ -4,6 +4,17 @@
 
 ## 2026-10-19
 
+### chore: 归档【任务探索表】（下线 `/explore` 并从主页移除入口）
+
+- **改动原因**：用户要求「把【任务探索表】的代码做归档，并从主页中移除【任务探索表】」。确认范围为「前端页面 + 后端导出一起归档，DB 表保留」，归档位置沿用仓库既有约定 `web/src/_archived/` 与 `api/src/_archived/`。
+- **变更文件**：`web/src/_archived/ExplorePage.tsx`（由 `web/src/pages/ExplorePage.tsx` 移入）、`web/src/AppInner.tsx`、`web/src/pages/HomePage.tsx`、`web/src/components/NavBar.tsx`、`web/scripts/ssg.mjs`、`api/src/_archived/explore_export.py`（新增）、`api/src/index_export.py`、`api/src/collector.py`、`api/tests/test_search_index_entries.py`、`docs/AGENT_REFERENCE.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **前端下线**：`AppInner` 删除 `ExplorePage` 引入与 `/:lang/explore` 路由；`HomePage` 删除 `CARD_THEME.explore` 与 `ui.home.view_explore` 那行；`NavBar` 删除 `NAV_LABEL_KEYS.explore`（面包屑）与 `PAGE_TAG_KEYS.explore`（搜索结果标签）；`ssg.mjs` 删除 `SINGLE` 中的 `'explore'`、`ssrDataMap['explore']` / `['explore-modules']`、`routeDataKey` 的 `/explore` 分支、sitemap 中 `/explore` 的 `['0.7','weekly']` 优先级。
+  2. **后端归档**：`save_quest_data()` 不再导出 `explore.json`，返回值由 4 元组变 3 元组 `(quest_items_count, quest_npc_count, quest_npcs_data)`；`build_and_save_indexes()` 删除 `explore_count` 形参与 `index.json` 的 `{"page":"explore"}` 卡片条目；`search_index.json` 的 `LIST_PAGES` 删除 `{"name":"explore","url":"/explore/"}` 导航条目；`collector.py` 同步调整解包/打印/传参（`ctx.set_result` 改为 `items=…, npcs=…`）。被摘除的代码完整保存在 `api/src/_archived/explore_export.py`（含恢复步骤），前端恢复步骤写在归档页文件头。
+  3. **明确不归档（仍活跃）**：`explore_targets` 表与 `db.import_explore_targets()`／`get_explore_targets()`、`quest_collector` 的探索目标提取、`db_freshness` 的 `REQUIRED_TABLES`；`Explore` 任务内容类型（`ui.content.explore`，`QuestNPCDetailPage` 的内容类型映射）；i18n 文案（`ui.explore.*` / `ui.nav.explore` / `ui.search.tag.explore` / `ui.home.card_labels.explore` / `ui.home.view_explore`）与 `seoTemplate` 的 `explore` 模板，均保留以便日后恢复，不影响构建。
+- **结果**：主页卡片 11 → 10 项（`index.json` 无 `explore`）；`search_index.json` 2214 → 2213 条（`_nav` 10 → 9）；管道不再产出 `data/json/explore.json`；SSG 3117 → 3116 页、dist 17160 → 17148 文件，`dist/**/explore/` 目录消失，sitemap 与 `_redirects` 均无 `explore`。
+- **验证**：`api/lint.sh` + `black --check src tests` 通过；`cd api && python3 -m unittest discover -s tests` 全绿（`test_search_index_entries` 增补「`index.json`/`search_index.json` 不含 explore」断言，并同步去掉位置参数）；`npm run check`（eslint 0 error / 20 既有 warning、Prettier、tsc）通过；`python main.py` 走导出态（`[DB] state=DB_READY: DB and source manifest are current`，DB md5 不变）；`npm run build` 3116 页、`data/json/explore.json` 不存在、`index.json` 10 张卡片、`search_index.json` 无 `explore`；8081 preview HTTP 200；Playwright 实测主页卡片 10 个且无「任务探索表」、en 主页无 Explore 卡片，导航搜索「探索」只返回任务/工匠条目（无 `_nav` 探索入口）、「风箱」「灯」原有结果不受影响，直接访问 `/zh-Hans/explore/` 无 pageerror（回落到 ListPage 空列表）。
+
 ### feat: 导航栏搜索纳入【地牢商店】商品、【工匠】成品与「任务目标物」
 
 - **改动原因**：用户要求把【地牢商店】【工匠】的目标产物，以及「某物品可提交给谁的任务」（如风箱）一并纳入导航栏搜索，即把 `quest_npc` 页的独立搜索能力合并进全局搜索框。约定候选池只按同一坐标实体判定，不按 `group_parent` 泛化。

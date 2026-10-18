@@ -55,14 +55,6 @@ const CARD_THEME: Record<string, CardTheme> = {
     titleColor: '#fff',
     titleColorLight: '#1565c0',
   },
-  explore: {
-    border: '#0097a7',
-    hoverBg: 'linear-gradient(145deg, #2a4a4a, #3a5a5a)',
-    hoverBgLight: 'linear-gradient(145deg, #e0f7fa, #b2ebf2)',
-    icon: '🗺️',
-    titleColor: '#0097a7',
-    titleColorLight: '#00695c',
-  },
   quest_items: {
     border: '#E91E63',
     hoverBg: 'linear-gradient(145deg, #4a2a3a, #5a3a4a)',
@@ -245,7 +237,6 @@ export default function HomePage() {
                   {entry.page === 'monsters' && ut('ui.home.view_monsters')}
                   {entry.page === 'props' && ut('ui.home.view_props')}
                   {entry.page === 'lootdrops' && ut('ui.home.view_lootdrops')}
-                  {entry.page === 'explore' && ut('ui.home.view_explore')}
                   {entry.page === 'quest_items' &&
                     ut('ui.home.view_quest_items')}
                   {entry.page === 'quest_npc' && ut('ui.home.view_quest_npc')}

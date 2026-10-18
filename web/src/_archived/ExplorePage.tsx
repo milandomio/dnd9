@@ -1,3 +1,20 @@
+/**
+ * 归档：【任务探索表】页面（`/:lang/explore`）。
+ *
+ * 迁移日期：2026-10-19
+ * 迁移原因：用户要求把【任务探索表】从站点下线（主页入口移除、路由取消），代码保留归档以便日后恢复。
+ *
+ * 恢复方式：
+ *   1. 移回 `web/src/pages/ExplorePage.tsx`；
+ *   2. `web/src/AppInner.tsx` 恢复 `import ExplorePage` 与 `<Route path="/:lang/explore" .../>`；
+ *   3. `web/scripts/ssg.mjs` 恢复 `SINGLE` 中的 `'explore'`、`ssrDataMap['explore']`、`routeDataKey` 的
+ *      `/explore` 分支与 sitemap 优先级；
+ *   4. 后端恢复 `api/src/_archived/explore_export.py` 中记录的 `explore.json` 导出与
+ *      `index.json` / `search_index.json` 条目（见该文件说明）。
+ *
+ * 注意：`Explore` 作为任务内容类型（`ui.content.explore`）与 `explore_targets` 数据表仍在活跃使用，
+ *       不属于本次归档范围。
+ */
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useSSRData } from '../context/SSRDataContext';

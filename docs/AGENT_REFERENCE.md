@@ -44,7 +44,7 @@ DarkFindV5/
 │   ├── data/                # DB（darkfindv5.db）
 │   └── output/json/         # 管道输出
 ├── data/                 # 交付目录（main.py 自动维护，可重生，可清理）
-│   ├── json/              # items/monsters/props/lootdrops/explore/quest_*/dungeon_modules 等
+│   ├── json/              # items/monsters/props/lootdrops/quest_*/dungeon_modules 等
 │   └── img/               # → api/src/img/
 ├── web/                 # React 前端（SSG）
 │   ├── src/
@@ -53,6 +53,7 @@ DarkFindV5/
 │   │   ├── App.tsx              # 客户端入口（Provider 包装）
 │   │   ├── AppInner.tsx         # 路由定义（Routes/Route 声明）
 │   │   ├── pages/               # 页面组件
+│   │   ├── _archived/           # 已下线页面（ExplorePage.tsx =【任务探索表】）
 │   │   ├── components/          # MapDebug, MapPanel, Disclaimer, DebugCoordTable, NavBar, QuestSearchBar
 │   │   ├── hooks/               # useDebug, useTheme, useDungeonModules, useDataVersion, useSearchIndex
 │   │   ├── context/             # SSRDataContext
@@ -70,7 +71,7 @@ Lootdrop 变体的静态范围：普通变体只生成默认变体实体 HTML，
 | 页面 | 路由 | 列数 |
 |------|------|------|
 | 主页 | `/` | 4 |
-| 列表页 | `/items` `/monsters` `/props` `/lootdrops` `/explore` `/quest_items` `/quest_npc` | 3 |
+| 列表页 | `/items` `/monsters` `/props` `/lootdrops` `/quest_items` `/quest_npc` | 3 |
 | 详情页 | `/items/:name` 等 | 4 (CSS Grid, 1x1/2x1/1x2/2x2) |
 | 任务物品分组 | `/quest_items/:group` | 3 |
 | 任务 NPC 详情 | `/quest_npc/:npc_name` | 4 |
@@ -91,7 +92,7 @@ Lootdrop 变体的静态范围：普通变体只生成默认变体实体 HTML，
 | `useDebug.tsx` | 调试开关/偏移量 | Detail, LootdropDetail |
 | `useTheme.tsx` | 主题切换 | 全局 |
 | `useDungeonModules.ts` | 地图模块数据（详情页已改用 `_modules` 内联） | DungeonModules/Group |
-| `useDataVersion.ts` | 数据版本（缓存 bust） | Disclaimer, NavBar, List, Explore |
+| `useDataVersion.ts` | 数据版本（缓存 bust） | Disclaimer, NavBar, List |
 | `useSearchIndex.ts` | 搜索索引（全局缓存 search_index.json） | NavBar |
 
 ## 详情页同步规则

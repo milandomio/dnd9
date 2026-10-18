@@ -15,18 +15,15 @@ def _save(output_dir: Path, filename: str, data: list | dict):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def save_quest_data(db, output_dir: Path) -> tuple[int, int, int, list[dict]]:
-    """Export quest data from DB. Returns (explore_count, quest_items_count, quest_npc_count, quest_npcs_data)."""
-    explore_data = db.get_explore_targets()
+def save_quest_data(db, output_dir: Path) -> tuple[int, int, list[dict]]:
+    """Export quest data from DB. Returns (quest_items_count, quest_npc_count, quest_npcs_data)."""
     quest_items_data = db.get_quest_items()
     quest_npcs_data = db.get_quest_npcs()
-    explore_count = len(explore_data)
     quest_items_count = len(quest_items_data)
     quest_npc_count = sum(n.get("quest_count", 0) for n in quest_npcs_data)
-    _save(output_dir, "explore.json", explore_data)
     _save(output_dir, "quest_items.json", quest_items_data)
     _save(output_dir, "quest_npc.json", quest_npcs_data)
-    return explore_count, quest_items_count, quest_npc_count, quest_npcs_data
+    return quest_items_count, quest_npc_count, quest_npcs_data
 
 
 def generate_quest_items_groups(
@@ -368,7 +365,6 @@ def build_and_save_indexes(
     props_index: list[dict],
     loot_index: list[dict],
     modules_data: list[dict],
-    explore_count: int,
     quest_items_count: int,
     quest_npc_count: int,
     quest_npcs_data: list[dict],
@@ -390,7 +386,6 @@ def build_and_save_indexes(
         {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "lootdrops", "label": "掉落表", "count": len(loot_index)},
         {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
-        {"page": "explore", "label": "任务探索表", "count": explore_count},
         {"page": "quest_items", "label": "任务物品表", "count": quest_items_count},
         {"page": "dungeon_modules", "label": "地图模块表", "count": len(modules_data)},
         {"page": "dungeon_shops", "label": "地牢商店", "count": shop_regions},
@@ -513,7 +508,6 @@ def build_and_save_indexes(
         {"name": "monsters", "translation": "怪物表", "page": "_nav", "url": "/monsters/"},
         {"name": "props", "translation": "实体表", "page": "_nav", "url": "/props/"},
         {"name": "lootdrops", "translation": "掉落表", "page": "_nav", "url": "/lootdrops/"},
-        {"name": "explore", "translation": "任务探索表", "page": "_nav", "url": "/explore/"},
         {"name": "quest_npc", "translation": "任务NPC表", "page": "_nav", "url": "/quest_npc/"},
         {"name": "dungeon_modules", "translation": "地图模块表", "page": "_nav", "url": "/dungeon_modules/"},
         {"name": "dungeon_shops", "translation": "地牢商店", "page": "_nav", "url": "/dungeon_shops/"},

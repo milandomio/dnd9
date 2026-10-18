@@ -10,7 +10,6 @@ import HomePage from './pages/HomePage';
 import ListPage from './pages/ListPage';
 import DetailPage from './pages/DetailPage';
 import LootdropDetailPage from './pages/LootdropDetailPage';
-import ExplorePage from './pages/ExplorePage';
 import QuestItemsPage from './pages/QuestItemsPage';
 import QuestNPCPage from './pages/QuestNPCPage';
 import QuestNPCDetailPage from './pages/QuestNPCDetailPage';
@@ -56,7 +55,6 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/:lang" element={<HomePage />} />
-      <Route path="/:lang/explore" element={<ExplorePage />} />
       <Route path="/:lang/quest_items" element={<QuestItemsPage />} />
       <Route
         path="/:lang/quest_items/:group"

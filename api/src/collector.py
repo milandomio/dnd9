@@ -694,9 +694,9 @@ def run(
 
         with pipe.step("quest data export") as ctx:
             print("\nExporting quest data from DB...")
-            explore_count, quest_items_count, quest_npc_count, quest_npcs_data = save_quest_data(db, OUTPUT_DIR)
-            print(f"  explore: {explore_count}, quest items: {quest_items_count}, quest NPCs: {quest_npc_count}")
-            ctx.set_result(f"explore={explore_count}, items={quest_items_count}, npcs={quest_npc_count}")
+            quest_items_count, quest_npc_count, quest_npcs_data = save_quest_data(db, OUTPUT_DIR)
+            print(f"  quest items: {quest_items_count}, quest NPCs: {quest_npc_count}")
+            ctx.set_result(f"items={quest_items_count}, npcs={quest_npc_count}")
 
         with pipe.step("quest_items_groups"):
             generate_quest_items_groups(
@@ -716,7 +716,6 @@ def run(
                 props_index,
                 loot_index,
                 modules_data,
-                explore_count,
                 quest_items_count,
                 quest_npc_count,
                 quest_npcs_data,
