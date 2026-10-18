@@ -4,6 +4,13 @@
 
 ## 2026-10-19
 
+### chore: 补丁部署（跳过 FMOD 同步，重建 DB 并推送 main）
+
+- **改动原因**：用户要求「按补丁流程（不执行 ~ 同步）进行补丁部署」，即走 `docs/BUILD_AND_DEPLOY.md` 的「更新部署」，但跳过第 1 步 `~/sync_fmod.sh`（不重新同步游戏解包，沿用现有 `~/fmod/Output`）。
+- **变更文件**：`docs/SESSION_CHANGES.md` + 临时跟踪的 `api/data/darkfindv5.db`（推送后立即 `reset` 并恢复 `skip-worktree`）。
+- **关键逻辑/映射关系**：删库 `rm -f api/data/darkfindv5.db` → `python main.py` 全量重建（`REBUILD_REQUIRED: DB missing`，耗时 46.49s，`[VALIDATE] all module images OK`）→ 新 DB 含本日两项改动（生成器真身解析 + 同坐标候选池、掉落表稀有分组修正）。本流程不跑 `npm run build` / `vite preview`，前端 SSG 交给 GitHub Actions。
+- **验证**：重建后 DB 45 张表，`spawners` 55147 / `spawner_entries` 2291 / `props_entities` 592 / `item_entities` 816 / `monster_entities` 735；`props/StatueCursedPower.json` 8 点（2 个同点候选）、`props.json` 255 条含 `StatueCursedPower`、`dungeon_modules_coords/Ruins_Square_01.json` 15 个带候选池实体；管道日志无 error/traceback。
+
 ### fix: 【掉落表】稀有掉落分组不再吞掉已分类物品（饰品行恢复）
 
 - **改动原因**：用户反馈 `zh-Hans/lootdrops/` 的「✨稀有掉落」分组里混进了「装备饰品」分组的物品（例：公牛吊坠），且页面连「💍饰品：」整行都不显示。根因是 `groupLootdrops()` 里 `max_score` 稀有判定（`0 < max_score < 1`）排在类型元数据分组之前并 `continue`，而全部 19 件饰品（项链 12／戒指 7）的 `max_score` 都是 0.4211，于是被整包吞进稀有组，类型行永远建不出来。
