@@ -2,6 +2,18 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-18
+
+### fix: 【灯】页在数据到达前误显示「0 种灯具」，改为保持加载态并自动重试
+
+- **改动原因**：用户反馈网络延迟时【灯】页显示「共 0 种灯具 | 0 个品质变体」，误判为线上没有数据。根因有二：① `useLights` 在 `fetch` 失败时把 `loading` 置为 `false` 而 `data` 仍为 `null`，页面随后渲染 `data?.count ?? 0`，计数字串直接变成 0；② 失败的 promise 被写入模块级缓存，即使网络恢复，重新挂载仍复用同一个已 reject 的 promise，页面永久卡在 0。
+- **变更文件**：`web/src/hooks/useLights.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `loading` 改由数据推导（`!data`）：payload 未到达前页面始终停留在 `ui.common.loading`（加载中...），不再渲染 0 计数；只有服务端确实返回空 payload 时才显示 0（此时页面确实为空，属正确结果）。
+  2. `fetchLights` 增加 `r.ok` 校验，避免把 404/错误页 HTML 当 JSON 解析；`.catch` 中执行 `cache.delete(version)`，失败 promise 不再被缓存。
+  3. 新增 `error` 状态与 5 秒自动重试（由 `attempt` 计数驱动 effect 重跑），网络恢复后自动拉取并渲染，无需用户手动刷新。
+- **验证**：`cd web && npm run check` 通过（lint 0 error / 20 既有 warning、Prettier、`tsc --noEmit`）；`npm run build` 退出码 0（3113 页 / 17109 文件，mode=quick）；`npx vite preview`（8080 被占用 → 回落 8081）HTTP 200；Playwright 三轮验证：正常路径渲染「共 8 种灯具 | 45 个品质变体」且「环境」标签存在；用 CDP `Network.setBlockedURLs` 阻断 `lights.json` 时页面显示「加载中...」且**不含**「共 0 种灯具」；解除阻断后 ≤2.5s 自动恢复为 8/45。
+
 ## 2026-10-16
 
 ### chore: 补丁部署——同步游戏数据并全量重建 DB
