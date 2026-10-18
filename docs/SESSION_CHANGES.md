@@ -4,6 +4,27 @@
 
 ## 2026-10-19
 
+### feat: 生成器实体解析（真身补录）+ 同坐标候选池标记
+
+- **改动原因**：
+  1. 用户核对 `Ruins_Square_01_HR_D.json` 中 Statue04 同一坐标是否「有概率生成其他实体」→ 结论：是（该点 2 选 1）。
+  2. 用户指出【实体表】缺少「受诅咒的神坛」这类实体，要求清查未录入原因并补录。
+- **根因**：地图里的生成器**资产名**不等于它实际生成的**实体**。`CursedStatue01` 生成器无 `LootDropGroupId`，旧 `import_spawner_entries` 直接丢弃该类条目 → `search_engine` 的 `multi_entity` 只能覆盖带掉落组的生成器 → `spawners.keyword` 停在生成器名 `CursedStatue01`，真身 `StatueCursedPower` 一个坐标都没有 → `export_props` 对无坐标 props 直接 `continue` → 实体表／详情页／搜索索引全部缺失。
+- **变更文件**：`api/src/db/schema.py`、`api/src/db/__init__.py`、`api/src/db/repositories/coordinates.py`、`api/src/db/importers/spawners.py`、`api/src/db/importers/spawner_coordinates.py`、`api/src/search_engine.py`、`api/src/translator.py`、`api/src/collector.py`、`api/src/entity_export.py`、`api/src/lootdrop_builder.py`、`api/src/module_builder.py`、`api/src/db_freshness.py`、`web/src/types/data.ts`、`web/src/i18n/uiLocale.ts`、`web/src/pages/DetailPage.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`web/src/pages/DungeonModuleDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `spawners.py::import_spawner_entries`：无掉落组但有 `PropsId`/`MonsterId` 的条目也写入 `spawner_entries`（新增 192 条无掉落组条目），速率计算提前统一（NPC 保留历史固定 100.0）。
+  2. `search_engine.load_all_spawner_data`：无掉落组条目只要目标命中 props/monster 实体表就参与 `grouped`（`Id_NPC_*` 一类被过滤），展开条目携带自身 `has_lootdrop`；`ldg_to_monsters` 仍只统计带掉落组条目。于是 `CursedStatue01 → StatueCursedPower`、`CursedStatue02 → StatueCursedLuck` 等重定向生效。
+  3. `spawner_coordinates.py::extract_spawners`：展开行改用 `entity_info["has_lootdrop"]`（不再硬编码 True）；`BP_*` actor 行标记 `is_container=True`；`schema.py` 的 `spawners` 新增 `is_container` 列（含 `_migrate_spawners_table` 迁移），容器行 7233 条。
+  4. `coordinates.get_point_pool_info()`：按 `(map_base, json_filename, x, y, z)` 聚合非容器生成器，不同 keyword > 1 即同点候选池。
+  5. `collector._point_pools`：先按 `RESOLVE_STRIP_RE` 去品质/地形后缀，再按**译名**去重（否则 `OrnateChestLarge`/`_Locked` 会重复计 4），计数与展示名同源；`translator.build_coord_out` 输出 `point_pool_size` / `point_pool_entries`（容器行不输出）。
+  6. `module_builder`：每个坐标附池信息，并按实体聚合 `point_pool_size` / `point_pool_entries`（排除自身） / `point_pool_count`。
+  7. 前端：`Coord`、模块 `CoordEntity` 增加上述字段；`DetailPage` / `DungeonModuleDetailPage` / `LootdropDetailPage` 显示「N选1（候选：A、B）」，新增 i18n `ui.pool.point_pool`（10 语言）。详情页对已有分组候选池（`variant_count > 1`）的坐标不再重复显示，避免双重「选1」。
+- **结果**：
+  - 实体表补录 **受诅咒的伤害神坛**（`StatueCursedPower`，8 点）与 **被诅咒的命运神坛**（`StatueCursedLuck`，16 点），伪实体 `CursedStatue01/02` 消失。
+  - 用户核对点：`Ruins_Square_01 / 广场A` 同点 `(-1378, 203, 0.314065)` → 「速度之泉／受诅咒的伤害神坛 2 选 1」；Statue04 全库共 14 个同点候选坐标（另有生命神坛／保护神坛等 3 选 1）。
+  - 同点候选池原始分组 3626 组；宝箱点位显示 3 选 1（受诅咒的箱子／黄金宝箱／狮头宝箱），矿点按矿种 2 选 1（如 铜矿／铁矿）。
+- **验证**：`api/lint.sh`（ruff + black）通过；`npm run check`（eslint + prettier + tsc）通过；DB 全量重建（`GENERATOR_VERSION` → `db-lifecycle-v12-spawner-entity-resolution`）后 `spawner_entries` 2291 条、`spawners` 55147 行；SSG 构建 3117 页 / 15281 HTML；`npm run test:i18n` Pass 29 / Fail 0；Playwright 校验 zh-Hans/en/ja/ru 目标页 HTTP 200，并实际渲染「2选1（候选：受诅咒的伤害神坛）」等文案。
+
 ### feat: 【工匠】装备类标签改按「护甲部位／武器子类」分类（武器锻造师一并纳入）
 
 - **改动原因**：用户要求「武器要分子类，装备要分部件，比如头 手 身体 裤子（检查 item 文件是否有部位属性）」。上一版只把制甲匠／裁缝／皮革匠按【掉落表】的子类分组（护甲：板甲／链甲／布甲／皮甲），既没有部位概念，武器锻造师也仍按原料分组（银粉／铁锭）。经查游戏 Item 资产确实带部位属性 `Properties.SlotType`（`Type.Item.Slot.*`）。

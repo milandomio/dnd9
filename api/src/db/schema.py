@@ -165,7 +165,8 @@ class SchemaManager:
                 module_type TEXT DEFAULT '',
                 version TEXT NOT NULL DEFAULT '',
                 map_base TEXT NOT NULL DEFAULT '',
-                group_parent TEXT NOT NULL DEFAULT ''
+                group_parent TEXT NOT NULL DEFAULT '',
+                is_container INTEGER NOT NULL DEFAULT 0
             );
 
             CREATE VIRTUAL TABLE IF NOT EXISTS items_fts USING fts5(
@@ -297,6 +298,8 @@ class SchemaManager:
             c.execute("ALTER TABLE spawners ADD COLUMN group_parent TEXT NOT NULL DEFAULT ''")
         if "sub_group_parent" not in columns:
             c.execute("ALTER TABLE spawners ADD COLUMN sub_group_parent TEXT NOT NULL DEFAULT ''")
+        if "is_container" not in columns:
+            c.execute("ALTER TABLE spawners ADD COLUMN is_container INTEGER NOT NULL DEFAULT 0")
 
     def _migrate_item_entities_table(self):
         c = self.conn.cursor()

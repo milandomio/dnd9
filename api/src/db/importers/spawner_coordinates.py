@@ -331,6 +331,7 @@ def extract_spawners(
                     "keyword": _strip_bp_prefix(t),
                     "spawner_type": "props",
                     "has_lootdrop": False,
+                    "is_container": True,
                 }
 
         if t in _scene_comp_types and entry.get("Name") in (
@@ -463,7 +464,8 @@ def extract_spawners(
                         "original_keyword": kw_original,
                         "spawner_type": entity_info["spawner_type"],
                         "preview_name": entity_info["entity_name"],
-                        "has_lootdrop": True,
+                        "has_lootdrop": bool(entity_info.get("has_lootdrop", True)),
+                        "is_container": False,
                         "x": coord["x"],
                         "y": coord["y"],
                         "z": coord["z"],
@@ -483,6 +485,7 @@ def extract_spawners(
                     "spawner_type": info["spawner_type"],
                     "preview_name": info.get("preview_name", ""),
                     "has_lootdrop": info.get("has_lootdrop", False),
+                    "is_container": bool(info.get("is_container", False)),
                     "x": coord["x"],
                     "y": coord["y"],
                     "z": coord["z"],

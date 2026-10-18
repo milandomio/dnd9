@@ -49,6 +49,7 @@ def export_items(
     item_coord_chain_map: dict[str, set[str]] | None = None,
     sub_pool_info: dict | None = None,
     entity_data_out: dict[str, dict] | None = None,
+    point_pools: dict | None = None,
 ) -> list[dict]:
     """Export items index + individual detail files. Returns items_index."""
     items_index = []
@@ -93,7 +94,9 @@ def export_items(
             "category": r["category"],
             "variant_count": variant_count,
             "monsters": merged_loot.get(name, []),
-            "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in coords],
+            "coords": [
+                build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info, point_pools) for c in coords
+            ],
         }
         _store_detail(output_dir, f"items/{name}.json", name, entity_data, entity_data_out)
     _save(output_dir, "items.json", items_index)
@@ -111,6 +114,7 @@ def export_monsters(
     sub_pool_info: dict | None = None,
     entity_data_out: dict[str, dict] | None = None,
     session_spawn_limits: dict[str, int] | None = None,
+    point_pools: dict | None = None,
 ) -> list[dict]:
     """Export monsters index + individual detail files. Returns monsters_index."""
     _monsters_by_name: dict[str, dict] = {r["monster_name"]: r for r in monsters}
@@ -181,7 +185,8 @@ def export_monsters(
             "translation": translation,
             "translation_key": translation_key,
             "coords": [
-                build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords_list
+                build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info, point_pools)
+                for c in merged_coords_list
             ],
         }
         # Per-session spawn cap (e.g. GoblinSmuggler): global, not per map.
@@ -212,6 +217,7 @@ def export_props(
     map_to_module: dict | None = None,
     sub_pool_info: dict | None = None,
     entity_data_out: dict[str, dict] | None = None,
+    point_pools: dict | None = None,
 ) -> list[dict]:
     """Export props index + individual detail files. Returns props_index."""
     props_index = []
@@ -284,7 +290,10 @@ def export_props(
             "name": name_key,
             "translation": translation,
             "translation_key": translation_key,
-            "coords": [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in merged_coords],
+            "coords": [
+                build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info, point_pools)
+                for c in merged_coords
+            ],
         }
         _store_detail(output_dir, f"props/{name_key}.json", name_key, entity_data, entity_data_out)
 
@@ -298,7 +307,10 @@ def export_props(
                 break
         _gc_base_trans = resolve_name("GoldChest", _gc_tk, "props") if _gc_tk else "黄金宝箱"
         _gc_special_trans = _gc_base_trans + LABEL_TYPE_SUFFIX["special"]
-        _built = [build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info) for c in _gc_special_coords]
+        _built = [
+            build_coord_out(c, coord_variant_count, map_to_module, sub_pool_info, point_pools)
+            for c in _gc_special_coords
+        ]
         props_index.append(
             {
                 "name": GOLDCHEST_SPECIAL,

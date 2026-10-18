@@ -36,6 +36,7 @@ from quest_collector import run_quest_extraction
 from search_engine import load_all_spawner_data
 from search_index_builder import build_search_index_files
 from translator import (
+    RESOLVE_STRIP_RE,
     NameResolver,
     build_coord_out,
     resolve_group_label,
@@ -167,11 +168,12 @@ def run(
                         s.get("map_base", ""),
                         s.get("group_parent", ""),
                         s.get("sub_group_parent", ""),
+                        1 if s.get("is_container", False) else 0,
                     )
                     for idx, s in enumerate(spawners)
                 ]
                 c.executemany(
-                    "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, json_filename, version, map_base, group_parent, sub_group_parent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO spawners (id, keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, json_filename, version, map_base, group_parent, sub_group_parent, is_container) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                     spawner_rows,
                 )
                 db.connect().commit()
@@ -320,6 +322,36 @@ def run(
 
         _monsters_lookup = {r["monster_name"]: r for r in monsters}
         _props_lookup = {r["asset_name"]: r for r in props}
+
+        def _pool_entry(_kw: str) -> dict[str, str]:
+            """Translate a spawner keyword into a {translation_key, name} entry."""
+            _cls = entity_class.get(_kw, {})
+            _mrow = _monsters_lookup.get(_kw) or _monsters_lookup.get(_kw.replace("Guardsman", "Guardman"))
+            if "FromFakeDeath" in _kw:
+                _tk = "ui.pool.skeleton_guard_fake_death"
+                _name = resolver.resolve(_kw, None, "props") or _kw
+            elif _mrow:
+                _tk = _mrow["translation_key"]
+                _name = resolver.resolve(_kw, _tk, "monster")
+            elif _kw == "Ore_GoldOre":
+                _tk = _props_lookup["Ore_GoldOre_VeryLow"]["translation_key"]
+                _name = resolver.resolve(_kw, _tk, "props")
+            elif _cls:
+                _cls_types = _cls.get("types", [])
+                if "props" in _cls_types:
+                    _tk = _cls.get("translation_key", "")
+                    _name = resolver.resolve(_kw, _tk, "props")
+                elif "item" in _cls_types:
+                    _tk = _cls.get("translation_key", "")
+                    _name = resolver.resolve(_kw, _tk, "item")
+                else:
+                    _tk = ""
+                    _name = resolver.resolve(_kw, None, "props") or _kw
+            else:
+                _tk = ""
+                _name = resolver.resolve(_kw, None, "props") or _kw
+            return {"translation_key": resolve_translation_key(_kw, _tk), "name": _name}
+
         for _vkey, (_vcnt, _vraw) in list(_coord_variant_count.items()):
             if _vraw:
                 _vtr: list[dict] = []
@@ -346,40 +378,7 @@ def run(
 
         _sub_pool_info: dict[tuple[str, str, str, str], tuple[int, list[dict[str, str]], int]] = {}
         for _sp_key, (_sp_cnt, _sp_raw_names) in _sub_pool_info_raw.items():
-            _sp_tr: list[dict[str, str]] = []
-            for _kw in _sp_raw_names:
-                _cls = entity_class.get(_kw, {})
-                _mrow = _monsters_lookup.get(_kw) or _monsters_lookup.get(_kw.replace("Guardsman", "Guardman"))
-                if "FromFakeDeath" in _kw:
-                    _tk = "ui.pool.skeleton_guard_fake_death"
-                    _name = resolver.resolve(_kw, None, "props") or _kw
-                elif _mrow:
-                    _tk = _mrow["translation_key"]
-                    _name = resolver.resolve(_kw, _tk, "monster")
-                elif _kw == "Ore_GoldOre":
-                    _tk = _props_lookup["Ore_GoldOre_VeryLow"]["translation_key"]
-                    _name = resolver.resolve(_kw, _tk, "props")
-                elif _cls:
-                    _cls_types = _cls.get("types", [])
-                    if "props" in _cls_types:
-                        _tk = _cls.get("translation_key", "")
-                        _name = resolver.resolve(_kw, _tk, "props")
-                    elif "item" in _cls_types:
-                        _tk = _cls.get("translation_key", "")
-                        _name = resolver.resolve(_kw, _tk, "item")
-                    else:
-                        _tk = ""
-                        _name = resolver.resolve(_kw, None, "props") or _kw
-                else:
-                    _tk = ""
-                    _name = resolver.resolve(_kw, None, "props") or _kw
-                _sp_tr.append(
-                    {
-                        "translation_key": resolve_translation_key(_kw, _tk),
-                        "name": _name,
-                    }
-                )
-            _sub_pool_info[_sp_key] = (_sp_cnt, _sp_tr, 0)
+            _sub_pool_info[_sp_key] = (_sp_cnt, [_pool_entry(_kw) for _kw in _sp_raw_names], 0)
 
         _parent_pool_sizes: dict[tuple[str, str, str], int] = {}
         for _map_base, _filename, _group_parent, _sub_group_parent in _sub_pool_info:
@@ -391,6 +390,32 @@ def run(
                 _sp_entries,
                 _parent_pool_sizes[_sp_key[:3]],
             )
+
+        # Same-point candidate pools: several entities placed on the exact same
+        # coordinate are mutually exclusive (only one of them is spawned there).
+        # Quality/grade variants of one entity (Ore_IronOre_Low / _High, ...) are
+        # collapsed so only real alternatives are listed.
+        _point_pools_raw = db.get_coord_point_pools()
+        pipe.log(f"[JSON] get_coord_point_pools DONE -> {len(_point_pools_raw)} same-point pools")
+        _point_pools: dict[tuple[str, str, float, float, float], tuple[int, list[dict[str, str]]]] = {}
+        for _pp_key, (_pp_cnt, _pp_raw_names) in _point_pools_raw.items():
+            _by_base: dict[str, str] = {}
+            for _kw in sorted(_pp_raw_names):
+                _base = RESOLVE_STRIP_RE.sub("", _kw) or _kw
+                _by_base.setdefault(_base, _kw)
+            if len(_by_base) < 2:
+                continue
+            _entries: list[dict[str, str]] = []
+            _seen_names: set[str] = set()
+            for _kw in _by_base.values():
+                _entry = _pool_entry(_kw)
+                if _entry["name"] in _seen_names:
+                    continue
+                _seen_names.add(_entry["name"])
+                _entries.append(_entry)
+            if len(_entries) < 2:
+                continue
+            _point_pools[_pp_key] = (len(_entries), _entries)
 
         pipe.log("[JSON] building merged lootdrop map...")
         merged_loot, skip_variants = build_merged_loot_map(db)
@@ -415,7 +440,7 @@ def run(
 
         with pipe.step("dungeon_modules export") as ctx:
             merged_coords = build_and_save_module_coords(
-                db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR
+                db, modules_map, map_to_module, resolver.resolve, items, monsters, props, OUTPUT_DIR, _point_pools
             )
             modules_data = build_and_save_modules_data(modules_map, module_to_maps, merged_coords, OUTPUT_DIR)
             ctx.set_result(f"{len(modules_data)} modules")
@@ -452,6 +477,7 @@ def run(
                 item_coord_chain_map,
                 _sub_pool_info,
                 entity_data_by_type["items"],
+                _point_pools,
             )
             # P005: Build from actual exported entities, not raw DB data
             for e in items_index:
@@ -470,6 +496,7 @@ def run(
                 _sub_pool_info,
                 entity_data_by_type["monsters"],
                 session_spawn_limits,
+                _point_pools,
             )
             for e in monsters_index:
                 entity_page_map[e["name"]] = f"monsters/{e['name']}"
@@ -487,6 +514,7 @@ def run(
                 map_to_module,
                 _sub_pool_info,
                 entity_data_by_type["props"],
+                _point_pools,
             )
             for e in props_index:
                 entity_page_map[e["name"]] = f"props/{e['name']}"
@@ -500,7 +528,9 @@ def run(
                 continue
             if not _coords:
                 continue
-            coord_data = [build_coord_out(c, _coord_variant_count, map_to_module, _sub_pool_info) for c in _coords]
+            coord_data = [
+                build_coord_out(c, _coord_variant_count, map_to_module, _sub_pool_info, _point_pools) for c in _coords
+            ]
             _save(f"coords/{_entity_name}.json", coord_data)
             entity_page_map[_entity_name] = f"coords/{_entity_name}"
             _orphan_count += 1
@@ -557,6 +587,7 @@ def run(
             entity_page_map,
             used_translation_keys,
             lootdrop_group_info_by_item,
+            _point_pools,
         )
         pipe.log(f"[PERF] lootdrops details: {time.perf_counter() - _lootdrop_details_started:.3f}s")
         pipe.log("[JSON] lootdrops detail files DONE")

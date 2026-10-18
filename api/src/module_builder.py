@@ -225,6 +225,7 @@ def build_and_save_module_coords(
     monsters: list[dict],
     props: list[dict],
     output_dir: Path,
+    point_pools: dict | None = None,
 ) -> dict[str, dict]:
     """Build and save module coordinates. Returns merged_coords."""
     # Build entity classification index from DB (ground truth type)
@@ -308,7 +309,7 @@ def build_and_save_module_coords(
     rows = (
         db.connect()
         .execute(
-            "SELECT keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, version, map_base, group_parent, sub_group_parent FROM spawners ORDER BY map_base, keyword"
+            "SELECT keyword, original_keyword, spawner_type, has_lootdrop, x, y, z, yaw, version, map_base, json_filename, group_parent, sub_group_parent, is_container FROM spawners ORDER BY map_base, keyword"
         )
         .fetchall()
     )
@@ -362,6 +363,11 @@ def build_and_save_module_coords(
             sgp = row["sub_group_parent"] or ""
         except (KeyError, IndexError):
             sgp = ""
+        _pp = (
+            point_pools.get((mb, row["json_filename"], row["x"], row["y"], row["z"]))
+            if point_pools and not row["is_container"]
+            else None
+        )
         module_coords[mb]["entities"][ek]["coords"].append(
             {
                 "x": row["x"],
@@ -372,6 +378,8 @@ def build_and_save_module_coords(
                 "label": HARDCODED_TRANSLATIONS.get(row["original_keyword"], row["original_keyword"]),
                 "group_parent": gp,
                 "sub_group_parent": sgp,
+                "point_pool_size": _pp[0] if _pp else 0,
+                "point_pool_entries": _pp[1] if _pp else None,
             }
         )
     # 按模块名合并坐标并保存（处理多个 map_base 映射到同一模块的情况）
@@ -426,6 +434,28 @@ def build_and_save_module_coords(
                     "group_size": len(deduped) if is_mutex else None,
                 }
             )
+        # 同点候选池：同一坐标上的其它实体标为二选一候选（该点只生成其中之一）
+        for entity in merged_entities:
+            _pool_sizes: list[int] = []
+            _pool_entries: list[dict] = []
+            _pooled_coords = 0
+            _own_names = {entity.get("name", ""), entity.get("translation", "")}
+            _seen_pool_names: set[str] = set()
+            for c in entity.get("coords", []):
+                if not c.get("point_pool_size") or c["point_pool_size"] < 2:
+                    continue
+                _pooled_coords += 1
+                _pool_sizes.append(c["point_pool_size"])
+                for _entry in c.get("point_pool_entries") or []:
+                    _ename = _entry.get("name", "")
+                    if _ename in _own_names or _ename in _seen_pool_names:
+                        continue
+                    _seen_pool_names.add(_ename)
+                    _pool_entries.append(_entry)
+            if _pooled_coords:
+                entity["point_pool_size"] = max(_pool_sizes)
+                entity["point_pool_entries"] = _pool_entries
+                entity["point_pool_count"] = _pooled_coords
         _save(
             output_dir,
             f"dungeon_modules_coords/{target_name}.json",

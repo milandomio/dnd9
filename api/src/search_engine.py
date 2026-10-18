@@ -32,21 +32,30 @@ def load_all_spawner_data(
         keyword_base = strip_variant_suffixes(keyword)
         has_lootdrop = bool(row["lootdrop_group_id"])
         keyword_has_lootdrop[keyword_base] = keyword_has_lootdrop.get(keyword_base, False) or has_lootdrop
+        entity_name = row["entity_name"]
+        if not entity_name:
+            continue
         if not has_lootdrop:
+            # Spawners without a lootdrop group (decorative props, NPCs) still
+            # describe which entity they place. Keep the entries whose target is
+            # a real entity so the spawner keyword can be resolved to it
+            # (e.g. Id_Spawner_New_Props_CursedStatue01 -> StatueCursedPower).
+            known = {entity_name, strip_variant_suffixes(entity_name)}
+            if not ((known & monster_names) or (known & props_names)):
+                continue
+            grouped.setdefault(keyword, []).append(row)
             continue
         grouped.setdefault(keyword, []).append(row)
-        entity_name = row["entity_name"]
-        if entity_name:
-            canonical = (monster_name_map or {}).get(entity_name.lower())
-            if not canonical:
-                stripped = strip_variant_suffixes(entity_name)
-                canonical = (monster_name_map or {}).get(stripped.lower(), entity_name)
-            ldg_name = row["lootdrop_group_id"]
-            for prefix in _LOOTDROP_GROUP_PREFIXES:
-                if ldg_name.startswith(prefix):
-                    ldg_name = ldg_name[len(prefix) :]
-                    break
-            ldg_to_monsters.setdefault(ldg_name, set()).add(canonical)
+        with_canonical = (monster_name_map or {}).get(entity_name.lower())
+        if not with_canonical:
+            stripped = strip_variant_suffixes(entity_name)
+            with_canonical = (monster_name_map or {}).get(stripped.lower(), entity_name)
+        ldg_name = row["lootdrop_group_id"]
+        for prefix in _LOOTDROP_GROUP_PREFIXES:
+            if ldg_name.startswith(prefix):
+                ldg_name = ldg_name[len(prefix) :]
+                break
+        ldg_to_monsters.setdefault(ldg_name, set()).add(with_canonical)
 
     for keyword, keyword_entries in grouped.items():
         entity_names = {strip_variant_suffixes(row["entity_name"]) for row in keyword_entries if row["entity_name"]}
@@ -71,6 +80,7 @@ def load_all_spawner_data(
                     "spawn_rate": min(row["spawn_rate"], 100.0),
                     "spawner_type": spawner_type,
                     "lootdrop_group_id": row["lootdrop_group_id"],
+                    "has_lootdrop": bool(row["lootdrop_group_id"]),
                 }
             )
         if expanded:

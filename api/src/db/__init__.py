@@ -232,5 +232,8 @@ class DatabaseManager:
     def get_coord_variant_counts(self) -> dict[tuple[str, str, str], tuple[int, list[str]]]:
         return self.repos.coordinates.get_variant_counts()
 
+    def get_coord_point_pools(self) -> dict[tuple[str, str, float, float, float], tuple[int, list[str]]]:
+        return self.repos.coordinates.get_point_pool_info()
+
     def get_sub_group_pool_info(self) -> dict[tuple[str, str, str, str], tuple[int, list[str]]]:
         return self.repos.coordinates.get_sub_group_pool_info()

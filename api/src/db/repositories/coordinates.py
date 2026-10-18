@@ -14,6 +14,7 @@ class SpawnerCoord(TypedDict):
     spawner_type: str
     group_parent: str
     sub_group_parent: str
+    is_container: int
 
 
 class CoordinatesRepository:
@@ -25,7 +26,7 @@ class CoordinatesRepository:
         c.execute("""
             SELECT s.keyword, s.x, s.y, s.z, s.yaw, s.json_filename,
                    s.version, s.map_base, s.original_keyword, s.spawner_type,
-                   s.group_parent, s.sub_group_parent
+                   s.group_parent, s.sub_group_parent, s.is_container
             FROM spawners s
             ORDER BY s.keyword, s.map_base, s.json_filename
         """)
@@ -51,6 +52,28 @@ class CoordinatesRepository:
         for term in result:
             for item in result[term]:
                 item.pop("_dup_key", None)
+        return result
+
+    def get_point_pool_info(self) -> dict[tuple[str, str, float, float, float], tuple[int, list[str]]]:
+        """Same-point candidate pools.
+
+        Keyed by (map_base, json_filename, x, y, z); value = (candidate count,
+        candidate keywords). Container actors (GameSpawnerGroup, GameObjectLinker,
+        SubGroup, ...) are excluded: they only act as placement containers.
+        """
+        c = self.conn.cursor()
+        result: dict[tuple[str, str, float, float, float], tuple[int, list[str]]] = {}
+        for row in c.execute(
+            "SELECT map_base, json_filename, x, y, z, "
+            "COUNT(DISTINCT keyword) as cnt, "
+            "GROUP_CONCAT(DISTINCT keyword) as keywords "
+            "FROM spawners WHERE is_container = 0 "
+            "GROUP BY map_base, json_filename, x, y, z "
+            "HAVING COUNT(DISTINCT keyword) > 1"
+        ):
+            key = (row["map_base"], row["json_filename"], row["x"], row["y"], row["z"])
+            names = [n for n in (row["keywords"] or "").split(",") if n]
+            result[key] = (len(names), names)
         return result
 
     def get_variant_counts(self) -> dict[tuple[str, str, str], tuple[int, list[str]]]:

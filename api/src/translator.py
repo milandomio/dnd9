@@ -239,7 +239,13 @@ def resolve_translation_key(name: str, translation_key: str | None = None) -> st
     )
 
 
-def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None, sub_pool_info: dict | None = None) -> dict:
+def build_coord_out(
+    c: dict,
+    vc: dict,
+    map_to_module: dict | None = None,
+    sub_pool_info: dict | None = None,
+    point_pools: dict | None = None,
+) -> dict:
     _gp = c.get("group_parent", "")
     _sgp = c.get("sub_group_parent", "")
     _mb = c["map_base"]
@@ -270,6 +276,13 @@ def build_coord_out(c: dict, vc: dict, map_to_module: dict | None = None, sub_po
     if vc_info and vc_info[0] > 1:
         out["variant_count"] = vc_info[0]
         out["variant_names"] = vc_info[1]
+    if point_pools and not c.get("is_container"):
+        # Same-point candidates: entities sharing the exact same coordinate are
+        # mutually exclusive (only one of them is spawned at that spot).
+        pp = point_pools.get((c["map_base"], c["json_filename"], c["x"], c["y"], c["z"]))
+        if pp and pp[0] > 1:
+            out["point_pool_size"] = pp[0]
+            out["point_pool_entries"] = pp[1]
     _qm = re.search(r"_(VeryLow|Low|Med|High)$", c.get("keyword", "")) or re.search(
         r"_(VeryLow|Low|Med|High)$", c.get("original_keyword", "")
     )

@@ -469,6 +469,7 @@ def build_and_save_lootdrop_details(
     entity_page_map: dict[str, str] | None = None,
     used_translation_keys: set[str] | None = None,
     lootdrop_group_info_out: dict[str, dict[str, list[dict]]] | None = None,
+    point_pools: dict | None = None,
 ) -> dict[str, float]:
     """Build and save lootdrop detail files. Returns item_max_score."""
     _timings: dict[str, float] = {
@@ -619,6 +620,11 @@ def build_and_save_lootdrop_details(
                             if _vc_info and _vc_info[0] > 1:
                                 coord_out["variant_count"] = _vc_info[0]
                                 coord_out["variant_names"] = _vc_info[1]
+                            if point_pools:
+                                _pp = point_pools.get((_c["map_base"], _c["json_filename"], _c["x"], _c["y"], _c["z"]))
+                                if _pp and _pp[0] > 1:
+                                    coord_out["point_pool_size"] = _pp[0]
+                                    coord_out["point_pool_entries"] = _pp[1]
                             _rate_en = _c.get("keyword") or m_name
                             if _c.get("keyword") != _c.get("original_keyword", ""):
                                 _pair = (_c["original_keyword"], _rate_en)

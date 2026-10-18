@@ -8,6 +8,7 @@ import type {
   Coord,
   DungeonModule,
   GroupDropInfo,
+  VariantNameEntry,
 } from '../types/data';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion } from '../hooks/useDataVersion';
@@ -951,6 +952,47 @@ export default function DetailPage() {
                         .replace('{sy}', String(sy))}
                     </div>
                   )}
+                  {(() => {
+                    const poolDots = mapCoords.filter(
+                      (c) =>
+                        (c.point_pool_size ?? 0) > 1 &&
+                        (c.point_pool_entries?.length ?? 0) > 0 &&
+                        !(c.variant_count && c.variant_count > 1)
+                    );
+                    if (poolDots.length === 0) return null;
+                    const poolEntries = new Map<string, VariantNameEntry>();
+                    for (const c of poolDots) {
+                      for (const entry of c.point_pool_entries ?? []) {
+                        if (!poolEntries.has(entry.name)) {
+                          poolEntries.set(entry.name, entry);
+                        }
+                      }
+                    }
+                    const poolCount = Math.max(
+                      ...poolDots.map((c) => c.point_pool_size ?? 0)
+                    );
+                    const poolNames = [...poolEntries.values()]
+                      .map((entry) => t(entry.translation_key, entry.name))
+                      .join(ut('ui.location.map_sep'));
+                    return (
+                      <div
+                        style={{
+                          fontSize: 13,
+                          color: tokens.muted,
+                          textAlign: 'center',
+                          marginBottom: 4,
+                        }}
+                      >
+                        {`(${ut('ui.pool.point_pool')
+                          .replace('{count}', String(poolCount))
+                          .replace('{members}', poolNames)})${
+                          poolDots.length > 1
+                            ? ` (${ut('ui.detail.position_count').replace('{count}', String(poolDots.length))})`
+                            : ''
+                        }`}
+                      </div>
+                    );
+                  })()}
 
                   {visibleMaps.has(mapName) ? (
                     <MapPanel

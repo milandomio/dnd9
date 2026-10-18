@@ -134,24 +134,32 @@ class SpawnersImporter:
                         raw = ue_asset_base_name(id_path) or ""
                         entity_name = raw.removeprefix("Id_Monster_").removeprefix("Id_Props_")
                         break
-                # NPC spawners (e.g. GoblinSmuggler) carry no lootdrop group; keep
-                # the row so the per-session spawn limit reaches the entity export.
-                if not ldg_path:
-                    if session_spawn_limit > 0 and entity_name:
-                        rows.append((keyword, entity_name, 100.0, json.dumps(dungeon_grades), "", session_spawn_limit))
-                    continue
                 if dungeon_grades:
                     _suffixes = set()
                     for g in dungeon_grades:
                         mode_id = g // 1000 if g >= 1000 else 1
                         _suffixes.add((mode_id, g % 1000))
                     _rates = [float(Decimal(str(100 * raw_rate)) / Decimal(str(_suffix_totals[s]))) for s in _suffixes]
-                    spawn_rate = _round_rate(min(_rates))
+                    spawn_rate = min(_round_rate(min(_rates)), 100.0)
                 elif len(items) > 1:
-                    spawn_rate = _round_rate(float(Decimal(str(100 * raw_rate)) / Decimal(str(_total_pool))))
+                    spawn_rate = min(
+                        _round_rate(float(Decimal(str(100 * raw_rate)) / Decimal(str(_total_pool)))), 100.0
+                    )
                 else:
-                    spawn_rate = _round_rate(float(Decimal(str(100 * raw_rate)) / Decimal("10000")))
-                spawn_rate = min(spawn_rate, 100.0)
+                    spawn_rate = min(_round_rate(float(Decimal(str(100 * raw_rate)) / Decimal("10000"))), 100.0)
+                # Spawners without a lootdrop group (decorative props, NPCs) still
+                # describe which entity they place. Keep those rows so the spawned
+                # entity can be resolved downstream: the map keyword is the
+                # *spawner asset* name (e.g. CursedStatue01) while the real entity
+                # is the referenced PropsId (StatueCursedPower).
+                if not ldg_path:
+                    if entity_name:
+                        if session_spawn_limit > 0:
+                            spawn_rate = 100.0
+                        rows.append(
+                            (keyword, entity_name, spawn_rate, json.dumps(dungeon_grades), "", session_spawn_limit)
+                        )
+                    continue
                 ldg_id = ue_asset_base_name(ldg_path) or ""
                 rows.append(
                     (

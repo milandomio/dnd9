@@ -11,7 +11,7 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
-import type { DungeonModule } from '../types/data';
+import type { DungeonModule, VariantNameEntry } from '../types/data';
 import {
   getAdj,
   useCtrlBtn,
@@ -30,6 +30,10 @@ interface CoordEntity {
   color: string;
   mutually_exclusive?: boolean;
   group_size?: number;
+  /** 同坐标候选池：该点只生成其中之一 */
+  point_pool_size?: number;
+  point_pool_entries?: VariantNameEntry[];
+  point_pool_count?: number;
   coords: { x: number; y: number; z: number; version: string; label: string }[];
 }
 
@@ -393,6 +397,34 @@ export default function DungeonModuleDetailPage() {
                               : ut('ui.module_detail.points')}
                             )
                           </span>
+                          {(e.point_pool_entries?.length ?? 0) > 0 && (
+                            <span
+                              style={{
+                                fontSize: 13,
+                                fontWeight: 'normal',
+                                marginLeft: 6,
+                                opacity: 0.85,
+                              }}
+                            >
+                              {ut('ui.pool.point_pool')
+                                .replace(
+                                  '{count}',
+                                  String(
+                                    e.point_pool_size ??
+                                      e.point_pool_entries?.length ??
+                                      0
+                                  )
+                                )
+                                .replace(
+                                  '{members}',
+                                  (e.point_pool_entries ?? [])
+                                    .map((entry) =>
+                                      t(entry.translation_key, entry.name)
+                                    )
+                                    .join(ut('ui.location.map_sep'))
+                                )}
+                            </span>
+                          )}
                         </button>
                       ))}
                     </div>

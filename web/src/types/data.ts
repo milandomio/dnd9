@@ -21,6 +21,9 @@ export interface Coord {
   score?: number;
   variant_count?: number;
   variant_names?: VariantNameEntry[];
+  /** 同坐标候选池：该点只生成其中之一 */
+  point_pool_size?: number;
+  point_pool_entries?: VariantNameEntry[];
   group_parent?: string;
   sub_group_parent?: string;
   sub_pool_size?: number;

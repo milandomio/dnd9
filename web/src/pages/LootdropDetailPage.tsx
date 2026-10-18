@@ -777,6 +777,9 @@ export default function LootdropDetailPage({
           spawn_rate?: number;
           variant_count?: number;
           variant_names?: VariantNameEntry[];
+          /** 同坐标候选池：该点只生成其中之一 */
+          point_pool_size?: number;
+          point_pool_entries?: VariantNameEntry[];
           score?: number;
           group_parent?: string;
           sub_group_parent?: string;
@@ -808,6 +811,8 @@ export default function LootdropDetailPage({
           spawn_rate: c.spawn_rate,
           variant_count: c.variant_count,
           variant_names: c.variant_names,
+          point_pool_size: c.point_pool_size,
+          point_pool_entries: c.point_pool_entries,
           score: c.score,
           group_parent: c.group_parent,
           sub_group_parent: c.sub_group_parent,
@@ -2160,6 +2165,43 @@ export default function LootdropDetailPage({
                                       : `(${ut('ui.detail.position_count').replace('{count}', String(totalVarPos))})`
                                   );
                                 }
+                              }
+                              const poolDots = mDots.filter(
+                                (d) =>
+                                  (d.point_pool_size ?? 0) > 1 &&
+                                  (d.point_pool_entries?.length ?? 0) > 0 &&
+                                  !(d.variant_count && d.variant_count > 1)
+                              );
+                              if (poolDots.length > 0) {
+                                const poolEntries = new Map<
+                                  string,
+                                  VariantNameEntry
+                                >();
+                                for (const d of poolDots) {
+                                  for (const entry of d.point_pool_entries ??
+                                    []) {
+                                    if (!poolEntries.has(entry.name)) {
+                                      poolEntries.set(entry.name, entry);
+                                    }
+                                  }
+                                }
+                                const poolCount = Math.max(
+                                  ...poolDots.map((d) => d.point_pool_size ?? 0)
+                                );
+                                const poolNames = [...poolEntries.values()]
+                                  .map((entry) =>
+                                    t(entry.translation_key, entry.name)
+                                  )
+                                  .join(ut('ui.location.map_sep'));
+                                parts.push(
+                                  `(${ut('ui.pool.point_pool')
+                                    .replace('{count}', String(poolCount))
+                                    .replace('{members}', poolNames)})${
+                                    poolDots.length > 1
+                                      ? ` (${ut('ui.detail.position_count').replace('{count}', String(poolDots.length))})`
+                                      : ''
+                                  }`
+                                );
                               }
                               return parts.join(' ');
                             })()}
