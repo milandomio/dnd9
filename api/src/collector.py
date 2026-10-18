@@ -640,7 +640,7 @@ def run(
             )
             craft_count = crafts_payload["count"]
             ctx.set_result(
-                f"{craft_count} merchants, {crafts_payload['item_count']} items, "
+                f"{craft_count} merchants, {crafts_payload['group_count']} groups, "
                 f"{crafts_payload['recipe_count']} recipes"
             )
 

@@ -21,6 +21,22 @@ const RARITY_COLORS: Record<string, string> = {
   Artifact: '#FF4500',
 };
 
+/**
+ * Section title: the materials that define the family, e.g. 「银粉」or
+ * 「蓝宝石 + 奥术精华」. An empty part list marks the synthetic ore tab, whose
+ * single group is named by the tab label.
+ */
+function groupLabel(
+  recipe: CraftRecipe,
+  t: (key: string | undefined, fallback: string) => string,
+  oresLabel: string
+): string {
+  if (!recipe.group_parts?.length) return oresLabel;
+  return recipe.group_parts
+    .map((part) => t(part.translation_key, part.translation || part.name))
+    .join(' + ');
+}
+
 export default function CraftsPage() {
   const ssrData = useSSRData<CraftsPayload>('crafts');
   const { data, loading } = useCrafts(ssrData);
@@ -39,22 +55,22 @@ export default function CraftsPage() {
   const selected =
     merchants.find((merchant) => merchant.name === activeTab) ?? merchants[0];
 
-  // Recipes arrive sorted by merchant, then item, then rarity, so one pass
-  // groups each crafted item with all of its quality tiers.
+  // Recipes arrive sorted by merchant, then material family, then item, then
+  // rarity, so one pass groups every recipe of one family under one heading.
   const groups: {
-    name: string;
+    key: string;
     label: string;
     recipes: CraftRecipe[];
   }[] = [];
   for (const recipe of data?.recipes ?? []) {
     if (!selected || recipe.merchant !== selected.name) continue;
     const last = groups[groups.length - 1];
-    if (last && last.name === recipe.name) {
+    if (last && last.key === recipe.group) {
       last.recipes.push(recipe);
     } else {
       groups.push({
-        name: recipe.name,
-        label: t(recipe.translation_key, recipe.translation || recipe.name),
+        key: recipe.group,
+        label: groupLabel(recipe, t, ut('ui.crafts.tab.ores')),
         recipes: [recipe],
       });
     }
@@ -96,6 +112,7 @@ export default function CraftsPage() {
         {ut('ui.crafts.stat')
           .replace('{merchants}', String(merchants.length))
           .replace('{items}', String(data?.item_count ?? 0))
+          .replace('{groups}', String(data?.group_count ?? 0))
           .replace('{recipes}', String(data?.recipe_count ?? 0))}
       </div>
       <p
@@ -122,9 +139,9 @@ export default function CraftsPage() {
         {merchants.map((merchant) => {
           const active = selected?.name === merchant.name;
           const label =
-            merchant.kind === 'ingot'
-              ? ut('ui.crafts.tab.ingots')
-              : t(merchant.translation_key, merchant.display || merchant.name);
+            merchant.kind === 'npc'
+              ? t(merchant.translation_key, merchant.display || merchant.name)
+              : ut('ui.crafts.tab.ores');
           return (
             <button
               key={merchant.name}
@@ -150,14 +167,14 @@ export default function CraftsPage() {
                   marginLeft: 6,
                 }}
               >
-                {merchant.item_count}
+                {merchant.recipe_count}
               </span>
             </button>
           );
         })}
       </div>
       {groups.map((group) => (
-        <section key={group.name} style={{ marginBottom: 18 }}>
+        <section key={group.key} style={{ marginBottom: 18 }}>
           <h2
             style={{
               fontSize: 17,

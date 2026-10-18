@@ -119,9 +119,9 @@ class SchemaManager:
             );
 
             -- Tavern crafting merchants (V2/Merchant/Merchant) that serve the
-            -- Craft service. `kind` is 'npc' for real NPCs and 'ingot' for the
-            -- synthetic 【锭制作】 tab that owns the ore -> ingot recipes, which
-            -- carry no merchant reference in the game data.
+            -- Craft service. `kind` is 'npc' for real NPCs and 'ores' for the
+            -- synthetic 【矿类】 tab that owns the pure ore/coin refining
+            -- recipes, which carry no merchant reference in the game data.
             CREATE TABLE IF NOT EXISTS craft_merchants (
                 merchant_name TEXT PRIMARY KEY,
                 kind TEXT NOT NULL DEFAULT 'npc',
@@ -133,6 +133,8 @@ class SchemaManager:
             -- folded (VoidBlade_5001 -> VoidBlade) so the 【工匠】 page can group
             -- the same item across rarities; the raw name keeps the tier.
             -- requirements_json is [{"name", "raw_name", "rarity", "amount"}, ...].
+            -- ``merchant_name`` is ``__ores__`` for pure ore/coin refining, which
+            -- the game data ties to no merchant (see importers/crafts.py).
             CREATE TABLE IF NOT EXISTS craft_recipes (
                 recipe_id TEXT PRIMARY KEY,
                 merchant_name TEXT NOT NULL,

@@ -288,6 +288,12 @@ export interface CraftRequirement {
   amount: number;
 }
 
+/** A group title fragment: a material name (or the item name for split tiers). */
+export type CraftGroupPart = Pick<
+  CraftRequirement,
+  'name' | 'translation' | 'translation_key'
+>;
+
 /** One crafting recipe: a quality tier of an item plus its materials. */
 export interface CraftRecipe {
   merchant: string;
@@ -299,16 +305,24 @@ export interface CraftRecipe {
   translation_key?: string;
   rarity: string;
   requirements: CraftRequirement[];
+  /**
+   * Material-family key; recipes of one family sit under one section. Recipes
+   * of the synthetic ore tab all share the `__ores__` key.
+   */
+  group: string;
+  /** Title fragments of the group, joined with ' + ' by the page. Empty for the ore tab. */
+  group_parts: CraftGroupPart[];
 }
 
-/** A crafting NPC tab (or the synthetic 【锭制作】 tab). */
+/** A crafting NPC tab (or the synthetic 【矿类】 tab). */
 export interface CraftMerchant {
   name: string;
-  /** 'npc' for a real merchant, 'ingot' for the synthetic ingot tab. */
+  /** 'npc' for a real merchant, 'ores' for the synthetic ore-refining tab. */
   kind: string;
   translation_key?: string;
   /** zh-Hans fallback for the default language. */
   display: string;
+  group_count: number;
   item_count: number;
   recipe_count: number;
 }
@@ -316,12 +330,14 @@ export interface CraftMerchant {
 export interface CraftsPayload {
   /** Distinct crafting tabs. */
   count: number;
-  /** Distinct (merchant, item) groups the page renders. */
+  /** Distinct (merchant, material family) sections the page renders. */
+  group_count: number;
+  /** Distinct (merchant, item) pairs. */
   item_count: number;
   /** Total recipes. */
   recipe_count: number;
-  /** Merchant name of the synthetic ingot tab. */
-  ingot_merchant?: string;
+  /** Merchant name of the synthetic ore-refining tab. */
+  ores_merchant?: string;
   merchants: CraftMerchant[];
   recipes: CraftRecipe[];
 }

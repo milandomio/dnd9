@@ -33,6 +33,19 @@
   - Playwright：zh-Hans 渲染 9 个标签（炼金术师17/医师1/制甲匠42/武器锻造师62/樵夫3/裁缝48/皮革匠49/珠宝匠24/锭制作9）与统计行「共 9 位工匠 | 255 种可制作物品 | 332 条配方」；「清晰药水」的优秀/罕见两条配方归入同一组；「锭制作」标签显示 9 种锭（钴锭/铜锭/霜石锭/金锭/铁锭/黑曜石锭/红宝石银锭/银锭/潮汐石锭）；en 页标签与材料正确（Ingots、Materials、Brimstone Ore×2）；无 hydration/page error（仅既有的 Cloudflare insights CORS 报错）。`BASE_URL=http://localhost:8081 node tests/i18n.mjs` → Pass 29 / Fail 0。
 - **备注**：`api/data/darkfindv5.db` 为 skip-worktree 跟踪文件，本次未纳入提交；`data/json/crafts.json` 已由本次管道生成。
 
+### feat: 【工匠】按「共用原料」归组，矿石／银币精炼配方并入「矿类」标签
+
+- **改动原因**：用户要求「把原料比较相同的配方归到一个分组（如银粉），矿类也归到一个分组（如铜矿做铜粉、金矿做金粉）」。确认后落为两条规则：① **用到同一种原料的配方合成一组**，组标题＝该原料（如「银粉」组＝7 把纯银武器、「铁锭」组）；② 所有**纯矿石／银币精炼**配方（粉末 + 锭）合并为一个「矿类」组，并把炼金术师里的矿石→粉末配方移入原【锭制作】标签，标签改名为「矿类」。
+- **变更文件**：`api/src/db/importers/crafts.py`、`api/src/craft_builder.py`、`api/src/db/schema.py`、`api/src/db_freshness.py`、`api/src/collector.py`、`web/src/types/data.ts`、`web/src/pages/CraftsPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 归属规则新增最高优先级：原料**全部**是矿石（`*Ores`）或银币/金币的配方视为「纯精炼」，一律归属合成标签 `__ores__`（`kind='ores'`、`sort_order=1000`），改名前为 `__ingots__`/`ingot`；因此炼金术师的 10 条矿石→粉末配方移入该标签，与原【锭制作】的 9 条合成 19 条。
+  2. 导出新增分组字段：`group`（分组键）+ `group_parts`（标题片段，前端按当前语言拼接成「A + B」）。分组键＝配方的原料名集合，**去掉银币/金币这类通用货币**（它们被 95/78 条无关配方共用，会导致跨类合并），仅当货币是唯一原料时才保留；组内按「分组键 → 物品 → 品质」排序，前端单趟扫描即可分组。`__ores__` 标签只有一个分组，其 `group_parts` 为空，标题回退到 `ui.crafts.tab.ores`。
+  3. 安全网：某物品的不同品质若用到**不同**原料（手术包／镐／营火工具包／樵夫斧），该物品仍按物品单独成组，保证「同一物品不同品质归为一组」不被拆散（其余多品质物品因原料一致自然同组）。
+  4. 标签页徽标由「物品数」改为「配方数」（矿类 19、珠宝匠 81…）；统计行改为「共 9 位工匠 | 207 类配方 | 255 种可制作物品 | 332 条配方」。`GENERATOR_VERSION` 升为 `db-lifecycle-v10-craft-ores` 以触发 DB 重建。
+  5. 前端 `CraftsPage` 改为按 `recipe.group` 单趟分组、标题用 `group_parts` 拼接；i18n 把 `ui.crafts.tab.ingots` 改为 `ui.crafts.tab.ores`（矿类 / Ores / 鉱石 / 礦類），并更新 `ui.crafts.stat`（新增 `{groups}`）与 `ui.crafts.hint`。`craft_builder` 重命名 `_resolve_item` → `_ItemLabel` 并新增 `_signature()`。
+- **验证**：管道全量重建（`REBUILD_REQUIRED`）`import_craft_recipes DONE -> 9 merchants, 332 recipes`、`crafts export DONE -> 9 merchants, 207 groups, 332 recipes`；隔离重放 `build_and_save_crafts` 与 `data/json/crafts.json` 对比 `identical: True`；`api/lint.sh`、`cd web && npm run check`（0 error / 20 既有 warning）、`npm run build`（3114 页）均通过；Playwright：标签「炼金术师20／医师2／制甲匠42／武器锻造师65／樵夫6／裁缝48／皮革匠49／珠宝匠81／矿类19」，炼金术师 7 个原料分组（生命之叶／幻影花／盐藤／护符草／生命之叶 + 护符草…），矿类 1 组 19 张卡（硫磺粉／钴锭／钴粉／铜锭…），珠宝匠 9 组（「奥术精华 + 蓝宝石」24 条 6 物品…），武器锻造师含「银粉」组（7 张）与「铁锭」组，医师「手术包」2 张同组；en 页 Ores／Goldsmith 标题正确；无 hydration/page error（仅既有 Cloudflare insights CORS 报错）。
+- **备注**：材料名（如 en 的「Ruby (Cracked)」）沿用折叠物品名的既有翻译键约定，与站点其他页面一致；如需按品质后缀显示精确名称可后续单独调整。
+
 ## 2026-10-16
 
 ### chore: 补丁部署——同步游戏数据并全量重建 DB
