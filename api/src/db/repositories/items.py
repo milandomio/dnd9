@@ -10,6 +10,7 @@ class ItemEntity(TypedDict):
     item_type: str
     item_category_key: str
     item_subtype_keys: str
+    item_slot_key: str
 
 
 class ItemWithMatches(TypedDict):
@@ -47,6 +48,7 @@ class ItemsRepository:
             "item_type": "''",
             "item_category_key": "''",
             "item_subtype_keys": "'[]'",
+            "item_slot_key": "''",
         }
         selected_optional = ", ".join(
             f"{column} AS {column}" if column in columns else f"{fallback} AS {column}"

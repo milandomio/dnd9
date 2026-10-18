@@ -13,10 +13,12 @@ built from the same thing sit together instead of one section per item:
 * ``BlueSapphire + ArcaneEssence`` -> the Goldsmith's sapphire jewellery;
 * the synthetic 【矿类】 tab (pure ore/coin refining) is a single group.
 
-Equipment NPCs (Armourer/Smith/Tailor/Leathersmith) are classified with the same
-item taxonomy the 【掉落表】 page uses instead: every material family there holds
-a single item, so the sections are the game's item category + subtype (护甲 /
-板甲…), which is what a player looks for.
+Equipment NPCs (Armourer, Weaponsmith, Tailor, Leathersmith) are classified with
+the item taxonomy the 【掉落表】 page uses instead: every material family there
+holds a single item, so the sections are the game's item category plus the worn
+body part (护甲 / 头部 …) or, for weapons, the weapon subtype (武器 / 剑 …). A
+weapon the game files under several weapon types (a staff is both a mace and a
+staff) is listed under each of them, exactly like the 【掉落表】 page does.
 
 Two safety nets keep the headings useful:
 
@@ -47,10 +49,18 @@ RARITY_ORDER = {
 #: material group only uses them when they are the *only* material.
 _CURRENCIES = frozenset({"SilverCoin", "GoldCoins"})
 
-#: Equipment NPCs that each craft one armour class, so a material family never
-#: merges anything: they are classified by item category + subtype instead (the
-#: same taxonomy as the 【掉落表】 page).
-_CATEGORY_MERCHANTS = frozenset({"Armourer", "Tailor", "Leathersmith"})
+#: Equipment NPCs whose items the page classifies with the 【掉落表】 taxonomy
+#: instead of by material: armour by the body part it is worn on (head / hands /
+#: chest / legs / foot) and weapons by their subtype (sword / axe / bow ...).
+_EQUIPMENT_MERCHANTS = frozenset({"Armourer", "Tailor", "Leathersmith", "Weaponsmith"})
+
+#: Item types whose section is the body part the item is worn on. Weapons only
+#: carry Primary/Secondary as their slot, so they are grouped by subtype instead.
+_PART_ITEM_TYPES = frozenset({"Armor"})
+
+#: Prefix of the item type tag keys (``…_Type_Item_Slot_Head``); it stops the
+#: ancestor lookup of ``_key_label`` from walking out of the tag namespace.
+_TYPE_TAG_PREFIX = "Text_Code_DCDataBlueprintLibrary_Type_Item_"
 
 #: Section order of the item categories, mirroring the 【掉落表】 page.
 _CATEGORY_ORDER = ("Utility", "Misc", "Accessory", "Armor", "Weapon")
@@ -71,9 +81,64 @@ def _category_name(category_key: str) -> str:
     return category_key.rsplit("_Category_", 1)[-1]
 
 
+def _part_keys(entry: dict) -> list[str]:
+    """Keys of the section parts: body part for armour, subtype for the rest."""
+    if entry["item_type"] in _PART_ITEM_TYPES and entry["slot_key"]:
+        return [entry["slot_key"]]
+    return entry["subtype_keys"]
+
+
+def _category_rank(group: str) -> int:
+    """【掉落表】 category order, used as the secondary section sort key."""
+    category = _category_name(group.split(_GROUP_SEPARATOR)[0])
+    return _CATEGORY_ORDER.index(category) if category in _CATEGORY_ORDER else len(_CATEGORY_ORDER)
+
+
+def _order_equipment_sections(entries: list[dict]) -> None:
+    """Sort the equipment sections: most items first, then the 【掉落表】 order.
+
+    The section key is prefixed with a zero padded index because the payload is
+    sorted by group key, which keeps the biggest part of the tab on top.
+    """
+    section_items: dict[tuple[str, str], set[str]] = {}
+    for entry in entries:
+        if entry.get("group_kind") != "category":
+            continue
+        section_items.setdefault((entry["merchant"], entry["group"]), set()).add(entry["name"])
+
+    by_merchant: dict[str, dict[str, tuple[int, int]]] = {}
+    for (merchant, group), items in section_items.items():
+        by_merchant.setdefault(merchant, {})[group] = (-len(items), _category_rank(group))
+
+    for sections in by_merchant.values():
+        ordered = sorted(sections, key=lambda group: (sections[group], group))
+        for index, group in enumerate(ordered):
+            sections[group] = index
+
+    for entry in entries:
+        index = by_merchant.get(entry["merchant"], {}).get(entry.get("group", ""))
+        if index is not None:
+            entry["group"] = f"{index:02d}{_GROUP_SEPARATOR}{entry['group']}"
+
+
 def _key_label(resolve_name, key: str) -> dict:
-    """Label for a raw game translation key (item category / subtype)."""
-    return {"name": key, "translation": resolve_name("", key, "item"), "translation_key": key}
+    """Label for a raw game translation key (item category / subtype / slot).
+
+    Some tags are one level deeper than the game's translations, e.g.
+    ``..._Type_Item_Utility_Installable_Trap`` has no string of its own while its
+    parent ``..._Type_Item_Utility_Installable`` (部署品) describes it, so an
+    untranslated key falls back to its closest translated ancestor.
+    """
+    candidate = key
+    while candidate:
+        translation = resolve_name("", candidate, "item")
+        if translation:
+            # The tag may be one level deeper than the game's strings, so the label
+            # points at the closest ancestor key that every language translates.
+            return {"name": key, "translation": translation, "translation_key": candidate}
+        parent = candidate.rsplit("_", 1)[0]
+        candidate = parent if parent != candidate and parent.startswith(_TYPE_TAG_PREFIX) else ""
+    return {"name": key, "translation": "", "translation_key": key}
 
 
 class _ItemLabel:
@@ -132,6 +197,8 @@ def build_and_save_crafts(
         entry["signature"] = _signature(requirements)
         entry["category_key"] = label.meta.get(name, {}).get("item_category_key", "")
         entry["subtype_keys"] = label.subtype_keys(name)
+        entry["item_type"] = label.meta.get(name, {}).get("item_type", "")
+        entry["slot_key"] = label.meta.get(name, {}).get("item_slot_key", "")
         entries.append(entry)
 
     # Items whose tiers need different materials keep an item group so every
@@ -148,6 +215,7 @@ def build_and_save_crafts(
             continue
         family_items.setdefault((entry["merchant"], entry["signature"]), set()).add(entry["name"])
 
+    grouped: list[dict] = []
     for entry in entries:
         merchant = entry["merchant"]
         if kinds.get(merchant) == "ores":
@@ -155,23 +223,32 @@ def build_and_save_crafts(
             entry["group"] = ORE_MERCHANT
             entry["group_kind"] = "ores"
             entry["group_parts"] = []
-        elif merchant in _CATEGORY_MERCHANTS and entry["category_key"] and entry["subtype_keys"]:
-            # Equipment NPCs: classify by item category + subtype like 【掉落表】.
-            category = _category_name(entry["category_key"])
-            order = _CATEGORY_ORDER.index(category) if category in _CATEGORY_ORDER else len(_CATEGORY_ORDER)
-            entry["group"] = _GROUP_SEPARATOR.join([str(order), entry["category_key"], *entry["subtype_keys"]])
-            entry["group_kind"] = "category"
-            entry["group_category"] = _key_label(resolve_name, entry["category_key"])
-            entry["group_parts"] = [_key_label(resolve_name, key) for key in entry["subtype_keys"]]
-        elif (merchant, entry["name"]) in split_items or len(family_items[(merchant, entry["signature"])]) == 1:
-            # Grouping would not merge anything, so the item names the section.
-            entry["group"] = entry["name"]
-            entry["group_kind"] = "item"
-            entry["group_parts"] = [label(entry["name"])]
+            grouped.append(entry)
+        elif merchant in _EQUIPMENT_MERCHANTS and entry["category_key"] and _part_keys(entry):
+            # Equipment NPCs: classify by item category + part, like 【掉落表】.
+            # An item that belongs to several weapon types is listed with each of
+            # them, exactly like the 【掉落表】 page does.
+            for part in _part_keys(entry):
+                clone = dict(entry)
+                clone["group"] = _GROUP_SEPARATOR.join([entry["category_key"], part])
+                clone["group_kind"] = "category"
+                clone["group_category"] = _key_label(resolve_name, entry["category_key"])
+                clone["group_parts"] = [_key_label(resolve_name, part)]
+                grouped.append(clone)
         else:
-            entry["group"] = " + ".join(entry["signature"])
-            entry["group_kind"] = "material"
-            entry["group_parts"] = [label(material) for material in entry["signature"]]
+            if (merchant, entry["name"]) in split_items or len(family_items[(merchant, entry["signature"])]) == 1:
+                # Grouping would not merge anything, so the item names the section.
+                entry["group"] = entry["name"]
+                entry["group_kind"] = "item"
+                entry["group_parts"] = [label(entry["name"])]
+            else:
+                entry["group"] = " + ".join(entry["signature"])
+                entry["group_kind"] = "material"
+                entry["group_parts"] = [label(material) for material in entry["signature"]]
+            grouped.append(entry)
+
+    entries = grouped
+    _order_equipment_sections(entries)
 
     entries.sort(
         key=lambda entry: (
@@ -187,6 +264,8 @@ def build_and_save_crafts(
         entry.pop("signature")
         entry.pop("category_key")
         entry.pop("subtype_keys")
+        entry.pop("item_type")
+        entry.pop("slot_key")
 
     merchant_entries = []
     for row in merchants:
@@ -204,7 +283,7 @@ def build_and_save_crafts(
                 ),
                 "group_count": len({entry["group"] for entry in owned}),
                 "item_count": len({entry["name"] for entry in owned}),
-                "recipe_count": len(owned),
+                "recipe_count": len({entry["recipe_id"] for entry in owned}),
             }
         )
 
@@ -212,7 +291,7 @@ def build_and_save_crafts(
         "count": len(merchant_entries),
         "group_count": len({(entry["merchant"], entry["group"]) for entry in entries}),
         "item_count": len({(entry["merchant"], entry["name"]) for entry in entries}),
-        "recipe_count": len(entries),
+        "recipe_count": len({entry["recipe_id"] for entry in entries}),
         "ores_merchant": ORE_MERCHANT,
         "merchants": merchant_entries,
         "recipes": entries,

@@ -2,6 +2,23 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-19
+
+### feat: 【工匠】装备类标签改按「护甲部位／武器子类」分类（武器锻造师一并纳入）
+
+- **改动原因**：用户要求「武器要分子类，装备要分部件，比如头 手 身体 裤子（检查 item 文件是否有部位属性）」。上一版只把制甲匠／裁缝／皮革匠按【掉落表】的子类分组（护甲：板甲／链甲／布甲／皮甲），既没有部位概念，武器锻造师也仍按原料分组（银粉／铁锭）。经查游戏 Item 资产确实带部位属性 `Properties.SlotType`（`Type.Item.Slot.*`）。
+- **变更文件**：`api/src/db/schema.py`、`api/src/db/importers/items.py`、`api/src/db/repositories/items.py`、`api/src/db_freshness.py`、`api/src/craft_builder.py`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **部位数据入库**：`item_entities` 新增 `item_slot_key`（建表语句 + `_migrate_item_entities_table` 迁移 + `ItemsRepository` 的可选列回退），导入时把 `Properties.SlotType.TagName`（`Type.Item.Slot.Head`）按既有 `_tag_translation_key` 规则转成翻译键；`GENERATOR_VERSION` 提升为 `db-lifecycle-v11-item-slots` 触发 DB 全量重建。实际取到的部位键：`Head` 头部／`Hands` 手部／`Chest` 胸部／`Legs` 腿部／`Foot` 脚部／`Back` 背部／`Sash` 装饰。
+  2. **分类规则**：`_CATEGORY_MERCHANTS` → `_EQUIPMENT_MERCHANTS = {Armourer, Tailor, Leathersmith, Weaponsmith}`；新增 `_part_keys()`：物品类型为 Armor 且有 `item_slot_key` 时用部位键，其余（武器／辅助道具／杂项）用 `item_subtype_keys`。原因是武器的 `SlotType` 只有 `Primary`／`Secondary`（不含武器种类），只能靠 `WeaponTypes` 子类区分，正是「武器分子类」。
+  3. **多武器类型**：游戏把法杖同时登记为 `Mace + Staff` 等，若按子类集合成组会切出「锤 + 杖」这类碎片组，故与【掉落表】一致地把该物品在每个子类下各列一次（`group` 逐子类克隆）。`item_count`（255）／`recipe_count`（332）改为按去重配方统计，重复卡片不影响统计口径。
+  4. **无翻译的深层标签**：`..._Type_Item_Utility_Installable_Trap` 在游戏里没有独立译文，`_key_label` 改为逐级回退到最近有译文的祖级键（`..._Type_Item_Utility_Installable` → zh 部署品／en Installable／ja 設置可能），且 `translation_key` 也指向祖级键，否则非默认语言会直接显示原始键。
+  5. **分节顺序**：装备类标签按「物品数降序 → 【掉落表】类别顺序 → 分组键」排序，让主要部位／子类排在最前（制甲匠「护甲：头部(12)」在前、武器锻造师「武器：剑(16)」在首、皮革匠「杂项：金币容器(3)」在末）。
+  6. **结果**：分组数 79 → 53。制甲匠＝护甲：头部12／胸部8／手部8／脚部7／腿部7；裁缝＝护甲：胸部18／头部15／背部6／腿部6／手部2／脚部1；皮革匠＝护甲：脚部14／手部13／腿部9／胸部5／头部5 + 杂项：金币容器3；武器锻造师＝武器：剑16／锤13／魔法物品8／匕首6／斧5／杖5／弓4／长柄4 + 辅助道具：消耗品2／投掷物2／部署品1／照明物1／挖掘工具1 + 杂项：弹丸1 + 武器：盾1（62 物品／65 配方／73 张卡）。炼金术师、樵夫、医师、珠宝匠、矿类维持不变。
+  7. **i18n**：`ui.crafts.hint` 四语言同步说明「装备类 NPC 按【掉落表】分类——护甲按部位、武器按子类」；统计行分组数 79 → 53。
+- **验证**：`python main.py` 全量重建（`state=REBUILD_REQUIRED`，`import_items DONE -> 816`）后两次 `DB_READY` 仅重跑导出，`crafts export DONE -> 9 merchants, 53 groups, 332 recipes`；`api/lint.sh`（ruff + black）通过；`cd web && npm run check` 通过（Prettier + `tsc --noEmit`）；`npm run build` 3114 页 / 17121 文件（mode=quick）；`BASE_URL=http://localhost:8081 node tests/i18n.mjs` → Pass 29 / Fail 0；Playwright 逐标签核对 zh-Hans／en／ja：武器锻造师 15 段标题如上（en `Weapon:Sword(16) … Utility:Installable(1)`、ja `武器：剣(16) … ユーティリティー：設置可能(1)`），制甲匠／裁缝／皮革匠按部位（en `Armor:Head`），炼金术师与矿类未变，页面无 hydration／page error（仅既有 Cloudflare RUM CORS 报错）。
+- **备注**：`api/data/darkfindv5.db` 与 `data/` 下产物均为本地生成，未纳入提交。
+
 ## 2026-10-18
 
 ### feat: 【工匠】装备类 NPC（制甲匠／裁缝／皮革匠）改用【掉落表】物品分类分组

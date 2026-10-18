@@ -16,7 +16,8 @@ class SchemaManager:
                 variant_count INTEGER NOT NULL DEFAULT 1,
                 item_type TEXT NOT NULL DEFAULT '',
                 item_category_key TEXT NOT NULL DEFAULT '',
-                item_subtype_keys TEXT NOT NULL DEFAULT '[]'
+                item_subtype_keys TEXT NOT NULL DEFAULT '[]',
+                item_slot_key TEXT NOT NULL DEFAULT ''
             );
 
             CREATE TABLE IF NOT EXISTS monster_entities (
@@ -305,6 +306,7 @@ class SchemaManager:
             ("item_type", "TEXT NOT NULL DEFAULT ''"),
             ("item_category_key", "TEXT NOT NULL DEFAULT ''"),
             ("item_subtype_keys", "TEXT NOT NULL DEFAULT '[]'"),
+            ("item_slot_key", "TEXT NOT NULL DEFAULT ''"),
         ):
             if column not in columns:
                 c.execute(f"ALTER TABLE item_entities ADD COLUMN {column} {definition}")

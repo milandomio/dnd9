@@ -46,6 +46,15 @@ def _item_type_metadata(properties: dict) -> tuple[str, str, list[str]]:
     return item_type, category_key, subtype_keys
 
 
+def _slot_key(properties: dict) -> str:
+    """Equip slot of the item (``Type.Item.Slot.Head`` -> its translation key).
+
+    Armour uses it for the body part (head / hands / chest / legs / foot), while
+    weapons only carry Primary/Secondary, which says nothing about the weapon.
+    """
+    return _tag_translation_key(_tag_name(properties.get("SlotType")))
+
+
 def _rarity_from_properties(properties: dict) -> str:
     rarity = properties.get("RarityType")
     tag = _tag_name(rarity)
@@ -85,11 +94,12 @@ class ItemsImporter:
                         item_type,
                         category_key,
                         json.dumps(subtype_keys, ensure_ascii=False, separators=(",", ":")),
+                        _slot_key(props),
                     )
                 )
         deduped = [r[:4] + (variant_counts.get(r[0], 1),) + r[4:] for r in rows]
         c.executemany(
-            "INSERT OR REPLACE INTO item_entities (item_name, raw_name, translation_key, category, variant_count, item_type, item_category_key, item_subtype_keys) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO item_entities (item_name, raw_name, translation_key, category, variant_count, item_type, item_category_key, item_subtype_keys, item_slot_key) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             deduped,
         )
         self._rebuild_fts("items_fts")
