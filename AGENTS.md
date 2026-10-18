@@ -55,12 +55,12 @@
 
 ## 术语约定
 
-- "我看到" — dev 分支时 `http://localhost:8090/`，其他分支时 `http://localhost:8080/`
+- "我看到" — dev 分支时 `http://localhost:8090/`，其他分支时 `http://localhost:8081/`（本机 8080 被本地 WordPress/nginx 占用，预览固定用 8081）
 - "前端" — `web/`，"后端" — `api/`，"db" — `api/data/darkfindv5.db`
 - "坐标" — spawners 表中 x/y/z 三个 REAL 字段
 - "启动web" — 根据分支：
   - **dev 分支**：`cd web && kill $(lsof -t -i:8090) 2>/dev/null; sleep 0.5; (npm run dev -- --port 8090 --host 0.0.0.0 &>/dev/null &) && echo "web started"`
-  - **其他分支**：`cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; (npx vite preview --port 8080 --host 0.0.0.0 &>/dev/null &) && echo "web started"`
+  - **其他分支**：`cd web && kill $(lsof -t -i:8081) 2>/dev/null; sleep 0.5; (npx vite preview --port 8081 --host 0.0.0.0 &>/dev/null &) && echo "web started"`
 - "详情页" / "列表页" — 如无特别说明，默认指 lootdrops/monsters/props/items 这四个实体类型所属的详情页和列表页
 - **最后总结必须用中文** — 完成任务后的总结、变更说明一律用中文输出
 
@@ -69,7 +69,7 @@
 | 分支 | 模式 | 端口 | 构建方式 |
 |------|------|------|----------|
 | `dev` | 开发调试 | 8090 | Vite HMR，跳过 SSG 和后端管道 |
-| 其他 | 生产预览 | 8080 | `python main.py` → `npm run build` → `vite preview` |
+| 其他 | 生产预览 | 8081 | `python main.py` → `npm run build` → `vite preview` |
 
 **dev 分支特殊规则**：
 - "启动web" → 直接 `npm run dev -- --port 8090 --host 0.0.0.0`，不运行管道、不 SSG 构建

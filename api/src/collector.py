@@ -722,9 +722,9 @@ def run(
                 quest_npcs_data,
                 OUTPUT_DIR,
                 group_label_resolver=lambda g: _resolve_group_display(g, translations),
-                shop_regions=len(shop_data["index"]["regions"]),
+                shop_index=shop_data["index"],
                 light_count=light_count,
-                craft_count=craft_count,
+                crafts_payload=crafts_payload,
             )
             ctx.set_result("DONE")
 

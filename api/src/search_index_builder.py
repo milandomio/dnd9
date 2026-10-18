@@ -37,6 +37,7 @@ def build_search_index_files(db, output_dir: Path) -> list[str]:
         for key in (
             entry.get("translation_key", ""),
             entry.get("tag_translation_key", ""),
+            entry.get("subtitle_key", ""),
             *(entry.get("monster_translation_keys") or []),
         )
         if key
@@ -64,6 +65,12 @@ def build_search_index_files(db, output_dir: Path) -> list[str]:
             tag_key = entry.get("tag_translation_key", "")
             if tag_key:
                 localized["tag"] = translations.get(tag_key, fallback_translations.get(tag_key, entry.get("tag", "")))
+            subtitle_key = entry.get("subtitle_key", "")
+            if subtitle_key:
+                localized["subtitle"] = translations.get(
+                    subtitle_key,
+                    fallback_translations.get(subtitle_key, entry.get("subtitle", "")),
+                )
             monster_keys = entry.get("monster_translation_keys") or []
             if monster_keys:
                 monster_fallbacks = entry.get("monster_translations") or []

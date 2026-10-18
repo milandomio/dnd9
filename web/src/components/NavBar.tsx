@@ -132,7 +132,8 @@ export default function NavBar() {
       .filter(
         (e) =>
           e.name.toLowerCase().includes(q) ||
-          e.translation.toLowerCase().includes(q)
+          e.translation.toLowerCase().includes(q) ||
+          (e.subtitle?.toLowerCase().includes(q) ?? false)
       )
       .sort((a, b) => {
         const an = a.name.toLowerCase();
@@ -354,7 +355,7 @@ export default function NavBar() {
               {query.trim() ? (
                 results.map((hit, i) => (
                   <div
-                    key={`${hit.page}::${hit.name}`}
+                    key={`${hit.page}::${hit.url}::${i}`}
                     onClick={() => handleSelect(hit)}
                     onMouseEnter={() => setSelectedIdx(i)}
                     style={{
@@ -374,7 +375,7 @@ export default function NavBar() {
                   >
                     <span style={{ color: tokens.text, fontSize: 14 }}>
                       {t(hit.translation_key, hit.translation || hit.name)}
-                      {hit.translation && hit.translation !== hit.name && (
+                      {hit.subtitle ? (
                         <span
                           style={{
                             color: tokens.muted,
@@ -382,8 +383,21 @@ export default function NavBar() {
                             fontSize: 12,
                           }}
                         >
-                          ({hit.name})
+                          ({hit.subtitle})
                         </span>
+                      ) : (
+                        hit.translation &&
+                        hit.translation !== hit.name && (
+                          <span
+                            style={{
+                              color: tokens.muted,
+                              marginLeft: 6,
+                              fontSize: 12,
+                            }}
+                          >
+                            ({hit.name})
+                          </span>
+                        )
                       )}
                     </span>
                     <span

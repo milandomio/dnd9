@@ -1,5 +1,10 @@
-import { useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import {
+  useParams,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../hooks/useTheme';
 import { useShopDetail } from '../hooks/useDungeonShops';
@@ -65,6 +70,30 @@ export default function DungeonShopDetailPage() {
   const { t, ut, lang, dict } = useLocale();
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // Set after mount (not during render) so a shared ?item= link hydrates the same
+  // HTML as the static build before the highlight is applied.
+  const [focusItem, setFocusItem] = useState('');
+
+  useEffect(() => {
+    setFocusItem(searchParams.get('item') ?? '');
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!focusItem || !detail) return;
+    const hit = (detail.difficulties ?? []).find((difficulty) =>
+      difficulty.slots.some((slot) =>
+        slot.items.some((item) => item.page === focusItem)
+      )
+    );
+    if (hit) setActiveDifficulty(hit.difficulty);
+    const timer = setTimeout(() => {
+      document
+        .querySelector(`[data-shop-item="${CSS.escape(focusItem)}"]`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [focusItem, detail]);
 
   if (loading)
     return (
@@ -253,6 +282,7 @@ export default function DungeonShopDetailPage() {
                   item={item}
                   // A one-item slot is guaranteed, so "100% chance" is noise.
                   showChance={slot.items.length > 1}
+                  focused={item.page === focusItem}
                 />
               ))}
             </div>
@@ -265,9 +295,11 @@ export default function DungeonShopDetailPage() {
 function ShopItemCard({
   item,
   showChance,
+  focused,
 }: {
   item: ShopItem;
   showChance: boolean;
+  focused?: boolean;
 }) {
   const { tokens } = useTheme();
   const { t, ut } = useLocale();
@@ -314,6 +346,7 @@ function ShopItemCard({
           searchForItem();
         }
       }}
+      data-shop-item={item.page}
       title={ut('ui.search.search')}
       style={{
         display: 'flex',
@@ -331,6 +364,7 @@ function ShopItemCard({
         height: '100%',
         boxSizing: 'border-box',
         cursor: 'pointer',
+        boxShadow: focused ? `0 0 0 2px ${tokens.accent}` : undefined,
       }}
     >
       <div style={{ minWidth: 0 }}>

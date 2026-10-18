@@ -10,6 +10,8 @@ export interface SearchEntry {
   page: string;
   url: string;
   tag?: string;
+  /** Secondary label rendered in parentheses, e.g. a quest objective. */
+  subtitle?: string;
 }
 
 const indexCache = new Map<string, SearchEntry[]>();

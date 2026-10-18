@@ -237,6 +237,131 @@ def generate_quest_items_groups(
     _save(output_dir, "quest_items_groups.json", groups_index)
 
 
+# Quest objectives with no seekable target of their own (a raw damage or hold
+# event); they would only add noise to the nav search.
+QUEST_OBJECTIVE_SKIP_TYPES = frozenset({"Damage", "Hold"})
+
+
+def _search_url(path: str, params: dict[str, str]) -> str:
+    """Append a query string only when at least one param carries a value."""
+    query = urllib.parse.urlencode({k: v for k, v in params.items() if v})
+    return f"{path}?{query}" if query else path
+
+
+def _iter_shop_search_entries(shop_index: dict | None, output_dir: Path) -> list[dict]:
+    """One search entry per (region, item) for the goods a dungeon shop sells.
+
+    Shop goods rarely own a detail page, so the entry links to the region page
+    and passes the folded item name as ``?item=`` for that page to focus.
+    """
+    entries: list[dict] = []
+    for region in (shop_index or {}).get("regions", []):
+        region_id = region.get("region")
+        if not region_id:
+            continue
+        detail_path = output_dir / "dungeon_shops" / f"{region_id}.json"
+        if not detail_path.exists():
+            continue
+        with open(detail_path, encoding="utf-8") as f:
+            detail = json.load(f)
+        seen: set[str] = set()
+        for difficulty in detail.get("difficulties", []):
+            for slot in difficulty.get("slots", []):
+                for item in slot.get("items", []):
+                    item_page = item.get("page") or item.get("name")
+                    if not item_page or item_page in seen:
+                        continue
+                    seen.add(item_page)
+                    entry = {
+                        "name": item_page,
+                        "translation": item.get("translation", item_page),
+                        "translation_key": item.get("translation_key", ""),
+                        "page": "dungeon_shops",
+                        "url": _search_url(
+                            f"/dungeon_shops/{urllib.parse.quote(region_id, safe='')}/",
+                            {"item": item_page},
+                        ),
+                    }
+                    if region.get("label_key"):
+                        entry["tag_translation_key"] = region["label_key"]
+                    if region.get("display"):
+                        entry["tag"] = region["display"]
+                    entries.append(entry)
+    return entries
+
+
+def _iter_craft_search_entries(crafts_payload: dict | None) -> list[dict]:
+    """One search entry per (merchant, item) for the goods a crafter makes.
+
+    Recipes have no page of their own, so the entry links to /crafts/ with the
+    item name as ``?item=`` for that page to focus.
+    """
+    entries: list[dict] = []
+    if not crafts_payload:
+        return entries
+    merchants = {merchant.get("name"): merchant for merchant in crafts_payload.get("merchants", [])}
+    seen: set[tuple[str, str]] = set()
+    for recipe in crafts_payload.get("recipes", []):
+        merchant_name = recipe.get("merchant")
+        item_name = recipe.get("name")
+        if not merchant_name or not item_name:
+            continue
+        key = (merchant_name, item_name)
+        if key in seen:
+            continue
+        seen.add(key)
+        entry = {
+            "name": item_name,
+            "translation": recipe.get("translation", item_name),
+            "translation_key": recipe.get("translation_key", ""),
+            "page": "crafts",
+            "url": _search_url("/crafts/", {"item": item_name}),
+        }
+        merchant = merchants.get(merchant_name, {})
+        if merchant.get("translation_key"):
+            entry["tag_translation_key"] = merchant["translation_key"]
+        if merchant.get("display"):
+            entry["tag"] = merchant["display"]
+        entries.append(entry)
+    return entries
+
+
+def _iter_quest_objective_entries(quest_npcs_data: list[dict]) -> list[dict]:
+    """One search entry per quest objective, so an item is searchable by who takes it.
+
+    The row reads "quest title (objective) [NPC]", mirroring the quest NPC search
+    bar; the link opens that NPC page with the quest highlighted.
+    """
+    entries: list[dict] = []
+    for npc in quest_npcs_data or []:
+        npc_name = npc.get("npc_name")
+        if not npc_name:
+            continue
+        for quest in npc.get("quests", []):
+            quest_number = quest.get("quest_number")
+            for content in quest.get("contents", []):
+                if content.get("type") in QUEST_OBJECTIVE_SKIP_TYPES:
+                    continue
+                entry = {
+                    "name": quest.get("id", ""),
+                    "translation": quest.get("title", ""),
+                    "translation_key": quest.get("translation_key", ""),
+                    "subtitle": content.get("target", ""),
+                    "subtitle_key": content.get("translation_key", ""),
+                    "page": "quest_npc",
+                    "url": _search_url(
+                        f"/quest_npc/{urllib.parse.quote(npc_name, safe='')}/",
+                        {"quest": str(quest_number)},
+                    ),
+                }
+                if npc.get("translation_key"):
+                    entry["tag_translation_key"] = npc["translation_key"]
+                if npc.get("npc_name_display"):
+                    entry["tag"] = npc["npc_name_display"]
+                entries.append(entry)
+    return entries
+
+
 def build_and_save_indexes(
     items_index: list[dict],
     monsters_index: list[dict],
@@ -249,11 +374,13 @@ def build_and_save_indexes(
     quest_npcs_data: list[dict],
     output_dir: Path,
     group_label_resolver=None,
-    shop_regions: int = 0,
+    shop_index: dict | None = None,
     light_count: int = 0,
-    craft_count: int = 0,
+    crafts_payload: dict | None = None,
 ):
     """Build and save index.json + search_index.json."""
+    shop_regions = len((shop_index or {}).get("regions", []))
+    craft_count = (crafts_payload or {}).get("count", 0)
     index_data = [
         {
             "_comment": "该文件由 api/src/collector.py 自动生成，请勿手动编辑。如需修改，请编辑 collector.py 中的 index_data 列表。"
@@ -349,6 +476,9 @@ def build_and_save_indexes(
                 "url": "/quest_npc/",
             }
         )
+    search_index.extend(_iter_quest_objective_entries(quest_npcs_data))
+    search_index.extend(_iter_shop_search_entries(shop_index, output_dir))
+    search_index.extend(_iter_craft_search_entries(crafts_payload))
     dm_groups = {}
     for module in modules_data:
         group = module.get("group")

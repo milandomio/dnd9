@@ -61,7 +61,7 @@ npx tsc --noEmit
 | 改动范围 | 最低功能验证 |
 |----------|--------------|
 | 前端组件/页面 | `cd web && npm run build`；需要页面回归时启动 preview 并验证 HTTP 200 |
-| 多语言/SSG/页面输出 | 构建后运行 `BASE_URL=http://localhost:8080 npm run test:i18n` |
+| 多语言/SSG/页面输出 | 构建后运行 `BASE_URL=http://localhost:8081 npm run test:i18n` |
 | 地图识别或浏览器交互 | 构建并启动 preview 后运行对应 Playwright 测试，如 `npm run test:map-recognition` |
 | 后端逻辑 | `cd api && python3 -m unittest discover -s tests -p 'test_*.py'`，或针对改动运行相关 pytest |
 | 数据管道/导出数据 | 先运行 `cd api && python main.py`，再运行前端 build；必要时检查产物和页面 HTTP 200 |

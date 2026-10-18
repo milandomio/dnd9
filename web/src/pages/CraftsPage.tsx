@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../hooks/useTheme';
 import { useCrafts } from '../hooks/useCrafts';
@@ -62,6 +62,26 @@ export default function CraftsPage() {
   const { tokens } = useTheme();
   const { t, ut, lang, dict } = useLocale();
   const [activeTab, setActiveTab] = useState('');
+  const [searchParams] = useSearchParams();
+  // Set after mount (not during render) so a shared ?item= link hydrates the same
+  // HTML as the static build before the highlight is applied.
+  const [focusItem, setFocusItem] = useState('');
+
+  useEffect(() => {
+    setFocusItem(searchParams.get('item') ?? '');
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (!focusItem || !data) return;
+    const hit = data.recipes.find((recipe) => recipe.name === focusItem);
+    if (hit) setActiveTab(hit.merchant);
+    const timer = setTimeout(() => {
+      document
+        .querySelector(`[data-craft-item="${CSS.escape(focusItem)}"]`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [focusItem, data]);
 
   if (loading)
     return (
@@ -228,6 +248,7 @@ export default function CraftsPage() {
                 key={recipe.recipe_id}
                 recipe={recipe}
                 pools={data?.property_pools}
+                focused={recipe.name === focusItem}
               />
             ))}
           </div>
@@ -307,9 +328,11 @@ function CraftPropertiesLine({
 function CraftCard({
   recipe,
   pools,
+  focused,
 }: {
   recipe: CraftRecipe;
   pools?: Record<string, CraftProperty[]>;
+  focused?: boolean;
 }) {
   const { tokens } = useTheme();
   const { t, ut } = useLocale();
@@ -341,6 +364,7 @@ function CraftCard({
           searchForItem();
         }
       }}
+      data-craft-item={recipe.name}
       title={ut('ui.search.search')}
       style={{
         display: 'flex',
@@ -354,6 +378,7 @@ function CraftCard({
         height: '100%',
         boxSizing: 'border-box',
         cursor: 'pointer',
+        boxShadow: focused ? `0 0 0 2px ${tokens.accent}` : undefined,
       }}
     >
       <div

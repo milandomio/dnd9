@@ -1,5 +1,11 @@
 import { Fragment, useEffect, useState } from 'react';
-import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+import {
+  useParams,
+  Link,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { SearchOutlined } from '@ant-design/icons';
 import { useSSRData } from '../context/SSRDataContext';
@@ -121,6 +127,17 @@ export default function QuestNPCDetailPage() {
     ?.questNumber;
   const highlightSearchText = (location.state as { searchText?: string })
     ?.searchText;
+  const [searchParams] = useSearchParams();
+  // Set after mount (not during render) so a shared ?quest= link hydrates the same
+  // HTML as the static build before the quest is highlighted.
+  const [searchQuestNum, setSearchQuestNum] = useState<number | null>(null);
+
+  useEffect(() => {
+    const value = Number(searchParams.get('quest'));
+    setSearchQuestNum(Number.isFinite(value) && value > 0 ? value : null);
+  }, [searchParams]);
+
+  const focusQuestNum = highlightQuestNum ?? searchQuestNum ?? undefined;
 
   useEffect(() => {
     if (ssrData) return;
@@ -160,14 +177,14 @@ export default function QuestNPCDetailPage() {
 
   // Scroll to highlighted quest after data loads
   useEffect(() => {
-    if (!highlightQuestNum) return;
+    if (!focusQuestNum) return;
     const timer = setTimeout(() => {
       document
-        .querySelector(`[data-quest-num="${highlightQuestNum}"]`)
+        .querySelector(`[data-quest-num="${focusQuestNum}"]`)
         ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
     return () => clearTimeout(timer);
-  }, [highlightQuestNum, npc?.npc_name]);
+  }, [focusQuestNum, npc?.npc_name]);
 
   if (!npc) {
     return (
@@ -202,6 +219,7 @@ export default function QuestNPCDetailPage() {
   });
 
   const matchedQuestNum = (() => {
+    if (searchQuestNum) return searchQuestNum;
     if (!search) return null;
     const s = search.toLowerCase();
     const found = npc.quests.find(

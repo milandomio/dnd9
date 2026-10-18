@@ -11,8 +11,8 @@ git status --short                              # 1. 检查工作区
 cd api && nohup python main.py > pipeline.log 2>&1 &  # 2. 数据管道（含 locale 字典导出）
 cd web && nohup npm run build > build.log 2>&1 &      # 3. 前端构建（含 SSG 多语言 HTML 后处理）
 # 4. 启动 web + 强制验证；构建进程结束且日志成功后执行
-cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log &
-sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
+cd web && kill $(lsof -t -i:8081) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8081 --host 0.0.0.0 &>/tmp/vite.log &
+sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8081/
 ```
 
 管道、构建和 preview 都必须检查后台日志/进程状态，确认命令成功后才能进行适用的功能回归。HTTP 200 和功能测试通过后，回到 `docs/DEVELOPMENT_WORKFLOW.md` 执行 `SESSION_CHANGES`、精确 staging 和正式 commit。测试失败或中断时才使用 `wip:` 保存状态。
@@ -63,7 +63,7 @@ IndexNow 已接入主站 GitHub Actions：静态密钥文件随构建发布到 `
 
 构建完成后必须验证 web 服务可用（HTTP 200），不可跳过。若返回非 200，必须排查错误并修复至返回 200 为止。
 
-常见原因：端口被占用（检查 `lsof -t -i:8080`）、构建产物损坏（`rm -rf dist && npm run build`）、数据文件缺失（运行 `python main.py`）。
+常见原因：端口被占用（本机 8080 由本地 WordPress/nginx 占用，预览固定用 8081；检查 `lsof -t -i:8081`）、构建产物损坏（`rm -rf dist && npm run build`）、数据文件缺失（运行 `python main.py`）。
 
 ## 仅前端改动
 
@@ -72,7 +72,7 @@ IndexNow 已接入主站 GitHub Actions：静态密钥文件随构建发布到 `
 ```bash
 cd web && npm run build > build.log 2>&1      # 1. 前端构建（含 TS 类型检查 + SSG）
 # 2. 启动web + 强制验证（同完整构建规则）
-cd web && kill $(lsof -t -i:8080) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8080 --host 0.0.0.0 &>/tmp/vite.log & && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8080/
+cd web && kill $(lsof -t -i:8081) 2>/dev/null; sleep 0.5; nohup npx vite preview --port 8081 --host 0.0.0.0 &>/tmp/vite.log & && sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8081/
 ```
 
 ## 一键部署

@@ -4,6 +4,24 @@
 
 ## 2026-10-19
 
+### feat: 导航栏搜索纳入【地牢商店】商品、【工匠】成品与「任务目标物」
+
+- **改动原因**：用户要求把【地牢商店】【工匠】的目标产物，以及「某物品可提交给谁的任务」（如风箱）一并纳入导航栏搜索，即把 `quest_npc` 页的独立搜索能力合并进全局搜索框。约定候选池只按同一坐标实体判定，不按 `group_parent` 泛化。
+- **变更文件**：`api/src/index_export.py`、`api/src/search_index_builder.py`、`api/src/collector.py`、`api/tests/test_search_index_entries.py`（新增）、`web/src/hooks/useSearchIndex.ts`、`web/src/components/NavBar.tsx`、`web/src/pages/CraftsPage.tsx`、`web/src/pages/DungeonShopDetailPage.tsx`、`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `index_export` 新增三类 entry：`dungeon_shops`（每 region × 折叠物品名，url `/dungeon_shops/{region}/?item={foldedName}`）、`crafts`（每 merchant × `recipe.name`，url `/crafts/?item={name}`）、任务目标（`page=quest_npc`，`name`=quest.id、`translation`=任务标题、新增 `subtitle`=目标物、`tag`=NPC 名，url `/quest_npc/{npc}/?quest={number}`）；`Damage`/`Hold` 类型目标无实际可寻物，跳过。
+  2. 品质档位折叠：商店按 `item.page` 去重（同 page 译名一致），工匠按 `(merchant, name)` 去重（`name` 只属一个 merchant）。`build_and_save_indexes` 签名改为接收 `shop_index` / `crafts_payload`，count 内部推导。
+  3. `search_index_builder` 新增 `subtitle` 按语言本地化，并把 `subtitle_key` 计入 `used_keys`。
+  4. 前端：`useSearchIndex` 的 `SearchEntry` 加 `subtitle?`；`NavBar` 匹配范围含 `subtitle`，渲染为「任务标题 (目标物) [NPC]」（有 `subtitle` 时不再重复显示 `(name)`），结果 key 改 `${page}::${url}::${i}` 避免同 url 重复；三个目标页用 `useSearchParams` + `useEffect` 写入 focus state（不在 render 期读 query，避免预渲染 HTML 与注水不一致），`?item=` / `?quest=` 触发高亮 + 滚动，工匠页会先切到该配方所属标签。
+- **结果**：`search_index.json` 2214 条（quest_npc 532 / lootdrops 523 / dungeon_modules 268 / props 255 / crafts 255 / monsters 152 / dungeon_shops 147 / items 72 / `_nav` 10）；每语言 `search_index/{lang}.json` 由 1.05MB 增至约 1.36MB（gzip ≈98–109KB）。该文件同时是 items/monsters/props/lootdrops 列表页的 SSR 数据源，新增三类 entry 不影响这些列表页。
+- **验证**：`api/lint.sh` 通过；`cd api && python3 -m unittest discover -s tests` 160/160 OK（新增 7 例）；`npm run check`（eslint 0 error / 20 既有 warning、Prettier、tsc）通过；`python main.py` 走导出态不改 DB（`[DB] state=DB_READY`，DB md5 与改动前一致）；`npm run build` 3117 页 / 17160 文件，8081 preview HTTP 200；Playwright 实测 zh-Hans 搜「风箱」得到「物资常缺 (风箱) 珠宝匠」并跳 `/quest_npc/Goldsmith/?quest=6` 且目标卡片高亮（`box-shadow` 命中 `[data-quest-num="6"]`）；搜「清晰药水」点工匠结果跳 `/crafts/?item=ClarityPotion` 并高亮 `[data-craft-item]`；搜「幸运药水」得 3 条带 地穴／哥布林洞穴／寒冰洞穴 标签，点第一条跳 `/dungeon_shops/Crypts/?item=LuckPotion` 并高亮；en 搜 `Bellows` 得 `Always in Short Supply (Bellows) Goldsmith`、ja 搜 `ふいご` 得 `いつも品薄 (ふいご) 金細工師`，均跳 `/en|/ja/quest_npc/Goldsmith/?quest=6`；全过程无 pageerror。
+
+### docs: 预览端口统一更正为 8081
+
+- **改动原因**：本机 `8080` 被本地 WordPress/nginx 占用（Playwright 访问会命中无关站点），项目预览实际固定使用 `8081`，文档仍写 `8080`。
+- **变更文件**：`AGENTS.md`（「我看到」、其他分支启动命令、端口表）、`docs/BUILD_AND_DEPLOY.md`（完整构建/仅前端改动的预览命令、端口占用排查说明）、`docs/DEVELOPMENT_WORKFLOW.md`（`BASE_URL` 示例）、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：仅文档端口替换，无代码行为变更；dev 分支 `8090` 规则不变。
+
 ### feat: 【工匠】制作物品展示属性区间（护甲值／武器伤害／随机词条池）
 
 - **改动原因**：用户要求「【工匠】制作的物品（如寒光布面甲）应显示对应属性，列在材料下面，并确认能否检出属性区间」。确认可行：物品资产的数值全部在独立 `ItemProperty` 资产里（主属性 `MinValue~MaxValue` + 随机池权重），且每种属性类型资产带 `ValueRatio` 可区分百分比与固定值。
