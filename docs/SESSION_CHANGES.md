@@ -10,6 +10,8 @@
 - **变更文件**：`docs/SESSION_CHANGES.md` + 临时跟踪的 `api/data/darkfindv5.db`（推送后立即 `reset` 并恢复 `skip-worktree`）。
 - **关键逻辑/映射关系**：删库 `rm -f api/data/darkfindv5.db` → `python main.py` 全量重建（`REBUILD_REQUIRED: DB missing`，耗时 46.49s，`[VALIDATE] all module images OK`）→ 新 DB 含本日两项改动（生成器真身解析 + 同坐标候选池、掉落表稀有分组修正）。本流程不跑 `npm run build` / `vite preview`，前端 SSG 交给 GitHub Actions。
 - **验证**：重建后 DB 45 张表，`spawners` 55147 / `spawner_entries` 2291 / `props_entities` 592 / `item_entities` 816 / `monster_entities` 735；`props/StatueCursedPower.json` 8 点（2 个同点候选）、`props.json` 255 条含 `StatueCursedPower`、`dungeon_modules_coords/Ruins_Square_01.json` 15 个带候选池实体；管道日志无 error/traceback。
+- **部署结果**：`main` 推送前远端已多出 `8d2fbf1728 chore: update DB`（10-16 的 DB 提交），先 `git reset --hard` 去掉本地临时 DB 提交、`git rebase origin/main` 后再提交 DB；`2fed5f8fdf` 推送成功（含新 DB 48308224 字节）。GitHub Actions「Build & Deploy」4 分钟内 success。
+- **线上抽查**：`https://dnd9.icetar.com/zh-Hans/props/StatueCursedPower/`、`/en/props/StatueCursedPower/` HTTP 200 且含「受诅咒的伤害神坛」；部署数据 `data/tn4bib/json/props.json` 255 条（无 `CursedStatue01`）；`Ruins_Square_01` 模块数据含同点候选池；Playwright 打开线上 `/zh-Hans/lootdrops/` 显示「稀有掉落(4)、项链(12)、戒指(7)、消耗品(15)、金币容器(4)」。（首轮抽查命中 Cloudflare 边缘缓存的旧版本 `tmzy71`，加缓存绕过后确认为新版本。）
 
 ### fix: 【掉落表】稀有掉落分组不再吞掉已分类物品（饰品行恢复）
 
