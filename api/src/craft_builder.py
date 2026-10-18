@@ -9,13 +9,18 @@ Recipes are grouped by the material that identifies their family, so recipes
 built from the same thing sit together instead of one section per item:
 
 * ``SilverPowder`` -> the seven 【纯银】 weapons of the Weaponsmith;
-* ``IronIngots``  -> the nine iron-only weaponsmith items;
+* ``IronIngots``  -> the six iron-only weaponsmith items;
 * ``BlueSapphire + ArcaneEssence`` -> the Goldsmith's sapphire jewellery;
 * the synthetic 【矿类】 tab (pure ore/coin refining) is a single group.
 
-An item whose quality tiers consume *different* materials (SurgicalKit) cannot
-sit in one material group without splitting the tiers apart, so it keeps its own
-item group; the same holds for every other multi-tier item as a safety net.
+Two safety nets keep the headings useful:
+
+* a material group that would hold a single item (every Armourer/Leathersmith
+  recipe, most Tailor ones) falls back to the item name, because a material
+  heading over one card groups nothing;
+* An item whose quality tiers consume *different* materials (SurgicalKit)
+  cannot sit in one material group without splitting the tiers apart, so it
+  keeps its own item group.
 """
 
 import json
@@ -100,12 +105,22 @@ def build_and_save_crafts(
         signatures.setdefault((entry["merchant"], entry["name"]), set()).add(entry["signature"])
     split_items = {key for key, found in signatures.items() if len(found) > 1 and kinds.get(key[0]) != "ores"}
 
+    # A material group is only worth its heading when it actually merges items.
+    family_items: dict[tuple[str, tuple[str, ...]], set[str]] = {}
+    for entry in entries:
+        if kinds.get(entry["merchant"]) == "ores" or (entry["merchant"], entry["name"]) in split_items:
+            continue
+        family_items.setdefault((entry["merchant"], entry["signature"]), set()).add(entry["name"])
+
     for entry in entries:
         if kinds.get(entry["merchant"]) == "ores":
             # One 【矿类】 group for every pure refining recipe.
             entry["group"] = ORE_MERCHANT
             entry["group_parts"] = []
-        elif (entry["merchant"], entry["name"]) in split_items:
+        elif (entry["merchant"], entry["name"]) in split_items or len(
+            family_items[(entry["merchant"], entry["signature"])]
+        ) == 1:
+            # Grouping would not merge anything, so the item names the section.
             entry["group"] = entry["name"]
             entry["group_parts"] = [label(entry["name"])]
         else:

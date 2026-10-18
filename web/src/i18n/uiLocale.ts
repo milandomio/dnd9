@@ -3480,9 +3480,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.home.view_crafts': '查看各工匠的制作配方与所需材料',
     'ui.crafts.title': '【工匠】制作配方一览',
     'ui.crafts.stat':
-      '共 {merchants} 位工匠 | {groups} 类配方 | {items} 种可制作物品 | {recipes} 条配方',
+      '共 {merchants} 位工匠 | {groups} 个分组 | {items} 种可制作物品 | {recipes} 条配方',
     'ui.crafts.hint':
-      '按 NPC 分组查看制作配方（成品 + 所需原料），同类原料的配方归为一组（如「银粉」＝所有需要银粉的配方）；矿石／银币精炼类配方统一放在「矿类」。点击卡片可搜索该物品。',
+      '按 NPC 分组查看制作配方（成品 + 所需原料）；同一原料的配方能合并多件物品时归为一组（如「银粉」＝7 把纯银武器），否则按物品名显示；矿石／银币精炼类配方统一放在「矿类」。点击卡片可搜索该物品。',
     'ui.crafts.materials': '材料',
     'ui.crafts.tab.ores': '矿类',
   },
@@ -3545,9 +3545,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.home.view_crafts': 'Browse crafting recipes and materials',
     'ui.crafts.title': 'Crafting Recipes',
     'ui.crafts.stat':
-      '{merchants} artisans | {groups} recipe groups | {items} craftable items | {recipes} recipes',
+      '{merchants} artisans | {groups} groups | {items} craftable items | {recipes} recipes',
     'ui.crafts.hint':
-      'Recipes are grouped by NPC and then by the material that defines the family, so everything built from the same thing sits together (e.g. Silver Powder). Pure ore/coin refining lives in the Ores tab. Click a card to search the item.',
+      'Recipes are grouped by NPC, then by the material that defines the family whenever that merges several items (e.g. Silver Powder = the seven sterling weapons); otherwise the item names its own section. Pure ore/coin refining lives in the Ores tab. Click a card to search the item.',
     'ui.crafts.materials': 'Materials',
     'ui.crafts.tab.ores': 'Ores',
   },
@@ -3609,9 +3609,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.home.view_crafts': '各工匠のレシピと必要素材を見る',
     'ui.crafts.title': '工匠レシピ一覧',
     'ui.crafts.stat':
-      '工匠 {merchants} 人 | レシピ分類 {groups} 類 | 製作可能 {items} 種 | レシピ {recipes} 件',
+      '工匠 {merchants} 人 | グループ {groups} 類 | 製作可能 {items} 種 | レシピ {recipes} 件',
     'ui.crafts.hint':
-      'レシピは NPC ごと、さらに共通の素材ごとにまとめています（例：「銀粉」＝銀粉を必要とする全レシピ）。鉱石・銀貨の精錬レシピは「鉱石」にまとめました。カードをクリックすると検索できます。',
+      'レシピは NPC ごと、さらに共通素材で複数アイテムをまとめられる場合のみ素材ごとにまとめています（例：「銀粉」＝純銀武器 7 種）。まとめられない場合はアイテム名で表示します。鉱石・銀貨の精錬レシピは「鉱石」にまとめました。カードをクリックすると検索できます。',
     'ui.crafts.materials': '素材',
     'ui.crafts.tab.ores': '鉱石',
   },
@@ -3670,9 +3670,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.home.view_crafts': '查看各工匠的製作配方與所需材料',
     'ui.crafts.title': '【工匠】製作配方一覽',
     'ui.crafts.stat':
-      '共 {merchants} 位工匠 | {groups} 類配方 | {items} 種可製作物品 | {recipes} 條配方',
+      '共 {merchants} 位工匠 | {groups} 個分組 | {items} 種可製作物品 | {recipes} 條配方',
     'ui.crafts.hint':
-      '按 NPC 分組查看製作配方（成品 + 所需原料），同類原料的配方歸為一組（如「銀粉」＝所有需要銀粉的配方）；礦石／銀幣精煉類配方統一放在「礦類」。點擊卡片可搜尋該物品。',
+      '按 NPC 分組查看製作配方（成品 + 所需原料）；同一原料的配方能合併多件物品時歸為一組（如「銀粉」＝7 把純銀武器），否則按物品名顯示；礦石／銀幣精煉類配方統一放在「礦類」。點擊卡片可搜尋該物品。',
     'ui.crafts.materials': '材料',
     'ui.crafts.tab.ores': '礦類',
   },
