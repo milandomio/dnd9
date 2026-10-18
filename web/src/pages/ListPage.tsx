@@ -61,6 +61,9 @@ const LOOT_GROUP_KEYS: Record<string, string> = {
   ['武器装备']: 'ui.list.weapon',
 };
 
+// 「稀有掉落」只保留战利品分类（以及无类型元数据）的条目：
+// 已带类型分组的装备/道具回到各自分组（饰品/护甲/辅助道具/杂项…）。
+const RARE_LOOT_SUBTYPE_SUFFIX = 'Type_Item_Misc_HuntingLoot';
 const ITEM_GROUP_SEPARATOR = '\u001f';
 const ITEM_CATEGORY_ORDER = ['Utility', 'Misc', 'Accessory', 'Armor', 'Weapon'];
 const ITEM_CATEGORY_ICONS: Record<string, string> = {
@@ -96,7 +99,10 @@ function groupLootdrops(items: IndexEntry[]): LootGroup[] {
     }
     const vc = item.variant_count ?? 1;
     const ms = item.max_score ?? 0;
-    if (ms > 0 && ms < 1) {
+    const isRareLootSubtype = (item.item_subtype_keys ?? []).some((key) =>
+      key.endsWith(RARE_LOOT_SUBTYPE_SUFFIX)
+    );
+    if (ms > 0 && ms < 1 && (!item.item_category_key || isRareLootSubtype)) {
       rare.push(item);
       continue;
     }
