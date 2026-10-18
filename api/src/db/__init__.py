@@ -121,6 +121,9 @@ class DatabaseManager:
     def import_light_items(self) -> int:
         return self.importers.items.import_lights()
 
+    def import_item_properties(self) -> dict:
+        return self.importers.item_properties.import_all()
+
     def import_environment_lights(self) -> int:
         return self.importers.props.import_environment_lights()
 
@@ -166,6 +169,12 @@ class DatabaseManager:
 
     def get_light_items(self) -> list[dict]:
         return self.repos.items.get_lights()
+
+    def get_item_properties(self) -> dict[str, dict]:
+        return self.repos.items.get_properties()
+
+    def get_item_property_pools(self) -> dict[str, list[dict]]:
+        return self.repos.items.get_property_pools()
 
     def get_monster_entities(self) -> list[dict]:
         return self.repos.monsters.get_all()

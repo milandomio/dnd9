@@ -19,6 +19,9 @@ LOCALIZATION_ROOT = GAME_ROOT.parent / "Localization" / "Game"
 
 ITEM_DIR = DATA_DIR / "Item" / "Item"
 ITEM_ABILITY_DIR = DATA_DIR / "Item" / "ItemAbility"
+# 物品属性（护甲值 / 伤害 / 随机词条池）——物品资产只引用，数值都在这里
+ITEM_PROPERTY_DIR = DATA_DIR / "ItemProperty" / "ItemProperty"
+ITEM_PROPERTY_TYPE_DIR = DATA_DIR / "ItemProperty" / "ItemPropertyType"
 ACTOR_STATUS_EFFECT_DIR = DATA_DIR / "ActorStatus" / "StatusEffect"
 POTION_ABILITY_DIR = GAME_ROOT / "Item" / "Utility" / "Potion" / "GameplayAbility"
 MONSTER_DIR = DATA_DIR / "Monster" / "Monster"

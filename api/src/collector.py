@@ -82,57 +82,61 @@ def run(
         pipe.log(f"get_entity_classification DONE -> {len(entity_class)}")
 
         if import_required:
-            with pipe.phase("import_translations", 11) as ctx:
+            with pipe.phase("import_translations", 12) as ctx:
                 count = db.import_translations()
                 ctx.set_result(f"{count}")
 
-            with pipe.phase("import_items", 11) as ctx:
+            with pipe.phase("import_items", 12) as ctx:
                 count = db.import_items()
                 ctx.set_result(f"{count}")
 
-            with pipe.phase("import_monsters", 11) as ctx:
+            with pipe.phase("import_monsters", 12) as ctx:
                 count = db.import_monsters()
                 ctx.set_result(f"{count}")
 
-            with pipe.phase("import_props", 11) as ctx:
+            with pipe.phase("import_props", 12) as ctx:
                 count = db.import_props()
                 ctx.set_result(f"{count}")
 
-            with pipe.phase("import_dungeon_modules", 11) as ctx:
+            with pipe.phase("import_dungeon_modules", 12) as ctx:
                 count = db.import_dungeon_modules()
                 ctx.set_result(f"{count}")
 
-            with pipe.phase("import_ingame_merchants", 11) as ctx:
+            with pipe.phase("import_ingame_merchants", 12) as ctx:
                 counts = db.import_ingame_merchants()
                 ctx.set_result(
                     f"{counts['merchants']} merchants, {counts['variants']} variants, {counts['stock']} stock rows"
                 )
 
-            with pipe.phase("import_item_effects", 11) as ctx:
+            with pipe.phase("import_item_effects", 12) as ctx:
                 count = db.import_item_effects()
                 ctx.set_result(f"{count} items")
 
-            with pipe.phase("import_light_items", 11) as ctx:
+            with pipe.phase("import_light_items", 12) as ctx:
                 count = db.import_light_items()
                 ctx.set_result(f"{count} light variants")
 
-            with pipe.phase("import_environment_lights", 11) as ctx:
+            with pipe.phase("import_item_properties", 12) as ctx:
+                counts = db.import_item_properties()
+                ctx.set_result(f"{counts['items']} items, {counts['pools']} random pools")
+
+            with pipe.phase("import_environment_lights", 12) as ctx:
                 count = db.import_environment_lights()
                 ctx.set_result(f"{count} environment props")
 
-            with pipe.phase("import_craft_recipes", 11) as ctx:
+            with pipe.phase("import_craft_recipes", 12) as ctx:
                 counts = db.import_craft_recipes()
                 ctx.set_result(f"{counts['merchants']} merchants, {counts['recipes']} recipes")
 
-            with pipe.phase("import_spawner_entries", 11) as ctx:
+            with pipe.phase("import_spawner_entries", 12) as ctx:
                 count = db.import_spawner_entries()
                 ctx.set_result(f"{count}")
 
-            with pipe.phase("get_monster_name_map", 11) as ctx:
+            with pipe.phase("get_monster_name_map", 12) as ctx:
                 monster_name_map = db.get_monster_name_map()
                 ctx.set_result(f"{len(monster_name_map)}")
 
-            with pipe.phase("load_all_spawner_data", 11) as ctx:
+            with pipe.phase("load_all_spawner_data", 12) as ctx:
                 spawner_has_lootdrop, spawner_multi_entity, spawner_monster_map = load_all_spawner_data(
                     db, monster_name_map
                 )
@@ -140,11 +144,11 @@ def run(
                     f"has_lootdrop={len(spawner_has_lootdrop)}, multi_entity={len(spawner_multi_entity)}, monster_map={len(spawner_monster_map)}"
                 )
 
-            with pipe.phase("import_lootdrops", 11) as ctx:
+            with pipe.phase("import_lootdrops", 12) as ctx:
                 count = db.import_lootdrops(spawner_monster_map)
                 ctx.set_result(f"{count}")
 
-            with pipe.phase("extract_and_store_spawners", 11):
+            with pipe.phase("extract_and_store_spawners", 12):
                 spawners = db.extract_spawners(
                     has_lootdrop_map=spawner_has_lootdrop, multi_entity_spawners=spawner_multi_entity
                 )
@@ -219,7 +223,7 @@ def run(
                 db.connect().commit()
                 pipe.log(f"mutually_exclusive_groups DONE -> {len(group_rows)} groups")
 
-            with pipe.phase("quest_extraction", 11) as ctx:
+            with pipe.phase("quest_extraction", 12) as ctx:
                 explore_data, quest_items_data, quest_npcs_data = run_quest_extraction(
                     db, entity_classification=entity_class
                 )
@@ -231,7 +235,7 @@ def run(
                 db.import_quest_npcs(quest_npcs_data)
                 pipe.log("quest data imported to DB")
 
-            with pipe.phase("import_lootdrop_rates", 11):
+            with pipe.phase("import_lootdrop_rates", 12):
                 db.import_lootdrop_groups()
                 db.import_lootdrop_rate_items()
                 db.import_lootdrop_rate_weights()
@@ -668,6 +672,8 @@ def run(
                 items,
                 resolver.resolve,
                 OUTPUT_DIR,
+                item_properties=db.get_item_properties(),
+                property_pools=db.get_item_property_pools(),
             )
             craft_count = crafts_payload["count"]
             ctx.set_result(

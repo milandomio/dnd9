@@ -141,6 +141,58 @@ def _key_label(resolve_name, key: str) -> dict:
     return {"name": key, "translation": "", "translation_key": key}
 
 
+def _property_entries(rows: list[dict], resolve_name, with_chance: bool) -> list[dict]:
+    """Label stat rows for the client: display name plus the rolled range.
+
+    ``ratio`` marks the percentage stats (raw 20 -> 2%), matching the in-game
+    tooltip; rows without it are flat numbers.
+    """
+    total = sum(row.get("rate") or 0 for row in rows) or 1
+    entries = []
+    for row in rows:
+        label = _key_label(resolve_name, row.get("key") or "")
+        entry = {
+            "type": row.get("type", ""),
+            "translation": label["translation"],
+            "translation_key": label["translation_key"],
+            "min": row.get("min", 0),
+            "max": row.get("max", 0),
+        }
+        if row.get("ratio"):
+            entry["ratio"] = row["ratio"]
+        if with_chance:
+            entry["chance"] = round((row.get("rate") or 0) / total, 4)
+        entries.append(entry)
+    return entries
+
+
+def _craft_properties(
+    raw_name: str,
+    item_properties: dict[str, dict],
+    property_pools: dict[str, list[dict]],
+    resolve_name,
+) -> dict:
+    """Stat lines shown under the materials of one crafted item.
+
+    ``primary`` stats are fixed; ``random`` names the pool the item's extra
+    enchantment slots draw from. Pools are shared by every item of one equipment
+    slot, so the payload keeps them once (``property_pools``) and recipes only
+    carry the reference.
+    """
+    stored = item_properties.get(raw_name)
+    if not stored:
+        return {}
+    primary = _property_entries(stored.get("primary") or [], resolve_name, with_chance=False)
+    pool_name = stored.get("secondary_pool") or ""
+    rolls = int(stored.get("secondary_rolls") or 0)
+    if not primary and not rolls:
+        return {}
+    entry: dict = {"primary": primary}
+    if pool_name and property_pools.get(pool_name):
+        entry["random"] = {"rolls": rolls, "pool": pool_name}
+    return entry
+
+
 class _ItemLabel:
     """Resolves a folded item name to (translation, translation_key)."""
 
@@ -174,9 +226,13 @@ def build_and_save_crafts(
     items,
     resolve_name,
     output_dir: Path,
+    item_properties: dict[str, dict] | None = None,
+    property_pools: dict[str, list[dict]] | None = None,
 ) -> dict:
     """Build ``crafts.json`` from DB rows. Returns the payload."""
     label = _ItemLabel(items, resolve_name)
+    item_properties = item_properties or {}
+    property_pools = property_pools or {}
     merchant_order = {row["merchant_name"]: row["sort_order"] for row in merchants}
     kinds = {row["merchant_name"]: row["kind"] for row in merchants}
 
@@ -199,6 +255,9 @@ def build_and_save_crafts(
         entry["subtype_keys"] = label.subtype_keys(name)
         entry["item_type"] = label.meta.get(name, {}).get("item_type", "")
         entry["slot_key"] = label.meta.get(name, {}).get("item_slot_key", "")
+        properties = _craft_properties(row["output_raw_name"], item_properties, property_pools, resolve_name)
+        if properties:
+            entry["properties"] = properties
         entries.append(entry)
 
     # Items whose tiers need different materials keep an item group so every
@@ -293,6 +352,14 @@ def build_and_save_crafts(
         "item_count": len({(entry["merchant"], entry["name"]) for entry in entries}),
         "recipe_count": len({entry["recipe_id"] for entry in entries}),
         "ores_merchant": ORE_MERCHANT,
+        # Random stat pools, once per pool asset instead of once per recipe.
+        "property_pools": {
+            pool_name: _property_entries(property_pools[pool_name], resolve_name, with_chance=True)
+            for pool_name in dict.fromkeys(
+                (entry.get("properties") or {}).get("random", {}).get("pool") for entry in entries
+            )
+            if pool_name
+        },
         "merchants": merchant_entries,
         "recipes": entries,
     }

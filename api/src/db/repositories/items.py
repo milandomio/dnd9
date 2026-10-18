@@ -1,4 +1,14 @@
+import json
 from typing import TypedDict
+
+
+def _load_rows(raw: str | None) -> list[dict]:
+    """Decode a stored JSON row list, tolerating rows written by older builds."""
+    try:
+        rows = json.loads(raw or "[]")
+    except (TypeError, json.JSONDecodeError):
+        return []
+    return rows if isinstance(rows, list) else []
 
 
 class ItemEntity(TypedDict):
@@ -39,6 +49,35 @@ class ItemsRepository:
             "FROM light_items ORDER BY item_name, rarity, fuel_seconds"
         )
         return [dict(r) for r in c.fetchall()]
+
+    def get_properties(self) -> dict[str, dict]:
+        """Stat lines written by the import phase, keyed by raw item name.
+
+        The 【工匠】 export runs without the game extract (CI has none), so the
+        numbers must come from the DB rather than being re-resolved from assets.
+        """
+        c = self.conn.cursor()
+        c.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'item_properties'")
+        if c.fetchone() is None:
+            return {}
+        c.execute("SELECT raw_name, primary_json, secondary_pool, secondary_rolls FROM item_properties")
+        properties: dict[str, dict] = {}
+        for row in c.fetchall():
+            properties[row["raw_name"]] = {
+                "primary": _load_rows(row["primary_json"]),
+                "secondary_pool": row["secondary_pool"],
+                "secondary_rolls": row["secondary_rolls"],
+            }
+        return properties
+
+    def get_property_pools(self) -> dict[str, list[dict]]:
+        """Random stat pools (pool asset name -> rows) written at import time."""
+        c = self.conn.cursor()
+        c.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'item_property_pools'")
+        if c.fetchone() is None:
+            return {}
+        c.execute("SELECT pool_name, entries_json FROM item_property_pools")
+        return {row["pool_name"]: _load_rows(row["entries_json"]) for row in c.fetchall()}
 
     def get_all(self) -> list[ItemEntity]:
         c = self.conn.cursor()

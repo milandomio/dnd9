@@ -4,6 +4,19 @@
 
 ## 2026-10-19
 
+### feat: 【工匠】制作物品展示属性区间（护甲值／武器伤害／随机词条池）
+
+- **改动原因**：用户要求「【工匠】制作的物品（如寒光布面甲）应显示对应属性，列在材料下面，并确认能否检出属性区间」。确认可行：物品资产的数值全部在独立 `ItemProperty` 资产里（主属性 `MinValue~MaxValue` + 随机池权重），且每种属性类型资产带 `ValueRatio` 可区分百分比与固定值。
+- **变更文件**：`api/src/item_properties.py`（新增）、`api/src/db/importers/item_properties.py`（新增）、`api/src/config.py`、`api/src/db/schema.py`、`api/src/db/importers/__init__.py`、`api/src/db/__init__.py`、`api/src/db/repositories/items.py`、`api/src/craft_builder.py`、`api/src/collector.py`、`api/src/db_freshness.py`、`api/tests/test_item_properties.py`（新增）、`api/tests/test_craft_builder_properties.py`（新增）、`web/src/types/data.ts`、`web/src/pages/CraftsPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `item_properties.py`：`Id_Item_{raw}` → `PrimaryProperty`（固定属性）+ `SecondaryProperties`（N 个随机词条槽，通常指向同一个池资产）→ `ItemProperty` 资产的 `ItemPropertyItemArray`（`MinValue`/`MaxValue`/`PropertyRate`）→ 属性类型资产 `Id_ItemPropertyType_*` 的 `PropertyType.TagName` 翻译键（`Type.Item.Property.Effect.ArmorRating` → `Text_Code_DCDataBlueprintLibrary_Type_Item_Property_Effect_ArmorRating`）+ `ValueRatio`。
+  2. **属性区间与百分比换算**：`ValueRatio=0.001` 的是百分比属性（原始值 × 0.001 即比例，如动作速度 20 → `2%`、对不死生物伤害加成 150 → `15%`），其余为固定值（护甲值 19~20、移动速度 -30、武器伤害 38~41）。该口径同时与游戏内 tooltip、维基（Frostlight Crystal Sword「Action Speed 2%」）和正义之刃（「武器伤害 38~41 / 移动速度 -33 / 对不死生物伤害加成 15%」）对齐。
+  3. 新增表 `item_properties(raw_name, primary_json, secondary_pool, secondary_rolls)` 与 `item_property_pools(pool_name, entries_json)`：随机池按槽位资产只存一份（14 个池），物品只引用池名，避免每件装备重复 46 条词条；导入阶段读游戏源，导出阶段（含 CI 无源）只读 DB。
+  4. `craft_builder`：为每条配方附 `properties.primary[]` 与 `properties.random{rolls, pool}`，顶层新增 `property_pools`（仅导出被引用的池，含 `chance`）；属性名带 `translation`（zh-Hans）+ `translation_key`，10 语言由 `locale_builder` 自动收录（每种语言 52 个属性键）。
+  5. 前端 `CraftsPage`：卡片材料行下新增「属性」行（固定属性 + 「随机属性 ×N」标签，悬停显示整池区间与概率），新增 `ui.crafts.properties`／`random_properties`／`random_hint`（zh-Hans/en/ja/zh-Hant，与既有 `ui.crafts.*` 一致）。
+  6. `collector.py` 导入阶段新增 `import_item_properties`（11 → 12 步）；`db_freshness.GENERATOR_VERSION` 提升为 `db-lifecycle-v13-item-properties`，两张新表加入 `REQUIRED_TABLES`。
+- **验证**：`api/lint.sh`（ruff + black）通过；`python -m unittest discover -s tests` 全绿（新增 5 + 6 个用例）；`npm run check` 0 error；删库重建 51.37s → `import_item_properties DONE -> 1876 items, 14 random pools`（1293 件带随机池）；`data/json/crafts.json` 340 配方 / 315 条带属性 / 13 个池；寒光布面甲 = 护甲值 19~20、最大生命值 3、魔法抗性 41、移动速度 -9、动作速度 1%、随机属性 ×3（池 46 条）；SSG 3117 页，SSR HTML 直出「属性 移动速度 -10」；8081 预览 HTTP 200，Playwright 实测 zh-Hans 裁缝页卡片「材料 … | 属性 | 护甲值 19~20 | … | 动作速度 1% | 随机属性 ×3」、en 页「Stats | Armor Rating 19~20 | … | Random ×3」及悬停池文案；`test:i18n` Pass 29 / Fail 0。
+
 ### chore: 补丁部署（跳过 FMOD 同步，重建 DB 并推送 main）
 
 - **改动原因**：用户要求「按补丁流程（不执行 ~ 同步）进行补丁部署」，即走 `docs/BUILD_AND_DEPLOY.md` 的「更新部署」，但跳过第 1 步 `~/sync_fmod.sh`（不重新同步游戏解包，沿用现有 `~/fmod/Output`）。

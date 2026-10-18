@@ -151,6 +151,26 @@ class SchemaManager:
             CREATE INDEX IF NOT EXISTS idx_craft_recipes_merchant
                 ON craft_recipes (merchant_name, unique_id);
 
+            -- Item stat lines (armour rating, weapon damage, ...) resolved from
+            -- the ItemProperty assets at import time; the numbers only exist in
+            -- the game extract, and CI builds have none, so the 【工匠】 export
+            -- reads them back from here.
+            -- ``primary_json`` is [{"type", "key", "ratio", "min", "max"}, ...].
+            CREATE TABLE IF NOT EXISTS item_properties (
+                raw_name TEXT PRIMARY KEY,
+                primary_json TEXT NOT NULL DEFAULT '[]',
+                secondary_pool TEXT NOT NULL DEFAULT '',
+                secondary_rolls INTEGER NOT NULL DEFAULT 0
+            );
+
+            -- Random stat pools (one asset per equipment slot) shared by many
+            -- items, stored once so items reference them by name.
+            -- ``entries_json`` matches a primary row plus its draw ``rate``.
+            CREATE TABLE IF NOT EXISTS item_property_pools (
+                pool_name TEXT PRIMARY KEY,
+                entries_json TEXT NOT NULL DEFAULT '[]'
+            );
+
             CREATE TABLE IF NOT EXISTS spawners (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 keyword TEXT NOT NULL,

@@ -332,6 +332,39 @@ export interface CraftRecipe {
    * ' + ' (or the language delimiter for category sections). Empty for the ore tab.
    */
   group_parts: CraftGroupPart[];
+  /** Stat lines of the crafted item; absent for materials and old payloads. */
+  properties?: CraftProperties;
+}
+
+/** One stat line of a crafted item (armour rating, weapon damage, …). */
+export interface CraftProperty {
+  /** Property type without its asset prefix (``Effect_ArmorRating``). */
+  type: string;
+  translation: string;
+  translation_key?: string;
+  /** Lowest value the item rolls. */
+  min: number;
+  /** Highest value the item rolls (equal to ``min`` for fixed stats). */
+  max: number;
+  /**
+   * ``ValueRatio`` of the property type. 0.001 marks the percentage stats, so
+   * a raw 20 renders as ``2%`` exactly like the in-game tooltip; without it the
+   * value is a flat number (armour rating 19, move speed -30).
+   */
+  ratio?: number;
+  /** Draw chance inside a random pool (pool entries only). */
+  chance?: number;
+}
+
+/** Stat lines shown under the materials of a crafted item. */
+export interface CraftProperties {
+  /** Fixed stats of the item. */
+  primary: CraftProperty[];
+  /**
+   * The extra enchantment slots: ``rolls`` random stats drawn from the pool
+   * shared by every item of the same equipment slot (``property_pools``).
+   */
+  random?: { rolls: number; pool: string };
 }
 
 /** A crafting NPC tab (or the synthetic 【矿类】 tab). */
@@ -358,6 +391,12 @@ export interface CraftsPayload {
   recipe_count: number;
   /** Merchant name of the synthetic ore-refining tab. */
   ores_merchant?: string;
+  /**
+   * Random stat pools by asset name (``Id_ItemProperty_Secondary_Chest``).
+   * Shared by every recipe of one equipment slot, so recipes only reference
+   * them instead of repeating the pool.
+   */
+  property_pools?: Record<string, CraftProperty[]>;
   merchants: CraftMerchant[];
   recipes: CraftRecipe[];
 }

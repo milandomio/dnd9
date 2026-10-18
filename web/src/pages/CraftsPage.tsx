@@ -7,7 +7,12 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { localizedSeoDescription } from '../i18n/seo';
-import type { CraftRecipe, CraftsPayload } from '../types/data';
+import type {
+  CraftProperties,
+  CraftProperty,
+  CraftRecipe,
+  CraftsPayload,
+} from '../types/data';
 
 /** Item rarity palette, matching the lights, lootdrop and shop pages. */
 const RARITY_COLORS: Record<string, string> = {
@@ -219,7 +224,11 @@ export default function CraftsPage() {
             }}
           >
             {group.recipes.map((recipe) => (
-              <CraftCard key={recipe.recipe_id} recipe={recipe} />
+              <CraftCard
+                key={recipe.recipe_id}
+                recipe={recipe}
+                pools={data?.property_pools}
+              />
             ))}
           </div>
         </section>
@@ -228,7 +237,80 @@ export default function CraftsPage() {
   );
 }
 
-function CraftCard({ recipe }: { recipe: CraftRecipe }) {
+/**
+ * One stat range, rendered the way the game tooltip does: percentage stats
+ * (``ValueRatio``) read as ``raw x ratio``, so a raw action speed of 20 shows as
+ * ``2%``; everything else is a flat number (armour 19, move speed -30).
+ */
+function formatPropertyValue(property: CraftProperty): string {
+  const scale = property.ratio ? property.ratio * 100 : 1;
+  const trim = (value: number) => String(Math.round(value * 100) / 100);
+  const suffix = property.ratio ? '%' : '';
+  const min = trim(property.min * scale);
+  const max = trim(property.max * scale);
+  return min === max ? `${min}${suffix}` : `${min}~${max}${suffix}`;
+}
+
+/**
+ * Stats of a crafted item, listed under its materials. The fixed lines come from
+ * the item asset; the extra enchantment slots roll from a pool shared by every
+ * item of one equipment slot, which the payload ships once (``property_pools``)
+ * — its entries are summarised in the hover text.
+ */
+function CraftPropertiesLine({
+  properties,
+  pools,
+}: {
+  properties: CraftProperties;
+  pools?: Record<string, CraftProperty[]>;
+}) {
+  const { tokens } = useTheme();
+  const { t, ut } = useLocale();
+  const pool = properties.random ? pools?.[properties.random.pool] : undefined;
+  const label = (property: CraftProperty) =>
+    t(property.translation_key, property.translation || property.type);
+  const poolHint = pool?.length
+    ? `${ut('ui.crafts.random_hint')}：${pool
+        .map((entry) => `${label(entry)} ${formatPropertyValue(entry)}`)
+        .join(' / ')}`
+    : undefined;
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: 8,
+        fontSize: 12,
+        color: tokens.muted,
+        alignItems: 'baseline',
+      }}
+    >
+      <span>{ut('ui.crafts.properties')}</span>
+      {properties.primary.map((property, index) => (
+        <span key={`${property.type}-${index}`} style={{ color: tokens.text }}>
+          {label(property)} {formatPropertyValue(property)}
+        </span>
+      ))}
+      {properties.random && (
+        <span style={{ color: tokens.accent }} title={poolHint}>
+          {ut('ui.crafts.random_properties').replace(
+            '{count}',
+            String(properties.random.rolls)
+          )}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function CraftCard({
+  recipe,
+  pools,
+}: {
+  recipe: CraftRecipe;
+  pools?: Record<string, CraftProperty[]>;
+}) {
   const { tokens } = useTheme();
   const { t, ut } = useLocale();
   const location = useLocation();
@@ -338,6 +420,9 @@ function CraftCard({ recipe }: { recipe: CraftRecipe }) {
           </span>
         ))}
       </div>
+      {recipe.properties && (
+        <CraftPropertiesLine properties={recipe.properties} pools={pools} />
+      )}
     </div>
   );
 }
