@@ -22,19 +22,33 @@ const RARITY_COLORS: Record<string, string> = {
 };
 
 /**
- * Section title: the materials that define the family, e.g. 「银粉」or
- * 「蓝宝石 + 奥术精华」. An empty part list marks the synthetic ore tab, whose
- * single group is named by the tab label.
+ * Section title. Material families read 「银粉」or「蓝宝石 + 奥术精华」, equipment
+ * NPC sections read like the 【掉落表】 page (「护甲：板甲」), and an empty part
+ * list marks the synthetic ore tab, whose single section is named by its label.
  */
 function groupLabel(
   recipe: CraftRecipe,
   t: (key: string | undefined, fallback: string) => string,
-  oresLabel: string
+  ut: (key: string) => string,
+  delimiter: string
 ): string {
-  if (!recipe.group_parts?.length) return oresLabel;
-  return recipe.group_parts
-    .map((part) => t(part.translation_key, part.translation || part.name))
-    .join(' + ');
+  if (!recipe.group_parts?.length) return ut('ui.crafts.tab.ores');
+  const parts = recipe.group_parts.map((part) =>
+    t(part.translation_key, part.translation || part.name)
+  );
+  if (recipe.group_kind === 'category') {
+    const category = recipe.group_category
+      ? t(
+          recipe.group_category.translation_key,
+          recipe.group_category.translation || recipe.group_category.name
+        )
+      : ut('ui.list.item_group_unknown');
+    return (
+      ut('ui.list.item_group_prefix').replace('{category}', category) +
+      parts.join(delimiter)
+    );
+  }
+  return parts.join(' + ');
 }
 
 export default function CraftsPage() {
@@ -54,9 +68,10 @@ export default function CraftsPage() {
   const merchants = data?.merchants ?? [];
   const selected =
     merchants.find((merchant) => merchant.name === activeTab) ?? merchants[0];
+  const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
 
-  // Recipes arrive sorted by merchant, then material family, then item, then
-  // rarity, so one pass groups every recipe of one family under one heading.
+  // Recipes arrive sorted by merchant, then section, then item, then rarity, so
+  // one pass groups every recipe of one section under one heading.
   const groups: {
     key: string;
     label: string;
@@ -70,7 +85,7 @@ export default function CraftsPage() {
     } else {
       groups.push({
         key: recipe.group,
-        label: groupLabel(recipe, t, ut('ui.crafts.tab.ores')),
+        label: groupLabel(recipe, t, ut, delimiter),
         recipes: [recipe],
       });
     }
@@ -185,6 +200,16 @@ export default function CraftsPage() {
             }}
           >
             {group.label}
+            <span
+              style={{
+                color: tokens.muted,
+                fontSize: 13,
+                fontWeight: 'normal',
+                marginLeft: 6,
+              }}
+            >
+              ({new Set(group.recipes.map((recipe) => recipe.name)).size})
+            </span>
           </h2>
           <div
             style={{

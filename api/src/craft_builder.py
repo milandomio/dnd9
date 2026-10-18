@@ -13,12 +13,16 @@ built from the same thing sit together instead of one section per item:
 * ``BlueSapphire + ArcaneEssence`` -> the Goldsmith's sapphire jewellery;
 * the synthetic 【矿类】 tab (pure ore/coin refining) is a single group.
 
+Equipment NPCs (Armourer/Smith/Tailor/Leathersmith) are classified with the same
+item taxonomy the 【掉落表】 page uses instead: every material family there holds
+a single item, so the sections are the game's item category + subtype (护甲 /
+板甲…), which is what a player looks for.
+
 Two safety nets keep the headings useful:
 
-* a material group that would hold a single item (every Armourer/Leathersmith
-  recipe, most Tailor ones) falls back to the item name, because a material
-  heading over one card groups nothing;
-* An item whose quality tiers consume *different* materials (SurgicalKit)
+* a material group that would hold a single item falls back to the item name,
+  because a material heading over one card groups nothing;
+* an item whose quality tiers consume *different* materials (SurgicalKit)
   cannot sit in one material group without splitting the tiers apart, so it
   keeps its own item group.
 """
@@ -43,12 +47,33 @@ RARITY_ORDER = {
 #: material group only uses them when they are the *only* material.
 _CURRENCIES = frozenset({"SilverCoin", "GoldCoins"})
 
+#: Equipment NPCs that each craft one armour class, so a material family never
+#: merges anything: they are classified by item category + subtype instead (the
+#: same taxonomy as the 【掉落表】 page).
+_CATEGORY_MERCHANTS = frozenset({"Armourer", "Tailor", "Leathersmith"})
+
+#: Section order of the item categories, mirroring the 【掉落表】 page.
+_CATEGORY_ORDER = ("Utility", "Misc", "Accessory", "Armor", "Weapon")
+
+#: Separator between the parts of a composite group key.
+_GROUP_SEPARATOR = "\u001f"
+
 
 def _signature(requirements: list[dict]) -> tuple[str, ...]:
     """The material names that identify a recipe family, sorted."""
     names = [requirement["name"] for requirement in requirements]
     distinctive = [name for name in names if name not in _CURRENCIES]
     return tuple(sorted(set(distinctive or names)))
+
+
+def _category_name(category_key: str) -> str:
+    """``..._Type_Item_Category_Armor`` -> ``Armor``."""
+    return category_key.rsplit("_Category_", 1)[-1]
+
+
+def _key_label(resolve_name, key: str) -> dict:
+    """Label for a raw game translation key (item category / subtype)."""
+    return {"name": key, "translation": resolve_name("", key, "item"), "translation_key": key}
 
 
 class _ItemLabel:
@@ -67,6 +92,15 @@ class _ItemLabel:
             "translation": self.resolve(name, translation_key, "item"),
             "translation_key": translation_key,
         }
+
+    def subtype_keys(self, name: str) -> list[str]:
+        """Item category / subtype keys of a folded item name (may be empty)."""
+        row = self.meta.get(name, {})
+        try:
+            subtypes = json.loads(row.get("item_subtype_keys", "[]") or "[]")
+        except json.JSONDecodeError:
+            subtypes = []
+        return [key for key in subtypes if isinstance(key, str) and key]
 
 
 def build_and_save_crafts(
@@ -96,6 +130,8 @@ def build_and_save_crafts(
         }
         entry.update(label(name))
         entry["signature"] = _signature(requirements)
+        entry["category_key"] = label.meta.get(name, {}).get("item_category_key", "")
+        entry["subtype_keys"] = label.subtype_keys(name)
         entries.append(entry)
 
     # Items whose tiers need different materials keep an item group so every
@@ -113,18 +149,28 @@ def build_and_save_crafts(
         family_items.setdefault((entry["merchant"], entry["signature"]), set()).add(entry["name"])
 
     for entry in entries:
-        if kinds.get(entry["merchant"]) == "ores":
+        merchant = entry["merchant"]
+        if kinds.get(merchant) == "ores":
             # One 【矿类】 group for every pure refining recipe.
             entry["group"] = ORE_MERCHANT
+            entry["group_kind"] = "ores"
             entry["group_parts"] = []
-        elif (entry["merchant"], entry["name"]) in split_items or len(
-            family_items[(entry["merchant"], entry["signature"])]
-        ) == 1:
+        elif merchant in _CATEGORY_MERCHANTS and entry["category_key"] and entry["subtype_keys"]:
+            # Equipment NPCs: classify by item category + subtype like 【掉落表】.
+            category = _category_name(entry["category_key"])
+            order = _CATEGORY_ORDER.index(category) if category in _CATEGORY_ORDER else len(_CATEGORY_ORDER)
+            entry["group"] = _GROUP_SEPARATOR.join([str(order), entry["category_key"], *entry["subtype_keys"]])
+            entry["group_kind"] = "category"
+            entry["group_category"] = _key_label(resolve_name, entry["category_key"])
+            entry["group_parts"] = [_key_label(resolve_name, key) for key in entry["subtype_keys"]]
+        elif (merchant, entry["name"]) in split_items or len(family_items[(merchant, entry["signature"])]) == 1:
             # Grouping would not merge anything, so the item names the section.
             entry["group"] = entry["name"]
+            entry["group_kind"] = "item"
             entry["group_parts"] = [label(entry["name"])]
         else:
             entry["group"] = " + ".join(entry["signature"])
+            entry["group_kind"] = "material"
             entry["group_parts"] = [label(material) for material in entry["signature"]]
 
     entries.sort(
@@ -139,6 +185,8 @@ def build_and_save_crafts(
     )
     for entry in entries:
         entry.pop("signature")
+        entry.pop("category_key")
+        entry.pop("subtype_keys")
 
     merchant_entries = []
     for row in merchants:

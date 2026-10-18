@@ -3482,7 +3482,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.stat':
       '共 {merchants} 位工匠 | {groups} 个分组 | {items} 种可制作物品 | {recipes} 条配方',
     'ui.crafts.hint':
-      '按 NPC 分组查看制作配方（成品 + 所需原料）；同一原料的配方能合并多件物品时归为一组（如「银粉」＝7 把纯银武器），否则按物品名显示；矿石／银币精炼类配方统一放在「矿类」。点击卡片可搜索该物品。',
+      '按 NPC 分组查看制作配方（成品 + 所需原料）；装备类 NPC（制甲匠／裁缝／皮革匠）按【掉落表】的物品分类分组（护甲／板甲…），其余按原料分组（如「银粉」＝7 把纯银武器）或物品名；矿石／银币精炼类配方统一放在「矿类」。点击卡片可搜索该物品。',
     'ui.crafts.materials': '材料',
     'ui.crafts.tab.ores': '矿类',
   },
@@ -3547,7 +3547,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.stat':
       '{merchants} artisans | {groups} groups | {items} craftable items | {recipes} recipes',
     'ui.crafts.hint':
-      'Recipes are grouped by NPC, then by the material that defines the family whenever that merges several items (e.g. Silver Powder = the seven sterling weapons); otherwise the item names its own section. Pure ore/coin refining lives in the Ores tab. Click a card to search the item.',
+      'Recipes are grouped by NPC. Equipment artisans (Armourer, Tailor, Leathersmith) are classified with the item taxonomy of the drop page (Armor / Plate…); elsewhere recipes are grouped by the material that merges several items (Silver Powder = the seven sterling weapons) or by item name. Pure ore/coin refining lives in the Ores tab. Click a card to search the item.',
     'ui.crafts.materials': 'Materials',
     'ui.crafts.tab.ores': 'Ores',
   },
@@ -3611,7 +3611,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.stat':
       '工匠 {merchants} 人 | グループ {groups} 類 | 製作可能 {items} 種 | レシピ {recipes} 件',
     'ui.crafts.hint':
-      'レシピは NPC ごと、さらに共通素材で複数アイテムをまとめられる場合のみ素材ごとにまとめています（例：「銀粉」＝純銀武器 7 種）。まとめられない場合はアイテム名で表示します。鉱石・銀貨の精錬レシピは「鉱石」にまとめました。カードをクリックすると検索できます。',
+      'レシピは NPC ごとに表示します。装備系 NPC（製甲師・仕立て屋・皮細工師）は【ドロップ表】のアイテム分類（鎧／板鎧…）でまとめ、それ以外は複数アイテムをまとめられる共通素材ごと（例：「銀粉」＝純銀武器 7 種）、まとめられない場合はアイテム名で表示します。鉱石・銀貨の精錬レシピは「鉱石」にまとめました。カードをクリックすると検索できます。',
     'ui.crafts.materials': '素材',
     'ui.crafts.tab.ores': '鉱石',
   },
@@ -3672,7 +3672,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.stat':
       '共 {merchants} 位工匠 | {groups} 個分組 | {items} 種可製作物品 | {recipes} 條配方',
     'ui.crafts.hint':
-      '按 NPC 分組查看製作配方（成品 + 所需原料）；同一原料的配方能合併多件物品時歸為一組（如「銀粉」＝7 把純銀武器），否則按物品名顯示；礦石／銀幣精煉類配方統一放在「礦類」。點擊卡片可搜尋該物品。',
+      '按 NPC 分組查看製作配方（成品 + 所需原料）；裝備類 NPC（製甲匠／裁縫／皮革匠）按【掉落表】的物品分類分組（護甲／板甲…），其餘按原料分組（如「銀粉」＝7 把純銀武器）或物品名；礦石／銀幣精煉類配方統一放在「礦類」。點擊卡片可搜尋該物品。',
     'ui.crafts.materials': '材料',
     'ui.crafts.tab.ores': '礦類',
   },

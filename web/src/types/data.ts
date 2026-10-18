@@ -294,6 +294,17 @@ export type CraftGroupPart = Pick<
   'name' | 'translation' | 'translation_key'
 >;
 
+/** How a section heading is built. */
+export type CraftGroupKind =
+  /** The synthetic ore tab: one 【矿类】 section. */
+  | 'ores'
+  /** The item names the section (tiers of one item stay together). */
+  | 'item'
+  /** The materials that identify the family (「银粉」…). */
+  | 'material'
+  /** Item category + subtype, the same taxonomy the lootdrops page uses. */
+  | 'category';
+
 /** One crafting recipe: a quality tier of an item plus its materials. */
 export interface CraftRecipe {
   merchant: string;
@@ -306,11 +317,17 @@ export interface CraftRecipe {
   rarity: string;
   requirements: CraftRequirement[];
   /**
-   * Material-family key; recipes of one family sit under one section. Recipes
-   * of the synthetic ore tab all share the `__ores__` key.
+   * Section key; recipes of one section sit next to each other. Recipes of the
+   * synthetic ore tab all share the `__ores__` key.
    */
   group: string;
-  /** Title fragments of the group, joined with ' + ' by the page. Empty for the ore tab. */
+  group_kind: CraftGroupKind;
+  /** Item category of a `category` section (e.g. 护甲), rendered as its prefix. */
+  group_category?: CraftGroupPart;
+  /**
+   * Heading fragments: materials, the item name, or item subtypes. Joined with
+   * ' + ' (or the language delimiter for category sections). Empty for the ore tab.
+   */
   group_parts: CraftGroupPart[];
 }
 
@@ -330,7 +347,7 @@ export interface CraftMerchant {
 export interface CraftsPayload {
   /** Distinct crafting tabs. */
   count: number;
-  /** Distinct (merchant, material family) sections the page renders. */
+  /** Distinct (merchant, section) pairs the page renders. */
   group_count: number;
   /** Distinct (merchant, item) pairs. */
   item_count: number;

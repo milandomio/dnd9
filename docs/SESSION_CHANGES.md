@@ -4,6 +4,18 @@
 
 ## 2026-10-18
 
+### feat: 【工匠】装备类 NPC（制甲匠／裁缝／皮革匠）改用【掉落表】物品分类分组
+
+- **改动原因**：用户指出「没有把这三个装备类 NPC 分类，他们合成的物品参考 lootdrops 中的武器/护甲分组」。上一版对这三个标签按原料分组时，每个原料集合只对应 1 件物品（制甲匠 42 条、裁缝 48 条、皮革匠 49 条几乎一物品一配方），回退物品名后又等于没有分类。
+- **变更文件**：`api/src/craft_builder.py`、`web/src/types/data.ts`、`web/src/pages/CraftsPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `craft_builder` 新增 `_CATEGORY_MERCHANTS = {Armourer, Tailor, Leathersmith}`：这些标签的配方改为按「物品类别 + 子类」分组，取 `item_entities.item_category_key` / `item_subtype_keys`（与【掉落表】页面同一套 `Text_Code_DCDataBlueprintLibrary_Type_Item_*` 键）：`group = "{类别序号}\u001f{category_key}\u001f{subtype_keys}"`，排序沿用【掉落表】的类别顺序 `Utility, Misc, Accessory, Armor, Weapon`，再按子类键排序；无类别/子类的物品回退「物品名」分组。
+  2. 导出新增字段 `group_kind`（`ores`/`item`/`material`/`category`）与 `group_category`（类别标签，仅 category 类有），`group_parts` 在 category 类下存放子类标签。`group` 仍为分组/排序键。
+  3. 前端 `groupLabel` 按 `group_kind` 渲染：category 类拼成「{类别}：{子类}」（复用【掉落表】的 `ui.list.item_group_prefix` 与语言分隔符 、/, ），其余仍为「材料 + 材料」或物品名；矿石标签仍为「矿类」。section 标题追加「(N)」＝该分组内不同物品数。
+  4. 【掉落表】的分类结果：制甲匠＝护甲：链甲(3)/板甲(39)；裁缝＝护甲：布甲(47)/皮甲(1)；皮革匠＝杂项：金币容器(3)/护甲：链甲(5)/皮甲(41)。武器锻造师、珠宝匠、炼金术师等保持原有的原料分组／物品名分组（武器锻造师的「银粉」「铁锭」保留）。全局分组数 207 → 79。
+  5. i18n：hint 说明装备类 NPC 按【掉落表】分类，其余按原料/物品名；统计行「79 个分组」。
+- **验证**：`python main.py`（`DB_READY`，仅重跑导出）`crafts export DONE -> 9 merchants, 79 groups, 332 recipes`；`api/lint.sh`、`npm run build`（3114 页）、`node tests/i18n.mjs`（Pass 29 / Fail 0）通过；Playwright：制甲匠／裁缝／皮革匠标题为「护甲：链甲(3)」「护甲：板甲(39)」「护甲：布甲(47)」「护甲：皮甲(1)」「杂项：金币容器(3)」「护甲：链甲(5)」「护甲：皮甲(41)」，皮革匠三段卡片数 3/5/41，武器锻造师仍含「银粉(7)」「铁锭(6)」，珠宝匠 4 个宝石原料组，矿类 1 段 19 卡；en 页 `Armor:Chain` / `Armor:Plate` / `Misc:Gold Container` 正确；无 console/page error。
+
 ### fix: 【工匠】分组细化——「原料组」只在能合并多件物品时生效，否则回退物品名
 
 - **改动原因**：用户反馈「制甲匠／裁缝／皮革匠不应该用原料分类，这样分成的分组都是 1 个物品，不符合分组初衷」。上一版对所有配方一律用原料集合当标题，导致这三个标签（制甲匠 42 条、裁缝 48 条、皮革匠 49 条几乎全是一物品一配方）出现「钴蓝锭 + 锅盔」这类无意义原料标题，分组数却没变。
