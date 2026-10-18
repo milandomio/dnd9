@@ -15,7 +15,7 @@ from pathlib import Path
 from config import DATA_DIR, DB_PATH, LOCALIZATION_ROOT, MAPS_DIR
 
 FRESHNESS_SCHEMA_VERSION = "1"
-GENERATOR_VERSION = "db-lifecycle-v8-environment-lights"
+GENERATOR_VERSION = "db-lifecycle-v9-craft-recipes"
 
 SOURCE_ROOTS: dict[str, Path] = {
     "localization": LOCALIZATION_ROOT,
@@ -36,6 +36,8 @@ REQUIRED_TABLES = frozenset(
         "lootdrop_rate_weights",
         "light_items",
         "environment_lights",
+        "craft_merchants",
+        "craft_recipes",
         "translations",
     }
 )

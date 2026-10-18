@@ -1,4 +1,5 @@
 from .coordinates import CoordinatesRepository
+from .crafts import CraftsRepository
 from .items import ItemsRepository
 from .lootdrops import LootdropsRepository
 from .merchants import InGameMerchantRepository
@@ -18,3 +19,4 @@ class RepositoryRegistry:
         self.lootdrops = LootdropsRepository(conn)
         self.quests = QuestsRepository(conn)
         self.merchants = InGameMerchantRepository(conn)
+        self.crafts = CraftsRepository(conn)

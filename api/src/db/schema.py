@@ -118,6 +118,36 @@ class SchemaManager:
                 only_in_swarm INTEGER NOT NULL DEFAULT 0
             );
 
+            -- Tavern crafting merchants (V2/Merchant/Merchant) that serve the
+            -- Craft service. `kind` is 'npc' for real NPCs and 'ingot' for the
+            -- synthetic 【锭制作】 tab that owns the ore -> ingot recipes, which
+            -- carry no merchant reference in the game data.
+            CREATE TABLE IF NOT EXISTS craft_merchants (
+                merchant_name TEXT PRIMARY KEY,
+                kind TEXT NOT NULL DEFAULT 'npc',
+                translation_key TEXT NOT NULL DEFAULT '',
+                sort_order INTEGER NOT NULL DEFAULT 0
+            );
+
+            -- One row per StockCraft recipe. Quality-suffixed output names are
+            -- folded (VoidBlade_5001 -> VoidBlade) so the 【工匠】 page can group
+            -- the same item across rarities; the raw name keeps the tier.
+            -- requirements_json is [{"name", "raw_name", "rarity", "amount"}, ...].
+            CREATE TABLE IF NOT EXISTS craft_recipes (
+                recipe_id TEXT PRIMARY KEY,
+                merchant_name TEXT NOT NULL,
+                unique_id INTEGER NOT NULL DEFAULT 0,
+                output_raw_name TEXT NOT NULL DEFAULT '',
+                output_item_name TEXT NOT NULL DEFAULT '',
+                output_rarity TEXT NOT NULL DEFAULT '',
+                requirements_json TEXT NOT NULL DEFAULT '[]',
+                conversation_key TEXT NOT NULL DEFAULT '',
+                craft_complete_key TEXT NOT NULL DEFAULT ''
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_craft_recipes_merchant
+                ON craft_recipes (merchant_name, unique_id);
+
             CREATE TABLE IF NOT EXISTS spawners (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 keyword TEXT NOT NULL,

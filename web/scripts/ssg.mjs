@@ -257,6 +257,7 @@ const SINGLE = [
   'dungeon_modules',
   'dungeon_shops',
   'lights',
+  'crafts',
 ];
 const DEFAULT_LANG = 'zh-Hans';
 const LANGS = [
@@ -684,6 +685,7 @@ function routeDataKey(path) {
   }
   if (stripped === '/explore') return 'explore';
   if (stripped === '/lights') return 'lights';
+  if (stripped === '/crafts') return 'crafts';
   return `list-${stripped.slice(1)}`;
 }
 

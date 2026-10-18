@@ -278,6 +278,54 @@ export interface EnvironmentLight {
   only_in_swarm: boolean;
 }
 
+/** One material a crafting recipe consumes. */
+export interface CraftRequirement {
+  name: string;
+  raw_name: string;
+  translation: string;
+  translation_key?: string;
+  rarity: string;
+  amount: number;
+}
+
+/** One crafting recipe: a quality tier of an item plus its materials. */
+export interface CraftRecipe {
+  merchant: string;
+  recipe_id: string;
+  unique_id: number;
+  name: string;
+  raw_name: string;
+  translation: string;
+  translation_key?: string;
+  rarity: string;
+  requirements: CraftRequirement[];
+}
+
+/** A crafting NPC tab (or the synthetic 【锭制作】 tab). */
+export interface CraftMerchant {
+  name: string;
+  /** 'npc' for a real merchant, 'ingot' for the synthetic ingot tab. */
+  kind: string;
+  translation_key?: string;
+  /** zh-Hans fallback for the default language. */
+  display: string;
+  item_count: number;
+  recipe_count: number;
+}
+
+export interface CraftsPayload {
+  /** Distinct crafting tabs. */
+  count: number;
+  /** Distinct (merchant, item) groups the page renders. */
+  item_count: number;
+  /** Total recipes. */
+  recipe_count: number;
+  /** Merchant name of the synthetic ingot tab. */
+  ingot_merchant?: string;
+  merchants: CraftMerchant[];
+  recipes: CraftRecipe[];
+}
+
 export interface ShopDetail {
   region: string;
   label_key?: string;

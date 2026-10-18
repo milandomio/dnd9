@@ -251,6 +251,7 @@ def build_and_save_indexes(
     group_label_resolver=None,
     shop_regions: int = 0,
     light_count: int = 0,
+    craft_count: int = 0,
 ):
     """Build and save index.json + search_index.json."""
     index_data = [
@@ -267,6 +268,7 @@ def build_and_save_indexes(
         {"page": "dungeon_modules", "label": "地图模块表", "count": len(modules_data)},
         {"page": "dungeon_shops", "label": "地牢商店", "count": shop_regions},
         {"page": "lights", "label": "灯", "count": light_count},
+        {"page": "crafts", "label": "工匠", "count": craft_count},
     ]
     _save(output_dir, "index.json", index_data)
 
@@ -386,6 +388,7 @@ def build_and_save_indexes(
         {"name": "dungeon_modules", "translation": "地图模块表", "page": "_nav", "url": "/dungeon_modules/"},
         {"name": "dungeon_shops", "translation": "地牢商店", "page": "_nav", "url": "/dungeon_shops/"},
         {"name": "lights", "translation": "灯", "page": "_nav", "url": "/lights/"},
+        {"name": "crafts", "translation": "工匠", "page": "_nav", "url": "/crafts/"},
     ]
     search_index.extend(LIST_PAGES)
     _save(output_dir, "search_index.json", search_index)

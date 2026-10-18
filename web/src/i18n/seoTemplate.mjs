@@ -29,6 +29,8 @@ const COPY = {
       `${name} 的《越来越黑暗》哥布林走私者商店${items ? `，收录 ${items} 种商品` : ''}，含价格与库存。浏览当地限定商品与不同难度下的货品差异。`,
     lights: ({ items }) =>
       `《越来越黑暗》灯具一览${items ? `，收录 ${items} 种灯具` : ''}。查看各品质灯具的燃烧时间与照明范围，规划地牢照明。`,
+    crafts: ({ items }) =>
+      `《越来越黑暗》工匠制作配方一览${items ? `，收录 ${items} 种可制作物品` : ''}。查看各工匠（炼金术师、制甲匠、金匠、皮革匠等）的制作配方与所需原料。`,
     categories: {
       items: '物品',
       monsters: '怪物',
@@ -66,6 +68,8 @@ const COPY = {
       `Goblin Smuggler shop in ${name}${items ? ` with ${items} items` : ''}, with prices and stock. See map-exclusive goods and how stock differs by difficulty.`,
     lights: ({ items }) =>
       `Dark and Darker light sources${items ? `, ${items} items` : ''}. Compare burn time and light radius across quality tiers to plan your dungeon lighting.`,
+    crafts: ({ items }) =>
+      `Dark and Darker crafting recipes${items ? `, ${items} craftable items` : ''}. Browse each artisan's recipes and the materials they consume.`,
     categories: {
       items: 'items',
       monsters: 'monsters',
@@ -103,6 +107,8 @@ const COPY = {
       `Goblin-Schmuggler-Laden in ${name}${items ? ` mit ${items} Artikeln` : ''}, mit Preisen und Bestand. Sieh dir kartenspezifische Ware und Unterschiede nach Schwierigkeit an.`,
     lights: ({ items }) =>
       `Lichtquellen in Dark and Darker${items ? ` mit ${items} Gegenständen` : ''}. Vergleiche Brenndauer und Lichtradius nach Qualitätsstufe für deine Dungeon-Beleuchtung.`,
+    crafts: ({ items }) =>
+      `Handwerksrezepte in Dark and Darker${items ? ` mit ${items} herstellbaren Gegenständen` : ''}. Sieh dir die Rezepte jedes Handwerkers und die benötigten Materialien an.`,
     categories: {
       items: 'Gegenstände',
       monsters: 'Monster',
@@ -140,6 +146,8 @@ const COPY = {
       `Tienda del contrabandista goblin en ${name}${items ? ` con ${items} artículos` : ''}, con precios y existencias. Descubre artículos exclusivos del mapa y diferencias por dificultad.`,
     lights: ({ items }) =>
       `Fuentes de luz en Dark and Darker${items ? `, ${items} objetos` : ''}. Compara tiempo de combustión y radio de luz por calidad para planear tu iluminación.`,
+    crafts: ({ items }) =>
+      `Recetas de artesanía en Dark and Darker${items ? `, ${items} objetos fabricables` : ''}. Consulta las recetas de cada artesano y los materiales necesarios.`,
     categories: {
       items: 'objetos',
       monsters: 'monstruos',
@@ -177,6 +185,8 @@ const COPY = {
       `Boutique du contrebandier gobelin à ${name}${items ? ` avec ${items} articles` : ''}, avec prix et stock. Consultez les articles exclusifs à la carte et les différences de difficulté.`,
     lights: ({ items }) =>
       `Sources de lumière dans Dark and Darker${items ? `, ${items} objets` : ''}. Comparez durée de combustion et rayon de lumière par qualité pour éclairer vos donjons.`,
+    crafts: ({ items }) =>
+      `Recettes d'artisanat dans Dark and Darker${items ? `, ${items} objets fabricables` : ''}. Parcourez les recettes de chaque artisan et les matériaux requis.`,
     categories: {
       items: 'objets',
       monsters: 'monstres',
@@ -214,6 +224,8 @@ const COPY = {
       `${name} のゴブリン密輸業者ショップ${items ? `（${items} 種）` : ''}。価格と在庫を掲載。マップ限定品や難易度ごとの差異も確認できます。`,
     lights: ({ items }) =>
       `Dark and Darker の灯火${items ? ` ${items} 種` : ''}。品質ごとの燃焼時間と照明範囲を比較してダンジョンの明かりを計画できます。`,
+    crafts: ({ items }) =>
+      `Dark and Darker の工匠レシピ${items ? ` ${items} 種の製作可能アイテム` : ''}。各 NPC のレシピと必要素材を確認できます。`,
     categories: {
       items: 'アイテム',
       monsters: 'モンスター',
@@ -251,6 +263,8 @@ const COPY = {
       `${name}의 고블린 밀수업자 상점${items ? ` (${items}종)` : ''}. 가격과 재고를 확인하고 맵 한정 품목과 난이도별 차이를 살펴보세요.`,
     lights: ({ items }) =>
       `Dark and Darker 광원${items ? ` ${items}종` : ''}. 품질별 연소 시간과 조명 범위를 비교해 던전 조명을 계획하세요.`,
+    crafts: ({ items }) =>
+      `Dark and Darker 제작 레시피${items ? `, 제작 가능 아이템 ${items}종` : ''}. 각 장인의 레시피와 필요한 재료를 확인하세요.`,
     categories: {
       items: '아이템',
       monsters: '몬스터',
@@ -288,6 +302,8 @@ const COPY = {
       `Loja do contrabandista goblin em ${name}${items ? ` com ${items} itens` : ''}, com preços e estoque. Confira itens exclusivos do mapa e diferenças por dificuldade.`,
     lights: ({ items }) =>
       `Fontes de luz em Dark and Darker${items ? `, ${items} itens` : ''}. Compare tempo de combustão e raio de luz por qualidade para planejar sua iluminação.`,
+    crafts: ({ items }) =>
+      `Receitas de artesanato em Dark and Darker${items ? `, ${items} itens fabricáveis` : ''}. Veja as receitas de cada artesão e os materiais necessários.`,
     categories: {
       items: 'itens',
       monsters: 'monstros',
@@ -325,6 +341,8 @@ const COPY = {
       `Магазин гоблина-контрабандиста в ${name}${items ? ` (${items} предметов)` : ''}, с ценами и запасами. Уникальные для карты товары и различия по сложности.`,
     lights: ({ items }) =>
       `Источники света в Dark and Darker${items ? `: ${items} предметов` : ''}. Сравнивайте время горения и радиус освещения по уровням качества для планирования освещения.`,
+    crafts: ({ items }) =>
+      `Рецепты крафта в Dark and Darker${items ? `: ${items} предметов` : ''}. Смотрите рецепты каждого мастера и необходимые материалы.`,
     categories: {
       items: 'предметы',
       monsters: 'монстров',
@@ -362,6 +380,8 @@ const COPY = {
       `${name} 的《越來越黑暗》哥布林走私者商店${items ? `，收錄 ${items} 種商品` : ''}，含價格與庫存。瀏覽當地限定商品與不同難度下的貨品差異。`,
     lights: ({ items }) =>
       `《越來越黑暗》燈具一覽${items ? `，收錄 ${items} 種燈具` : ''}。查看各品質燈具的燃燒時間與照明範圍，規劃地城照明。`,
+    crafts: ({ items }) =>
+      `《越來越黑暗》工匠製作配方一覽${items ? `，收錄 ${items} 種可製作物品` : ''}。查看各工匠（鍊金術師、製甲匠、珠寶匠、皮革匠等）的製作配方與所需原料。`,
     categories: {
       items: '物品',
       monsters: '怪物',

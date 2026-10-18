@@ -124,6 +124,9 @@ class DatabaseManager:
     def import_environment_lights(self) -> int:
         return self.importers.props.import_environment_lights()
 
+    def import_craft_recipes(self) -> dict[str, int]:
+        return self.importers.crafts.import_all()
+
     def import_lootdrops(self, spawner_monster_map: dict[str, list[str]] | None = None) -> int:
         return self.importers.lootdrops.import_all(spawner_monster_map)
 
@@ -175,6 +178,12 @@ class DatabaseManager:
 
     def get_environment_lights(self) -> list[dict]:
         return self.repos.props.get_environment_lights()
+
+    def get_craft_data(self) -> dict[str, list[dict]]:
+        return {
+            "merchants": self.repos.crafts.get_merchants(),
+            "recipes": self.repos.crafts.get_recipes(),
+        }
 
     def get_props_tag_info(self, tag_name: str) -> dict | None:
         return self.repos.props.get_tag_info(tag_name)

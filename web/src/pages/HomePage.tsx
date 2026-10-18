@@ -103,6 +103,14 @@ const CARD_THEME: Record<string, CardTheme> = {
     titleColor: '#FFE082',
     titleColorLight: '#f9a825',
   },
+  crafts: {
+    border: '#8D6E63',
+    hoverBg: 'linear-gradient(145deg, #40342c, #52443a)',
+    hoverBgLight: 'linear-gradient(145deg, #f5efe9, #eadfd5)',
+    icon: '⚒️',
+    titleColor: '#D7CCC8',
+    titleColorLight: '#5d4037',
+  },
 };
 
 const DEFAULT_THEME: CardTheme = {
@@ -246,6 +254,7 @@ export default function HomePage() {
                   {entry.page === 'dungeon_shops' &&
                     ut('ui.home.view_dungeon_shops')}
                   {entry.page === 'lights' && ut('ui.home.view_lights')}
+                  {entry.page === 'crafts' && ut('ui.home.view_crafts')}
                 </div>
               </Link>
             );

@@ -3474,6 +3474,17 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.lights.swarm': '仅虫潮',
     'ui.lights.env_hint':
       '场景中的发光道具（火把、灯架、蜡烛等），只有燃烧时间，没有照明范围数据。',
+    'ui.nav.crafts': '工匠',
+    'ui.search.tag.craft': '工匠',
+    'ui.home.card_labels.crafts': '工匠',
+    'ui.home.view_crafts': '查看各工匠的制作配方与所需材料',
+    'ui.crafts.title': '【工匠】制作配方一览',
+    'ui.crafts.stat':
+      '共 {merchants} 位工匠 | {items} 种可制作物品 | {recipes} 条配方',
+    'ui.crafts.hint':
+      '按 NPC 分组查看制作配方（成品 + 所需原料）。同一物品的不同品质配方归为一组；矿石→锭的配方在数据里没有 NPC 归属，统一放在「锭制作」。点击卡片可搜索该物品。',
+    'ui.crafts.materials': '材料',
+    'ui.crafts.tab.ingots': '锭制作',
   },
   en: {
     'ui.pwa.install_title': 'Install DarkFlashNav',
@@ -3528,6 +3539,17 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.lights.swarm': 'Swarm only',
     'ui.lights.env_hint':
       'Light-emitting props found in the world (torches, lamp stands, candles) — they only have a burn time, no light radius data.',
+    'ui.nav.crafts': 'Crafts',
+    'ui.search.tag.craft': 'Craft',
+    'ui.home.card_labels.crafts': 'Crafts',
+    'ui.home.view_crafts': 'Browse crafting recipes and materials',
+    'ui.crafts.title': 'Crafting Recipes',
+    'ui.crafts.stat':
+      '{merchants} artisans | {items} craftable items | {recipes} recipes',
+    'ui.crafts.hint':
+      'Recipes are grouped by NPC (the crafted item plus the materials it consumes). Quality tiers of one item share a group; ore-to-ingot recipes have no NPC owner and live under Ingots. Click a card to search the item.',
+    'ui.crafts.materials': 'Materials',
+    'ui.crafts.tab.ingots': 'Ingots',
   },
   ja: {
     'ui.pwa.install_title': 'DarkFlashNavをインストール',
@@ -3581,6 +3603,17 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.lights.swarm': '虫の群れ限定',
     'ui.lights.env_hint':
       'フィールドの発光オブジェクト（たいまつ、灯架、ろうそくなど）。燃焼時間のみで照明範囲のデータはありません。',
+    'ui.nav.crafts': '工匠',
+    'ui.search.tag.craft': '工匠',
+    'ui.home.card_labels.crafts': '工匠',
+    'ui.home.view_crafts': '各工匠のレシピと必要素材を見る',
+    'ui.crafts.title': '工匠レシピ一覧',
+    'ui.crafts.stat':
+      '工匠 {merchants} 人 | 製作可能 {items} 種 | レシピ {recipes} 件',
+    'ui.crafts.hint':
+      'NPC ごとにレシピ（完成品と必要素材）を掲載。同じアイテムの品質違いは 1 つのグループにまとめ、鉱石→インゴットのレシピは NPC の紐付けがないため「インゴット製作」にまとめています。カードをクリックすると検索できます。',
+    'ui.crafts.materials': '素材',
+    'ui.crafts.tab.ingots': 'インゴット製作',
   },
   'zh-Hant': {
     'ui.pwa.install_title': '安裝 DND閃電指南',
@@ -3631,6 +3664,17 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.lights.swarm': '僅蟲潮',
     'ui.lights.env_hint':
       '場景中的發光道具（火把、燈架、蠟燭等），只有燃燒時間，沒有照明範圍資料。',
+    'ui.nav.crafts': '工匠',
+    'ui.search.tag.craft': '工匠',
+    'ui.home.card_labels.crafts': '工匠',
+    'ui.home.view_crafts': '查看各工匠的製作配方與所需材料',
+    'ui.crafts.title': '【工匠】製作配方一覽',
+    'ui.crafts.stat':
+      '共 {merchants} 位工匠 | {items} 種可製作物品 | {recipes} 條配方',
+    'ui.crafts.hint':
+      '按 NPC 分組查看製作配方（成品 + 所需原料）。同一物品的不同品質配方歸為一組；礦石→錠的配方在資料中沒有 NPC 歸屬，統一放在「錠製作」。點擊卡片可搜尋該物品。',
+    'ui.crafts.materials': '材料',
+    'ui.crafts.tab.ingots': '錠製作',
   },
 };
 

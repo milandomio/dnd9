@@ -30,6 +30,9 @@ DUNGEON_MODULE_DIR = DATA_DIR / "Dungeon" / "DungeonModule"
 INGAME_MERCHANT_DIR = DATA_DIR / "InGameMerchant" / "InGameMerchant"
 INGAME_MERCHANT_SCHEDULE_DIR = DATA_DIR / "InGameMerchant" / "InGameMerchantSchedule"
 INGAME_MERCHANT_STOCK_BUY_DIR = DATA_DIR / "InGameMerchant" / "InGameMerchantStockBuy"
+# 酒馆工匠（Alchemist / Armourer / ...）与其制作配方
+CRAFT_MERCHANT_DIR = DATA_DIR / "Merchant" / "Merchant"
+CRAFT_STOCK_DIR = DATA_DIR / "Merchant" / "StockCraft"
 SPAWNER_DIR = DATA_DIR / "Spawner" / "Spawner"
 ART_DIR = DATA_DIR / "Art"
 

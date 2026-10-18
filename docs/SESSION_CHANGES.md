@@ -14,6 +14,25 @@
   3. 新增 `error` 状态与 5 秒自动重试（由 `attempt` 计数驱动 effect 重跑），网络恢复后自动拉取并渲染，无需用户手动刷新。
 - **验证**：`cd web && npm run check` 通过（lint 0 error / 20 既有 warning、Prettier、`tsc --noEmit`）；`npm run build` 退出码 0（3113 页 / 17109 文件，mode=quick）；`npx vite preview`（8080 被占用 → 回落 8081）HTTP 200；Playwright 三轮验证：正常路径渲染「共 8 种灯具 | 45 个品质变体」且「环境」标签存在；用 CDP `Network.setBlockedURLs` 阻断 `lights.json` 时页面显示「加载中...」且**不含**「共 0 种灯具」；解除阻断后 ≤2.5s 自动恢复为 8/45。
 
+### feat: 【工匠】栏目——按制作 NPC 分标签页展示配方与原料
+
+- **改动原因**：用户要求新增【工匠】栏目：顶部标签页为制作 NPC 名字（替换【灯】页的 常用/不常用/环境），内容为「制作的物品 + 所需原料」，同一物品的不同稀有度归为一组，UI 仿造【灯】，数据来源限定 `V2/Merchant`。侦察发现 9 条「矿石→锭」配方在游戏数据里没有任何 NPC 归属（`MerchantSchedule` 只引用 `StockSellBack`，全库无 `StockCraft` 引用），经用户确认：单独开一个【锭制作】标签页收拢这些无归属配方。
+- **变更文件**：`api/src/db/importers/crafts.py`（新增）、`api/src/db/repositories/crafts.py`（新增）、`api/src/craft_builder.py`（新增）、`api/src/db/schema.py`、`api/src/db/__init__.py`、`api/src/db/importers/__init__.py`、`api/src/db/repositories/__init__.py`、`api/src/config.py`、`api/src/collector.py`、`api/src/index_export.py`、`api/src/db_freshness.py`、`api/src/locale_builder.py`、`web/src/hooks/useCrafts.ts`（新增）、`web/src/pages/CraftsPage.tsx`（新增）、`web/src/types/data.ts`、`web/src/AppInner.tsx`、`web/src/components/NavBar.tsx`、`web/src/pages/HomePage.tsx`、`web/src/i18n/uiLocale.ts`、`web/src/i18n/seoTemplate.mjs`、`web/src/i18n/seoTemplate.d.mts`、`web/scripts/ssg.mjs`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 数据源：`V2/Merchant/StockCraft`（一个文件一条配方，共 **332** 条）+ `V2/Merchant/Merchant`（取有 Craft 服务的商人：显示名 `Properties.Name.Key`、酒馆顺序 `Properties.Order`）。新增 DB 表 `craft_recipes`（`recipe_id`=资产名`#索引`、产物裸名+折叠名+品质、`requirements_json`、话术 key）与 `craft_merchants`（`kind` = `npc` / `ingot`，含 `sort_order`），并加 `idx_craft_recipes_merchant` 索引。
+  2. NPC 归属三级判定（`CraftsImporter._owner`）：① 文件名 `Id_StockCraft_<商人>_NN` 且该商人在 Craft 商人表内（Alchemist/Armourer/Goldsmith/Leathersmith/Surgeon/Tailor/Weaponsmith/Woodsman）；② 配方的 conversation key `..._StockCraft_Conversation_<商人>_...`（3 个钱袋 GoldBag/GoldPouch/SpectralCoinbag → **Leathersmith**，故皮革匠 49 条 = 46 + 3）；③ 其余无归属者（9 条矿石→锭）归入合成标签 `__ingots__`，`sort_order=1000` 排在最后，前端用 `ui.crafts.tab.ingots`＝「锭制作」渲染。
+  3. 品质由物品名 `_1001~_8001` 后缀映射（Poor→Artifact，与地牢商店/掉落页同表）；产物与原料统一存**折叠名**（`VoidBlade_5001` → `VoidBlade`），导出时按「商人 → 折叠物品名 → 品质 → UniqueID」排序，前端单趟扫描即可把同一物品的不同稀有度归为一组。
+  4. 导出阶段只读 DB：`craft_builder.build_and_save_crafts()` 产出 `data/json/crafts.json`（`count`=9 个标签、`item_count`=255 组、`recipe_count`=332）。NPC 显示名走 `Text_DesignData_Merchant_Merchant_<Name>` 翻译键，因此 `locale_builder` 把 `crafts.json` 纳入 `_collect_keys` 收集（否则非 zh-Hans 语言只有中文回退值）。
+  5. 前端：`useCrafts` 与修好的 `useLights` 同构（数据未到前保持加载态、失败 5s 自动重试、失败 promise 不入缓存）；`CraftsPage` 顶部标签＝NPC 名（附组数），卡片＝品质色 + 「材料：名称×数量」（原料按各自品质着色），点击卡片注入搜索框查询该物品。
+  6. 接线：`index.json` 新增 `{page: crafts, label: 工匠, count: 9}` 与 `_nav` 搜索项、HomePage 卡片主题/文案、路由 `/:lang/crafts`、NavBar 面包屑与搜索标签、`db_freshness` `REQUIRED_TABLES` 增表并把 `GENERATOR_VERSION` 提升为 `db-lifecycle-v9-craft-recipes`（触发 DB 全量重建）、SSG `SINGLE`/`routeDataKey` 新增 `crafts`（每语言生成 `/{lang}/crafts/`）。
+- **验证**：
+  - 管道全量重建（`[DB] state=REBUILD_REQUIRED`）：`import_craft_recipes DONE -> 9 merchants, 332 recipes`、`crafts export DONE -> 9 merchants, 255 items, 332 recipes`，管道总耗时 47.05s，无 error/traceback。
+  - 隔离重放：用真实 DB 跑 `build_and_save_crafts` 与已交付的 `data/json/crafts.json` 对比 `identical: True`。
+  - `api/lint.sh`（ruff + black）通过；`cd web && npm run check` 通过（lint 0 error / 20 既有 warning、Prettier、`tsc --noEmit`）。
+  - `npm run build` 退出码 0（3114 页 / 17121 文件，mode=quick；10 语言 sitemap 各 1338 URL）；`npx vite preview`（8080 被占用 → 落 8081）`/zh-Hans/crafts/`、`/en/crafts/`、`/ja/crafts/` 均 HTTP 200。
+  - Playwright：zh-Hans 渲染 9 个标签（炼金术师17/医师1/制甲匠42/武器锻造师62/樵夫3/裁缝48/皮革匠49/珠宝匠24/锭制作9）与统计行「共 9 位工匠 | 255 种可制作物品 | 332 条配方」；「清晰药水」的优秀/罕见两条配方归入同一组；「锭制作」标签显示 9 种锭（钴锭/铜锭/霜石锭/金锭/铁锭/黑曜石锭/红宝石银锭/银锭/潮汐石锭）；en 页标签与材料正确（Ingots、Materials、Brimstone Ore×2）；无 hydration/page error（仅既有的 Cloudflare insights CORS 报错）。`BASE_URL=http://localhost:8081 node tests/i18n.mjs` → Pass 29 / Fail 0。
+- **备注**：`api/data/darkfindv5.db` 为 skip-worktree 跟踪文件，本次未纳入提交；`data/json/crafts.json` 已由本次管道生成。
+
 ## 2026-10-16
 
 ### chore: 补丁部署——同步游戏数据并全量重建 DB

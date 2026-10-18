@@ -20,6 +20,7 @@ import DungeonModuleDetailPage from './pages/DungeonModuleDetailPage';
 import DungeonShopsPage from './pages/DungeonShopsPage';
 import DungeonShopDetailPage from './pages/DungeonShopDetailPage';
 import LightsPage from './pages/LightsPage';
+import CraftsPage from './pages/CraftsPage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import SWUpdateBanner from './components/SWUpdateBanner';
@@ -76,6 +77,7 @@ function AppRoutes() {
         element={<DungeonModuleDetailPage />}
       />
       <Route path="/:lang/lights" element={<LightsPage />} />
+      <Route path="/:lang/crafts" element={<CraftsPage />} />
       <Route path="/:lang/dungeon_shops" element={<DungeonShopsPage />} />
       <Route
         path="/:lang/dungeon_shops/:region"

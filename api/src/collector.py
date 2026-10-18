@@ -7,6 +7,7 @@ from config import (
     LOG_DIR,
     OUTPUT_DIR,
 )
+from craft_builder import build_and_save_crafts
 from db_freshness import has_usable_database
 from db_manager import DatabaseManager
 from drop_rate import DropRateEngine
@@ -117,6 +118,10 @@ def run(
             with pipe.phase("import_environment_lights", 11) as ctx:
                 count = db.import_environment_lights()
                 ctx.set_result(f"{count} environment props")
+
+            with pipe.phase("import_craft_recipes", 11) as ctx:
+                counts = db.import_craft_recipes()
+                ctx.set_result(f"{counts['merchants']} merchants, {counts['recipes']} recipes")
 
             with pipe.phase("import_spawner_entries", 11) as ctx:
                 count = db.import_spawner_entries()
@@ -624,6 +629,21 @@ def run(
                 f"{len(lights_payload['environment'])} environment props"
             )
 
+        with pipe.step("crafts export") as ctx:
+            craft_data = db.get_craft_data()
+            crafts_payload = build_and_save_crafts(
+                craft_data["merchants"],
+                craft_data["recipes"],
+                items,
+                resolver.resolve,
+                OUTPUT_DIR,
+            )
+            craft_count = crafts_payload["count"]
+            ctx.set_result(
+                f"{craft_count} merchants, {crafts_payload['item_count']} items, "
+                f"{crafts_payload['recipe_count']} recipes"
+            )
+
         _lootdrop_enrichment_started = time.perf_counter()
         enrich_all_entities(
             drop_engine,
@@ -667,6 +687,7 @@ def run(
                 group_label_resolver=lambda g: _resolve_group_display(g, translations),
                 shop_regions=len(shop_data["index"]["regions"]),
                 light_count=light_count,
+                craft_count=craft_count,
             )
             ctx.set_result("DONE")
 

@@ -13,6 +13,7 @@ export type SeoPageType =
   | 'shops'
   | 'shopRegion'
   | 'lights'
+  | 'crafts'
   | 'module';
 
 export type SeoFacts = Record<string, string | number | undefined>;
