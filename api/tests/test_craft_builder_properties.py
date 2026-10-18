@@ -147,6 +147,17 @@ class CraftBuilderPropertiesTest(unittest.TestCase):
         self.assertEqual(saved["recipes"][0]["properties"]["primary"][0]["translation"], "护甲值")
         self.assertIn("Id_ItemProperty_Secondary_Chest", saved["property_pools"])
 
+    def test_merchant_carries_tab_route_slug(self):
+        payload = self._build(_ITEM_PROPERTIES, _POOLS)
+        self.assertEqual([(m["name"], m["slug"]) for m in payload["merchants"]], [("Tailor", "tailor")])
+
+    def test_ore_tab_slug_is_readable(self):
+        merchants = [{"merchant_name": "__ores__", "kind": "ores", "translation_key": "", "sort_order": 9}]
+        recipes = _recipe()
+        recipes[0]["merchant_name"] = "__ores__"
+        payload = build_and_save_crafts(merchants, recipes, _items(), _resolve, self.output_dir)
+        self.assertEqual([(m["name"], m["slug"]) for m in payload["merchants"]], [("__ores__", "ores")])
+
 
 if __name__ == "__main__":
     unittest.main()

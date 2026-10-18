@@ -322,6 +322,20 @@ for (const r of shopRegions) {
   });
 }
 
+// Crafts: one page per crafter tab (``/crafts/{slug}/``) so the tab is routable and
+// search results can link straight at it. All tabs share the crafts payload.
+let craftMerchants = [];
+try {
+  craftMerchants = readJSON(join(DATA, 'crafts.json')).merchants ?? [];
+} catch {}
+for (const m of craftMerchants) {
+  if (!m.slug) continue;
+  routes.push({
+    path: `/${DEFAULT_LANG}/crafts/${m.slug}`,
+    file: `${DEFAULT_LANG}/crafts/${m.slug}/index.html`,
+  });
+}
+
 for (const p of PAGES) {
   const list = readJSON(join(DATA, `${p}.json`));
   for (const e of list) {
@@ -679,7 +693,9 @@ function routeDataKey(path) {
     return 'dungeon_shops';
   }
   if (stripped === '/lights') return 'lights';
-  if (stripped === '/crafts') return 'crafts';
+  // Every crafter tab page shares the one crafts payload.
+  if (stripped === '/crafts' || stripped.startsWith('/crafts/'))
+    return 'crafts';
   return `list-${stripped.slice(1)}`;
 }
 
@@ -1320,6 +1336,7 @@ function sitemapPriority(path) {
     return ['0.6', 'weekly'];
   if (path.startsWith('/lootdrops/')) return ['0.5', 'weekly'];
   if (path.startsWith('/dungeon_modules/')) return ['0.5', 'weekly'];
+  if (path.startsWith('/crafts/')) return ['0.5', 'weekly'];
   if (path.startsWith('/quest_')) return ['0.4', 'monthly'];
   // list pages
   if (path.split('/').length <= 2) return ['0.8', 'weekly'];

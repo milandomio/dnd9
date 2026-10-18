@@ -370,6 +370,8 @@ export interface CraftProperties {
 /** A crafting NPC tab (or the synthetic 【矿类】 tab). */
 export interface CraftMerchant {
   name: string;
+  /** URL slug of the tab route (``/crafts/{slug}/``): ``alchemist``, ``ores``. */
+  slug: string;
   /** 'npc' for a real merchant, 'ores' for the synthetic ore-refining tab. */
   kind: string;
   translation_key?: string;

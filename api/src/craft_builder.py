@@ -76,6 +76,11 @@ def _signature(requirements: list[dict]) -> tuple[str, ...]:
     return tuple(sorted(set(distinctive or names)))
 
 
+def _merchant_slug(merchant_name: str, kind: str) -> str:
+    """URL slug of a 【工匠】 tab: ``Alchemist`` -> ``alchemist``, ``__ores__`` -> ``ores``."""
+    return "ores" if kind == "ores" else merchant_name.lower()
+
+
 def _category_name(category_key: str) -> str:
     """``..._Type_Item_Category_Armor`` -> ``Armor``."""
     return category_key.rsplit("_Category_", 1)[-1]
@@ -335,6 +340,7 @@ def build_and_save_crafts(
         merchant_entries.append(
             {
                 "name": merchant_name,
+                "slug": _merchant_slug(merchant_name, row["kind"]),
                 "kind": row["kind"],
                 "translation_key": row["translation_key"],
                 "display": (

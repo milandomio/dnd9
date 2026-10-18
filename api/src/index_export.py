@@ -290,8 +290,8 @@ def _iter_shop_search_entries(shop_index: dict | None, output_dir: Path) -> list
 def _iter_craft_search_entries(crafts_payload: dict | None) -> list[dict]:
     """One search entry per (merchant, item) for the goods a crafter makes.
 
-    Recipes have no page of their own, so the entry links to /crafts/ with the
-    item name as ``?item=`` for that page to focus.
+    Each merchant tab has its own route (``/crafts/{slug}/``), so the entry links
+    straight to that tab with the item name as ``?item=`` for the page to focus.
     """
     entries: list[dict] = []
     if not crafts_payload:
@@ -307,14 +307,15 @@ def _iter_craft_search_entries(crafts_payload: dict | None) -> list[dict]:
         if key in seen:
             continue
         seen.add(key)
+        merchant = merchants.get(merchant_name, {})
+        slug = merchant.get("slug") or merchant_name
         entry = {
             "name": item_name,
             "translation": recipe.get("translation", item_name),
             "translation_key": recipe.get("translation_key", ""),
             "page": "crafts",
-            "url": _search_url("/crafts/", {"item": item_name}),
+            "url": _search_url(f"/crafts/{urllib.parse.quote(slug, safe='')}/", {"item": item_name}),
         }
-        merchant = merchants.get(merchant_name, {})
         if merchant.get("translation_key"):
             entry["tag_translation_key"] = merchant["translation_key"]
         if merchant.get("display"):

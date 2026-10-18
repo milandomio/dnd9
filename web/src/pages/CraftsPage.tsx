@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../hooks/useTheme';
 import { useCrafts } from '../hooks/useCrafts';
@@ -61,8 +67,12 @@ export default function CraftsPage() {
   const { data, loading } = useCrafts(ssrData);
   const { tokens } = useTheme();
   const { t, ut, lang, dict } = useLocale();
-  const [activeTab, setActiveTab] = useState('');
+  // The active tab is part of the route (``/crafts/{slug}/``) so search results and
+  // shared links open the right crafter directly; ``/crafts/`` falls back to the
+  // first tab.
+  const { merchant: merchantSlug } = useParams();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   // Set after mount (not during render) so a shared ?item= link hydrates the same
   // HTML as the static build before the highlight is applied.
   const [focusItem, setFocusItem] = useState('');
@@ -74,14 +84,27 @@ export default function CraftsPage() {
   useEffect(() => {
     if (!focusItem || !data) return;
     const hit = data.recipes.find((recipe) => recipe.name === focusItem);
-    if (hit) setActiveTab(hit.merchant);
+    const routed = data.merchants.find((m) => m.slug === merchantSlug);
+    const active = routed?.name ?? data.merchants[0]?.name;
+    // Legacy ``/crafts/?item=`` links carry no tab segment; send them to the route
+    // of the recipe's own crafter so the card is rendered and highlighted.
+    if (hit && hit.merchant !== active) {
+      const target = data.merchants.find((m) => m.name === hit.merchant);
+      if (target) {
+        navigate(
+          `/${lang}/crafts/${target.slug}/?item=${encodeURIComponent(focusItem)}`,
+          { replace: true }
+        );
+        return;
+      }
+    }
     const timer = setTimeout(() => {
       document
         .querySelector(`[data-craft-item="${CSS.escape(focusItem)}"]`)
         ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
     return () => clearTimeout(timer);
-  }, [focusItem, data]);
+  }, [focusItem, data, merchantSlug, lang, navigate]);
 
   if (loading)
     return (
@@ -92,7 +115,8 @@ export default function CraftsPage() {
 
   const merchants = data?.merchants ?? [];
   const selected =
-    merchants.find((merchant) => merchant.name === activeTab) ?? merchants[0];
+    merchants.find((merchant) => merchant.slug === merchantSlug) ??
+    merchants[0];
   const delimiter = ['zh-Hans', 'zh-Hant', 'ja'].includes(lang) ? '、' : ', ';
 
   // Recipes arrive sorted by merchant, then section, then item, then rarity, so
@@ -183,10 +207,10 @@ export default function CraftsPage() {
               ? t(merchant.translation_key, merchant.display || merchant.name)
               : ut('ui.crafts.tab.ores');
           return (
-            <button
+            <Link
               key={merchant.name}
-              type="button"
-              onClick={() => setActiveTab(merchant.name)}
+              to={`/${lang}/crafts/${merchant.slug}/`}
+              aria-current={active ? 'page' : undefined}
               style={{
                 padding: '7px 18px',
                 border: `1px solid ${active ? tokens.accent : tokens.border}`,
@@ -196,6 +220,7 @@ export default function CraftsPage() {
                 fontWeight: 'bold',
                 color: active ? tokens.accent : tokens.muted,
                 background: active ? tokens.surface : tokens.card,
+                textDecoration: 'none',
               }}
             >
               {label}
@@ -209,7 +234,7 @@ export default function CraftsPage() {
               >
                 {merchant.recipe_count}
               </span>
-            </button>
+            </Link>
           );
         })}
       </div>

@@ -76,6 +76,7 @@ function AppRoutes() {
       />
       <Route path="/:lang/lights" element={<LightsPage />} />
       <Route path="/:lang/crafts" element={<CraftsPage />} />
+      <Route path="/:lang/crafts/:merchant" element={<CraftsPage />} />
       <Route path="/:lang/dungeon_shops" element={<DungeonShopsPage />} />
       <Route
         path="/:lang/dungeon_shops/:region"

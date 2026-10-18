@@ -77,11 +77,12 @@ CRAFTS_PAYLOAD = {
     "merchants": [
         {
             "name": "Alchemist",
+            "slug": "alchemist",
             "kind": "npc",
             "translation_key": "Text_DesignData_Merchant_Merchant_Alchemist",
             "display": "炼金术师",
         },
-        {"name": "__ores__", "kind": "ores", "translation_key": "", "display": ""},
+        {"name": "__ores__", "slug": "ores", "kind": "ores", "translation_key": "", "display": ""},
     ],
     "recipes": [
         {
@@ -170,9 +171,19 @@ class CraftSearchEntryTest(unittest.TestCase):
         )
         healing = entries[0]
         self.assertEqual(healing["page"], "crafts")
-        self.assertEqual(healing["url"], "/crafts/?item=HealingPotion")
+        # The crafter tab is a route now, so the entry links to that tab directly.
+        self.assertEqual(healing["url"], "/crafts/alchemist/?item=HealingPotion")
         self.assertEqual(healing["translation_key"], "Text_DesignData_Item_Item_HealingPotion_1001")
         self.assertEqual(healing["tag_translation_key"], "Text_DesignData_Merchant_Merchant_Alchemist")
+        # The synthetic ore tab gets a readable slug instead of ``__ores__``.
+        self.assertEqual(entries[1]["url"], "/crafts/ores/?item=IronIngot")
+
+    def test_merchant_without_slug_falls_back_to_name(self):
+        payload = {
+            "merchants": [{"name": "Alchemist", "kind": "npc"}],
+            "recipes": [{"merchant": "Alchemist", "name": "HealingPotion"}],
+        }
+        self.assertEqual(_iter_craft_search_entries(payload)[0]["url"], "/crafts/Alchemist/?item=HealingPotion")
 
     def test_empty_payload_yields_nothing(self):
         self.assertEqual(_iter_craft_search_entries(None), [])

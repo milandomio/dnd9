@@ -78,6 +78,7 @@ Lootdrop 变体的静态范围：普通变体只生成默认变体实体 HTML，
 | 地图模块表 | `/dungeon_modules` | 4 (分组列表) |
 | 地图模块分组 | `/dungeon_modules/:group` | 4 |
 | 地图模块详情 | `/dungeon_modules/:group/:name` | 全宽 |
+| 工匠（分页标签路由） | `/crafts` `/crafts/:merchant` | 自动填充卡片网格；`:merchant` 为工匠标签 slug（`alchemist`…`goldsmith`、`ores`），`/crafts` 回落首个标签 |
 
 ## 组件架构
 

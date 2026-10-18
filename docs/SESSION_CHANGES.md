@@ -4,6 +4,19 @@
 
 ## 2026-10-19
 
+### feat: 【工匠】分页标签改为路由（`/crafts/:merchant`），搜索直达标签页
+
+- **改动原因**：用户要求「为 `zh-Hans/crafts/` 页面的不同分页标签添加路由，使搜索结果能直接跳到路由的标签页而不是自己翻找」。原实现里标签只是组件内 state（`activeTab`），搜索跳转只能落 `/crafts/?item=X` 再由 `useEffect` 猜测并切换标签。
+- **变更文件**：`api/src/craft_builder.py`、`api/src/index_export.py`、`api/tests/test_craft_builder_properties.py`、`api/tests/test_search_index_entries.py`、`web/src/types/data.ts`、`web/src/AppInner.tsx`、`web/src/pages/CraftsPage.tsx`、`web/scripts/ssg.mjs`、`docs/AGENT_REFERENCE.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **商品标签 slug**：`craft_builder._merchant_slug()` 生成语言无关的稳定 slug——NPC 用 `merchant_name.lower()`（`Alchemist` → `alchemist`），合成矿石标签 `__ores__` 映射为 `ores`；`crafts.json` 的 `merchants[]` 新增 `slug` 字段（前端类型 `CraftMerchant.slug` 同步）。
+  2. **搜索直达**：`_iter_craft_search_entries()` 的 url 由 `/crafts/?item=X` 改为 `/crafts/{slug}/?item=X`，搜索结果点击后直接命中该工匠标签路由，无需再猜标签。
+  3. **路由与标签同源**：`AppInner` 新增 `/:lang/crafts/:merchant`；`CraftsPage` 用 `useParams` 取 `merchant` 并与 `merchant.slug` 匹配决定选中标签（找不到回落首个），删除 `activeTab` state；标签按钮由 `<button onClick>` 改为 `<Link to="/{lang}/crafts/{slug}/">`（带 `aria-current="page"`），可被爬虫跟随、支持新标签页打开，切换标签不再残留 `?item=`。
+  4. **兼容旧链接**：`/crafts/?item=X`（无标签段）在 `?item=` 命中的配方所属工匠与当前标签不一致时，用 `navigate(..., { replace: true })` 重定向到 `/crafts/{slug}/?item=X`，随后照旧高亮 + 平滑滚动。
+  5. **SSG**：`ssg.mjs` 按 `crafts.json` 的 `merchants[].slug` 为每个标签生成 `/{lang}/crafts/{slug}/` 页面（`routeDataKey` 让所有标签页共享 `crafts` 数据，SSR 阶段即渲染对应标签），sitemap 给 `/crafts/*` 提升为 `['0.5','weekly']`；非语言前缀 URL（`/crafts/weaponsmith`）由既有 step 5c/5d 机制自动生成 meta-refresh + `_redirects` 301。
+- **结果**：每语言新增 9 个标签页（10 语言共 +90 页，另 +9 个无语言前缀重定向页）；SSG 3116 → 3125 页、dist 17148 → 17247 文件、sitemap 13400 → 13490 URL；`crafts.json` 9 个 slug（`alchemist/surgeon/armourer/weaponsmith/woodsman/tailor/leathersmith/goldsmith/ores`），`search_index.json` 255 条工匠条目的 url 全部改为标签路由（`/crafts/ores/?item=BrimstonePowder` 等，无 `__ores__` 残留）。
+- **验证**：`api/lint.sh` + `black --check src tests` 通过；`cd api && python3 -m unittest discover -s tests` 163/163 OK（新增 slug 与「无 slug 回落」用例，并更新工匠 url 断言）；`npm run check`（eslint 0 error / 20 既有 warning、Prettier、tsc）通过；`python main.py` 走导出态（`[DB] state=DB_READY`，DB 未变）；`npm run build` 3125 页；`BASE_URL=http://localhost:8081 npm run test:i18n` Pass 29 / Fail 0；8081 各标签页 HTTP 200；Playwright 实测 zh-Hans 搜「獾吊坠」点工匠结果 → `/zh-Hans/crafts/goldsmith/?item=BadgerPendant` 且珠宝匠标签选中、卡片高亮（`box-shadow` 命中）；搜「清晰药水」→ `/crafts/alchemist/?item=ClarityPotion`；直接访问 `/zh-Hans/crafts/goldsmith/` 首个卡片为 `BadgerPendant`（SSR 直出对应标签）；点击「矿石」标签 → `/crafts/ores/` 客户端切换并渲染 `BrimstonePowder`；旧链接 `/crafts/?item=BladeOfRighteousness` → 自动 replace 到 `/crafts/weaponsmith/?item=BladeOfRighteousness` 并高亮；`/en/crafts/tailor/` 正常（首卡 `CobaltFrock`）、`/crafts/` 无标签时回落首个标签；全过程无 pageerror、无 hydration 报错。
+
 ### chore: 归档【任务探索表】（下线 `/explore` 并从主页移除入口）
 
 - **改动原因**：用户要求「把【任务探索表】的代码做归档，并从主页中移除【任务探索表】」。确认范围为「前端页面 + 后端导出一起归档，DB 表保留」，归档位置沿用仓库既有约定 `web/src/_archived/` 与 `api/src/_archived/`。
