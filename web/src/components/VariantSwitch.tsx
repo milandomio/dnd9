@@ -28,12 +28,15 @@ interface VariantSwitchProps {
   variantRarity: Record<string, { name: string; translation_key: string }>;
   itemName: string;
   currentSuffix: string | null;
+  /** Selected source ids to keep in ``?sources=`` when switching variants. */
+  sources?: string[];
 }
 
 export default function VariantSwitch({
   variantRarity,
   itemName,
   currentSuffix,
+  sources,
 }: VariantSwitchProps) {
   const { tokens } = useTheme();
   const { lang } = useLanguage();
@@ -65,7 +68,9 @@ export default function VariantSwitch({
         return (
           <Link
             key={suffix}
-            to={`/${lang}/lootdrops/${itemName}_${suffix}/`}
+            to={`/${lang}/lootdrops/${itemName}_${suffix}/${
+              sources ? `?sources=${encodeURIComponent(sources.join(','))}` : ''
+            }`}
             style={{
               padding: '8px 15px',
               border: `2px solid ${color}`,

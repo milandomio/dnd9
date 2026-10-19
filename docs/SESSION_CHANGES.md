@@ -629,3 +629,16 @@
 - **变更文件**：`api/data/darkfindv5.db`；`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：远端 `main` 追踪与本地一致的 `darkfindv5.db` 二进制快照；该库保留实体、生成点、掉落率和十语言翻译等 36 张数据表，前端与构建管道继续从该 DB 读取数据。
 - **验证**：SQLite 表结构可读取，确认包含 36 张表。
+
+### feat: 掉落详情页来源筛选写入可分享路由参数 `?sources=`
+
+- **改动原因**：用户要求 `zh-Hans/lootdrops/HeaterShield_8001/` 等掉落详情页的怪物/来源选中状态「提供参数路由」，例如只显示「洞穴巨魔」时更新 URL，别人打开链接即可看到同样的筛选结果。
+- **变更文件**：`web/src/pages/LootdropDetailPage.tsx`、`web/src/components/VariantSwitch.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **参数格式**：URL 查询参数 `?sources=`，值为仍处于显示状态的来源 id（`source_id ?? name`，如 `CaveTroll`、`Lich`、`SuperHoard01_9`），逗号分隔；`?sources=`（空值）表示全部隐藏；无该参数表示沿用原有阈值默认可见性（不变）。
+  2. **点击即写 URL**：`toggle`、「显示全部 / 隐藏全部」按钮在更新 `hidden` 的同一步调用 `updateSourcesParam()`，用 `setSearchParams(..., { replace: true })` 写回，避免每次点选都堆积历史记录；全部可见时删除参数，URL 回到干净状态。
+  3. **打开即还原**：`useSearchParams()` 读取 `sources`，`hiddenForSources()` 把未列出的来源加入 `hidden`；效果只在挂载后/参数变化时应用，首帧仍用阈值默认值，保证与 SSG 静态 HTML 一致（无水合差异）；`skipSelectionApplyRef` 用于跳过自身写 URL 的回声。
+  4. **容错**：来源匹配同时接受 `source_id`、`name` 与 `translation`（中文翻译也可手写）；未知 id 不报错，表现为该来源隐藏。
+  5. **阈值联动**：`threshold` 变化（调试面板）在存在显式 `?sources=` 时不再覆盖选择。
+  6. **变体切换**：`VariantSwitch` 新增可选 `sources` 属性，切品质（1001–7001 等）时把当前选择带进新 URL，避免筛选丢失。
+- **验证**：`npm run check`（eslint 0 error / 20 既有 warning、Prettier、`tsc --noEmit`）通过；`npm run build` 生成 3125 页、dist 17247 文件；8081 `vite preview` HTTP 200；Playwright 实测 `/zh-Hans/lootdrops/HeaterShield_8001/` 默认 H1 显示「洞穴巨魔、巫妖、熔岩飞龙、超级宝藏堆 (+1)」，点「隐藏全部」再点「洞穴巨魔」后 URL 变为 `?sources=CaveTroll`，H1 只剩「洞穴巨魔 (+4)」且地图区仅渲染 `哥布林小镇 B` 1 个位置点；新开页面加载该分享 URL 得到同样的按钮透明度（熔岩飞龙/巫妖/鬼灵骑士 0.3）与 H1，无 pageerror / 无水合报错；`?sources=` 空值链接打开后 5 个来源全部隐藏；无参数与未知 id 均不破坏原有默认展示。

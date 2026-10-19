@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { useDungeonModules } from '../hooks/useDungeonModules';
@@ -126,6 +126,35 @@ function lootdropSourceKey(monster: LootdropMonster): string {
 
 function monsterVisibilityKey(monster: LootdropMonster): string {
   return lootdropSourceKey(monster);
+}
+
+// Stable identifier used by the shareable ``?sources=`` route parameter.
+function monsterRouteKey(monster: LootdropMonster): string {
+  return monster.source_id ?? monster.name ?? monster.translation;
+}
+
+function matchesRouteSource(
+  monster: LootdropMonster,
+  selected: Set<string>
+): boolean {
+  return (
+    selected.has(monsterRouteKey(monster)) ||
+    selected.has(monsterVisibilityKey(monster)) ||
+    selected.has(monster.translation)
+  );
+}
+
+function hiddenForSources(
+  monsters: LootdropMonster[],
+  selected: Set<string>
+): Set<string> {
+  const hidden = new Set<string>();
+  for (const monster of monsters) {
+    if (!matchesRouteSource(monster, selected)) {
+      hidden.add(monsterVisibilityKey(monster));
+    }
+  }
+  return hidden;
 }
 
 function normalizeQuestGroup(group: QuestGroupData): LootdropItem {
@@ -271,6 +300,7 @@ export default function LootdropDetailPage({
 }: LootdropDetailPageProps) {
   const { name, group } = useParams<{ name: string; group: string }>();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const isQuestGroupPage = mode === 'quest_group';
   const decodedName = decodeURIComponent(
     (isQuestGroupPage ? group : name) ?? ''
@@ -364,15 +394,47 @@ export default function LootdropDetailPage({
         defaultThreshold
       )
     : defaultThreshold;
-  const [hidden, setHidden] = useState<Set<string>>(() =>
-    hasLootdropDetail(effectiveSsrData?.item)
-      ? defaultHidden(
-          selectLootdropVariant(effectiveSsrData!.item, currentSuffix)
-            .monsters ?? [],
-          initialThreshold
-        )
-      : new Set()
+  // Shareable source selection: ``?sources=CaveTroll,Lich`` renders only the
+  // listed drop sources. Absent means "no explicit selection" so the default
+  // threshold-based visibility still applies.
+  const hasSourceParam = searchParams.has('sources');
+  const selectedSources = useMemo(
+    () =>
+      new Set(
+        (searchParams.get('sources') ?? '')
+          .split(',')
+          .map((value) => value.trim())
+          .filter(Boolean)
+      ),
+    [searchParams]
   );
+  // An empty ``?sources=`` is an explicit "hide every source" selection; a
+  // missing parameter keeps the default threshold-based visibility.
+  const hasExplicitSelection = hasSourceParam;
+  // Latest selection for callbacks/effects that must not refetch on URL change.
+  const selectedSourcesRef = useRef(selectedSources);
+  selectedSourcesRef.current = selectedSources;
+  const hasSourceParamRef = useRef(hasExplicitSelection);
+  hasSourceParamRef.current = hasExplicitSelection;
+  const skipSelectionApplyRef = useRef(false);
+  const initialHiddenFor = (
+    list: LootdropMonster[],
+    threshold: number
+  ): Set<string> =>
+    hasSourceParamRef.current
+      ? hiddenForSources(list, selectedSourcesRef.current)
+      : defaultHidden(list, threshold);
+  // First client render mirrors the static HTML (threshold defaults); an
+  // explicit ``?sources=`` selection is applied post-hydration by the effects
+  // below. This keeps hydration deterministic for shared links.
+  const [hidden, setHidden] = useState<Set<string>>(() => {
+    if (!hasLootdropDetail(effectiveSsrData?.item)) return new Set();
+    return defaultHidden(
+      selectLootdropVariant(effectiveSsrData!.item, currentSuffix).monsters ??
+        [],
+      initialThreshold
+    );
+  });
   const [hiddenRows, setHiddenRows] = useState<Set<string>>(new Set()); // per-coord toggle: \"monsterName-index\"
   const [threshold, setThreshold] = useState(initialThreshold);
   const [modeFilter, setModeFilter] = useState('');
@@ -395,7 +457,7 @@ export default function LootdropDetailPage({
         const selected = normalizeQuestGroup(fullQuestSsrData);
         setData(selected);
         setThreshold(defaultThreshold);
-        setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
+        setHidden(initialHiddenFor(selected.monsters ?? [], defaultThreshold));
         return () => {
           cancelled = true;
         };
@@ -421,7 +483,9 @@ export default function LootdropDetailPage({
           setQuestGroupData(groupData);
           setData(selected);
           setThreshold(defaultThreshold);
-          setHidden(defaultHidden(selected.monsters ?? [], defaultThreshold));
+          setHidden(
+            initialHiddenFor(selected.monsters ?? [], defaultThreshold)
+          );
         })
         .catch((error: unknown) => {
           if (!cancelled) console.error(error);
@@ -442,7 +506,7 @@ export default function LootdropDetailPage({
         defaultThreshold
       );
       setThreshold(nextThreshold);
-      setHidden(defaultHidden(selected.monsters ?? [], nextThreshold));
+      setHidden(initialHiddenFor(selected.monsters ?? [], nextThreshold));
       return;
     }
     if (!dataVersion) return;
@@ -478,7 +542,7 @@ export default function LootdropDetailPage({
           defaultThreshold
         );
         setThreshold(nextThreshold);
-        setHidden(defaultHidden(selected.monsters ?? [], nextThreshold));
+        setHidden(initialHiddenFor(selected.monsters ?? [], nextThreshold));
       })
       .catch((error) => {
         _globalLootPending.delete(baseName);
@@ -509,12 +573,6 @@ export default function LootdropDetailPage({
       replace: true,
     });
   }, [data, currentSuffix, itemName, lang, navigate, isQuestGroupPage]);
-
-  // 在调试模式下实时响应阈值变化
-  useEffect(() => {
-    if (!data?.monsters) return;
-    setHidden(defaultHidden(data.monsters, threshold));
-  }, [threshold]);
 
   const [visibleMaps, setVisibleMaps] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -689,6 +747,77 @@ export default function LootdropDetailPage({
     [monsters, refCoords, modules, variantRatesBySource]
   );
 
+  // Write the current source selection back to the shareable URL.
+  // Called from the visibility controls (never from URL-driven effects), using
+  // ``replace`` so toggling sources does not pollute the history stack.
+  const updateSourcesParam = (nextHidden: Set<string>) => {
+    if (isQuestGroupPage) return;
+    const all = resolvedMonsters.length > 0 ? resolvedMonsters : monsters;
+    if (all.length === 0) return;
+    const visible = all
+      .filter((m) => !nextHidden.has(monsterVisibilityKey(m)))
+      .map(monsterRouteKey);
+    const allVisible = visible.length === all.length;
+    const current = searchParams.get('sources') ?? '';
+    const next = allVisible ? '' : visible.join(',');
+    if (!allVisible) {
+      if (searchParams.has('sources') && current === next) return;
+    } else if (!searchParams.has('sources')) {
+      return;
+    }
+    // The effect below only reacts to URL changes; its state must stay in sync
+    // with the visibility this write represents, so drop the pending echo.
+    skipSelectionApplyRef.current = true;
+    setSearchParams(
+      (prev) => {
+        const params = new URLSearchParams(prev);
+        if (allVisible) params.delete('sources');
+        else params.set('sources', next);
+        return params;
+      },
+      { replace: true }
+    );
+  };
+
+  // Apply an incoming ``?sources=`` selection from a shared link or a client
+  // navigation. SSR/hydration keeps the threshold-based default, so this runs
+  // only after mount; ``skipSelectionApplyRef`` drops the echo of our own
+  // URL writes (the visibility state is already up to date then).
+  useEffect(() => {
+    if (isQuestGroupPage) return;
+    if (!data) return;
+    const all = resolvedMonsters.length > 0 ? resolvedMonsters : monsters;
+    if (all.length === 0) return;
+    const nextHidden = hasExplicitSelection
+      ? hiddenForSources(all, selectedSources)
+      : defaultHidden(all, threshold);
+    setHidden((prev) => {
+      if (skipSelectionApplyRef.current) {
+        skipSelectionApplyRef.current = false;
+        return prev;
+      }
+      if (prev.size === nextHidden.size) {
+        let same = true;
+        for (const key of nextHidden) {
+          if (!prev.has(key)) {
+            same = false;
+            break;
+          }
+        }
+        if (same) return prev;
+      }
+      return nextHidden;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasExplicitSelection, selectedSources, data, resolvedMonsters, monsters]);
+
+  // Threshold changes must not override an explicit shareable selection.
+  useEffect(() => {
+    if (hasSourceParamRef.current) return;
+    if (!data?.monsters) return;
+    setHidden(defaultHidden(data.monsters, threshold));
+  }, [threshold]);
+
   const orderedMonsters = useMemo(() => {
     return [...resolvedMonsters].sort(
       (a, b) => (b.max_score ?? -1) - (a.max_score ?? -1)
@@ -741,12 +870,11 @@ export default function LootdropDetailPage({
   }
 
   const toggle = (monsterName: string) => {
-    setHidden((prev) => {
-      const next = new Set(prev);
-      if (next.has(monsterName)) next.delete(monsterName);
-      else next.add(monsterName);
-      return next;
-    });
+    const next = new Set(hidden);
+    if (next.has(monsterName)) next.delete(monsterName);
+    else next.add(monsterName);
+    setHidden(next);
+    updateSourcesParam(next);
   };
 
   const toggleRow = (key: string, forceShow?: boolean) => {
@@ -1379,6 +1507,7 @@ export default function LootdropDetailPage({
           variantRarity={data.variant_rarity}
           itemName={itemName}
           currentSuffix={currentSuffix}
+          sources={hasExplicitSelection ? [...selectedSources] : undefined}
         />
       )}
 
@@ -1411,13 +1540,12 @@ export default function LootdropDetailPage({
       >
         <button
           onClick={() => {
-            if (hidden.size > 0) {
-              setHidden(new Set());
-            } else {
-              setHidden(
-                new Set(visibleMonsters.map((m) => monsterVisibilityKey(m)))
-              );
-            }
+            const next =
+              hidden.size > 0
+                ? new Set<string>()
+                : new Set(visibleMonsters.map((m) => monsterVisibilityKey(m)));
+            setHidden(next);
+            updateSourcesParam(next);
           }}
           style={{
             padding: '8px 15px',
@@ -1957,7 +2085,6 @@ export default function LootdropDetailPage({
                       const m = resolvedMonsters.find(
                         (source) => lootdropSourceKey(source) === sourceId
                       )!;
-                      const tl = m.translation;
                       const mDots = dots.filter(
                         (d) => lootdropSourceKey(d.monster) === sourceId
                       );
@@ -2006,7 +2133,7 @@ export default function LootdropDetailPage({
                           ></span>
                           <span
                             style={{ cursor: 'pointer' }}
-                            onClick={() => toggle(tl)}
+                            onClick={() => toggle(monsterVisibilityKey(m))}
                           >
                             {t(lootdropSourceTranslationKey(m), m.translation)}
                           </span>
