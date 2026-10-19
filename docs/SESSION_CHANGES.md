@@ -4,6 +4,14 @@
 
 ## 2026-10-19
 
+### chore: 补丁部署（跳过 FMOD 同步，删库重建并推送含 DB 的 main）
+
+- **改动原因**：用户要求「进行补丁部署（不包括 ~ 的同步脚本）」，即按 `docs/BUILD_AND_DEPLOY.md` 的「更新部署」流程执行，但跳过第 1 步 `~/sync_fmod.sh`（沿用现有 `~/fmod/Output` 解包源）。
+- **变更文件**：`docs/SESSION_CHANGES.md` + 临时跟踪的 `api/data/darkfindv5.db`（推送后立即 `reset` 并恢复 `skip-worktree`）。
+- **关键逻辑/映射关系**：`rm -f api/data/darkfindv5.db` → `cd api && nohup python main.py > pipeline.log 2>&1 &` 全量重建（`[DB] state=REBUILD_REQUIRED: DB missing`，耗时 50.52s，`[VALIDATE] all module images OK`，日志 0 error/0 traceback）。本流程不跑 `npm run build` / `vite preview`，前端 SSG 交给 GitHub Actions。本次推送内容涵盖四个未推送提交：`3f44a95ead`【工匠】属性区间（含 DB 新表）、`dc5580b44b` 搜索纳入商店/工匠/任务目标物、`78f956d279` 归档【任务探索表】、`f98ca08a5b`【工匠】标签路由。
+- **DB 校验**：新 DB 49,500,160 字节、md5 `43c7801756951a4e226ea7c94dd65bca`；`pipeline_meta.generator_version = db-lifecycle-v13-item-properties`、`import_complete=1`；47 张表（含新增 `item_properties` 1876 行、`item_property_pools` 14 行）；`spawners` 55147 / `spawner_entries` 2291 / `props_entities` 592 / `craft_recipes` 332 / `craft_merchants` 9 / `quest_npcs` 14 / `explore_targets` 9。
+- **导出产物校验**：`data/json/crafts.json` 9 个标签 slug（含 `ores`）；`search_index.json` 255 条工匠条目全部为标签路由（`/crafts/alchemist/?item=…`）；`index.json` / `search_index.json` 均无 `explore` 条目、`data/json/explore.json` 已不再产出。
+
 ### feat: 【工匠】分页标签改为路由（`/crafts/:merchant`），搜索直达标签页
 
 - **改动原因**：用户要求「为 `zh-Hans/crafts/` 页面的不同分页标签添加路由，使搜索结果能直接跳到路由的标签页而不是自己翻找」。原实现里标签只是组件内 state（`activeTab`），搜索跳转只能落 `/crafts/?item=X` 再由 `useEffect` 猜测并切换标签。
