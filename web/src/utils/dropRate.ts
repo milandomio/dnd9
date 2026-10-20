@@ -70,13 +70,27 @@ export function formatDropRateEntryLabel(
   return `${prefix}${base}${type}${locked}`;
 }
 
+/**
+ * Modes recorded in the data but never surfaced in the default "all" view.
+ * PvE rates are kept for calculations only — the UI shows the PvP brackets.
+ */
+export const HIDDEN_DROP_RATE_MODES: ReadonlySet<string> = new Set(['PVE']);
+
 export function filterDropRates(
   drop_rates: Record<string, number>,
   modeFilter?: string
 ): [string, number][] {
-  return Object.entries(drop_rates).filter(
-    ([k]) => !modeFilter || k === modeFilter
+  return Object.entries(drop_rates).filter(([k]) =>
+    modeFilter ? k === modeFilter : !HIDDEN_DROP_RATE_MODES.has(k)
   );
+}
+
+/** True when any rate that the UI is allowed to show is above zero. */
+export function hasVisibleDropRate(
+  drop_rates: Record<string, number>,
+  modeFilter?: string
+): boolean {
+  return filterDropRates(drop_rates, modeFilter).some(([, rate]) => rate > 0);
 }
 
 /** Build `[Mode:rate%]` or `[Mode:spawn%×rate%]` with i18n mode labels */

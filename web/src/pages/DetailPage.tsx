@@ -33,6 +33,7 @@ import MapPanel from '../components/MapPanel';
 import MapImageRecognition from '../components/MapImageRecognition';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { HIDDEN_DROP_RATE_MODES, hasVisibleDropRate } from '../utils/dropRate';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import {
@@ -336,9 +337,6 @@ export default function DetailPage() {
     }>;
     gdi: GroupDropInfo[];
   }
-  function hasAnyRate(dr: Record<string, number>): boolean {
-    return Object.values(dr).some((v) => v > 0);
-  }
   function labelMatch(label: string, t: string): boolean {
     const lUndersea = label.includes('UnderSea') || label.includes('海底');
     const lSpecial = label.includes('Special') || label.includes('特殊');
@@ -441,6 +439,7 @@ export default function DetailPage() {
       for (const [, { items, entry }] of sorted) {
         const rateStr = `${entry.spawn_rate}%`;
         const dropStr = Object.entries(entry.drop_rates)
+          .filter(([m]) => !HIDDEN_DROP_RATE_MODES.has(m))
           .map(([m, r]) => `[${m}:${r}%]`)
           .join('');
         sections.push({
@@ -555,8 +554,7 @@ export default function DetailPage() {
                 labelMatch(coord.label || '', entry.translation)
               );
               if (!match) return true;
-              if (modeFilter) return (match.drop_rates[modeFilter] ?? 0) > 0;
-              return hasAnyRate(match.drop_rates);
+              return hasVisibleDropRate(match.drop_rates, modeFilter);
             })
           : item.coords;
         const module = item.mod;
@@ -596,11 +594,7 @@ export default function DetailPage() {
             labelMatch(c.label || '', e.translation)
           );
           if (match) {
-            if (modeFilter) {
-              if ((match.drop_rates[modeFilter] ?? 0) === 0) continue;
-            } else {
-              if (!hasAnyRate(match.drop_rates)) continue;
-            }
+            if (!hasVisibleDropRate(match.drop_rates, modeFilter)) continue;
           }
           bottomCount++;
           bottomMapsSet.add(item.mapName);
@@ -756,9 +750,7 @@ export default function DetailPage() {
                         labelMatch(c.label || '', e.translation)
                       );
                       if (!match) return true;
-                      if (modeFilter)
-                        return (match.drop_rates[modeFilter] ?? 0) > 0;
-                      return hasAnyRate(match.drop_rates);
+                      return hasVisibleDropRate(match.drop_rates, modeFilter);
                     })
                   )
             }
@@ -826,9 +818,7 @@ export default function DetailPage() {
                       labelMatch(c.label || '', e.translation)
                     );
                     if (!match) return true;
-                    if (modeFilter)
-                      return (match.drop_rates[modeFilter] ?? 0) > 0;
-                    return hasAnyRate(match.drop_rates);
+                    return hasVisibleDropRate(match.drop_rates, modeFilter);
                   })
                 : rawCoords;
               const subPoolRate = subPoolGenerationRate(mapCoords);

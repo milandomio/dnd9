@@ -6,7 +6,11 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
-import { dropRateModeLabel } from '../utils/dropRate';
+import {
+  dropRateModeLabel,
+  filterDropRates,
+  hasVisibleDropRate,
+} from '../utils/dropRate';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import SectionHeader from '../components/SectionHeader';
 import VariantSwitch from '../components/VariantSwitch';
@@ -114,10 +118,6 @@ function getRarityColor(
   if (!vr) return fallback;
   const rn = vr.translation_key.split('_').pop() || '';
   return RARITY_COLORS[rn] ?? fallback;
-}
-
-function hasAnyRate(dr: Record<string, number>): boolean {
-  return Object.values(dr).some((v) => v > 0);
 }
 
 function lootdropSourceKey(monster: LootdropMonster): string {
@@ -1127,7 +1127,7 @@ export default function LootdropDetailPage({
               );
               if (!entry) return true;
               if (modeFilter) return (entry.drop_rates[modeFilter] ?? 0) > 0;
-              return hasAnyRate(entry.drop_rates);
+              return hasVisibleDropRate(entry.drop_rates, modeFilter);
             })
           : item.dots;
         const module = item.mod;
@@ -1174,7 +1174,7 @@ export default function LootdropDetailPage({
             if (modeFilter) {
               if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
             } else {
-              if (!hasAnyRate(entry.drop_rates)) continue;
+              if (!hasVisibleDropRate(entry.drop_rates, modeFilter)) continue;
             }
           }
         }
@@ -1213,7 +1213,7 @@ export default function LootdropDetailPage({
               if (modeFilter) {
                 if ((entry.drop_rates[modeFilter] ?? 0) === 0) continue;
               } else {
-                if (!hasAnyRate(entry.drop_rates)) continue;
+                if (!hasVisibleDropRate(entry.drop_rates, modeFilter)) continue;
               }
             }
           }
@@ -1686,7 +1686,7 @@ export default function LootdropDetailPage({
                       if (!entry) return true;
                       if (modeFilter)
                         return (entry.drop_rates[modeFilter] ?? 0) > 0;
-                      return hasAnyRate(entry.drop_rates);
+                      return hasVisibleDropRate(entry.drop_rates, modeFilter);
                     })
                   )
                 : groupItems.length > 0
@@ -1753,7 +1753,7 @@ export default function LootdropDetailPage({
                     if (!entry) return true;
                     if (modeFilter)
                       return (entry.drop_rates[modeFilter] ?? 0) > 0;
-                    return hasAnyRate(entry.drop_rates);
+                    return hasVisibleDropRate(entry.drop_rates, modeFilter);
                   })
                 : rawDots;
               if (dots.length === 0) return null;
@@ -2091,27 +2091,22 @@ export default function LootdropDetailPage({
                       if (hideZeroRate) {
                         const gdi = data?.group_drop_info?.[groupName];
                         const entry = gdi?.find((e) => matchesGroupEntry(e, m));
-                        if (entry) {
-                          if (
-                            modeFilter &&
-                            (entry.drop_rates[modeFilter] ?? 0) === 0
-                          )
-                            return null;
-                          if (!modeFilter && !hasAnyRate(entry.drop_rates))
-                            return null;
-                        }
+                        if (
+                          entry &&
+                          !hasVisibleDropRate(entry.drop_rates, modeFilter)
+                        )
+                          return null;
                       }
                       // 取该怪物在此模块中的 spawn_rate（所有点通常相同，取第一个非默认值）
                       const sr = mDots.find(
                         (d) => d.spawn_rate != null
                       )?.spawn_rate;
-                      const dr = m.drop_rates;
-                      const filteredDr =
-                        dr && modeFilter && dr[modeFilter] != null
-                          ? { [modeFilter]: dr[modeFilter] }
-                          : dr;
-                      const hasRates =
-                        filteredDr && Object.keys(filteredDr).length > 0;
+                      // PvE rates stay in the data but are not shown.
+                      const visibleRates = filterDropRates(
+                        m.drop_rates ?? {},
+                        modeFilter
+                      );
+                      const hasRates = visibleRates.length > 0;
                       return (
                         <span
                           key={sourceId}
@@ -2147,7 +2142,7 @@ export default function LootdropDetailPage({
                           {hasRates && (
                             <span style={{ color: tokens.muted, fontSize: 12 }}>
                               (
-                              {Object.entries(filteredDr!)
+                              {visibleRates
                                 .map(
                                   ([mode, rate]) =>
                                     `[${dropRateModeLabel(mode, t, ut)}:${rate}%]`

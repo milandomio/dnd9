@@ -4,6 +4,22 @@
 
 ## 2026-10-21
 
+### feat: 爆率「全部」模式默认不再显示 PvE 爆率
+
+- **改动原因**：用户要求「爆率显示：全部，这个模式不再显示 pve 爆率，即所有页面默认都不显示 pve 爆率」。
+- **变更文件**：`web/src/utils/dropRate.ts`、`web/src/pages/DetailPage.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **单一开关**：`dropRate.ts` 新增 `HIDDEN_DROP_RATE_MODES = new Set(['PVE'])`；`filterDropRates` 在**未指定 modeFilter**（即「全部」）时跳过该集合中的模式，显式选择 PvE 时仍照常返回 PvE 数据。
+  2. **可见性判断统一**：新增 `hasVisibleDropRate(drop_rates, modeFilter)`，语义为「按当前筛选，是否存在可展示的 >0 爆率」。两个详情页原来的本地 `hasAnyRate` 全部替换（`DetailPage` 内嵌版直接删除），共 11 处调用点，覆盖坐标过滤、分组是否有可见项、地图识别模板、隐藏 0 爆率开关等分支。
+  3. **拼接字符串处**：`DetailPage` 的变体分组 `subLabel` 用 `Object.entries(drop_rates)` 手工拼 `[模式:爆率%]`，改用 `HIDDEN_DROP_RATE_MODES` 过滤；`LootdropDetailPage` 里图例旁的爆率拼接改用 `filterDropRates(...)` 的结果渲染。
+  4. **数据层不动**：`drop_rates.PVE` 仍完整保留在导出的 JSON 中，仅在展示层隐藏；综合爆率、评分等计算（继续使用「豪客赛」）不受影响。
+- **验证**：`npm run format` + `npm run check`（0 error / 20 既有 warning、Prettier、tsc）通过；`npm run build` 3125 页；8081 preview HTTP 200；`test:i18n` Pass 29 / Fail 0；Playwright 实测：
+  - `/zh-Hans/items/Ale/` 显示 `[普通:4%][豪客赛:15%][逆袭赛:15%]`，无 PvE；
+  - `/zh-Hans/lootdrops/HealingPotion/` 页面文本中 PvE 只出现在筛选下拉的 `<option>`，爆率区无 PvE；
+  - 手动把筛选切到「PvE」仍正常显示 `[PvE:4%]`，切回「全部」恢复三种 PvP 模式；
+  - `/en/items/Ale/` 显示 `[Normal:4%][Squire Royale:15%]`，无 PvE；无 pageerror；
+  - 数据统计：items + lootdrops 共 6737 条 group_drop_info，其中「仅 PvE 有爆率」的条目为 0，因此本次隐藏不会让任何条目意外消失。
+
 ### fix: 搜索命中当前页时不再"点了没反应"，重新触发滚动定位
 
 - **改动原因**：用户反馈「当搜索的工匠合成物品刚好在本页时，没有触发滚动跳转到对应物品位置」。原因是 `NavBar.handleSelect` 只做 `navigate(target)`；目标 URL 与当前 `pathname + search` 完全相同时 React Router 不产生变化，页面的 `useSearchParams` 不会更新，`?item=`/`?quest=` 的滚动 effect 也就不会重跑。
