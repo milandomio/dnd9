@@ -28,6 +28,7 @@ import { useSSRData } from '../context/SSRDataContext';
 import { DataVersionLoader } from '../hooks/useDataVersion';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import AutoScrollButton from './AutoScrollButton';
+import AppName from './AppName';
 
 const NAV_LABEL_KEYS: Record<string, string> = {
   items: 'ui.nav.items',
@@ -260,6 +261,10 @@ export default function NavBar() {
           flex: 0 1 360px !important;
           width: min(360px, 100%);
         }
+        .navbar-brand-slot {
+          flex: 1 1 auto;
+          min-width: 0;
+        }
         .navbar-actions {
           min-height: 32px;
         }
@@ -271,6 +276,9 @@ export default function NavBar() {
           .navbar-search-container {
             flex-basis: 40px !important;
             width: 100%;
+          }
+          .navbar-brand-slot {
+            flex-basis: 100%;
           }
           .navbar-actions {
             justify-content: flex-end;
@@ -460,6 +468,10 @@ export default function NavBar() {
               ) : null}
             </div>
           )}
+        </div>
+
+        <div className="navbar-brand-slot">
+          <AppName />
         </div>
 
         <div

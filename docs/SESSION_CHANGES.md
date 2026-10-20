@@ -4,6 +4,17 @@
 
 ## 2026-10-20
 
+### feat: 站点名移入导航栏（搜索框右侧），全站可见
+
+- **改动原因**：用户要求「把首页的 越来越黑暗闪电指南 DarkFlashNav 移动到导航栏上，放在搜索框右边，这样每个页面都能知道站点名字」。
+- **变更文件**：`web/src/components/AppName.tsx`、`web/src/components/NavBar.tsx`、`web/src/pages/HomePage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **位置**：`NavBar` 在搜索框 `.navbar-search-container` 与右侧操作区 `.navbar-actions` 之间新增 `.navbar-brand-slot` 包裹 `<AppName />`；桌面端品牌名紧贴搜索框右侧、操作区靠右，移动端（≤600px）导航栏竖向排列，品牌独占一行位于搜索框下方、操作区上方。
+  2. **组件改造**：`AppName` 由首页居中大标题改为导航栏品牌链接——文字取 `ui.brand.name`，`Link` 指向当前语言首页（`zh-Hans` → `/`，其余 → `/{lang}/`），色值用 `tokens.accent`；仅在首页渲染为 `<h1 class="navbar-brand">`（首页原本无其他 h1），其余页面渲染为 `<div>`，避免与页面内容 h1 重复。
+  3. **首页去重**：`HomePage` 删除 `<AppName />` 与该引入，首页大标题由导航栏品牌名承担；`<title>` / meta 的 `ui.brand.name` 逻辑不变。
+  4. **响应式**：品牌单行 `nowrap + ellipsis`，小屏字号 17 → 15px，390px 视口下宽度 318px 不溢出、无横向滚动。
+- **验证**：`npm run format` + `npm run check`（eslint 0 error / 20 既有 warning、Prettier、tsc）通过；`npm run build` 3125 页；8081 preview HTTP 200；SSR 产物校验：首页 `<h1 class="navbar-brand">` 且仅 1 个 h1，详情页品牌为 div、页面自身标题仍是唯一 h1；`BASE_URL=http://localhost:8081 npm run test:i18n` Pass 29 / Fail 0；Playwright 实测 `/zh-Hans/`、`/zh-Hans/items/Ale/`、`/zh-Hans/monsters/`、`/en/`、`/ja/crafts/` 均显示品牌且紧贴搜索框右侧（brand.x 444 > search.right 436），点击 `/ja/crafts/` 品牌跳 `/ja/`、`/en/items/Ale/` 跳 `/en/`，无 pageerror（仅云朵统计 CORS 噪音）。
+
 ### feat: 导航栏新增录屏用「自动滚动」播放按钮
 
 - **改动原因**：用户要求「给导航栏增加一个播放按钮，点击播放按钮画面会慢慢滚动到最底部，用于页面录制视频使用」。
