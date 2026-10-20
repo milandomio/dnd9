@@ -102,7 +102,9 @@ function LocalizedApp() {
           padding: '16px',
           background: tokens.bg,
           boxSizing: 'border-box',
-          maxWidth: 1200,
+          // --shell-max is the inner content width; add the 16px side padding
+          // so the shell's outer box (and the navbar inside it) matches it.
+          maxWidth: 'calc(var(--shell-max) + 32px)' as const,
           margin: '0 auto',
         }}
       >

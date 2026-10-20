@@ -1315,7 +1315,7 @@ export default function LootdropDetailPage({
   return (
     <div
       aria-busy={data == null || (hasRefs && !refsLoaded) ? 'true' : 'false'}
-      style={{ maxWidth: 1200, margin: '0 auto' }}
+      style={{ maxWidth: 'var(--shell-max)' as const, margin: '0 auto' }}
     >
       <DebugPanel
         buttons={[

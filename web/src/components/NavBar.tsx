@@ -262,11 +262,24 @@ export default function NavBar() {
           width: min(360px, 100%);
         }
         .navbar-brand-slot {
-          flex: 1 1 auto;
-          min-width: 0;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          max-width: 40%;
         }
         .navbar-actions {
           min-height: 32px;
+        }
+        /* Below this width the centred brand would collide with the search box
+           or the action buttons, so it returns to the normal flow. */
+        @media (max-width: 1100px) {
+          .navbar-brand-slot {
+            position: static;
+            flex: 1 1 auto;
+            min-width: 0;
+            max-width: 100%;
+            transform: none;
+          }
         }
         @media (max-width: 600px) {
           .navbar-shell {
@@ -278,7 +291,10 @@ export default function NavBar() {
             width: 100%;
           }
           .navbar-brand-slot {
+            position: static;
             flex-basis: 100%;
+            max-width: 100%;
+            transform: none;
           }
           .navbar-actions {
             justify-content: flex-end;
@@ -292,13 +308,14 @@ export default function NavBar() {
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 8,
-          maxWidth: 1200,
+          maxWidth: 'var(--shell-max)' as const,
           margin: '0 auto 15px',
           padding: '8px 20px',
           background: tokens.surface,
           borderRadius: 5,
           flexWrap: 'wrap',
           rowGap: 8,
+          position: 'relative',
         }}
       >
         <div

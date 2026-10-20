@@ -2,6 +2,23 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-21
+
+### feat: 容器宽度随视口线性缩放到 1400px + 导航栏品牌名居中
+
+- **改动原因**：用户要求「把页面适配成 1920px 宽度，内容（比如导航栏组件总宽度）1400px，宽度变化时等比例缩放，页面宽度 1200 以下还是进入平板/手机模式（保持之前的样子）」；随后追加「越来越黑暗闪电指南 DarkFlashNav 这个组件能否居中显示」。
+- **变更文件**：`web/index.html`、`web/src/AppInner.tsx`、`web/src/components/NavBar.tsx`、`web/scripts/ssg.mjs` 以及 14 个页面容器（`pages/*.tsx`）、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **宽度变量**：`index.html` 的 `:root` 新增 `--shell-max: min(1400px, calc(1200px + (100vw - 1200px) * 0.27778))`。1200px 视口时 = 1200px，1920px 时 = 1400px，两点之间线性插值，>1920px 封顶 1400px；<1200px 时计算值大于视口，行为等同原先的满宽，既有 950/750/600 断点完全不变。
+  2. **外层外壳**：`AppInner` 的根容器 `maxWidth` 改为 `calc(var(--shell-max) + 32px)`——它自身有 `padding: 16px` 且 `box-sizing: border-box`，加 32px 后**内容区**正好等于 `--shell-max`，从而与导航栏内宽对齐（1920 下导航栏 1400、内容区 1400）。
+  3. **统一替换**：`NavBar` 的 `.navbar-shell` 与 14 个页面的 `maxWidth: 1200` 全部改为 `var(--shell-max)`；SSG 的详情占位页（`scripts/ssg.mjs`）同步改为 `calc(var(--shell-max) + 32px)`，避免首屏占位与 React 渲染后宽度跳变。
+  4. **品牌名居中**：`.navbar-brand-slot` 由 `flex: 1 1 auto` 改为绝对定位 `left: 50%` + `translateX(-50%)`，在导航栏内水平居中（导航栏补 `position: relative`）；`max-width: 40%` 防止长语言名溢出。**≤1100px 时回退为静态流式布局**（此时居中会撞到搜索框/操作区），≤600px 仍按原移动端规则独占一行。
+- **验证**：`npm run format` + `npm run check`（0 error / 20 既有 warning、Prettier、tsc）通过；`npm run build` 3125 页；8081 preview HTTP 200；`BASE_URL=http://localhost:8081 npm run test:i18n` Pass 29 / Fail 0；Playwright 逐宽度实测——
+  - 导航栏宽度：1920→1400、1680→1333、1440→1267、1200→1168、1024→992、768→736、390→358，全部水平居中（`navCenterOffset=0`），无横向滚动；
+  - 首页网格列数：≥1200 四列（4/4/2）、768 三列、390 两列，与改动前一致；
+  - 品牌名居中误差：1920/1600/1440/1200 均为 **0px**，且与搜索框、操作区均无重叠；≤1100 自动回到流式布局；
+  - 详情页 `/zh-Hans/items/Ale/` 在 1440 下内容区与导航栏同为 1267px。
+
 ## 2026-10-20
 
 ### feat: 站点名移入导航栏（搜索框右侧），全站可见

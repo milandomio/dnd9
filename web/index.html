@@ -33,6 +33,15 @@
         min-height: 100%;
         background: #2c2c2c;
       }
+      :root {
+        /*
+         * Content shell width: 1200px at a 1200px viewport, growing linearly
+         * to 1400px at 1920px, capped there. Below 1200px the computed value
+         * exceeds the viewport, so the layout keeps its previous full-width
+         * behaviour (tablet / mobile breakpoints unchanged).
+         */
+        --shell-max: min(1400px, calc(1200px + (100vw - 1200px) * 0.27778));
+      }
       @media (max-width: 950px) {
         [style*='repeat(4, 1fr)'] {
           grid-template-columns: repeat(3, 1fr) !important;

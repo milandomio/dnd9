@@ -610,7 +610,7 @@ export default function DetailPage() {
   }
 
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+    <div style={{ maxWidth: 'var(--shell-max)' as const, margin: '0 auto' }}>
       <Helmet>
         <title>
           {ssrLocalizedTitle() ??

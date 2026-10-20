@@ -1076,7 +1076,7 @@ function detailPlaceholder(title, modules, localeDict, lang) {
     ? `<h2 style="margin:0 0 10px;font-size:22px;color:#ffc107">${escapeHtml(moduleHeading)}</h2>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px">${moduleCards}</div>`
     : `<p>未找到可显示的地图模块。</p>`;
-  return `<main aria-busy="false" style="max-width:1200px;min-height:100vh;margin:0 auto;padding:16px;box-sizing:border-box;background:#141414;color:#f5f5f5">
+  return `<main aria-busy="false" style="max-width:calc(var(--shell-max) + 32px);min-height:100vh;margin:0 auto;padding:16px;box-sizing:border-box;background:#141414;color:#f5f5f5">
   <h1 style="margin:0 0 16px;text-align:center;color:#ffc107;font-size:32px">${escapeHtml(title)}</h1>
   <section aria-label="${escapeHtml(moduleHeading)}" style="color:#f5f5f5">
     ${content}
