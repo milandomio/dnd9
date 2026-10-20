@@ -327,6 +327,9 @@ def _iter_craft_search_entries(crafts_payload: dict | None) -> list[dict]:
                 entry["tag_translation_key"] = merchant["translation_key"]
             if merchant.get("display"):
                 entry["tag"] = merchant["display"]
+            # Reads "工匠合成-炼金术师": a crafted item is only reachable
+            # through the crafter that makes it.
+            entry["tag_prefix_key"] = "ui.search.tag.craft_group"
             entries.append(entry)
 
         for requirement in recipe.get("requirements") or []:
@@ -387,6 +390,8 @@ def _iter_quest_objective_entries(quest_npcs_data: list[dict]) -> list[dict]:
                     entry["tag_translation_key"] = npc["translation_key"]
                 if npc.get("npc_name_display"):
                     entry["tag"] = npc["npc_name_display"]
+                # Reads "任务-珠宝匠": the NPC alone reads like a merchant row.
+                entry["tag_prefix_key"] = "ui.search.tag.quest"
                 entries.append(entry)
     return entries
 

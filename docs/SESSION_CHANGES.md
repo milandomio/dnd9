@@ -4,6 +4,20 @@
 
 ## 2026-10-21
 
+### feat: 搜索条目成品与任务统一加语义前缀
+
+- **改动原因**：用户反馈两处——「生命之叶成品搜索时只显示『炼金术师』，应完整显示『工匠合成-炼金术师』」；「任务也应该显示前缀，比如金锭显示为『珠宝匠』，应显示为『任务-珠宝匠』」。
+- **变更文件**：`api/src/index_export.py`、`api/tests/test_search_index_entries.py`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **工匠成品**：`_iter_craft_search_entries` 的成品条目补 `tag_prefix_key = "ui.search.tag.craft_group"`，显示为「工匠合成-炼金术师」，与其原料条目前缀一致（原料条目是「工匠合成-治疗药水」，成品条目是「工匠合成-炼金术师」，一个答"谁做的"、一个答"做什么用"）。
+  2. **任务目标**：`_iter_quest_objective_entries` 补 `tag_prefix_key = "ui.search.tag.quest"`（既有键，10 语言均已存在：任务/Quest/クエスト/…），显示为「任务-珠宝匠」。
+  3. 前缀渲染仍由前端 `NavBar` 统一处理（`ut(tag_prefix_key) + "-" + tag`），不需要新增文案键。
+- **结果**：`search_index.json` 中 `ui.search.tag.craft_group` 前缀条目 879 条、`ui.search.tag.quest` 518 条。
+- **验证**：`cd api && python3 -m unittest tests.test_search_index_entries` 8/8 OK（新增成品前缀与任务前缀断言）；`TMPDIR=<workspace>/.tmp python3 main.py` 导出无 error；`npm run build` 3125 页；8081 HTTP 200；`test:i18n` Pass 29 / Fail 0；Playwright 实测：
+  - 搜「治疗药水」→「地牢商店-地穴 / 工匠合成-炼金术师 / 任务-炼金术师」；
+  - 搜「生命之叶」→「工匠合成-清晰药水 / 治疗药水 / 毒药瓶 / 手术包」+「任务-女猎手 / 任务-皮革匠」；
+  - 搜「金锭」→「工匠合成-黄金武装盔 …」等 10 条原料条目；无 pageerror。
+
 ### feat: 搜索索引补全商店/工匠语义标签，并为合成原料建索引
 
 - **改动原因**：用户反馈「黄金钥匙在搜索栏显示为『地穴』，实际是哥布林走私者卖的，应完整显示为『地牢商店-地穴』」；同时要求「像合成原料『生命之叶』也应该添加为『工匠合成-治疗药水』，即成品和原料都要索引」。

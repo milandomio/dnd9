@@ -191,6 +191,8 @@ class CraftSearchEntryTest(unittest.TestCase):
         self.assertEqual(healing["url"], "/crafts/alchemist/?item=HealingPotion")
         self.assertEqual(healing["translation_key"], "Text_DesignData_Item_Item_HealingPotion_1001")
         self.assertEqual(healing["tag_translation_key"], "Text_DesignData_Merchant_Merchant_Alchemist")
+        # Products read "工匠合成-炼金术师", same prefix as their materials.
+        self.assertEqual(healing["tag_prefix_key"], "ui.search.tag.craft_group")
         # The synthetic ore tab gets a readable slug instead of ``__ores__``.
         self.assertEqual(entries[2]["url"], "/crafts/ores/?item=IronIngot")
         material = entries[1]
@@ -222,6 +224,8 @@ class QuestObjectiveEntryTest(unittest.TestCase):
         self.assertEqual(entry["subtitle"], "风箱")
         self.assertEqual(entry["subtitle_key"], "Text_DesignData_Item_Item_Bellows")
         self.assertEqual(entry["tag"], "珠宝匠")
+        # Rendered as "任务-珠宝匠", not a bare NPC name.
+        self.assertEqual(entry["tag_prefix_key"], "ui.search.tag.quest")
         self.assertEqual(entry["page"], "quest_npc")
         self.assertEqual(entry["url"], "/quest_npc/Goldsmith/?quest=6")
 
