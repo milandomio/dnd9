@@ -2,6 +2,19 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-20
+
+### feat: 导航栏新增录屏用「自动滚动」播放按钮
+
+- **改动原因**：用户要求「给导航栏增加一个播放按钮，点击播放按钮画面会慢慢滚动到最底部，用于页面录制视频使用」。
+- **变更文件**：`web/src/components/AutoScrollButton.tsx`（新增）、`web/src/components/NavBar.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **按钮挂载**：`NavBar` 的 `.navbar-actions` 内、语言选择器之前挂载 `<AutoScrollButton />`，与主题/语言控件同排；SSG 与客户端共用同一组件树，SSR 只输出停止态。
+  2. **匀速滚动**：`requestAnimationFrame` 循环按 `SCROLL_SPEED = 60` CSS px/s（与屏幕刷新率无关，每帧用 `dt` 累加，`dt` 上限 50ms 防切标签页后跳变）写 `window.scrollTo`，到 `scrollHeight - innerHeight` 自动停止；再次在底部点击则先回到顶部重新播放。
+  3. **交互中止**：运行中按钮切换为暂停图标（`aria-pressed` 同步），再点即暂停；用户 `wheel` / `touchstart` / 方向键、PageUp/PageDown、Home/End、空格会立即暂停自动滚动；路由 `pathname` 变化也会重置为停止态。
+  4. **文案**：新增 `ui.autoscroll.play` / `ui.autoscroll.pause`，在 `UI_EXTRA_LOCALE` 的 `zh-Hans`、`en` 中提供，其余语言回落到英文（`extraUiDict` 既有回落逻辑）；中文含「（录屏用）」说明用途。
+- **验证**：`npm run format` + `npm run check`（eslint 0 error / 20 既有 warning、Prettier、tsc）通过；`npm run build` 3125 页成功；8081 preview HTTP 200；Playwright 实测：`/zh-Hans/monsters/` 点击播放 2s 内滚动 120px 且按钮变为「暂停自动滚动」，滚轮介入立即暂停、按钮点击可暂停、`/zh-Hans/` 短页面滚动到 12px 底部后自动回到播放态、在底部再次点击从顶部重播，`/en/` 显示英文标签，路由切换后回到停止态；全过程无 pageerror。
+
 ## 2026-10-19
 
 ### chore: 补丁部署（跳过 FMOD 同步，删库重建并推送含 DB 的 main）

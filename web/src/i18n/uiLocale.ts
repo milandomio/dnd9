@@ -3498,6 +3498,8 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.random_properties': '随机属性 ×{count}',
     'ui.crafts.random_hint': '随机获得以下属性之一',
     'ui.crafts.tab.ores': '矿类',
+    'ui.autoscroll.play': '自动滚动到页面底部（录屏用）',
+    'ui.autoscroll.pause': '暂停自动滚动',
   },
   en: {
     'ui.pwa.install_title': 'Install DarkFlashNav',
@@ -3566,6 +3568,8 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.random_properties': 'Random ×{count}',
     'ui.crafts.random_hint': 'Randomly grants one of these stats',
     'ui.crafts.tab.ores': 'Ores',
+    'ui.autoscroll.play': 'Auto-scroll to the bottom (for recording)',
+    'ui.autoscroll.pause': 'Pause auto-scroll',
   },
   ja: {
     'ui.pwa.install_title': 'DarkFlashNavをインストール',

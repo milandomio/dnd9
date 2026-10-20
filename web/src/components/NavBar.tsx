@@ -27,6 +27,7 @@ import { useLocale } from '../i18n/useLocale';
 import { useSSRData } from '../context/SSRDataContext';
 import { DataVersionLoader } from '../hooks/useDataVersion';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import AutoScrollButton from './AutoScrollButton';
 
 const NAV_LABEL_KEYS: Record<string, string> = {
   items: 'ui.nav.items',
@@ -471,6 +472,7 @@ export default function NavBar() {
             rowGap: 6,
           }}
         >
+          <AutoScrollButton />
           <GlobalOutlined style={{ color: tokens.muted, fontSize: 16 }} />
           <details
             ref={languageSelectorRef}
