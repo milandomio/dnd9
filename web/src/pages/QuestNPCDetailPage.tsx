@@ -11,6 +11,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
+import { useSearchTargetSignal } from '../hooks/useSearchTargetSignal';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { dataUrl } from '../utils/dataUrl';
@@ -131,6 +132,8 @@ export default function QuestNPCDetailPage() {
   // Set after mount (not during render) so a shared ?quest= link hydrates the same
   // HTML as the static build before the quest is highlighted.
   const [searchQuestNum, setSearchQuestNum] = useState<number | null>(null);
+  // Bumped when the navbar re-emits a hit for this very page.
+  const searchSignal = useSearchTargetSignal();
 
   useEffect(() => {
     const value = Number(searchParams.get('quest'));
@@ -184,7 +187,7 @@ export default function QuestNPCDetailPage() {
         ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
     return () => clearTimeout(timer);
-  }, [focusQuestNum, npc?.npc_name]);
+  }, [focusQuestNum, npc?.npc_name, searchSignal]);
 
   if (!npc) {
     return (

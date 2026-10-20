@@ -26,6 +26,7 @@ import {
 import { useLocale } from '../i18n/useLocale';
 import { useSSRData } from '../context/SSRDataContext';
 import { DataVersionLoader } from '../hooks/useDataVersion';
+import { SEARCH_TARGET_EVENT } from '../hooks/useSearchTargetSignal';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import AutoScrollButton from './AutoScrollButton';
 import AppName from './AppName';
@@ -190,7 +191,18 @@ export default function NavBar() {
     if (query.trim()) saveRecent(query.trim());
     setQuery('');
     setShowDropdown(false);
-    navigate(withLangPrefix(hit.url, lang));
+    // A hit for the page we are already on would be a no-op navigation, so the
+    // page never sees the new ?item= and cannot scroll to the card. Re-emit the
+    // target instead so the page's own focus effect runs again.
+    const target = withLangPrefix(hit.url, lang);
+    const current = location.pathname + location.search;
+    if (target === current) {
+      window.dispatchEvent(
+        new CustomEvent(SEARCH_TARGET_EVENT, { detail: target })
+      );
+      return;
+    }
+    navigate(target);
   };
 
   const handleRecentClick = (term: string) => {

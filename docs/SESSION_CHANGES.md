@@ -4,6 +4,21 @@
 
 ## 2026-10-21
 
+### fix: 搜索命中当前页时不再"点了没反应"，重新触发滚动定位
+
+- **改动原因**：用户反馈「当搜索的工匠合成物品刚好在本页时，没有触发滚动跳转到对应物品位置」。原因是 `NavBar.handleSelect` 只做 `navigate(target)`；目标 URL 与当前 `pathname + search` 完全相同时 React Router 不产生变化，页面的 `useSearchParams` 不会更新，`?item=`/`?quest=` 的滚动 effect 也就不会重跑。
+- **变更文件**：`web/src/hooks/useSearchTargetSignal.ts`（新增）、`web/src/components/NavBar.tsx`、`web/src/pages/CraftsPage.tsx`、`web/src/pages/DungeonShopDetailPage.tsx`、`web/src/pages/QuestNPCDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **同页判定**：`handleSelect` 先算出本地化目标 URL 并与 `location.pathname + location.search` 比较；相同则不再 `navigate`，改为 `window.dispatchEvent(new CustomEvent(SEARCH_TARGET_EVENT))`。
+  2. **信号 hook**：新增 `useSearchTargetSignal()`，监听 `df5:search-target` 并返回自增计数；消费页面把它加进定位 effect 的依赖数组，事件到达时 effect 重新执行 `scrollIntoView({behavior:'smooth', block:'center'})`。
+  3. **接入页面**：`CraftsPage`（`[data-craft-item]`）、`DungeonShopDetailPage`（`[data-shop-item]`）、`QuestNPCDetailPage`（`[data-quest-num]`）三处，覆盖搜索结果里所有带定位参数的页面。
+  4. 非同页时行为不变，仍走 `navigate`（浏览器地址更新 + 页面 effect 正常触发）。
+- **验证**：`npm run format` + `npm run check`（0 error / 20 既有 warning、Prettier、tsc）通过；`npm run build` 3125 页；8081 preview HTTP 200；`test:i18n` Pass 29 / Fail 0；Playwright 用「URL 已等于命中目标」的真实同页场景实测——
+  - 工匠：`/zh-Hans/crafts/alchemist/?item=ClarityPotion` 先把页面滚回顶部，再搜「清晰药水」点「工匠合成-炼金术师」→ 页面滚到 y=50，目标卡片 `top=310`、2px accent 高亮；
+  - 商店：`/zh-Hans/dungeon_shops/Crypts/?item=GoldenKey` 滚回顶部后搜「黄金钥匙」→ 滚到 y=1549，卡片 `top=321` 并高亮；
+  - 任务：`/zh-Hans/quest_npc/Alchemist/?quest=4` 滚回顶部后搜「乱成一团」→ 滚动到 y=507；
+  - 全程无 pageerror。
+
 ### feat: 搜索条目成品与任务统一加语义前缀
 
 - **改动原因**：用户反馈两处——「生命之叶成品搜索时只显示『炼金术师』，应完整显示『工匠合成-炼金术师』」；「任务也应该显示前缀，比如金锭显示为『珠宝匠』，应显示为『任务-珠宝匠』」。

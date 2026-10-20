@@ -8,6 +8,7 @@ import {
 import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../hooks/useTheme';
 import { useShopDetail } from '../hooks/useDungeonShops';
+import { useSearchTargetSignal } from '../hooks/useSearchTargetSignal';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
@@ -74,6 +75,8 @@ export default function DungeonShopDetailPage() {
   // Set after mount (not during render) so a shared ?item= link hydrates the same
   // HTML as the static build before the highlight is applied.
   const [focusItem, setFocusItem] = useState('');
+  // Bumped when the navbar re-emits a hit for this very page.
+  const searchSignal = useSearchTargetSignal();
 
   useEffect(() => {
     setFocusItem(searchParams.get('item') ?? '');
@@ -93,7 +96,7 @@ export default function DungeonShopDetailPage() {
         ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
     return () => clearTimeout(timer);
-  }, [focusItem, detail]);
+  }, [focusItem, detail, searchSignal]);
 
   if (loading)
     return (
