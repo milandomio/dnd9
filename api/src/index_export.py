@@ -283,44 +283,75 @@ def _iter_shop_search_entries(shop_index: dict | None, output_dir: Path) -> list
                         entry["tag_translation_key"] = region["label_key"]
                     if region.get("display"):
                         entry["tag"] = region["display"]
+                    # A bare region name ("地穴") reads like a map, not a shop;
+                    # the frontend prefixes this UI key ("地牢商店-地穴").
+                    entry["tag_prefix_key"] = "ui.nav.dungeon_shops"
                     entries.append(entry)
     return entries
 
 
 def _iter_craft_search_entries(crafts_payload: dict | None) -> list[dict]:
-    """One search entry per (merchant, item) for the goods a crafter makes.
+    """Search entries for every crafted product *and* every material it needs.
 
-    Each merchant tab has its own route (``/crafts/{slug}/``), so the entry links
-    straight to that tab with the item name as ``?item=`` for the page to focus.
+    Products point at their crafter tab and link with ``?item=<product>`` so the
+    card is focused. Materials reuse the same link but carry the product as their
+    tag, so a search hit reads "工匠合成 - <product>" — that is how a player
+    finds which recipe a herb or ore belongs to.
     """
     entries: list[dict] = []
     if not crafts_payload:
         return entries
     merchants = {merchant.get("name"): merchant for merchant in crafts_payload.get("merchants", [])}
-    seen: set[tuple[str, str]] = set()
+    seen_products: set[tuple[str, str]] = set()
+    seen_materials: set[tuple[str, str, str]] = set()
     for recipe in crafts_payload.get("recipes", []):
         merchant_name = recipe.get("merchant")
         item_name = recipe.get("name")
         if not merchant_name or not item_name:
             continue
-        key = (merchant_name, item_name)
-        if key in seen:
-            continue
-        seen.add(key)
         merchant = merchants.get(merchant_name, {})
         slug = merchant.get("slug") or merchant_name
-        entry = {
-            "name": item_name,
-            "translation": recipe.get("translation", item_name),
-            "translation_key": recipe.get("translation_key", ""),
-            "page": "crafts",
-            "url": _search_url(f"/crafts/{urllib.parse.quote(slug, safe='')}/", {"item": item_name}),
-        }
-        if merchant.get("translation_key"):
-            entry["tag_translation_key"] = merchant["translation_key"]
-        if merchant.get("display"):
-            entry["tag"] = merchant["display"]
-        entries.append(entry)
+        url = _search_url(f"/crafts/{urllib.parse.quote(slug, safe='')}/", {"item": item_name})
+
+        product_key = (merchant_name, item_name)
+        if product_key not in seen_products:
+            seen_products.add(product_key)
+            entry = {
+                "name": item_name,
+                "translation": recipe.get("translation", item_name),
+                "translation_key": recipe.get("translation_key", ""),
+                "page": "crafts",
+                "url": url,
+            }
+            if merchant.get("translation_key"):
+                entry["tag_translation_key"] = merchant["translation_key"]
+            if merchant.get("display"):
+                entry["tag"] = merchant["display"]
+            entries.append(entry)
+
+        for requirement in recipe.get("requirements") or []:
+            material_name = requirement.get("name")
+            if not material_name:
+                continue
+            material_key = (merchant_name, item_name, material_name)
+            if material_key in seen_materials:
+                continue
+            seen_materials.add(material_key)
+            material_entry = {
+                "name": material_name,
+                "translation": requirement.get("translation", material_name),
+                "translation_key": requirement.get("translation_key", ""),
+                "page": "crafts",
+                "url": url,
+            }
+            if recipe.get("translation_key"):
+                material_entry["tag_translation_key"] = recipe["translation_key"]
+            if recipe.get("translation"):
+                material_entry["tag"] = recipe["translation"]
+            # Reads "工匠合成-治疗药水": a material is only searchable through
+            # the product it is used for.
+            material_entry["tag_prefix_key"] = "ui.search.tag.craft_group"
+            entries.append(material_entry)
     return entries
 
 

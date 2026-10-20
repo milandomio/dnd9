@@ -434,7 +434,9 @@ export default function NavBar() {
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      {hit.tag || ut(PAGE_TAG_KEYS[hit.page] || '') || hit.page}
+                      {hit.tag
+                        ? `${hit.tag_prefix_key ? `${ut(hit.tag_prefix_key)}-` : ''}${hit.tag}`
+                        : ut(PAGE_TAG_KEYS[hit.page] || '') || hit.page}
                     </span>
                   </div>
                 ))

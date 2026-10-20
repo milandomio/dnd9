@@ -10,6 +10,8 @@ export interface SearchEntry {
   page: string;
   url: string;
   tag?: string;
+  /** UI key prefixed to `tag` with a dash, e.g. "地牢商店-地穴". */
+  tag_prefix_key?: string;
   /** Secondary label rendered in parentheses, e.g. a quest objective. */
   subtitle?: string;
 }

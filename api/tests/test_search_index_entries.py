@@ -91,6 +91,14 @@ CRAFTS_PAYLOAD = {
             "name": "HealingPotion",
             "translation": "治疗药水",
             "translation_key": "Text_DesignData_Item_Item_HealingPotion_1001",
+            "requirements": [
+                {
+                    "name": "Lifeleaf",
+                    "translation": "生命之叶",
+                    "translation_key": "Text_DesignData_Item_Item_Lifeleaf_1001",
+                    "amount": 1,
+                }
+            ],
         },
         {
             "merchant": "Alchemist",
@@ -154,6 +162,8 @@ class ShopSearchEntryTest(unittest.TestCase):
         self.assertEqual(healing["translation"], "治疗药水")
         self.assertEqual(healing["tag"], "地穴")
         self.assertEqual(healing["tag_translation_key"], "Text_UI_WB_DungeonSlot_TheCrypts_2ndFloor")
+        # The UI renders <prefix>-<tag> so a shop hit reads "地牢商店-地穴".
+        self.assertEqual(healing["tag_prefix_key"], "ui.nav.dungeon_shops")
         self.assertEqual(healing["url"], "/dungeon_shops/Crypts/?item=HealingPotion")
 
     def test_missing_region_file_is_skipped(self):
@@ -165,9 +175,15 @@ class ShopSearchEntryTest(unittest.TestCase):
 class CraftSearchEntryTest(unittest.TestCase):
     def test_one_entry_per_merchant_item(self):
         entries = _iter_craft_search_entries(CRAFTS_PAYLOAD)
+        # Products carry the crafter as tag; materials carry the product they
+        # are used for, so "生命之叶" surfaces as "工匠合成-治疗药水".
         self.assertEqual(
             [(e["name"], e.get("tag", "")) for e in entries],
-            [("HealingPotion", "炼金术师"), ("IronIngot", "")],
+            [
+                ("HealingPotion", "炼金术师"),
+                ("Lifeleaf", "治疗药水"),
+                ("IronIngot", ""),
+            ],
         )
         healing = entries[0]
         self.assertEqual(healing["page"], "crafts")
@@ -176,7 +192,14 @@ class CraftSearchEntryTest(unittest.TestCase):
         self.assertEqual(healing["translation_key"], "Text_DesignData_Item_Item_HealingPotion_1001")
         self.assertEqual(healing["tag_translation_key"], "Text_DesignData_Merchant_Merchant_Alchemist")
         # The synthetic ore tab gets a readable slug instead of ``__ores__``.
-        self.assertEqual(entries[1]["url"], "/crafts/ores/?item=IronIngot")
+        self.assertEqual(entries[2]["url"], "/crafts/ores/?item=IronIngot")
+        material = entries[1]
+        self.assertEqual(material["page"], "crafts")
+        self.assertEqual(material["tag_prefix_key"], "ui.search.tag.craft_group")
+        self.assertEqual(material["tag_translation_key"], "Text_DesignData_Item_Item_HealingPotion_1001")
+        self.assertEqual(material["translation_key"], "Text_DesignData_Item_Item_Lifeleaf_1001")
+        # Clicking the material opens the recipe card that uses it.
+        self.assertEqual(material["url"], "/crafts/alchemist/?item=HealingPotion")
 
     def test_merchant_without_slug_falls_back_to_name(self):
         payload = {
@@ -231,7 +254,8 @@ class BuildSearchIndexTest(unittest.TestCase):
 
         pages = [e["page"] for e in search_index]
         self.assertEqual(pages.count("dungeon_shops"), 2)
-        self.assertEqual(pages.count("crafts"), 2)
+        # Two products + the material each recipe consumes.
+        self.assertEqual(pages.count("crafts"), 3)
         # 1 NPC entry + 1 quest objective entry.
         self.assertEqual(pages.count("quest_npc"), 2)
         # 【任务探索表】已归档，不再进入 index.json / search_index.json。

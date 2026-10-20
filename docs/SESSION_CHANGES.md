@@ -4,6 +4,24 @@
 
 ## 2026-10-21
 
+### feat: 搜索索引补全商店/工匠语义标签，并为合成原料建索引
+
+- **改动原因**：用户反馈「黄金钥匙在搜索栏显示为『地穴』，实际是哥布林走私者卖的，应完整显示为『地牢商店-地穴』」；同时要求「像合成原料『生命之叶』也应该添加为『工匠合成-治疗药水』，即成品和原料都要索引」。
+- **变更文件**：`api/src/index_export.py`、`api/tests/test_search_index_entries.py`、`web/src/hooks/useSearchIndex.ts`、`web/src/components/NavBar.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **标签前缀键**：搜索条目新增可选字段 `tag_prefix_key`。前端渲染规则为 `tag_prefix_key ? ut(tag_prefix_key) + "-" + tag : tag`，因此同一个 `tag` 在不同页面可复用不同前缀，避免把展示文案写死进索引。
+  2. **商店条目**：`_iter_shop_search_entries` 为每条商品加 `tag_prefix_key = "ui.nav.dungeon_shops"`（=「地牢商店」），页面显示为「地牢商店-地穴」；`tag` 仍取区域 `display`，`tag_translation_key` 不变，10 语言自动本地化。
+  3. **工匠成品条目**：保持原逻辑（`tag` = 工匠名，如「炼金术师」）。
+  4. **新增工匠原料条目**：`_iter_craft_search_entries` 在原「按 (merchant, item) 去重」之外，再遍历每份配方的 `requirements`，为每个原料生成一条 `page="crafts"` 的条目——`name/translation/translation_key` 取原料本身，`tag` 取成品名、`tag_translation_key` 取成品翻译键、`tag_prefix_key = "ui.search.tag.craft_group"`（=「工匠合成」），`url` 复用成品的 `/crafts/{slug}/?item={成品}`，点击后打开该工匠标签并高亮用到该原料的配方卡片（`CraftsPage` 的 `data-craft-item` 高亮逻辑无需改动）。去重键为 `(merchant, 成品, 原料)`，因此一个原料用于多个配方会各出现一条。
+  5. **文案**：`uiLocale.ts` 的 `UI_EXTRA_LOCALE` 增补中英两条 `ui.search.tag.craft_group`（「工匠合成」/「Crafting」），其余语言回落英文。
+- **结果**：`search_index.json` 2213 → 2837 条；`crafts` 条目 255 → 879，`dungeon_shops` 147 条带前缀；`search_index/{lang}.json` 同步重新生成。
+- **验证**：`api/lint.sh` + `black --check` 通过；`cd api && python3 -m unittest discover -s tests` 163/163 OK（新增商店前缀断言、原料条目断言与素材，并同步 `pages.count("crafts")` 由 2 改 3）；`npm run check`（0 error / 20 既有 warning、Prettier、tsc）通过；`TMPDIR=<workspace>/.tmp python3 main.py` 导出 29.31s 无 error；`npm run build` 3125 页；8081 preview HTTP 200；Playwright 实测：
+  - 搜「黄金钥匙」→ 第二行为「地牢商店-地穴」，点击进入 `/zh-Hans/dungeon_shops/Crypts/?item=GoldenKey`；
+  - 搜「生命之叶」→ 出现「工匠合成-清晰药水 / 治疗药水 / 毒药瓶 / 手术包」四条（另有原掉落、实体、任务条目）；
+  - 点击「工匠合成-治疗药水」→ `/zh-Hans/crafts/alchemist/?item=HealingPotion`，目标卡片带 2px accent 高亮；
+  - `/en/` 搜 Lifeleaf → 「Crafting-Potion of Healing」等英文标签正确；全程无 pageerror。
+- **附注**：`python3 main.py` 首次运行报 `sqlite3.OperationalError: unable to open database file`，原因是本机 `/tmp` 对 SQLite 排序临时文件不可写；用 `TMPDIR=<workspace>/.tmp` 重跑即通过（`.tmp/` 已由 gitignore 忽略）。
+
 ### feat: 容器宽度随视口线性缩放到 1400px + 导航栏品牌名居中
 
 - **改动原因**：用户要求「把页面适配成 1920px 宽度，内容（比如导航栏组件总宽度）1400px，宽度变化时等比例缩放，页面宽度 1200 以下还是进入平板/手机模式（保持之前的样子）」；随后追加「越来越黑暗闪电指南 DarkFlashNav 这个组件能否居中显示」。
