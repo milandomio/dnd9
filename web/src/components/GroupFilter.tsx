@@ -16,6 +16,33 @@ type Props = {
 };
 
 /**
+ * Alphabetical order by label, with digit runs compared numerically so the
+ * floors of one dungeon stay together ("废墟1层 / 废墟2层 / 废墟3层").
+ *
+ * Deliberately avoids Intl.Collator: the options are server-rendered, and a
+ * collator whose ICU differs between Node and the browser would reorder the
+ * <option> list during hydration.
+ */
+function compareGroupLabels(a: string, b: string): number {
+  const pa = a.match(/\d+|\D+/g) ?? [];
+  const pb = b.match(/\d+|\D+/g) ?? [];
+  for (let i = 0; i < Math.min(pa.length, pb.length); i++) {
+    const x = pa[i];
+    const y = pb[i];
+    if (x === y) continue;
+    const nx = /^\d+$/.test(x);
+    const ny = /^\d+$/.test(y);
+    if (nx && ny) return Number(x) - Number(y);
+    return x < y ? -1 : 1;
+  }
+  return pa.length - pb.length;
+}
+
+function sortGroups(groups: GroupOption[]): GroupOption[] {
+  return [...groups].sort((a, b) => compareGroupLabels(a.label, b.label));
+}
+
+/**
  * "地图分组显示" picker, shown above the map grid on entity and loot pages.
  * Deliberately always visible (not tucked into the debug panel): narrowing the
  * page to one dungeon is useful to everyone, not just when debugging.
@@ -24,6 +51,7 @@ export default function GroupFilter({ groups, value, onChange }: Props) {
   const { tokens } = useTheme();
   const { ut } = useLocale();
   if (groups.length < 2) return null;
+  const sorted = sortGroups(groups);
 
   return (
     <div
@@ -57,7 +85,7 @@ export default function GroupFilter({ groups, value, onChange }: Props) {
         }}
       >
         <option value="">{ut('ui.filter.all_groups')}</option>
-        {groups.map((group) => (
+        {sorted.map((group) => (
           <option key={group.name} value={group.name}>
             {group.label}
           </option>

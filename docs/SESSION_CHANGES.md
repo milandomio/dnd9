@@ -4,6 +4,20 @@
 
 ## 2026-10-21
 
+### feat: 地图分组下拉按标签排序（同地牢各层相邻）
+
+- **改动原因**：用户要求「地图分组显示的列表应该用首字排序，比如废墟1、2、3层排在一起」。此前顺序沿用地图网格的「综合爆率/坐标数」排序，同一地牢的楼层会被拆散。
+- **变更文件**：`web/src/components/GroupFilter.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **排序键**：直接按**本地化后的标签**排序，而不是按分组 id（id 如 `Crypt`/`FireDeep` 与显示名不同序）。标签形如「废墟2层（地穴）」，因此同地牢的楼层自然相邻。
+  2. **数字感知比较**：`compareGroupLabels` 用 `/\d+|\D+/g` 切分后逐段比较，数字段转 `Number` 比较，避免字典序把 10 层排在 2 层前面；非数字段按码点比较。
+  3. **不用 `Intl.Collator`**：选项在 SSG 阶段由 Node 预渲染，若 ICU 数据与浏览器不同会导致 hydration 时 `<option>` 顺序重排；手写比较器在两端结果一致。
+  4. **不入库**：排序只在组件内对传入的 `groups` 做一次副本排序，页面自身的爆率/坐标排序逻辑不受影响；分组数据本身顺序不变。
+  5. **补充文案**：`UI_EXTRA_LOCALE` 的 `ja` / `zh-Hant` 原先缺少 `ui.filter.group`、`ui.filter.all_groups`（会直接显示 key），本次补齐；同时补上两国语言的 `ui.search.tag.craft_group`（此前的搜索前缀在 ja/zh-Hant 也回落成 key）。
+- **验证**：`npm run format` + `npm run check`（0 error / 20 既有 warning、Prettier、tsc）通过；`npm run build` 3125 页；8081 preview HTTP 200；`test:i18n` Pass 29 / Fail 0；Playwright 实测「火把」详情页各语言选项顺序：
+  - zh-Hans：哥布林洞穴1层 / 哥布林洞穴2层 / 寒冰洞穴1层 / 寒冰洞穴2层 / **废墟1层 / 废墟2层 / 废墟3层** / 沉船墓场1层；
+  - en / ja / zh-Hant / de 均按各自译文正确分组（The Ruins1F/2F/3F、廃墟1階/2階/3階、廢墟1層/2層/3層、Die Ruinen1E/2E/3E），数字按数值升序；无 pageerror。
+
 ### feat: 实体/掉落详情页新增「地图分组显示」筛选（非调试模式）
 
 - **改动原因**：用户要求「参考『爆率显示』组件，在非调试模式提供『地图分组显示』：默认选择全部分组，选中其他分组时只显示对应分组」。
