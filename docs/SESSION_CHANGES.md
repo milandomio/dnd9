@@ -4,6 +4,21 @@
 
 ## 2026-10-21
 
+### feat: 实体/掉落详情页新增「地图分组显示」筛选（非调试模式）
+
+- **改动原因**：用户要求「参考『爆率显示』组件，在非调试模式提供『地图分组显示』：默认选择全部分组，选中其他分组时只显示对应分组」。
+- **变更文件**：`web/src/components/GroupFilter.tsx`（新增）、`web/src/pages/DetailPage.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **组件**：`GroupFilter` 渲染「地图分组显示：<select>」，第一项是「全部分组」（value `''`），其余选项来自当前页面的 `sortedGroups`，标签复用 `formatGroupLabel`（如「废墟2层（地穴）」）；`aria-label` 与可见标签一致；分组数 < 2 时不渲染，避免单地图页面出现无意义控件。
+  2. **位置**：放在 `<Disclaimer />` 之后、地图网格之前，**不在 `debug` 条件内**——普通用户即可按地牢筛选；调试面板里的「爆率显示 / 隐藏0爆率坐标」保持原位不变。
+  3. **过滤**：`DetailPage` 由 `sections` 派生 `visibleSections`，`LootdropDetailPage` 由 `sortedGroups` 派生 `displayGroups`，映射与统计用的循环、地图识别模板、底部「N 个坐标 / M 张地图」统计全部改用派生集合，保证切组后计数同步。
+  4. **选择有效性**：选中的分组在新数据里不存在时自动按「全部分组」处理（`DetailPage` 用 `activeGroupFilter` 计算值，`LootdropDetailPage` 在 `displayGroups` 的 `useMemo` 里过滤）。最初用 `useEffect` 重置，但 `DetailPage` 的 `useEffect` 位于提前 `return` 之后，触发 `react-hooks/rules-of-hooks`，改为纯计算派生，无副作用。
+  5. **文案**：`UI_EXTRA_LOCALE` 增补中英 `ui.filter.group`（地图分组显示 / Map group）与 `ui.filter.all_groups`（全部分组 / All groups）。
+- **验证**：`npm run format` + `npm run check`（0 error / 20 既有 warning、Prettier、tsc）通过；`npm run build` 3125 页；8081 preview HTTP 200；`test:i18n` Pass 29 / Fail 0；Playwright 实测：
+  - `/zh-Hans/items/Torch/` 出现 9 个选项（全部分组 + 8 个地牢分组），默认「全部分组」；选中「废墟2层（地穴）」后页面只剩该分组（正文 8260 → 1922 字符，地图卡片只剩 4 张）；
+  - `/zh-Hans/lootdrops/Torch/` 同样生效（5208 → 1633 字符）；
+  - 单地图条目（如 `/zh-Hans/items/Ale/`、`/zh-Hans/monsters/Goblin/`）不渲染该控件；无 pageerror。
+
 ### feat: 爆率「全部」模式默认不再显示 PvE 爆率
 
 - **改动原因**：用户要求「爆率显示：全部，这个模式不再显示 pve 爆率，即所有页面默认都不显示 pve 爆率」。

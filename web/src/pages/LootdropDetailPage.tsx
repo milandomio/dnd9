@@ -13,6 +13,7 @@ import {
 } from '../utils/dropRate';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
 import SectionHeader from '../components/SectionHeader';
+import GroupFilter from '../components/GroupFilter';
 import VariantSwitch from '../components/VariantSwitch';
 import DebugPanel from '../components/DebugPanel';
 import { useSSRData } from '../context/SSRDataContext';
@@ -440,6 +441,8 @@ export default function LootdropDetailPage({
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
   const [mapRecognitionEnabled, setMapRecognitionEnabled] = useState(false);
+  // '' shows every dungeon group; any other value narrows the page to one.
+  const [groupFilter, setGroupFilter] = useState('');
   const [qualityFilter, setQualityFilter] = useState('High');
   const { debug, toggle: toggleDebug, adjOffsets, setAdjOffsets } = useDebug();
   const { tokens, dark } = useTheme();
@@ -1111,12 +1114,38 @@ export default function LootdropDetailPage({
     });
   }, [groupedByType, groupDropRateLookup, computeModuleScore]);
 
+  const groupOptions = useMemo(
+    () =>
+      sortedGroups.map(([name, groupItems]) => ({
+        name,
+        label: formatGroupLabel(groupItems[0]?.mod, t, ut) || name,
+      })),
+    [sortedGroups, t, ut]
+  );
+
+  // Keep the selection valid when the data behind it changes.
+  useEffect(() => {
+    if (
+      groupFilter &&
+      !groupOptions.some((group) => group.name === groupFilter)
+    )
+      setGroupFilter('');
+  }, [groupFilter, groupOptions]);
+
+  const displayGroups = useMemo(
+    () =>
+      groupFilter
+        ? sortedGroups.filter(([name]) => name === groupFilter)
+        : sortedGroups,
+    [sortedGroups, groupFilter]
+  );
+
   const recognitionTemplates = useMemo(() => {
     const templates: MapImageTemplate[] = [];
     if (!mapRecognitionEnabled) return templates;
 
     const recognitionImageUrls = new Set<string>();
-    for (const [, groupItems] of sortedGroups) {
+    for (const [, groupItems] of displayGroups) {
       for (const item of groupItems) {
         const visibleDots = hideZeroRate
           ? item.dots.filter((dot) => {
@@ -1151,7 +1180,7 @@ export default function LootdropDetailPage({
     return templates;
   }, [
     mapRecognitionEnabled,
-    sortedGroups,
+    displayGroups,
     hideZeroRate,
     data?.group_drop_info,
     modeFilter,
@@ -1203,7 +1232,7 @@ export default function LootdropDetailPage({
     let count = 0;
     const maps = new Set<string>();
     const bottomPosSet = new Set<string>();
-    for (const [groupName, groupItems] of sortedGroups) {
+    for (const [groupName, groupItems] of displayGroups) {
       for (const item of groupItems) {
         for (const d of item.dots) {
           if (hideZeroRate) {
@@ -1226,7 +1255,7 @@ export default function LootdropDetailPage({
       }
     }
     return { bottomCount: count, visibleMapsSet: maps };
-  }, [sortedGroups, hideZeroRate, data?.group_drop_info, modeFilter]);
+  }, [displayGroups, hideZeroRate, data?.group_drop_info, modeFilter]);
   const visibleCount = useMemo(
     () =>
       resolvedMonsters.filter((m) => !hidden.has(monsterVisibilityKey(m)))
@@ -1389,6 +1418,12 @@ export default function LootdropDetailPage({
       </h1>
 
       <Disclaimer />
+
+      <GroupFilter
+        groups={groupOptions}
+        value={groupFilter}
+        onChange={setGroupFilter}
+      />
 
       {debug && (
         <div
@@ -1671,7 +1706,7 @@ export default function LootdropDetailPage({
           gridTemplateColumns: 'repeat(4, 1fr)',
         }}
       >
-        {sortedGroups.map(([groupName, groupItems]) => (
+        {displayGroups.map(([groupName, groupItems]) => (
           <SectionHeader
             key={groupName}
             groupName={groupName}

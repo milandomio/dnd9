@@ -17,6 +17,7 @@ import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import DebugPanel from '../components/DebugPanel';
 import SectionHeader from '../components/SectionHeader';
+import GroupFilter from '../components/GroupFilter';
 import {
   getAdj,
   useCtrlBtn,
@@ -130,6 +131,8 @@ export default function DetailPage() {
   const [modeFilter, setModeFilter] = useState('');
   const [hideZeroRate, setHideZeroRate] = useState(true);
   const [mapRecognitionEnabled, setMapRecognitionEnabled] = useState(false);
+  // '' shows every dungeon group; any other value narrows the page to one.
+  const [groupFilter, setGroupFilter] = useState('');
   const [visibleMaps, setVisibleMaps] = useState<Set<string>>(new Set());
 
   const dataVersion = useDataVersion();
@@ -543,10 +546,27 @@ export default function DetailPage() {
     return groupOrder.indexOf(a.groupName) - groupOrder.indexOf(b.groupName);
   });
 
+  const groupOptions = sortedGroups.map(([name, groupItems]) => ({
+    name,
+    label: formatGroupLabel(groupItems[0]?.mod, t, ut) || name,
+  }));
+
+  // Ignore a stale selection (e.g. after switching entity) without an effect:
+  // this sits below an early return, so a hook is not allowed here.
+  const activeGroupFilter = groupOptions.some(
+    (group) => group.name === groupFilter
+  )
+    ? groupFilter
+    : '';
+
+  const visibleSections = activeGroupFilter
+    ? sections.filter((sec) => sec.groupName === activeGroupFilter)
+    : sections;
+
   const recognitionTemplates: MapImageTemplate[] = [];
   if (mapRecognitionEnabled) {
     const recognitionImageUrls = new Set<string>();
-    for (const sec of sections) {
+    for (const sec of visibleSections) {
       for (const item of sec.items) {
         const visibleCoords = hideZeroRate
           ? item.coords.filter((coord) => {
@@ -580,14 +600,14 @@ export default function DetailPage() {
   let bottomCount = 0;
   const bottomMapsSet = new Set<string>();
   if (!hideZeroRate) {
-    for (const sec of sections) {
+    for (const sec of visibleSections) {
       for (const item of sec.items) {
         bottomCount += item.coords.length;
         bottomMapsSet.add(item.mapName);
       }
     }
   } else {
-    for (const sec of sections) {
+    for (const sec of visibleSections) {
       for (const item of sec.items) {
         for (const c of item.coords) {
           const match = sec.gdi.find((e) =>
@@ -722,6 +742,12 @@ export default function DetailPage() {
 
       <Disclaimer />
 
+      <GroupFilter
+        groups={groupOptions}
+        value={activeGroupFilter}
+        onChange={setGroupFilter}
+      />
+
       {(page === 'monsters' || page === 'props') &&
         (entity as MonsterEntity | PropsEntity).loot_pools &&
         (entity as MonsterEntity | PropsEntity).loot_pools!.length > 0 && (
@@ -737,7 +763,7 @@ export default function DetailPage() {
           gridTemplateColumns: 'repeat(4, 1fr)',
         }}
       >
-        {sections.map((sec) => (
+        {visibleSections.map((sec) => (
           <SectionHeader
             key={sec.sectionKey}
             groupName={sec.groupName}
