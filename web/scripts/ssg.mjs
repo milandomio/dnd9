@@ -768,7 +768,8 @@ const MODULE_PLACEMENT_SUFFIX = {
 function modulePlacementSuffix(routeData, lang) {
   const placement = routeData?.module || routeData;
   if (!placement) return '';
-  const dict = MODULE_PLACEMENT_SUFFIX[lang] || MODULE_PLACEMENT_SUFFIX[DEFAULT_LANG];
+  const dict =
+    MODULE_PLACEMENT_SUFFIX[lang] || MODULE_PLACEMENT_SUFFIX[DEFAULT_LANG];
   if (placement.is_corner) return dict.corner;
   if (placement.is_edge) return dict.edge;
   return '';
