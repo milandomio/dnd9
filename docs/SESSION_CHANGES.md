@@ -19,11 +19,14 @@
   3. **导入顺序**：`import_item_effects` 原先跑在 `import_craft_recipes` 之前，导致读取配方表时它还是空的。已在 `collector.py` 中把 `import_craft_recipes` 前移，并加注释说明依赖关系。
   4. **导出**：`craft_builder.py` 新增 `item_effects` 参数，为每个配方附加 `effect: { values: [...], random: bool }`；字段显示名复用游戏自身的 `SetByCaller` 翻译键（`Text_Code_DCDataBlueprintLibrary_Data_SetByCaller_MaxPhysicalShield` → 最大物理护盾），10 种语言均可本地化；`Duration` 带 `seconds: true` 标记。
   5. **前端**：`CraftsPage.tsx` 新增 `CraftEffectLine` 组件与 `formatEffectValue`，渲染为「效果：最大物理护盾 30 ｜ 持续时间 24 秒」；随机效果（幸运药水）追加「随机效果」标记。新增 `ui.crafts.effect` / `ui.crafts.effect_random` 四条语言文案。
+- **CI 失败修复**：首次推送后 GitHub Actions 在「Run API unit tests」步骤失败（`test_consumable_effects.ResolveItemEffectsTest.test_item_name_maps_through_its_ability_asset` → `KeyError: 'LuckPotion_5001'`）。原因是 `resolve_item_effects()` 改为从物品资产的 `Abilities` 列表读取能力名后，旧测试的 fixture 只建了 `ItemAbility` 目录、未建 `Item` 目录，本地因有游戏解包目录而通过，CI 无解包目录故返回空。修复：为该测试补 `_make_item_dir()` fixture 并在 `_resolve` 与 `MissingSourceTest` 中显式传入 `item_dir`，使测试不再依赖真实解包目录。
+- **CI 等价环境验证**：用脚本把 `config` 的所有解包路径常量改写到不存在的临时路径下（`GAME_ROOT exists: False`）后重跑整套测试，173 个全部通过 —— 与 CI 环境等价。
 - **验证**：
   - 后端：`python3 -m unittest discover -s tests` 173 个测试全部通过；`./lint.sh`（ruff + black）通过；
   - 管道：`python main.py --rebuild-db` 全量重建成功，`import_item_effects` 由 9 项增至 81 项；
   - 产物：`data/json/crafts.json` 中 8 条保护药水配方全部带 `effect`（物理 20/25/30/35、魔法 20/25/30/35，持续时间均 24 秒），`translation` 为「最大物理护盾」/「最大魔法护盾」/「持续时间」；
-  - 前端：`npx tsc --noEmit` 通过，`npm run lint` 0 error，`npm run format:check` 通过。
+  - 前端：`npx tsc --noEmit` 通过，`npm run lint` 0 error，`npm run format:check` 通过；8081 preview HTTP 200，Playwright 实测炼金术士页 8 张药水卡片均显示「效果 / 最大物理护盾 20~35 / 持续时间 24 秒」，`test:i18n` Pass 29 / Fail 0。
+
 ## 2026-10-21
 
 ### feat: 地图分组下拉按标签排序（同地牢各层相邻）

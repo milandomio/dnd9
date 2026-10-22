@@ -107,6 +107,35 @@ def _make_item_ability_dir(root: Path) -> Path:
     return directory
 
 
+def _make_item_dir(root: Path) -> Path:
+    """Item assets whose ``Abilities`` list points at the fixture abilities.
+
+    CI has no game extract, so the resolver must read these rather than the
+    configured ``ITEM_DIR``.
+    """
+    directory = root / "Item"
+    directory.mkdir(parents=True, exist_ok=True)
+    for item in _ITEM_ABILITIES:
+        _write_json(
+            directory / f"Id_Item_{item}.json",
+            [
+                {
+                    "Type": "DCItemDataAsset",
+                    "Name": f"Id_Item_{item}",
+                    "Properties": {
+                        "Abilities": [
+                            {
+                                "AssetPathName": "/Game/DungeonCrawler/Data/Generated/V2/Item/ItemAbility/"
+                                f"Id_ItemAbility_{item}.Id_ItemAbility_{item}",
+                            }
+                        ]
+                    },
+                }
+            ],
+        )
+    return directory
+
+
 class EffectValueTest(unittest.TestCase):
     def test_reads_luck_from_status_effect_asset(self):
         """The asset suffix is a shorthand: Luck10 holds 100, not 10."""
@@ -195,6 +224,7 @@ class ResolveItemEffectsTest(unittest.TestCase):
             items,
             build_effect_index(_make_effect_dir(root), _make_ability_dir(root)),
             _make_item_ability_dir(root),
+            item_dir=_make_item_dir(root),
         )
 
     def test_item_name_maps_through_its_ability_asset(self):
@@ -223,7 +253,12 @@ class MissingSourceTest(unittest.TestCase):
             {},
         )
         self.assertEqual(
-            resolve_item_effects({"LuckPotion_5001"}, {}, Path("/nonexistent")),
+            resolve_item_effects(
+                {"LuckPotion_5001"},
+                {},
+                Path("/nonexistent"),
+                item_dir=Path("/nonexistent"),
+            ),
             {},
         )
 
