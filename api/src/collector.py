@@ -108,6 +108,13 @@ def run(
                     f"{counts['merchants']} merchants, {counts['variants']} variants, {counts['stock']} stock rows"
                 )
 
+            # Craft recipes come first: their outputs (the Protection potions)
+            # are part of the item set the effect importer resolves, so
+            # ``craft_recipes`` must already be populated when it runs.
+            with pipe.phase("import_craft_recipes", 12) as ctx:
+                counts = db.import_craft_recipes()
+                ctx.set_result(f"{counts['merchants']} merchants, {counts['recipes']} recipes")
+
             with pipe.phase("import_item_effects", 12) as ctx:
                 count = db.import_item_effects()
                 ctx.set_result(f"{count} items")
@@ -123,10 +130,6 @@ def run(
             with pipe.phase("import_environment_lights", 12) as ctx:
                 count = db.import_environment_lights()
                 ctx.set_result(f"{count} environment props")
-
-            with pipe.phase("import_craft_recipes", 12) as ctx:
-                counts = db.import_craft_recipes()
-                ctx.set_result(f"{counts['merchants']} merchants, {counts['recipes']} recipes")
 
             with pipe.phase("import_spawner_entries", 12) as ctx:
                 count = db.import_spawner_entries()
@@ -666,6 +669,9 @@ def run(
 
         with pipe.step("crafts export") as ctx:
             craft_data = db.get_craft_data()
+            # Reuse the effect summaries already resolved for the shop export:
+            # both pages read the same DB table, so there is no second query.
+            shop_merchant_data = db.get_ingame_merchants()
             crafts_payload = build_and_save_crafts(
                 craft_data["merchants"],
                 craft_data["recipes"],
@@ -674,6 +680,7 @@ def run(
                 OUTPUT_DIR,
                 item_properties=db.get_item_properties(),
                 property_pools=db.get_item_property_pools(),
+                item_effects=shop_merchant_data["effects"],
             )
             craft_count = crafts_payload["count"]
             ctx.set_result(

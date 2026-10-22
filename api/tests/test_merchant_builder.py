@@ -388,7 +388,7 @@ class ItemEffectsImporterTest(unittest.TestCase):
             # resolve_item_effects needs a real ability asset; patch it too so the
             # test target stays the DB round trip rather than asset parsing.
             original_resolve = effects_module.resolve_item_effects
-            effects_module.resolve_item_effects = lambda items, index, directory: {
+            effects_module.resolve_item_effects = lambda items, index, directory, **kwargs: {
                 "LuckPotion_5001": {"values": {"Luck": [100, 200]}}
             }
             try:

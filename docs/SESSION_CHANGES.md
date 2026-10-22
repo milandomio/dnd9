@@ -2,6 +2,28 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-22
+
+### fix: 【工匠】页保护药水显示护盾值与持续时间
+
+- **改动原因**：用户反馈「https://dnd9.icetar.com/zh-Hans/crafts/ 中的 保护药水，没有显示关键属性抵挡多少伤害持续多长时间」。工匠页此前只渲染物品的 `primary` 属性（护甲/伤害等），而药水类物品的数值不在 `ItemProperty` 资产里，而在其饮用能力指向的状态效果资产中，因此保护药水卡片只有「移动速度 -10」这一项。
+- **变更文件**：
+  - 后端：`api/src/consumable_effects.py`、`api/src/db/importers/effects.py`、`api/src/craft_builder.py`、`api/src/collector.py`；
+  - 测试：`api/tests/test_consumable_effects_fixed.py`（新增）、`api/tests/test_craft_builder_effects.py`（新增）、`api/tests/test_merchant_builder.py`；
+  - 前端：`web/src/pages/CraftsPage.tsx`、`web/src/types/data.ts`、`web/src/i18n/uiLocale.ts`。
+- **关键逻辑/映射关系**：
+  1. **数据链路**：保护药水的数值来自 `Id_ActorStatusEffect_ProtectionPotionConsumeShield_XXXX`（`MaxPhysicalShield` 20/25/30/35、`duration` 24000ms），魔法保护药水同理走 `MaxMagicalShield`。这些资产只能由导入阶段读取，因此扩展 `consumable_effects.py`：
+     - 新增 `load_fixed_effects()`：保留所有带追踪字段或 `duration` 的状态效果，`duration` 由毫秒除以 1000 转为「持续时间」秒数（24000 → 24 秒，与游戏内 tooltip 一致）；
+     - `resolve_item_effects()` 改为**从物品资产的 `Abilities` 列表**解析能力资产名（`Id_Item_ProtectionPotion_5001` 的能力是 `Id_ItemAbility_ProtectionPotionConsume_5001`，不能由物品名推导），先试加权随机（幸运药水），再回退到固定 `Effects` 列表（保护药水）。
+  2. **导入范围**：`ItemEffectsImporter` 原本只处理地牢商店在售商品；保护药水只出现在工匠配方中，因此额外并入 `craft_recipes` 的 `output_raw_name`。
+  3. **导入顺序**：`import_item_effects` 原先跑在 `import_craft_recipes` 之前，导致读取配方表时它还是空的。已在 `collector.py` 中把 `import_craft_recipes` 前移，并加注释说明依赖关系。
+  4. **导出**：`craft_builder.py` 新增 `item_effects` 参数，为每个配方附加 `effect: { values: [...], random: bool }`；字段显示名复用游戏自身的 `SetByCaller` 翻译键（`Text_Code_DCDataBlueprintLibrary_Data_SetByCaller_MaxPhysicalShield` → 最大物理护盾），10 种语言均可本地化；`Duration` 带 `seconds: true` 标记。
+  5. **前端**：`CraftsPage.tsx` 新增 `CraftEffectLine` 组件与 `formatEffectValue`，渲染为「效果：最大物理护盾 30 ｜ 持续时间 24 秒」；随机效果（幸运药水）追加「随机效果」标记。新增 `ui.crafts.effect` / `ui.crafts.effect_random` 四条语言文案。
+- **验证**：
+  - 后端：`python3 -m unittest discover -s tests` 173 个测试全部通过；`./lint.sh`（ruff + black）通过；
+  - 管道：`python main.py --rebuild-db` 全量重建成功，`import_item_effects` 由 9 项增至 81 项；
+  - 产物：`data/json/crafts.json` 中 8 条保护药水配方全部带 `effect`（物理 20/25/30/35、魔法 20/25/30/35，持续时间均 24 秒），`translation` 为「最大物理护盾」/「最大魔法护盾」/「持续时间」；
+  - 前端：`npx tsc --noEmit` 通过，`npm run lint` 0 error，`npm run format:check` 通过。
 ## 2026-10-21
 
 ### feat: 地图分组下拉按标签排序（同地牢各层相邻）

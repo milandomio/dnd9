@@ -68,6 +68,45 @@ _CATEGORY_ORDER = ("Utility", "Misc", "Accessory", "Armor", "Weapon")
 #: Separator between the parts of a composite group key.
 _GROUP_SEPARATOR = "\u001f"
 
+#: Consumable effect field -> the game's own display key. ``Luck`` comes from
+#: the SetByCaller namespace the buff blueprint reads, ``MaxPhysicalShield`` /
+#: ``MaxMagicalShield`` are the Protection potion shields, and ``Duration`` is
+#: derived from the status effect's millisecond ``duration``.
+_EFFECT_FIELD_KEYS = {
+    "Luck": "Text_Code_DCDataBlueprintLibrary_Data_SetByCaller_Luck",
+    "MaxPhysicalShield": "Text_Code_DCDataBlueprintLibrary_Data_SetByCaller_MaxPhysicalShield",
+    "MaxMagicalShield": "Text_Code_DCDataBlueprintLibrary_Data_SetByCaller_MaxMagicalShield",
+    "Duration": "Text_Code_DCDataBlueprintLibrary_Data_SetByCaller_Duration",
+}
+
+#: Effect fields that are shown in seconds on the card.
+_EFFECT_SECOND_FIELDS = frozenset({"Duration"})
+
+
+def _effect_entries(values: dict, resolve_name) -> list[dict]:
+    """Label the resolved consumable effect values for the client.
+
+    ``values`` maps a field name to ``[min, max]``. The display label comes from
+    the game's own SetByCaller translation key so every language reads the same
+    word the in-game tooltip uses.
+    """
+    entries = []
+    for field, bounds in (values or {}).items():
+        key = _EFFECT_FIELD_KEYS.get(field)
+        if not key or not isinstance(bounds, (list, tuple)) or not bounds:
+            continue
+        entries.append(
+            {
+                "type": field,
+                "translation": resolve_name("", key, "item"),
+                "translation_key": key,
+                "min": bounds[0],
+                "max": bounds[-1],
+                "seconds": field in _EFFECT_SECOND_FIELDS,
+            }
+        )
+    return entries
+
 
 def _signature(requirements: list[dict]) -> tuple[str, ...]:
     """The material names that identify a recipe family, sorted."""
@@ -233,11 +272,13 @@ def build_and_save_crafts(
     output_dir: Path,
     item_properties: dict[str, dict] | None = None,
     property_pools: dict[str, list[dict]] | None = None,
+    item_effects: dict[str, dict] | None = None,
 ) -> dict:
     """Build ``crafts.json`` from DB rows. Returns the payload."""
     label = _ItemLabel(items, resolve_name)
     item_properties = item_properties or {}
     property_pools = property_pools or {}
+    item_effects = item_effects or {}
     merchant_order = {row["merchant_name"]: row["sort_order"] for row in merchants}
     kinds = {row["merchant_name"]: row["kind"] for row in merchants}
 
@@ -263,6 +304,15 @@ def build_and_save_crafts(
         properties = _craft_properties(row["output_raw_name"], item_properties, property_pools, resolve_name)
         if properties:
             entry["properties"] = properties
+        # Consumables publish their numbers (a Protection potion's shield amount
+        # and duration) through the effect index instead of stat rows.
+        effect = item_effects.get(row["output_raw_name"]) or {}
+        effect_entries = _effect_entries(effect.get("values") or {}, resolve_name)
+        if effect_entries:
+            entry["effect"] = {
+                "values": effect_entries,
+                "random": bool(effect.get("rolls")),
+            }
         entries.append(entry)
 
     # Items whose tiers need different materials keep an item group so every

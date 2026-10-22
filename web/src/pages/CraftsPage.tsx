@@ -15,6 +15,8 @@ import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { localizedSeoDescription } from '../i18n/seo';
 import type {
+  CraftEffect,
+  CraftEffectProperty,
   CraftProperties,
   CraftProperty,
   CraftRecipe,
@@ -301,6 +303,19 @@ function formatPropertyValue(property: CraftProperty): string {
 }
 
 /**
+ * One effect range. Unlike a stat line there is no percentage scaling: the
+ * payload already holds the numbers the game tooltip shows, so a shield reads
+ * ``30`` and a duration reads ``24 秒``.
+ */
+function formatEffectValue(property: CraftEffectProperty): string {
+  const trim = (value: number) => String(Math.round(value * 100) / 100);
+  const suffix = property.seconds ? ' 秒' : '';
+  const min = trim(property.min);
+  const max = trim(property.max);
+  return min === max ? `${min}${suffix}` : `${min}~${max}${suffix}`;
+}
+
+/**
  * Stats of a crafted item, listed under its materials. The fixed lines come from
  * the item asset; the extra enchantment slots roll from a pool shared by every
  * item of one equipment slot, which the payload ships once (``property_pools``)
@@ -347,6 +362,44 @@ function CraftPropertiesLine({
             '{count}',
             String(properties.random.rolls)
           )}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Effect of a crafted consumable, listed under its materials. A Protection
+ * potion reads 「最大物理护盾 30 ｜ 持续时间 24 秒」 — exactly the numbers the
+ * in-game tooltip shows — while a Luck potion adds a hint that the value is
+ * rolled at random.
+ */
+function CraftEffectLine({ effect }: { effect: CraftEffect }) {
+  const { tokens } = useTheme();
+  const { t, ut } = useLocale();
+  const label = (property: CraftEffectProperty) =>
+    t(property.translation_key, property.translation || property.type);
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: 8,
+        fontSize: 12,
+        color: tokens.muted,
+        alignItems: 'baseline',
+      }}
+    >
+      <span>{ut('ui.crafts.effect')}</span>
+      {effect.values.map((property, index) => (
+        <span key={`${property.type}-${index}`} style={{ color: tokens.text }}>
+          {label(property)} {formatEffectValue(property)}
+        </span>
+      ))}
+      {effect.random && (
+        <span style={{ color: tokens.accent }}>
+          {ut('ui.crafts.effect_random')}
         </span>
       )}
     </div>
@@ -476,6 +529,7 @@ function CraftCard({
       {recipe.properties && (
         <CraftPropertiesLine properties={recipe.properties} pools={pools} />
       )}
+      {recipe.effect && <CraftEffectLine effect={recipe.effect} />}
     </div>
   );
 }

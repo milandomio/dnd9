@@ -334,6 +334,11 @@ export interface CraftRecipe {
   group_parts: CraftGroupPart[];
   /** Stat lines of the crafted item; absent for materials and old payloads. */
   properties?: CraftProperties;
+  /**
+   * Consumable effect of the crafted item (a Protection potion's shield amount
+   * and duration). Absent for equipment and items without an effect summary.
+   */
+  effect?: CraftEffect;
 }
 
 /** One stat line of a crafted item (armour rating, weapon damage, …). */
@@ -365,6 +370,37 @@ export interface CraftProperties {
    * shared by every item of the same equipment slot (``property_pools``).
    */
   random?: { rolls: number; pool: string };
+}
+
+/**
+ * One consumable effect line (幸运 / 最大物理护盾 / 持续时间 …).
+ *
+ * Unlike a stat line it carries no ``ratio``: the value is what the game shows
+ * in the tooltip, already converted from the asset (a millisecond duration
+ * becomes seconds, a raw shield amount stays flat).
+ */
+export interface CraftEffectProperty {
+  /** Effect field without its asset prefix (``MaxPhysicalShield``). */
+  type: string;
+  translation: string;
+  translation_key?: string;
+  /** Lowest value the item grants (equal to ``max`` for a fixed effect). */
+  min: number;
+  /** Highest value the item grants. */
+  max: number;
+  /** True when the value is a duration in seconds (renders as 「24 秒」). */
+  seconds?: boolean;
+}
+
+/** Effect of a crafted consumable (a Protection potion's shield and duration). */
+export interface CraftEffect {
+  /** Every effect line the item grants. */
+  values: CraftEffectProperty[];
+  /**
+   * True when the effect is rolled at random (Luck potions); a fixed shield
+   * (Protection potions) always grants the same numbers.
+   */
+  random?: boolean;
 }
 
 /** A crafting NPC tab (or the synthetic 【矿类】 tab). */
