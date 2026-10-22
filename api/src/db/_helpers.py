@@ -236,6 +236,14 @@ def sl_base_name(asset_name: str) -> str:
     return _SL_SUFFIX_RE.sub("", asset_name)
 
 
+def module_placement_flags(properties) -> tuple[bool, bool]:
+    # bEdgeOnly  -> 只能放在边缘槽（四边非角落）
+    # bCornerOnly-> 只能放在角落槽（四角）
+    # 二者互斥，均为可选的放置限制，未设置表示可放内部。
+    props = properties or {}
+    return bool(props.get("bEdgeOnly")), bool(props.get("bCornerOnly"))
+
+
 def has_map_file(ue_path: str) -> bool:
     fs = ue_to_fs_path(ue_path)
     if not fs:

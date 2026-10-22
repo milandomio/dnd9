@@ -8,6 +8,7 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { modulePlacementSuffix } from '../utils/mapImage';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import type { DungeonModule } from '../types/data';
 import { localizedSeoDescription } from '../i18n/seo';
@@ -176,6 +177,7 @@ export default function DungeonModuleGroupPage() {
                     }}
                   >
                     {t(mod.translation_key, mod.translation || mod.name)}
+                    {modulePlacementSuffix(mod, ut)}
                   </span>
                   <span
                     style={{ fontSize: 12, color: tokens.muted, flexShrink: 0 }}

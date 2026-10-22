@@ -30,6 +30,8 @@ LOOTDROP_DIR = DATA_DIR / "LootDrop" / "LootDrop"
 LOOTDROP_GROUP_DIR = DATA_DIR / "LootDrop" / "LootDropGroup"
 LOOTDROP_RATE_DIR = DATA_DIR / "LootDrop" / "LootDropRate"
 DUNGEON_MODULE_DIR = DATA_DIR / "Dungeon" / "DungeonModule"
+# 随机地牢定义（含 LevelAsset / ModuleType / LayoutSize），用于判定模块所属组的布局尺寸
+DUNGEON_DIR = DATA_DIR / "Dungeon" / "Dungeon"
 INGAME_MERCHANT_DIR = DATA_DIR / "InGameMerchant" / "InGameMerchant"
 INGAME_MERCHANT_SCHEDULE_DIR = DATA_DIR / "InGameMerchant" / "InGameMerchantSchedule"
 INGAME_MERCHANT_STOCK_BUY_DIR = DATA_DIR / "InGameMerchant" / "InGameMerchantStockBuy"

@@ -172,6 +172,8 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
             "rotate": rotate,
             "range": custom_range,
             "aliases": aliases,
+            "is_edge": bool(r.get("is_edge")),
+            "is_corner": bool(r.get("is_corner")),
         }
     for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
         if override_name not in modules_map:
@@ -189,6 +191,8 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
                 "offset_y": 0,
                 "rotate": 270,
                 "range": 0,
+                "is_edge": False,
+                "is_corner": False,
             }
     return modules_map
 

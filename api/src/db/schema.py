@@ -50,7 +50,9 @@ class SchemaManager:
                 sl_base_name TEXT NOT NULL DEFAULT '',
                 map_image_name TEXT NOT NULL DEFAULT '',
                 aliases TEXT NOT NULL DEFAULT '[]',
-                rotation REAL DEFAULT 270
+                rotation REAL DEFAULT 270,
+                is_edge INTEGER NOT NULL DEFAULT 0,
+                is_corner INTEGER NOT NULL DEFAULT 0
             );
 
             CREATE TABLE IF NOT EXISTS lootdrop_items (
@@ -294,6 +296,7 @@ class SchemaManager:
         self._migrate_monster_entities_table()
         self._migrate_spawners_table()
         self._migrate_explore_targets_table()
+        self._migrate_dungeon_modules_table()
         self.conn.commit()
 
     def ensure_translation_table(self, lang: str):
@@ -344,6 +347,15 @@ class SchemaManager:
             c.execute("ALTER TABLE monster_entities ADD COLUMN race TEXT NOT NULL DEFAULT ''")
         if "races" not in columns:
             c.execute("ALTER TABLE monster_entities ADD COLUMN races TEXT NOT NULL DEFAULT '[]'")
+
+    def _migrate_dungeon_modules_table(self):
+        c = self.conn.cursor()
+        c.execute("PRAGMA table_info(dungeon_modules)")
+        columns = {row[1] for row in c.fetchall()}
+        if "is_edge" not in columns:
+            c.execute("ALTER TABLE dungeon_modules ADD COLUMN is_edge INTEGER NOT NULL DEFAULT 0")
+        if "is_corner" not in columns:
+            c.execute("ALTER TABLE dungeon_modules ADD COLUMN is_corner INTEGER NOT NULL DEFAULT 0")
 
     def _migrate_explore_targets_table(self):
         c = self.conn.cursor()

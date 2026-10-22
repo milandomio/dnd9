@@ -4,16 +4,27 @@ import os
 import re
 from pathlib import Path
 
-from config import DUNGEON_MODULE_DIR, GROUP_TO_ART_DIR, LAYOUT_DIR, MAPS_DIR
+from config import (
+    DUNGEON_DIR,
+    DUNGEON_MODULE_DIR,
+    GROUP_TO_ART_DIR,
+    LAYOUT_DIR,
+    MAPS_DIR,
+)
 
 from .._helpers import (
     extract_dungeon_module_name,
     has_map_file,
     load_json_dir,
+    module_placement_flags,
     sl_base_name,
     ue_asset_base_name,
     ue_to_fs_path,
 )
+
+# 收录入口：只接受 5x5 随机地牢引用的关卡尺寸
+ENTRY_LAYOUT_SIZE = 5
+_LAYOUT_SIZE_RE = re.compile(r"_(\d)x(\d)_")
 
 
 def _load_layout_rotations(layout_root: Path) -> dict[str, int]:
@@ -49,6 +60,50 @@ def _load_layout_rotations(layout_root: Path) -> dict[str, int]:
     return rotations
 
 
+def _layout_size(level_asset: str) -> int | None:
+    """Extract the grid size from a LevelAsset name such as Crypt_5x5_HR_R_P."""
+    match = _LAYOUT_SIZE_RE.search(level_asset or "")
+    if not match:
+        return None
+    return int(match.group(1))
+
+
+def load_entry_groups(dungeon_dir: Path = DUNGEON_DIR) -> dict[str, int]:
+    """Return module_group -> layout size for every random dungeon using ENTRY_LAYOUT_SIZE.
+
+    Only groups whose random dungeons are built on a 5x5 level are collected;
+    larger levels (e.g. the legacy ShipGraveyard 7x7) are excluded entirely.
+    """
+    groups: dict[str, int] = {}
+    if not dungeon_dir.exists():
+        return groups
+    for fp in sorted(dungeon_dir.glob("*.json")):
+        try:
+            with open(fp, encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            continue
+        if not isinstance(data, list):
+            continue
+        for entry in data:
+            if not isinstance(entry, dict):
+                continue
+            props = entry.get("Properties") or {}
+            name = entry.get("Name") or ""
+            if not name.startswith("Id_Dungeon_Random"):
+                continue
+            if "S2R" in name:
+                continue
+            group = (props.get("ModuleType") or "").removeprefix("EDCDungeonModuleType::")
+            if not group:
+                continue
+            asset = (props.get("LevelAsset") or {}).get("AssetPathName", "")
+            size = _layout_size(asset)
+            if size == ENTRY_LAYOUT_SIZE:
+                groups[group] = size
+    return groups
+
+
 class ModulesImporter:
     def __init__(self, conn):
         self.conn = conn
@@ -56,6 +111,9 @@ class ModulesImporter:
     def import_all(self) -> int:
         module_rotations = _load_layout_rotations(LAYOUT_DIR)
         path_group_map = self._build_path_group_map()
+        entry_groups = load_entry_groups()
+        if entry_groups:
+            path_group_map = {k: v for k, v in path_group_map.items() if v in entry_groups}
         files = load_json_dir(DUNGEON_MODULE_DIR)
         c = self.conn.cursor()
         c.execute("DELETE FROM dungeon_modules")
@@ -153,6 +211,12 @@ class ModulesImporter:
                     if module_name.lower().startswith(prefix.lower()):
                         module_type = group
                         break
+            if not module_type:
+                skipped_names.append(module_name)
+                continue
+            if entry_groups and module_type not in entry_groups:
+                skipped_names.append(module_name)
+                continue
             mi_asset = (props.get("MapImage") or {}).get("AssetPathName", "")
             map_image = ue_asset_base_name(mi_asset) or ""
             aliases_json = json.dumps(aliases) if aliases else "[]"
@@ -161,10 +225,25 @@ class ModulesImporter:
                 if module_rotations.get(module_name) is not None
                 else module_rotations.get(sl_base, 270)
             )
-            rows.append((module_name, name_key, module_type, size_x, size_y, sl_base, map_image, aliases_json, rot))
+            is_edge, is_corner = module_placement_flags(props)
+            rows.append(
+                (
+                    module_name,
+                    name_key,
+                    module_type,
+                    size_x,
+                    size_y,
+                    sl_base,
+                    map_image,
+                    aliases_json,
+                    rot,
+                    int(is_edge),
+                    int(is_corner),
+                )
+            )
             inserted_names.add(module_name)
         c.executemany(
-            "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases, rotation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases, rotation, is_edge, is_corner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             rows,
         )
         if skipped_names:
@@ -180,11 +259,13 @@ class ModulesImporter:
                     stripped = _variant_suffix_re.sub("", base_name)
                     if stripped != base_name:
                         tk = sl_base_to_key.get(stripped, "") or module_name_to_key.get(stripped, "")
-                extra_rows.append((base_name, tk, group, 1, 1, "", "", "[]", module_rotations.get(base_name, 270)))
+                extra_rows.append(
+                    (base_name, tk, group, 1, 1, "", "", "[]", module_rotations.get(base_name, 270), 0, 0)
+                )
                 inserted_names.add(base_name)
         if extra_rows:
             c.executemany(
-                "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases, rotation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases, rotation, is_edge, is_corner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 extra_rows,
             )
         c.execute("DELETE FROM dungeon_modules WHERE module_group = '' OR module_group IS NULL")

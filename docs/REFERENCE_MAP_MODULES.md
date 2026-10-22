@@ -2,6 +2,32 @@
 
 本文集中说明 DungeonModule、Layout、旋转和无资产模块。Spawner 坐标解析规则见 [`REFERENCE_DATA_PIPELINE.md`](REFERENCE_DATA_PIPELINE.md)；完整历史表格见 [`REFERENCE_ARCHIVE.md`](REFERENCE_ARCHIVE.md) 的地图模块章节。
 
+## 收录入口（5x5 布局）
+
+模块收录以 **随机地牢定义**（`Data/Generated/V2/Dungeon/Dungeon/Id_Dungeon_Random*.json`）为入口，不再按地图目录扫描结果无条件收录：
+
+1. 读取每个 `DCDungeonDataAsset` 的 `Properties.ModuleType` 与 `Properties.LevelAsset.AssetPathName`。
+2. 从 `LevelAsset` 文件名解析网格尺寸（`{区域}_{X}x{Y}_{...}`）。
+3. 仅保留尺寸为 **5x5** 的分组；`S2R` 变体地牢直接跳过。
+4. 只收录 `ModuleType` 落在上述分组内的模块。
+
+因此 ShipGraveyard 整组被排除：它的 9 个随机地牢全部指向 `ShipGraveyard_7x7_01_HR_P` / `ShipGraveyard_7x7_02_N_P`（7x7），当前不存在 5x5 的 ShipGraveyard 关卡文件。等游戏提供 5x5 版本后会自动重新纳入，无需改代码。
+
+实现位置：`db/importers/modules.py` 的 `load_entry_groups()` / `_layout_size()`，常量 `ENTRY_LAYOUT_SIZE = 5`。
+
+## 放置限制属性（is_edge / is_corner）
+
+`DCDungeonModuleDataAsset` 的两个布尔字段决定模块能被放进哪类槽位：
+
+| 字段 | DB 列 | 含义 |
+|------|-------|------|
+| `bEdgeOnly` | `is_edge` | 只能放在边缘槽（四边非角落） |
+| `bCornerOnly` | `is_corner` | 只能放在角落槽（四角） |
+
+两者互斥，均未设置表示可放内部。解析函数为 `db/_helpers.py:module_placement_flags()`，返回 `(is_edge, is_corner)`。
+
+前端通过 `web/src/utils/mapImage.ts:modulePlacementSuffix()` 在模块显示名后追加后缀，例如「强盗森林(角落)」「军营(边缘)」；文案键为 `ui.module.suffix.edge` / `ui.module.suffix.corner`，10 种语言均已补齐。角落优先于边缘（虽然二者互斥，仍按此顺序防偶发脏数据）。
+
 ## 模块数据来源
 
 `DCDungeonModuleDataAsset` 位于游戏导出目录的 DungeonModule 数据目录，关键字段为：

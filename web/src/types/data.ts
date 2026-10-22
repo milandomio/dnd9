@@ -161,6 +161,8 @@ export interface DungeonModule {
   img_name: string;
   has_img: boolean;
   has_useful_entities: boolean;
+  is_edge?: boolean;
+  is_corner?: boolean;
   offset_x: number;
   offset_y: number;
   rotate: number;

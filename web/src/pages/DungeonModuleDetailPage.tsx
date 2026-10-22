@@ -6,6 +6,7 @@ import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
+import { modulePlacementSuffix } from '../utils/mapImage';
 import DebugPanel from '../components/DebugPanel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
@@ -151,7 +152,7 @@ export default function DungeonModuleDetailPage() {
     );
 
   const m = mod;
-  const moduleDisplayName = t(m.translation_key, m.translation || m.name);
+  const moduleDisplayName = `${t(m.translation_key, m.translation || m.name)}${modulePlacementSuffix(m, ut)}`;
   const groupLabel = formatGroupLabel(m, t, ut);
   const sx = m.size_x || 1;
   const sy = m.size_y || 1;

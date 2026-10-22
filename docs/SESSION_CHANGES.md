@@ -2,6 +2,24 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-23
+
+### feat: 地图模块改以 5x5 布局为收录入口，并新增边缘/角落属性
+
+- **改动原因**：用户要求「模块信息录入从 5x5 模块为入口」，且「7x7 的 ShipGraveyard 完全不收录到 db 文件」；同时要求模块增加边缘属性，边缘模块在地图名后显示 `(边缘)`，例如「强盗森林(边缘)」。随后明确「角落显示为角落，边缘显示为边缘，二者可进一步区分」，因此拆成 `is_edge` / `is_corner` 两个独立属性。
+- **变更文件**：
+  - 后端：`api/src/config.py`、`api/src/db/_helpers.py`、`api/src/db/schema.py`、`api/src/db/importers/modules.py`、`api/src/db/repositories/modules.py`、`api/src/module_builder.py`；
+  - 前端：`web/src/types/data.ts`、`web/src/utils/mapImage.ts`、`web/src/pages/DungeonModuleGroupPage.tsx`、`web/src/pages/DungeonModuleDetailPage.tsx`、`web/src/i18n/uiLocale.ts`；
+  - 测试：`api/tests/test_module_entries.py`（新增）；
+  - 文档：`docs/REFERENCE_MAP_MODULES.md`。
+- **关键逻辑/映射关系**：
+  1. **收录入口改为随机地牢资产**：新增 `config.DUNGEON_DIR` 与 `db/importers/modules.py` 的 `ENTRY_LAYOUT_SIZE = 5`、`_layout_size()`、`load_entry_groups()`。导入时先扫描 `Data/Generated/V2/Dungeon/Dungeon/Id_Dungeon_Random*.json`，读取 `Properties.ModuleType` 与 `Properties.LevelAsset.AssetPathName`，从关卡名 `{区域}_{X}x{Y}_{...}` 解析网格尺寸，仅保留 5x5 的分组；`S2R` 变体地牢整体跳过。
+  2. **ShipGraveyard 整组排除**：该组 9 个随机地牢全部指向 `ShipGraveyard_7x7_01_HR_P` / `ShipGraveyard_7x7_02_N_P`（7x7），当前导出中不存在任何 5x5 的 ShipGraveyard 关卡文件。导入结果从 268 条降为 238 条，导出 `dungeon_modules.json` 从 260 条降为 234 条，ShipGraveyard 残留为 0。此排除由数据驱动，游戏若出现 5x5 版本会自动恢复，无需改代码。
+  3. **新增放置限制属性**：`db/_helpers.py:module_placement_flags()` 把 `bEdgeOnly` 映射为 `is_edge`、`bCornerOnly` 映射为 `is_corner`，二者互斥。DB `dungeon_modules` 新增同名列（`INTEGER NOT NULL DEFAULT 0`），`schema.py` 增加 `_migrate_dungeon_modules_table()` 做增量迁移。
+  4. **前端展示**：`web/src/utils/mapImage.ts:modulePlacementSuffix()` 返回对应后缀，角落优先于边缘（防偶发脏数据）。列表页 `DungeonModuleGroupPage` 与详情页标题 `DungeonModuleDetailPage` 均在翻译名后追加。新增文案键 `ui.module.suffix.edge` / `ui.module.suffix.corner`，10 种语言全部补齐（zh-Hans 为 `(边缘)` / `(角落)`，zh-Hant 为 `(邊緣)` / `(角落)`）。
+  5. **附带修正**：`ModuleType` 为空且无法通过前缀推断的模块现在直接跳过，不再写入空分组后被 `DELETE FROM dungeon_modules WHERE module_group = ''` 静默删除。
+- **验证**：`python3 -m unittest tests.test_module_entries` 9/9 通过；完整管道 `python3 main.py`（41.34s）通过，`[VALIDATE] all module images OK`；导出 `dungeon_modules.json` 234 条，分组 `Crypt 60 / Ruins 43 / Inferno 27 / IceCavern 27 / GoblinCave 26 / FireDeep 25 / IceAbyss 22`，`is_edge` 20 条、`is_corner` 9 条，ShipGraveyard 0 条；`npx tsc --noEmit`、`npm run format:check`、`npm run lint`（0 错误，20 条既有 warning）均通过。
+
 ## 2026-10-22
 
 ### fix: 【工匠】页保护药水显示护盾值与持续时间

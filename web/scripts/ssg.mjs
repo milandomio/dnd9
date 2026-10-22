@@ -752,6 +752,28 @@ function stripTrailingParenthetical(value) {
     .trim();
 }
 
+const MODULE_PLACEMENT_SUFFIX = {
+  'zh-Hans': { edge: '(边缘)', corner: '(角落)' },
+  'zh-Hant': { edge: '(邊緣)', corner: '(角落)' },
+  en: { edge: ' (Edge)', corner: ' (Corner)' },
+  de: { edge: ' (Rand)', corner: ' (Ecke)' },
+  es: { edge: ' (Borde)', corner: ' (Esquina)' },
+  fr: { edge: ' (Bord)', corner: ' (Coin)' },
+  ja: { edge: '（端）', corner: '（角）' },
+  ko: { edge: ' (외곽)', corner: ' (모서리)' },
+  'pt-BR': { edge: ' (Borda)', corner: ' (Canto)' },
+  ru: { edge: ' (Край)', corner: ' (Угол)' },
+};
+
+function modulePlacementSuffix(routeData, lang) {
+  const placement = routeData?.module || routeData;
+  if (!placement) return '';
+  const dict = MODULE_PLACEMENT_SUFFIX[lang] || MODULE_PLACEMENT_SUFFIX[DEFAULT_LANG];
+  if (placement.is_corner) return dict.corner;
+  if (placement.is_edge) return dict.edge;
+  return '';
+}
+
 const GROUP_FLOOR_SUFFIX = {
   'zh-Hans': '层',
   'zh-Hant': '層',
@@ -799,9 +821,14 @@ function localizedTitle(
   const localized =
     title || entity.translation || entity.name || 'DarkFlashNav';
   const lootdropVariant = routePath.match(/\/lootdrops\/[^/]+_(\d{4})\/?$/);
-  return lootdropVariant && lootdropVariant[1] !== '8001'
-    ? stripTrailingParenthetical(localized)
-    : localized;
+  if (lootdropVariant && lootdropVariant[1] !== '8001') {
+    return stripTrailingParenthetical(localized);
+  }
+  // 地图模块详情：在地图名后追加放置限制后缀（边缘/角落）
+  if (/\/dungeon_modules\/[^/]+\/[^/]+\/?$/.test(routePath)) {
+    return `${localized}${modulePlacementSuffix(routeData, lang)}`;
+  }
+  return localized;
 }
 
 function decodeHtml(value) {
