@@ -277,17 +277,19 @@ class ModulesImporter:
         c.execute("SELECT COUNT(*) FROM dungeon_modules")
         return c.fetchone()[0]
 
-    def _store_spawn_rates(self) -> None:
+    def _store_spawn_rates(self, stats: dict | None = None) -> None:
         """Cache each rare module's spawn rate in the DB.
 
         The rate depends on layout assets and the collected rare pool, but CI runs
         without the game export tree. Storing the value here keeps exports stable
         across environments instead of silently degrading to 0.
+
+        ``stats`` exists so tests can inject layout statistics without the game tree.
         """
         c = self.conn.cursor()
         c.execute("SELECT module_name, module_group, is_rare FROM dungeon_modules")
         modules = [{"module_name": row[0], "module_group": row[1], "is_rare": bool(row[2])} for row in c.fetchall()]
-        rates = compute_spawn_rates(modules)
+        rates = compute_spawn_rates(modules, stats)
         if rates:
             c.executemany(
                 "UPDATE dungeon_modules SET spawn_rate = ? WHERE module_name = ?",

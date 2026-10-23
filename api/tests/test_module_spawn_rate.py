@@ -123,19 +123,50 @@ class SpawnRateCachingTest(unittest.TestCase):
         from db.importers.modules import ModulesImporter
         from db.schema import SchemaManager
 
+        # 显式注入统计，测试不依赖游戏导出目录（CI 里没有）
+        stats = {
+            "Crypt": {
+                "source": "assets",
+                "layouts": 40,
+                "rare_layouts": 2,
+                "grid": 5,
+                "fixed_cells": [4],
+            }
+        }
         with tempfile.TemporaryDirectory() as tmp:
             conn = sqlite3.connect(Path(tmp) / "test.db")
             conn.row_factory = sqlite3.Row
             SchemaManager(conn).create_tables()
             cur = conn.cursor()
             cur.executemany(
-                "INSERT INTO dungeon_modules (module_name, module_group, is_rare)" " VALUES (?, ?, ?)",
+                "INSERT INTO dungeon_modules (module_name, module_group, is_rare) VALUES (?, ?, ?)",
                 [(f"Crypt_Rare_{i}", "Crypt", 1) for i in range(5)],
             )
             conn.commit()
-            ModulesImporter(conn)._store_spawn_rates()
+            ModulesImporter(conn)._store_spawn_rates(stats=stats)
             rows = cur.execute("SELECT spawn_rate FROM dungeon_modules WHERE module_group = 'Crypt'").fetchall()
             self.assertEqual({row[0] for row in rows}, {0.84})
+
+    def test_missing_assets_keep_stored_values(self):
+        import sqlite3
+
+        from db.importers.modules import ModulesImporter
+        from db.schema import SchemaManager
+
+        with tempfile.TemporaryDirectory() as tmp:
+            conn = sqlite3.connect(Path(tmp) / "test.db")
+            conn.row_factory = sqlite3.Row
+            SchemaManager(conn).create_tables()
+            cur = conn.cursor()
+            cur.execute(
+                "INSERT INTO dungeon_modules (module_name, module_group, is_rare, spawn_rate)"
+                " VALUES ('Crypt_A', 'Crypt', 1, 0.84)"
+            )
+            conn.commit()
+            # 空 stats 表示资产缺失，必须保留旧值而不是清零
+            ModulesImporter(conn)._store_spawn_rates(stats={})
+            value = cur.execute("SELECT spawn_rate FROM dungeon_modules WHERE module_name = 'Crypt_A'").fetchone()[0]
+            self.assertEqual(value, 0.84)
 
 
 class LayoutStatsFallbackTest(unittest.TestCase):
