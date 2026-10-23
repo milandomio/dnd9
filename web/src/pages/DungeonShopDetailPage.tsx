@@ -13,6 +13,12 @@ import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import { localizedSeoDescription } from '../i18n/seo';
+import {
+  formatChancePercent,
+  groupEquipmentByChance,
+  type EquipmentCategoryGroup,
+  type EquipmentGroup,
+} from '../utils/shopEquipment';
 import type { ShopDetail, ShopDifficulty, ShopItem } from '../types/data';
 
 /** Shop slot -> the item group it sells, for a readable section heading. */
@@ -132,6 +138,27 @@ export default function DungeonShopDetailPage() {
     detail.merchant?.translation_key,
     detail.merchant?.display ?? detail.merchant?.merchant_name ?? ''
   );
+  // Equipment band headline: the minor-artifact batch is sold as its own group
+  // regardless of quality, so it gets a UI label; every other band shows the
+  // game's own rarity name (Unique -> 独特 through the locale dictionary).
+  const groupHeadline = (group: EquipmentGroup) =>
+    group.pool === 'mini_artifact'
+      ? ut('ui.shops.mini_artifact')
+      : t(
+          group.rarity_key,
+          group.rarity_label || group.rarity || ut('ui.shops.slot.other')
+        );
+
+  // Second level label: 饰品 / 护甲 / 武器 straight from the game's own
+  // category translation keys.
+  const categoryName = (category: EquipmentCategoryGroup) =>
+    category.category_key
+      ? t(
+          category.category_key,
+          category.label || ut('ui.list.item_group_unknown')
+        )
+      : ut('ui.list.item_group_unknown');
+
   const description = localizedSeoDescription(lang, dict, 'shopRegion', {
     name: regionName,
     items: detail.total_items || undefined,
@@ -283,22 +310,92 @@ export default function DungeonShopDetailPage() {
                 gap: 8,
               }}
             >
-              {slot.items.map((item) => (
-                <ShopItemCard
-                  key={`${slot.slot}-${item.name}`}
-                  item={item}
-                  // A one-item slot is guaranteed, so "100% chance" is noise.
-                  // The equipment slot (90) is a price list: every entry is always
-                  // purchasable, so per-item chance is meaningless there.
-                  showChance={
-                    slot.items.length > 1 && slot.slot !== EQUIPMENT_SLOT
-                  }
-                  focused={item.page === focusItem}
-                />
-              ))}
+              {slot.slot === EQUIPMENT_SLOT
+                ? // Equipment is a weighted pool, so its rows are summary lines
+                  // rather than item cards: every entry of a rarity band shares
+                  // one weight and one price, and the same holds per
+                  // 饰品 / 护甲 / 武器 category. Listing the 631 individual
+                  // names adds no information the odds line does not carry.
+                  groupEquipmentByChance(slot.items).map((group) => (
+                    <div
+                      key={`${group.pool}-${group.chance}`}
+                      style={{ gridColumn: '1 / -1', marginTop: 6 }}
+                    >
+                      <EquipmentSummaryRow
+                        label={`${groupHeadline(group)} ×${group.items.length}`}
+                        rate={formatChancePercent(group.cumulative)}
+                        price={group.price}
+                        strong
+                      />
+                      {group.categories.map((category) => (
+                        <EquipmentSummaryRow
+                          key={`${group.pool}-${group.chance}-${category.category_key}`}
+                          label={`${categoryName(category)} ×${category.items.length}`}
+                          rate={formatChancePercent(category.cumulative)}
+                          price={category.price}
+                        />
+                      ))}
+                    </div>
+                  ))
+                : slot.items.map((item) => (
+                    <ShopItemCard
+                      key={`${slot.slot}-${item.name}`}
+                      item={item}
+                      // A one-item slot is guaranteed, so "100% chance" is
+                      // noise.
+                      showChance={slot.items.length > 1}
+                      focused={item.page === focusItem}
+                    />
+                  ))}
             </div>
           </section>
         ))}
+    </div>
+  );
+}
+
+/**
+ * One summary line of the equipment pool: the label ("护甲 ×144"), the
+ * cumulative drop rate and the shared price, in the same grid cell so the three
+ * columns line up across rows.
+ */
+function EquipmentSummaryRow({
+  label,
+  rate,
+  price,
+  strong,
+}: {
+  label: string;
+  rate: string;
+  price: number;
+  /** Rarity band headline; the category rows below it are secondary. */
+  strong?: boolean;
+}) {
+  const { tokens } = useTheme();
+  const { ut } = useLocale();
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'baseline',
+        gap: 12,
+        padding: strong ? '8px 10px' : '4px 10px',
+        background: strong ? tokens.card : 'transparent',
+        borderRadius: strong ? 6 : 0,
+        fontSize: strong ? 14 : 13,
+        color: strong ? tokens.text : tokens.muted,
+      }}
+    >
+      <span style={{ fontWeight: strong ? 'bold' : 'normal' }}>{label}</span>
+      <span>· {ut('ui.shops.cumulative_rate').replace('{rate}', rate)}</span>
+      {price > 0 && (
+        <span style={{ color: '#F39C12', marginLeft: 'auto' }}>
+          {price}
+          <span style={{ fontSize: 12, marginLeft: 2 }}>
+            {ut('ui.shops.gold')}
+          </span>
+        </span>
+      )}
     </div>
   );
 }

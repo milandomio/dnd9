@@ -644,11 +644,24 @@ def run(
                 }
                 for entry in loot_index
             }
+            # Equipment categories (饰品/护甲/武器) drive the shop page's second
+            # grouping level. They come from the item entities table rather than
+            # the lootdrop index: gear that never drops (GrimveilCloak) is still
+            # sold, so the loot index alone would leave it uncategorised.
+            shop_item_categories = {
+                item["item_name"]: {
+                    "item_type": item.get("item_type", ""),
+                    "item_category_key": item.get("item_category_key", ""),
+                }
+                for item in items
+                if item.get("item_category_key")
+            }
             shop_data = build_shop_data(
                 db.get_ingame_merchants(),
                 translations,
                 shop_item_index,
                 region_labels,
+                shop_item_categories,
             )
             save_shop_data(shop_data, OUTPUT_DIR)
             ctx.set_result(f"{len(shop_data['index']['regions'])} regions")

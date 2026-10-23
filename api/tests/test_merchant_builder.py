@@ -12,6 +12,7 @@ from db.importers.merchants import parse_asset_name, parse_merchant_name  # noqa
 from db.repositories.merchants import InGameMerchantRepository  # noqa: E402
 from db.schema import SchemaManager  # noqa: E402
 from merchant_builder import (  # noqa: E402
+    EQUIPMENT_SLOT,
     REGION_LABEL_KEY,
     build_shop_data,
     save_shop_data,
@@ -460,6 +461,104 @@ class ShopChanceTest(unittest.TestCase):
         slot = self._slot("Crypts", 8)
         bone = next(i for i in slot["items"] if i["name"] == "Bone")
         self.assertEqual(bone["rarity"], "")
+
+
+def _equipment_merchant_data():
+    """One slot holding the three equipment weight bands plus the special batch."""
+    data = _merchant_data()
+    vid = "GoblinSmuggler_Crypts_HR"
+    for name, rate in (
+        ("AdventurerBoots_5001", 300),
+        ("GrimveilCloak_5001", 300),
+        ("Bloodbound_5001", 105),
+    ):
+        data["stock"].append(_row(vid, EQUIPMENT_SLOT, name, 500, 1, rate))
+    return data
+
+
+ITEM_CATEGORIES = {
+    "AdventurerBoots": {
+        "item_type": "Armor",
+        "item_category_key": "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Armor",
+    },
+    "GrimveilCloak": {
+        "item_type": "Armor",
+        "item_category_key": "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Armor",
+    },
+    "Bloodbound": {
+        "item_type": "Weapon",
+        "item_category_key": "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Weapon",
+    },
+}
+
+
+class EquipmentCategoryTest(unittest.TestCase):
+    """The equipment pool carries its category and rarity key for the UI."""
+
+    def _items(self):
+        data = build_shop_data(
+            _equipment_merchant_data(),
+            {},
+            ITEM_INDEX,
+            {r: r for r in REGION_LABEL_KEY},
+            ITEM_CATEGORIES,
+        )
+        detail = data["details"]["Crypts"]["difficulties"][1]
+        slot = next(s for s in detail["slots"] if s["slot"] == EQUIPMENT_SLOT)
+        return {i["name"]: i for i in slot["items"]}
+
+    def test_category_comes_from_item_entities(self):
+        boots = self._items()["AdventurerBoots_5001"]
+        self.assertEqual(boots["item_type"], "Armor")
+        self.assertEqual(
+            boots["item_category_key"],
+            "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Armor",
+        )
+
+    def test_rarity_key_points_at_the_game_locale(self):
+        boots = self._items()["AdventurerBoots_5001"]
+        self.assertEqual(boots["rarity"], "Epic")
+        self.assertEqual(
+            boots["rarity_key"],
+            "Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_Epic",
+        )
+
+    def test_labels_carry_the_translated_text(self):
+        """The default language never loads the game dictionary, so the payload
+        ships the translated label alongside the key."""
+        data = build_shop_data(
+            _equipment_merchant_data(),
+            {
+                "Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_Epic": "史诗",
+                "Text_Code_DCDataBlueprintLibrary_Type_Item_Category_Armor": "护甲",
+            },
+            ITEM_INDEX,
+            {r: r for r in REGION_LABEL_KEY},
+            ITEM_CATEGORIES,
+        )
+        detail = data["details"]["Crypts"]["difficulties"][1]
+        slot = next(s for s in detail["slots"] if s["slot"] == EQUIPMENT_SLOT)
+        boots = next(i for i in slot["items"] if i["name"] == "AdventurerBoots_5001")
+        self.assertEqual(boots["rarity_label"], "史诗")
+        self.assertEqual(boots["item_category_label"], "护甲")
+
+    def test_minor_artifacts_get_their_own_pool(self):
+        items = self._items()
+        self.assertEqual(items["Bloodbound_5001"]["pool"], "mini_artifact")
+        self.assertEqual(items["AdventurerBoots_5001"]["pool"], "tier")
+
+    def test_missing_category_leaves_empty_fields(self):
+        data = build_shop_data(
+            _equipment_merchant_data(),
+            {},
+            ITEM_INDEX,
+            {r: r for r in REGION_LABEL_KEY},
+        )
+        detail = data["details"]["Crypts"]["difficulties"][1]
+        slot = next(s for s in detail["slots"] if s["slot"] == EQUIPMENT_SLOT)
+        for item in slot["items"]:
+            self.assertEqual(item["item_type"], "")
+            self.assertEqual(item["item_category_key"], "")
 
 
 if __name__ == "__main__":

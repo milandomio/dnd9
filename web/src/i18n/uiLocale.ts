@@ -19,6 +19,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': '共 {count} 种商品',
     'ui.shops.map_exclusive': '地图限定',
     'ui.shops.chance': '{chance} 概率',
+    'ui.shops.cumulative_rate': '累计 {rate}',
+    'ui.shops.mini_artifact': '小型神器',
     'ui.shops.chance_hint':
       '每个槽位每局随机刷出商品：多数槽位抽 1 种，材料槽位抽 2 种（同一张表抽两次）。下方百分比是该商品当次出现的概率。',
     'ui.shops.effect.luck': '幸运',
@@ -358,6 +360,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': '{count} items total',
     'ui.shops.map_exclusive': 'Map exclusive',
     'ui.shops.chance': '{chance} chance',
+    'ui.shops.cumulative_rate': 'Cumulative {rate}',
+    'ui.shops.mini_artifact': 'Minor Artifact',
     'ui.shops.chance_hint':
       'Each slot rolls per run: most slots pick 1 item, the material slot picks 2 (the same table twice). The percentage is that item’s chance of appearing.',
     'ui.shops.effect.luck': 'Luck',
@@ -702,6 +706,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': 'insgesamt {count} Artikel',
     'ui.shops.map_exclusive': 'Kartenspezifisch',
     'ui.shops.chance': '{chance} Chance',
+    'ui.shops.cumulative_rate': 'Kumuliert {rate}',
+    'ui.shops.mini_artifact': 'Kleinartefakt',
     'ui.shops.chance_hint':
       'Jeder Slot zieht pro Run: die meisten 1 Artikel, der Material-Slot 2 (dieselbe Tabelle zweimal). Der Prozentsatz ist die Chance, dass der Artikel erscheint.',
     'ui.shops.effect.luck': 'Glück',
@@ -1050,6 +1056,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': '{count} artículos en total',
     'ui.shops.map_exclusive': 'Exclusivo del mapa',
     'ui.shops.chance': '{chance} prob.',
+    'ui.shops.cumulative_rate': 'Acumulado {rate}',
+    'ui.shops.mini_artifact': 'Artefacto menor',
     'ui.shops.chance_hint':
       'Cada ranura sortea por partida: la mayoría 1 artículo, la ranura de materiales 2 (la misma tabla dos veces). El porcentaje es la probabilidad de que aparezca.',
     'ui.shops.effect.luck': 'Suerte',
@@ -1401,6 +1409,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': '{count} articles au total',
     'ui.shops.map_exclusive': 'Exclusif à la carte',
     'ui.shops.chance': '{chance} chance',
+    'ui.shops.cumulative_rate': 'Cumulé {rate}',
+    'ui.shops.mini_artifact': 'Artefact mineur',
     'ui.shops.chance_hint':
       'Chaque emplacement tire par partie : la plupart 1 article, l’emplacement de matériaux 2 (deux fois la même table). Le pourcentage est la chance d’apparition.',
     'ui.shops.effect.luck': 'Chance',
@@ -1751,6 +1761,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': '全 {count} 種',
     'ui.shops.map_exclusive': 'マップ限定',
     'ui.shops.chance': '{chance}',
+    'ui.shops.cumulative_rate': '累計 {rate}',
+    'ui.shops.mini_artifact': '小型神器',
     'ui.shops.chance_hint':
       '各スロットは1回につき抽選します。多くは1種、素材スロットは2種（同じ表を2回）。割合はその商品が出現する確率です。',
     'ui.shops.effect.luck': '幸運',
@@ -2097,6 +2109,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': '총 {count}종',
     'ui.shops.map_exclusive': '맵 한정',
     'ui.shops.chance': '{chance}',
+    'ui.shops.cumulative_rate': '누적 {rate}',
+    'ui.shops.mini_artifact': '소형 신기',
     'ui.shops.chance_hint':
       '각 슬롯은 판당 추첨합니다. 대부분 1종, 재료 슬롯은 2종(같은 표를 두 번). 표시된 비율은 해당 상품이 등장할 확률입니다.',
     'ui.shops.effect.luck': '행운',
@@ -2439,6 +2453,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': '{count} itens no total',
     'ui.shops.map_exclusive': 'Exclusivo do mapa',
     'ui.shops.chance': '{chance} chance',
+    'ui.shops.cumulative_rate': 'Acumulado {rate}',
+    'ui.shops.mini_artifact': 'Artefato menor',
     'ui.shops.chance_hint':
       'Cada slot sorteia por partida: a maioria 1 item, o slot de materiais 2 (a mesma tabela duas vezes). A porcentagem é a chance de o item aparecer.',
     'ui.shops.effect.luck': 'Sorte',
@@ -2788,6 +2804,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': 'всего {count} предметов',
     'ui.shops.map_exclusive': 'Только на этой карте',
     'ui.shops.chance': '{chance}',
+    'ui.shops.cumulative_rate': 'Накопительно {rate}',
+    'ui.shops.mini_artifact': 'Малый артефакт',
     'ui.shops.chance_hint':
       'Каждый слот выдаёт за забег: большинство 1 предмет, слот материалов 2 (одна таблица дважды). Процент — шанс появления предмета.',
     'ui.shops.effect.luck': 'Удача',
@@ -3136,6 +3154,8 @@ const UI_LOCALE: Record<SupportedLang, UILocaleDict> = {
     'ui.shops.total_items': '共 {count} 種商品',
     'ui.shops.map_exclusive': '地圖限定',
     'ui.shops.chance': '{chance} 機率',
+    'ui.shops.cumulative_rate': '累計 {rate}',
+    'ui.shops.mini_artifact': '小型神器',
     'ui.shops.chance_hint':
       '每個槽位每局隨機刷出商品：多數槽位抽 1 種，材料槽位抽 2 種（同一張表抽兩次）。下方百分比是該商品當次出現的機率。',
     'ui.shops.effect.luck': '幸運',

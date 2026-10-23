@@ -203,6 +203,21 @@ export interface ShopItem {
   chance: number;
   /** Poor | Common | Uncommon | Rare | Epic | Legend | Unique | Artifact. */
   rarity?: string;
+  /** Game translation key for `rarity` (already localized in every locale). */
+  rarity_key?: string;
+  /** Pre-translated rarity label (zh-Hans fallback, the default language). */
+  rarity_label?: string;
+  /** Armor | Accessory | Weapon (equipment only). */
+  item_type?: string;
+  /** Game translation key for the item category (饰品 / 护甲 / 武器). */
+  item_category_key?: string;
+  /** Pre-translated category label (zh-Hans fallback). */
+  item_category_label?: string;
+  /**
+   * `mini_artifact` for the 10 special Epic items that share their own roll
+   * weight (Bloodbound 血缚 ...); `tier` for the regular rarity bands.
+   */
+  pool?: 'tier' | 'mini_artifact';
   /** Sold by this region only (not present in any other region's stock). */
   map_exclusive?: boolean;
   /** Resolved gameplay effect (only consumables that roll an effect have it). */

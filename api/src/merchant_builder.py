@@ -43,6 +43,23 @@ SUFFIX_RARITY = {
     "8001": "Artifact",
 }
 
+# Shared equipment stock: every region schedule references the same
+# `GoblinSmuggler_Equip_*` assets, so the whole pool shows up as one slot.
+EQUIPMENT_SLOT = 90
+
+# The equipment pool holds three major weights (300/190/10, 207 items each) plus
+# one independent weight for 10 special Epic items (Bloodbound 血缚, GrimveilCloak
+# 阴森帷幕披风, ThornShield 荆棘之盾 ...). The game sells that last batch as minor
+# artifacts, so it is grouped as its own tier instead of being folded into the
+# Epic weight band. Do not derive this from the lootdrop `hr100` flag (only 7 of
+# the 10 carry it) or from item ability names (only 4 mention MinorArtifact).
+MINI_ARTIFACT_RATE = 105
+
+# Item rarity -> the game's own translation key. The locale dictionaries already
+# ship every value in all 10 languages, so the UI reads them instead of keeping a
+# parallel list of hardcoded rarity names.
+RARITY_KEY_PREFIX = "Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_"
+
 # Slot 8 and 9 hold byte-identical pools (the game rolls the same material table
 # twice); they are merged into one row group so the table is not duplicated.
 MATERIAL_SLOT_GROUP = (8, 9)
@@ -57,11 +74,18 @@ def build_shop_data(
     translations: dict[str, str],
     item_index: dict[str, dict],
     region_labels: dict[str, str],
+    item_categories: dict[str, dict] | None = None,
 ) -> dict[str, object]:
     """Assemble the index + per-region shop payloads.
 
     ``item_index`` maps an item page name to ``{"page", "translation",
     "translation_key"}`` so items link to their lootdrop detail page.
+
+    ``item_categories`` maps a folded item name to ``{"item_type",
+    "item_category_key"}`` (read from the DB `item_entities` table). The shop
+    page sub-groups the equipment pool by 饰品 / 护甲 / 武器, and the lootdrop
+    index cannot serve that: it only lists items that drop somewhere, while the
+    equipment stock also sells shop-only goods (GrimveilCloak).
 
     Merchants also carry resolved ``display`` / ``greeting`` values: the default
     language does not load the locale dictionary on the client, so anything the
@@ -72,6 +96,7 @@ def build_shop_data(
     export never reads the game extract.
     """
     item_effects: dict[str, dict] = merchant_data.get("effects") or {}
+    categories = item_categories or {}
 
     merchants = {}
     for m in merchant_data["merchants"]:
@@ -162,6 +187,14 @@ def build_shop_data(
                             break
                 total = slot_totals.get(slot_index, 0)
                 chance = row["item_rate"] / total if total else 0.0
+                rarity = SUFFIX_RARITY.get(suffix or "", "")
+                rarity_key = f"{RARITY_KEY_PREFIX}{rarity}" if rarity else ""
+                # Equipment categories (饰品 / 护甲 / 武器) only exist for gear;
+                # consumables and materials fall back to an empty value so the
+                # UI can group them the flat way it always did.
+                # Artifact pages keep their quality suffix (CrystalBall_8001),
+                # while item entities are keyed by the folded name, so try both.
+                category_meta = categories.get(page) or categories.get(fold_item_page(page)[0]) or {}
                 entry["items"][row["item_name"]] = {
                     "name": row["item_name"],
                     "page": item_meta.get("page", page),
@@ -174,7 +207,18 @@ def build_shop_data(
                     "rate": row["item_rate"],
                     "slot_total": total,
                     "chance": chance,
-                    "rarity": SUFFIX_RARITY.get(suffix or "", ""),
+                    "rarity": rarity,
+                    "rarity_key": rarity_key,
+                    # Already-translated label so the default language (which
+                    # never loads the game dictionary client-side) can render a
+                    # readable name; other languages prefer the locale value.
+                    "rarity_label": translations.get(rarity_key, rarity),
+                    "item_type": category_meta.get("item_type", ""),
+                    "item_category_key": category_meta.get("item_category_key", ""),
+                    "item_category_label": translations.get(category_meta.get("item_category_key", ""), ""),
+                    # The minor-artifact batch shares one weight of its own, so
+                    # the UI can label the group without re-deriving it.
+                    "pool": "mini_artifact" if row["item_rate"] == MINI_ARTIFACT_RATE else "tier",
                     "map_exclusive": page not in other_items,
                     "effect": item_effects.get(row["item_name"]),
                     "_miss": 1 - chance,
