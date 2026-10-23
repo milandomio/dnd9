@@ -63,6 +63,16 @@
   7. **README 数据核对**：文中数字均取自当前导出实测——816 物品、732 怪物、570 实体、234 地图模块、524 掉落条目、2980 条路由、13774 个 HTML、10 种语言。
   8. **README 后续调整**：按用户要求删除「快速开始」之前的部分（项目简介、在线站点、特性列表），文档现在直接从 `# 快速开始` 开始；随后再次按用户要求删除「免责声明」章节，理由是其中的版权归属表述对本项目并不成立且容易误导。保留环境要求、一键构建、常用参数、脱游部署原理、项目结构、页面、技术栈、开发、文档索引与许可。
 - **验证**：`bash -n deploy.sh` 语法通过；`./deploy.sh --help` 输出完整说明；实际运行 `./deploy.sh` 全流程通过——`[DB] state=DB_ONLY` 正确识别无游戏源、管道导出成功、SSG 2980 页、`[5/5]` 返回 HTTP 200；模拟普通用户（将所有 `config` 游戏路径指向不存在目录）调用 `inspect_database()` 得到 `state=DB_ONLY / import_required=False`，确认无需游戏文件即可构建；README 内 7 个文档链接与 3 条命令均校验存在。
+### chore: 补丁部署（同步游戏数据、全量重建 DB）
+
+- **改动原因**：用户要求执行补丁流程（更新部署），按 `docs/BUILD_AND_DEPLOY.md` 的「更新部署」章节执行：同步最新游戏解包 → 全量重建 SQLite → 提交含新 DB 的 `main`。**按用户明确要求不推送远程**。
+- **变更文件**：`api/data/darkfindv5.db`（全量重建）、`data/json/**`（管道导出，未跟踪）。
+- **关键逻辑/映射关系**：
+  1. 同步：`~/sync_fmod.sh`（rsync 362 MB 增量，总数据 1.79 GB）。同步后发现游戏端 `Data/Generated/V2/Dungeon/` 仍只有 Dungeon / DungeonCard / DungeonGrade / DungeonModule / DungeonType 五个子目录，`DungeonLayout` 与 `Random*` 的 `Layouts` 字段依旧缺失，`0.84%` 概率继续使用 `BASELINE_LAYOUT_FACTORS` 兜底。
+  2. 重建：`rm -f api/data/darkfindv5.db && python3 main.py --rebuild-db`，36.47s，`[VALIDATE] all module images OK`。新 digest `656f063e…`（旧 `42fcb3e1…`），说明有实质数据更新。
+  3. 数据变化：modules 238（不变）、spawners 46,504 → 46,725（+221）、items 816（不变）、monsters 732 → 742（+10）、spawn_rate>0 仍为 5（Crypt 稀有池）、ShipGraveyard 仍为 0（5x5 收录规则持续生效）。
+  4. 首次同步时发现 `~/fmod/Output/Exports` 曾被清空（FModel 日志显示用户在 Windows 端重新导出），第二次同步恢复完整数据。
+- **验证**：`pragma integrity_check` = ok；`data/json/**` 已重新交付；`dungeon_shops/Crypts.json` 仍为 11 槽 72 物品（装备槽问题与本次数据无关，仍未修复）。
 ## 2026-10-22
 
 ### fix: 【工匠】页保护药水显示护盾值与持续时间
