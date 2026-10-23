@@ -276,10 +276,13 @@
 
 ### fix: 小型神器组恢复物品卡片并标注单件爆率
 
-- **改动原因**：用户指出小型神器组不应只显示汇总行，需保留 10 张物品卡并标注各自爆率；同时确认「10 个 0.1% 累计 1.0043%」的计算口径。
-- **变更文件**：`web/src/pages/DungeonShopDetailPage.tsx`、`docs/plans/DUNGEON_SHOP_EQUIPMENT_GROUPING.md`、`docs/SESSION_CHANGES.md`。
+### test: 验证商店数据走「先录入 DB 再读取」链路
+
+- **改动原因**：用户要求验证地牢商店（装备槽类别/稀有度/价格）的数据确实来自 DB `item_entities` / `ingame_merchant_stock`，而不是导出阶段直读游戏解包资产。
+- **变更文件**：`api/tests/test_shop_db_source.py`（新增）、`api/tests/test_runtime_io_guard.py`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：
-  1. **分组渲染分支**：装备槽遍历 `groupEquipmentByChance()` 时按 `group.pool` 分流——`mini_artifact` 渲染 10 张 `ShopItemCard`（`showChance` + `preciseChance`），其余 `tier` 组仍渲染「饰品/护甲/武器 ×件数 · 累计概率 · 价格」汇总行，不列具体物品。
-  2. **精确概率**：`ShopItemCard` 恢复 `preciseChance` 属性，为 true 时走 `formatChancePercent()`（四位小数 `0.1004%`），否则仍走 `formatChance()`（两位有效数字）。两位有效数字会把 0.100430% 压成 `0.1%`，看不出是同一权重组。
-  3. **概率口径自检**：`slot_total = 104550 = 300×207 + 190×207 + 10×207 + 105×10`；单件 `105/104550 = 0.100430%`；10 件 `1050/104550 = 1.004304%`。卡片 `0.1%` 是 `0.1004%` 的显示值，10 × 0.100430% 恰好等于标题的 1.0043%，脚本无误（`sum(rate) == slot_total` 实测相等）。
-- **验证**：`npx tsc --noEmit` 通过、`npm run lint` 0 error、Prettier 通过；SSG 构建 2980 页成功；8081 HTTP 200；静态 HTML 中装备槽依次为「小型神器 ×10 · 累计 1.0043% 500金」+ 10 张卡（血缚/吸血之刃/永饮弓/阴森帷幕披风/迷乱之刃/献魂册/盗法者权杖/静谧长靴/缠丝长裤/荆棘之盾，各显示 `史诗 0.1004% 概率 500金`），随后是 独特/传奇/史诗 三组汇总行；小型神器组内不再出现饰品/护甲/武器子行；Playwright 截图核对通过。
+  1. **静态边界**：`test_runtime_io_guard.py` 的 `RUNTIME_MODULES` 加入 `merchant_builder.py`，禁止导出期模块出现 `Output/Exports`、`Localization/Game`、`MAPS_DIR`、`LAYOUT_DIR`、`SPAWNER_DIR`、`DungeonModuleMapImage`；同时把该文件从 pytest 风格（`unittest discover` 收不到，此前 CI 实测 `Ran 0 tests`）改写为 `unittest.TestCase`，CI 才真正执行。
+  2. **动态实证（手工实验）**：`[DB] state=DB_READY` 时管道走 `mode=DB-only`，不进入 import 阶段。仅用 SQLite 改两处——`ingame_merchant_stock.price` 500→7777、`item_entities.item_category_key` Armor→Weapon——不触碰游戏源目录，重跑 `python main.py` 后导出 JSON 变为 `price: 7777`、`item_category_label: 武器`；恢复 DB 备份后重跑，导出回到 `500` / `护甲`，`7777` 无残留。证明数据流向是 DB → JSON。
+  3. **回归测试**：`test_shop_db_source.py` 用临时 SQLite（`SchemaManager` 建表）模拟导入结果，先导出再改 DB 再导出，断言 `price` 500→7777、`item_category_label` 护甲→武器；另断言 `rarity_label` 由 DB `translations` 提供、`pool` 由 `ingame_merchant_stock.item_rate == 105` 决定。
+  4. **阶段顺序**：`main.py` 先 `inspect_database()` 判定三态；`REBUILD_REQUIRED` 时把 DB 建到 `.building` 再 `os.replace` 原子替换，之后 `run(import_required=False)` 只读 DB 导出；`DB_ONLY`/`DB_READY` 直接读库导出。export 阶段不调用任何游戏资产读取。
+- **验证**：`python -m unittest discover -s tests -p 'test_*.py'` 202 项全部 OK（此前 198 项，新增 4 项并修好 1 项未被收集的测试）；`./api/lint.sh` 通过（ruff + black）。
