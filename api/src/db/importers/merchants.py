@@ -114,9 +114,39 @@ class InGameMerchantImporter:
         )
         return len(rows)
 
+    def _schedule_stock_refs(self) -> dict[str, list[str]]:
+        """Map each Schedule asset to the StockBuy assets it references.
+
+        The Equip stock files are shared by every region: Crypts/Goblin/IceCavern
+        schedules all point at the same three Equip_*_N files. Reading the
+        reference lists here (instead of trusting the filename) is what lets the
+        export attach the shared stock to every region that sells it.
+        """
+        refs: dict[str, list[str]] = {}
+        for asset_name, data_list in sorted(load_json_dir(INGAME_MERCHANT_SCHEDULE_DIR).items()):
+            if not data_list:
+                continue
+            variant_id, _, _, _ = parse_asset_name(asset_name)
+            if not variant_id:
+                continue
+            props = data_list[0].get("Properties", {}) or {}
+            buys = [ue_asset_base_name((x or {}).get("AssetPathName", "")) or "" for x in props.get("StockBuy") or []]
+            refs[variant_id] = [b for b in buys if b]
+        return refs
+
     def _import_stock(self) -> int:
         c = self.conn.cursor()
         c.execute("DELETE FROM ingame_merchant_stock")
+        schedule_refs = self._schedule_stock_refs()
+        # StockBuy asset -> the region variants that reference it. Regular stock
+        # is owned by its own region; Equip_* files are referenced by all three
+        # region schedules, so their rows are copied into each region variant.
+        ownership: dict[str, list[str]] = {}
+        for variant_id, buys in schedule_refs.items():
+            for buy in buys:
+                ownership.setdefault(buy, [])
+                if variant_id not in ownership[buy]:
+                    ownership[buy].append(variant_id)
         rows = []
         for asset_name, data_list in sorted(load_json_dir(INGAME_MERCHANT_STOCK_BUY_DIR).items()):
             if not data_list:
@@ -125,23 +155,31 @@ class InGameMerchantImporter:
             if not variant_id or slot is None:
                 continue
             props = data_list[0].get("Properties", {}) or {}
+            # Equip_* 文件没有自己的 region：三个地区 Schedule 都引用它们。
+            # 有归属记录时按归属展开（每个地区一份），否则按文件名归属原 variant。
+            buy_base = asset_name.rsplit(".", 1)[0].rsplit("/", 1)[-1]
+            target_variants = ownership.get(buy_base, []) or [variant_id]
+            # Equip 文件名后缀的 01/02/03 是文件序号而不是商店槽位；三个文件内容
+            # 完全相同，且槽号 1 会与各地区的治疗药水槽冲突，统一映射到 90。
+            display_slot = 90 if "_Equip_" in buy_base else slot
             for entry in props.get("InGameMerchantStockBuyItemArray") or []:
                 item_name = _asset_item_name((entry.get("ItemId") or {}).get("AssetPathName", ""))
                 if not item_name:
                     continue
                 currency = _asset_item_name((entry.get("RequiredItemId_01") or {}).get("AssetPathName", ""))
-                rows.append(
-                    (
-                        variant_id,
-                        slot,
-                        item_name,
-                        int(entry.get("ItemCount") or 1),
-                        int(entry.get("ItemRate") or 0),
-                        int(entry.get("Stock") or 0),
-                        int(entry.get("RequiredAmount01") or 0),
-                        currency,
+                for target in target_variants:
+                    rows.append(
+                        (
+                            target,
+                            display_slot,
+                            item_name,
+                            int(entry.get("ItemCount") or 1),
+                            int(entry.get("ItemRate") or 0),
+                            int(entry.get("Stock") or 0),
+                            int(entry.get("RequiredAmount01") or 0),
+                            currency,
+                        )
                     )
-                )
         c.executemany(
             "INSERT OR REPLACE INTO ingame_merchant_stock"
             " (variant_id, slot_index, item_name, item_count, item_rate, stock, price, currency)"

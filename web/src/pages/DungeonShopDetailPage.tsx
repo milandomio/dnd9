@@ -28,10 +28,14 @@ const SLOT_LABEL_KEYS: Record<number, string> = {
   10: 'ui.shops.slot.key',
   11: 'ui.shops.slot.gold',
   12: 'ui.shops.slot.lantern',
+  90: 'ui.shops.slot.equipment',
 };
 
 /** Slot that sells the 4 gem attributes across 3 quality tiers. */
 const GEM_SLOT = 7;
+
+/** Shared equipment stock referenced by every region schedule (slot 90). */
+const EQUIPMENT_SLOT = 90;
 
 const DIFFICULTY_LABEL_KEYS: Record<string, string> = {
   N: 'ui.shops.difficulty.normal',
@@ -284,7 +288,11 @@ export default function DungeonShopDetailPage() {
                   key={`${slot.slot}-${item.name}`}
                   item={item}
                   // A one-item slot is guaranteed, so "100% chance" is noise.
-                  showChance={slot.items.length > 1}
+                  // The equipment slot (90) is a price list: every entry is always
+                  // purchasable, so per-item chance is meaningless there.
+                  showChance={
+                    slot.items.length > 1 && slot.slot !== EQUIPMENT_SLOT
+                  }
                   focused={item.page === focusItem}
                 />
               ))}

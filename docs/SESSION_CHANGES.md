@@ -73,6 +73,17 @@
   3. 数据变化：modules 238（不变）、spawners 46,504 → 46,725（+221）、items 816（不变）、monsters 732 → 742（+10）、spawn_rate>0 仍为 5（Crypt 稀有池）、ShipGraveyard 仍为 0（5x5 收录规则持续生效）。
   4. 首次同步时发现 `~/fmod/Output/Exports` 曾被清空（FModel 日志显示用户在 Windows 端重新导出），第二次同步恢复完整数据。
 - **验证**：`pragma integrity_check` = ok；`data/json/**` 已重新交付；`dungeon_shops/Crypts.json` 仍为 11 槽 72 物品（装备槽问题与本次数据无关，仍未修复）。
+### feat: 地牢商店新增装备槽（Equip 共享库存）
+
+- **改动原因**：用户反馈 `zh-Hans/dungeon_shops/Crypts/` 应该出现装备售卖。排查确认游戏资产里每个地区的哥布林走私者 Schedule 都引用了 3 个 `Equip` StockBuy 文件（`GoblinSmuggler_Equip_{N,HR}_01/02/03`，每文件 631 条，三份内容完全相同），但项目导入器只按文件名归属 region，`Equip` 没有对应 Schedule 定义、也没有 `REGION_LABEL_KEY` 条目，导致 1893×2 条装备库存躺在 DB 里却从未导出。
+- **变更文件**：`api/src/db/importers/merchants.py`、`api/src/merchant_builder.py`、`web/src/pages/DungeonShopDetailPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **按 Schedule 引用归属库存**：新增 `InGameMerchantImporter._schedule_stock_refs()`，读取每个 Schedule 的 `StockBuy` 引用列表，建立 StockBuy 资产 → 引用它的 variant 列表映射。`Equip_*` 三个文件被 Crypts/Goblin/IceCavern 的全部 6 个 Schedule 引用，其库存行按归属复制到每个地区 variant（`GoblinSmuggler_Equip_N` 的 1893 行 → Crypts_N/Goblin_N/IceCavern_N 各得一份）。
+  2. **槽位重映射**：Equip 文件名后缀 `01/02/03` 是文件序号而非商店槽位，且三份内容相同（逐字节比对为 True）；文件名解析出的 slot=1 会与各地区治疗药水槽冲突，统一映射到 **slot 90**。普通 StockBuy 仍按文件名槽位归属。
+  3. **装备槽展示语义**：631 条 = 207 款装备 × Rare(300)/Epic(190)/Legend(10) 三档价格权重 + 10 条 `_5001` 特殊品（rate 105，Stock 1）。这是**明码标价的在售列表**而非概率池，`DungeonShopDetailPage` 对 slot 90 关闭 `showChance`（新增 `EQUIPMENT_SLOT = 90` 常量），卡片只显示名称/稀有度/价格。
+  4. **翻译 fallback 修正**：装备类商品（如 `GrimveilCloak_5001`）只有品质后缀形态的资产，不在 lootdrop 索引里；`merchant_builder` 的翻译 fallback 原来只试 `Text_DesignData_Item_Item_{page}`，现在追加试 `Text_DesignData_Item_Item_{row.item_name}`（带 `_5001` 的完整名），631 条装备翻译缺失从 611 降到 0。
+  5. **新增 i18n**：`ui.shops.slot.equipment`（装备 / Equipment / Ausrüstung / 装備 …10 语言），前端 `SLOT_LABEL_KEYS` 增加 `90` 映射。
+- **验证**：API 192 测试全通过；`api/lint.sh` 通过；`npm run check`（0 错误，20 条既有 warning）；重建管道 26.53s，`[VALIDATE] all module images OK`；导出后 Crypts/Goblin/IceCavern 的 N/HR 六个难度全部出现 `slot 90: 631 items`；Playwright 实测 `zh-Hans/dungeon_shops/Crypts/` 渲染「装备」标题 + 631 张卡片（冒险者长靴/披风/外衣等），装备卡不显示百分比，页面无错误。
 ## 2026-10-22
 
 ### fix: 【工匠】页保护药水显示护盾值与持续时间

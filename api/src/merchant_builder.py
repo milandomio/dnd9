@@ -147,12 +147,19 @@ def build_shop_data(
                 translation = item_meta.get("translation", "")
                 translation_key = item_meta.get("translation_key", "")
                 if not translation:
-                    # Shop-only goods (LuckPotion) never appear in the lootdrop
-                    # index, so fall back to the official Game.json item key.
-                    fallback_key = f"Text_DesignData_Item_Item_{page}"
-                    if fallback_key in translations:
-                        translation = translations[fallback_key]
-                        translation_key = fallback_key
+                    # Shop-only goods (LuckPotion, equipment like GrimveilCloak)
+                    # never appear in the lootdrop index, so fall back to the
+                    # official Game.json item key. Try the folded name first,
+                    # then the quality-suffixed asset name (GrimveilCloak_5001
+                    # has no folded entry in the locale dictionary).
+                    for candidate in (
+                        f"Text_DesignData_Item_Item_{page}",
+                        f"Text_DesignData_Item_Item_{row['item_name']}",
+                    ):
+                        if candidate in translations:
+                            translation = translations[candidate]
+                            translation_key = candidate
+                            break
                 total = slot_totals.get(slot_index, 0)
                 chance = row["item_rate"] / total if total else 0.0
                 entry["items"][row["item_name"]] = {
