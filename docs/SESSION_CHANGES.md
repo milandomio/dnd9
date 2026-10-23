@@ -276,13 +276,14 @@
 
 ### fix: 小型神器组恢复物品卡片并标注单件爆率
 
-### test: 验证商店数据走「先录入 DB 再读取」链路
+### chore: 补丁部署——全量重建 DB 并推送 main（跳过 ~/sync_fmod.sh）
 
-- **改动原因**：用户要求验证地牢商店（装备槽类别/稀有度/价格）的数据确实来自 DB `item_entities` / `ingame_merchant_stock`，而不是导出阶段直读游戏解包资产。
-- **变更文件**：`api/tests/test_shop_db_source.py`（新增）、`api/tests/test_runtime_io_guard.py`、`docs/SESSION_CHANGES.md`。
+- **改动原因**：用户要求按补丁部署流程推送 `main` 与 DB 到远程，并明确跳过 `~/sync_fmod.sh` 的 FMOD 同步步骤。
+- **变更文件**：`api/data/darkfindv5.db`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：
-  1. **静态边界**：`test_runtime_io_guard.py` 的 `RUNTIME_MODULES` 加入 `merchant_builder.py`，禁止导出期模块出现 `Output/Exports`、`Localization/Game`、`MAPS_DIR`、`LAYOUT_DIR`、`SPAWNER_DIR`、`DungeonModuleMapImage`；同时把该文件从 pytest 风格（`unittest discover` 收不到，此前 CI 实测 `Ran 0 tests`）改写为 `unittest.TestCase`，CI 才真正执行。
-  2. **动态实证（手工实验）**：`[DB] state=DB_READY` 时管道走 `mode=DB-only`，不进入 import 阶段。仅用 SQLite 改两处——`ingame_merchant_stock.price` 500→7777、`item_entities.item_category_key` Armor→Weapon——不触碰游戏源目录，重跑 `python main.py` 后导出 JSON 变为 `price: 7777`、`item_category_label: 武器`；恢复 DB 备份后重跑，导出回到 `500` / `护甲`，`7777` 无残留。证明数据流向是 DB → JSON。
-  3. **回归测试**：`test_shop_db_source.py` 用临时 SQLite（`SchemaManager` 建表）模拟导入结果，先导出再改 DB 再导出，断言 `price` 500→7777、`item_category_label` 护甲→武器；另断言 `rarity_label` 由 DB `translations` 提供、`pool` 由 `ingame_merchant_stock.item_rate == 105` 决定。
-  4. **阶段顺序**：`main.py` 先 `inspect_database()` 判定三态；`REBUILD_REQUIRED` 时把 DB 建到 `.building` 再 `os.replace` 原子替换，之后 `run(import_required=False)` 只读 DB 导出；`DB_ONLY`/`DB_READY` 直接读库导出。export 阶段不调用任何游戏资产读取。
-- **验证**：`python -m unittest discover -s tests -p 'test_*.py'` 202 项全部 OK（此前 198 项，新增 4 项并修好 1 项未被收集的测试）；`./api/lint.sh` 通过（ruff + black）。
+  1. **流程裁剪**：原文 1. `~/sync_fmod.sh` 按用户要求跳过；其余步骤按 `docs/BUILD_AND_DEPLOY.md`「更新部署」执行——删除本地 DB 强制全量重建 → 后台跑管道 → 确认 DB 可读 → 提交含 DB 的 `main` 并推送 `origin/main`。
+  2. **全量重建**：`rm -f api/data/darkfindv5.db` 后 `[DB] state=REBUILD_REQUIRED: DB missing`，管道写入 `.building` 再 `os.replace` 原子替换，耗时 57.75s。
+  3. **DB 校验**：47 张表、`item_entities` 816 行、`ingame_merchant_stock` 4365 行、`pipeline_meta.import_complete = 1`。
+  4. **导出校验**：`data/json/dungeon_shops/Crypts.json` 装备槽 631 项全部带 `item_category_key`，`pool` 为 `tier 621 / mini_artifact 10`，小型神器累计 1.0043%，示例 `Bloodbound_5001`（血缚）显示 `史诗 / 武器 / 500`。
+  5. **不跑前端**：按流程不在本次执行 `npm run build` / `vite preview`，SSG 由 GitHub Actions 拿到新 DB 后完成。
+- **验证**：后端 202 项单测全部 OK；`./api/lint.sh` 通过（ruff + black）；DB 表数与大表行数正常；导出 JSON 字段与增长后一致。
