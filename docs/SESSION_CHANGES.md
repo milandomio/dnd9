@@ -61,6 +61,7 @@
   5. **依赖安装幂等**：`web/node_modules` 已存在时跳过 `npm ci`，避免重复安装耗时；提示用户删除目录可强制重装。
   6. **README 说明脱离游戏的原理**：核心是 `api/src/db_freshness.py` 的三态决策——数据源完整 → `REBUILD_REQUIRED`；数据源缺失 → `DB_ONLY`（直接用仓库内 47 MB 的 `api/data/darkfindv5.db` 导出 JSON）；两者都缺 → `FAIL_FAST`。普通用户环境没有 `Output/Exports/`，自动走 `DB_ONLY`，几十秒完成。
   7. **README 数据核对**：文中数字均取自当前导出实测——816 物品、732 怪物、570 实体、234 地图模块、524 掉落条目、2980 条路由、13774 个 HTML、10 种语言。
+  8. **README 后续调整**：按用户要求删除「快速开始」之前的部分（项目简介、在线站点、特性列表），文档现在直接从 `# 快速开始` 开始，保留环境要求、一键构建、常用参数、脱游部署原理、项目结构、页面、技术栈、开发、文档索引、免责声明与许可。
 - **验证**：`bash -n deploy.sh` 语法通过；`./deploy.sh --help` 输出完整说明；实际运行 `./deploy.sh` 全流程通过——`[DB] state=DB_ONLY` 正确识别无游戏源、管道导出成功、SSG 2980 页、`[5/5]` 返回 HTTP 200；模拟普通用户（将所有 `config` 游戏路径指向不存在目录）调用 `inspect_database()` 得到 `state=DB_ONLY / import_required=False`，确认无需游戏文件即可构建；README 内 7 个文档链接与 3 条命令均校验存在。
 ## 2026-10-22
 
