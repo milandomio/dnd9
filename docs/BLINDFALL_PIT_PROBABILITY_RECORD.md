@@ -15,6 +15,8 @@
 
 当前游戏导出中 `Data/Generated/V2/Dungeon/DungeonLayout/` 目录不存在，`Id_Dungeon_Random*.json` 也不含 `Layouts` 字段，因此布局因子无法从资产统计。代码在布局缺失时使用 `BASELINE_LAYOUT_FACTORS = {"Crypt": (40, 2)}` 并在管道日志中标注 `source=baseline`；一旦游戏重新提供布局资产，会自动切到 `source=assets` 按真实槽位计算，无需改代码。
 
+**结果缓存**：CI 没有游戏导出目录，导入阶段会被 `db_freshness` 跳过，届时无法重新计算。因此 `ModulesImporter._store_spawn_rates()` 会把算出的概率写回 `dungeon_modules.spawn_rate`，导出时直接读该列；`module_builder` 不再重复计算。这样仓库里提交的 DB 就是概率的唯一来源，CI 与本地结果一致。若导入时资产缺失且算不出概率，代码保留 DB 里的既有值并打印提示，不会清零。
+
 重新计算后的结果与本文档结论一致：Crypt 的 5 个稀有模块均为 `0.84%`；Ruins 的 17 个 `bIsRare` 模块因该组没有 `NumMaxRares` 而**不显示概率**（此前会错误套用 Crypt 的 2/40）。
 
 ## 结论

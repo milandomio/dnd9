@@ -43,10 +43,11 @@
   - 文档：`docs/BLINDFALL_PIT_PROBABILITY_RECORD.md`。
 - **关键逻辑/映射关系**：
   1. **稀有槽存在性按组判定**：新增 `rare_groups()`，只认 `DCDungeonDataAsset.Properties.NumMaxRares > 0` 的地图组。当前只有 Crypt 的 9 个随机地牢声明了 `NumMaxRares = 1`，FireDeep / GoblinCave / IceAbyss / IceCavern / Inferno / Ruins 均无该字段，因此只有 Crypt 会产出概率。
-  2. **稀有池实时统计**：`rare_pool_sizes()` 按 `module_group` 统计 `is_rare` 模块数。DB 与导出新增 `is_rare` 列（映射资产 `bIsRare`），当前 Crypt = 5。
+  2. **稀有池实时统计**：`rare_pool_sizes()` 按 `module_group` 统计 `is_rare` 模块数。DB 与导出新增 `is_rare` 列（映射资产 `bIsRare`）与 `spawn_rate` 列，当前 Crypt = 5。
   3. **布局因子按组隔离**：`layout_stats()` 从 `DungeonLayout/*.json` 的 `SlotType == Rare` / `Fixed` 统计，文件名第二段作为地图组。资产缺失时退回 `BASELINE_LAYOUT_FACTORS = {"Crypt": (40, 2)}`（实测值），`source` 字段标记 `baseline` / `assets`，游戏恢复布局资产后自动切换。
   4. **覆盖修正实时读取**：`SlotType == Fixed` 指向的模块按 `DungeonModule.Size` 累加占地，`CenterTower` 为 2×2，`(25 - 4) / 25` 系数由资产算出而非写死。
   5. **前端只读不算**：`getRareModuleSpawnRate(module)` 直接返回 `module.spawn_rate`，`applyModuleSpawnRate(rate, module)` 同；两个调用页（物品详情、掉落详情）改为传模块对象而非模块名。
+  6. **结果缓存进 DB**：首版实现由前端读 `spawn_rate` 字段，但 CI 没有游戏导出目录，`db_freshness` 跳过导入，导致线上所有模块概率为 0。改为 `ModulesImporter._store_spawn_rates()` 在导入时把概率写回 `dungeon_modules.spawn_rate`，`module_builder` 直接读该列；导入时若资产缺失算不出概率，保留 DB 既有值并打印提示，不清零。
 - **验证**：`python3 -m unittest discover -s tests` **190 个全通过**（新增 8 个）；CI 等价环境（把所有 `config` 游戏路径常量指向不存在目录）同样 190 个通过；`api/lint.sh`（ruff + black）通过；完整管道通过，`[VALIDATE] all module images OK`；导出 `dungeon_modules.json` 中恰好 5 个模块带 `spawn_rate = 0.84`（全部 Crypt），Ruins 的 17 个稀有模块为 0；SSG 构建 2979 页；Playwright 实测 `zh-Hans/items/GrimveilCloak/` 显示「盲坑 0.84%」「综合爆率 0.5208%」且无页面错误，`Ruins_Passage_Outer_04` 页面不出现任何百分比；`npm run check` 通过（0 错误，20 条既有 warning）。
 ## 2026-10-22
 

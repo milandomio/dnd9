@@ -11,6 +11,7 @@ from config import (
     LAYOUT_DIR,
     MAPS_DIR,
 )
+from module_spawn_rate import compute_spawn_rates
 
 from .._helpers import (
     extract_dungeon_module_name,
@@ -271,9 +272,29 @@ class ModulesImporter:
                 extra_rows,
             )
         c.execute("DELETE FROM dungeon_modules WHERE module_group = '' OR module_group IS NULL")
+        self._store_spawn_rates()
         self.conn.commit()
         c.execute("SELECT COUNT(*) FROM dungeon_modules")
         return c.fetchone()[0]
+
+    def _store_spawn_rates(self) -> None:
+        """Cache each rare module's spawn rate in the DB.
+
+        The rate depends on layout assets and the collected rare pool, but CI runs
+        without the game export tree. Storing the value here keeps exports stable
+        across environments instead of silently degrading to 0.
+        """
+        c = self.conn.cursor()
+        c.execute("SELECT module_name, module_group, is_rare FROM dungeon_modules")
+        modules = [{"module_name": row[0], "module_group": row[1], "is_rare": bool(row[2])} for row in c.fetchall()]
+        rates = compute_spawn_rates(modules)
+        if rates:
+            c.executemany(
+                "UPDATE dungeon_modules SET spawn_rate = ? WHERE module_name = ?",
+                [(rate, name) for name, rate in rates.items()],
+            )
+        else:
+            print("  spawn rates unavailable (layout assets missing); keeping stored values")
 
     def _build_path_group_map(self) -> dict[str, str]:
         path_group: dict[str, str] = {}

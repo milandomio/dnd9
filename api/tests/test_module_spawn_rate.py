@@ -114,6 +114,30 @@ class ComputeSpawnRatesTest(unittest.TestCase):
         self.assertEqual(compute_spawn_rates(modules, stats), {})
 
 
+class SpawnRateCachingTest(unittest.TestCase):
+    """概率要写进 DB，否则没有游戏导出的 CI 会把它算成 0。"""
+
+    def test_importer_persists_spawn_rate(self):
+        import sqlite3
+
+        from db.importers.modules import ModulesImporter
+        from db.schema import SchemaManager
+
+        with tempfile.TemporaryDirectory() as tmp:
+            conn = sqlite3.connect(Path(tmp) / "test.db")
+            conn.row_factory = sqlite3.Row
+            SchemaManager(conn).create_tables()
+            cur = conn.cursor()
+            cur.executemany(
+                "INSERT INTO dungeon_modules (module_name, module_group, is_rare)" " VALUES (?, ?, ?)",
+                [(f"Crypt_Rare_{i}", "Crypt", 1) for i in range(5)],
+            )
+            conn.commit()
+            ModulesImporter(conn)._store_spawn_rates()
+            rows = cur.execute("SELECT spawn_rate FROM dungeon_modules WHERE module_group = 'Crypt'").fetchall()
+            self.assertEqual({row[0] for row in rows}, {0.84})
+
+
 class LayoutStatsFallbackTest(unittest.TestCase):
     def test_uses_baseline_when_layout_dir_missing(self):
         with tempfile.TemporaryDirectory() as tmp:
