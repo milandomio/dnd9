@@ -126,10 +126,6 @@ cd api && python3 main.py --rebuild-db
 | [docs/REFERENCE_MAP_MODULES.md](docs/REFERENCE_MAP_MODULES.md) | 地图模块收录规则 |
 | [docs/SESSION_CHANGES.md](docs/SESSION_CHANGES.md) | 变更记录 |
 
-## 免责声明
-
-本项目为玩家社区制作的第三方资料站，与 Ironmace 无关。游戏名称、图像与文本素材版权归其所有者所有。数据通过分析游戏资产获得，仅供参考。
-
 ## 许可
 
 [MIT](LICENSE)
