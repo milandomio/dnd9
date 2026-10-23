@@ -311,11 +311,12 @@ export default function DungeonShopDetailPage() {
               }}
             >
               {slot.slot === EQUIPMENT_SLOT
-                ? // Equipment is a weighted pool, so its rows are summary lines
-                  // rather than item cards: every entry of a rarity band shares
-                  // one weight and one price, and the same holds per
-                  // 饰品 / 护甲 / 武器 category. Listing the 631 individual
-                  // names adds no information the odds line does not carry.
+                ? // Equipment is a weighted pool. The three regular rarity bands
+                  // are summary lines: every entry of a band shares one weight
+                  // and one price, so listing 207 names adds nothing the odds
+                  // line does not carry. The 10 minor artifacts are the
+                  // exception — a player wants to know which ones they are and
+                  // each card states its own chance.
                   groupEquipmentByChance(slot.items).map((group) => (
                     <div
                       key={`${group.pool}-${group.chance}`}
@@ -327,14 +328,39 @@ export default function DungeonShopDetailPage() {
                         price={group.price}
                         strong
                       />
-                      {group.categories.map((category) => (
-                        <EquipmentSummaryRow
-                          key={`${group.pool}-${group.chance}-${category.category_key}`}
-                          label={`${categoryName(category)} ×${category.items.length}`}
-                          rate={formatChancePercent(category.cumulative)}
-                          price={category.price}
-                        />
-                      ))}
+                      {group.pool === 'mini_artifact' ? (
+                        <div
+                          style={{
+                            display: 'grid',
+                            gridTemplateColumns:
+                              'repeat(auto-fill, minmax(230px, 1fr))',
+                            gap: 8,
+                            marginTop: 8,
+                          }}
+                        >
+                          {group.items.map((item) => (
+                            <ShopItemCard
+                              key={`${slot.slot}-${item.name}`}
+                              item={item}
+                              // Every card repeats the same 0.1004%, but here
+                              // that is the point: it is the per-item rate of a
+                              // hand-listed pool.
+                              showChance
+                              preciseChance
+                              focused={item.page === focusItem}
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        group.categories.map((category) => (
+                          <EquipmentSummaryRow
+                            key={`${group.pool}-${group.chance}-${category.category_key}`}
+                            label={`${categoryName(category)} ×${category.items.length}`}
+                            rate={formatChancePercent(category.cumulative)}
+                            price={category.price}
+                          />
+                        ))
+                      )}
                     </div>
                   ))
                 : slot.items.map((item) => (
@@ -403,10 +429,17 @@ function EquipmentSummaryRow({
 function ShopItemCard({
   item,
   showChance,
+  preciseChance,
   focused,
 }: {
   item: ShopItem;
   showChance: boolean;
+  /**
+   * Print four decimals instead of two significant figures. The minor-artifact
+   * batch all shares 0.100430%, which collapses to "0.1%" at two significant
+   * figures and would then look like a coincidence rather than one weight.
+   */
+  preciseChance?: boolean;
   focused?: boolean;
 }) {
   const { tokens } = useTheme();
@@ -519,7 +552,9 @@ function ShopItemCard({
             <span style={{ color: tokens.muted }}>
               {ut('ui.shops.chance').replace(
                 '{chance}',
-                formatChance(item.chance)
+                preciseChance
+                  ? formatChancePercent(item.chance)
+                  : formatChance(item.chance)
               )}
             </span>
           )}

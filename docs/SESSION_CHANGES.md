@@ -273,11 +273,13 @@
 - **变更文件**：`api/src/merchant_builder.py`、`api/src/collector.py`、`api/tests/test_merchant_builder.py`、`web/src/types/data.ts`、`web/src/utils/shopEquipment.ts`、`web/src/pages/DungeonShopDetailPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/plans/DUNGEON_SHOP_EQUIPMENT_GROUPING.md`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：
   1. **类别来源**：DB `item_entities` 的 `item_type` / `item_category_key`（787 行，631 件商店装备全命中）。`collector.py` 构造 `shop_item_categories` 传入 `build_shop_data()`；不能用 `loot_index`（524 条），GrimveilCloak 不在其中。
-  2. **新增字段**：每项商店物品输出 `rarity_key`（`Text_Code_DCDataBlueprintLibrary_Type_Item_Rarity_*`）、`rarity_label`、`item_type`、`item_category_key`、`item_category_label`、`pool`。
-  3. **小型神器判定**：`item_rate == MINI_ARTIFACT_RATE (105)`，即 `Equip_*` 库存里与 300/190/10 并列的独立权重档（10 件：血缚、吸血之刃、永饮弓、阴森帷幕披风、迷乱之刃、献魂册、盗法者权杖、静谧长靴、缠丝长裤、荆棘之盾）。**不可**用 `hr100`（7/10）或能力名 `MinorArtifact`（4/10）。
-  4. **两级分组**：`groupEquipmentByChance()` 先按 `pool + round(chance*1e9)` 聚成稀有度档（按累计升序），再按 `item_category_key` 聚成类别（同样升序）。小型神器档不拆类别。
-  5. **渲染**：slot 90 不再渲染任何 `ShopItemCard`，改为 `EquipmentSummaryRow`（标签 ×件数 · 累计概率 · 共同价格右对齐）。实测 zh-Hans/Crypts 普通：`小型神器 ×10 1.0043% 500金`、`独特 ×207 1.9799% 500金`（饰品 0.1817% / 武器 0.4209% / 护甲 1.3773%）、`传奇 ×207 37.6184% 300金`、`史诗 ×207 59.3974% 200金`；价格用 `uniform()` 校验，不一致返回 0 并隐藏价格列。
-  6. **默认语言坑**：zh-Hans 不加载游戏字典（`lang === DEFAULT_LANG → dict = null`），`t(gameKey)` 直接回落，所以组标题必须用后端下发的 `rarity_label` / `item_category_label`；只用 `t(key)` 会渲染成英文 `Unique` 和「未分类」。
-  7. **i18n**：新增 `ui.shops.mini_artifact`（10 语言：小型神器 / Minor Artifact / Kleinartefakt / Artefacto menor / Artefact mineur / 小型神器 / 소형 신기 / Artefato menor / Малый артефакт / 小型神器）。稀有度与类别词不新增键，直接用游戏 locale。
-  8. **折叠名兜底**：`item_entities` 用折叠名（`GrimveilCloak` 而非 `GrimveilCloak_5001`），查表走 `fold_item_page()`。
-- **验证**：`python main.py` 全量管道复核 631 项 0 项缺类别、`pool` 为 `tier 621 / mini_artifact 10`、类别 护甲 435 / 武器 139 / 饰品 57（N 与 HR 一致）；后端 39 项单测 + `./api/lint.sh` 通过；`tsc --noEmit`、`npm run lint`（0 error）、Prettier 通过；SSG 构建 2980 页 / 15407 文件；8081 `vite preview` 三地区 HTTP 200；静态 HTML 与 Playwright 截图核对 zh-Hans 标题正确且物品名（血缚等）不再出现；en / ja / ru 的稀有度与类别词随语言变化（Minor Artifact·Unique·Accessory / 小型神器·ユニーク·アクセサリー / Малый артефакт·Уникальное·Аксессуар）。
+
+### fix: 小型神器组恢复物品卡片并标注单件爆率
+
+- **改动原因**：用户指出小型神器组不应只显示汇总行，需保留 10 张物品卡并标注各自爆率；同时确认「10 个 0.1% 累计 1.0043%」的计算口径。
+- **变更文件**：`web/src/pages/DungeonShopDetailPage.tsx`、`docs/plans/DUNGEON_SHOP_EQUIPMENT_GROUPING.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **分组渲染分支**：装备槽遍历 `groupEquipmentByChance()` 时按 `group.pool` 分流——`mini_artifact` 渲染 10 张 `ShopItemCard`（`showChance` + `preciseChance`），其余 `tier` 组仍渲染「饰品/护甲/武器 ×件数 · 累计概率 · 价格」汇总行，不列具体物品。
+  2. **精确概率**：`ShopItemCard` 恢复 `preciseChance` 属性，为 true 时走 `formatChancePercent()`（四位小数 `0.1004%`），否则仍走 `formatChance()`（两位有效数字）。两位有效数字会把 0.100430% 压成 `0.1%`，看不出是同一权重组。
+  3. **概率口径自检**：`slot_total = 104550 = 300×207 + 190×207 + 10×207 + 105×10`；单件 `105/104550 = 0.100430%`；10 件 `1050/104550 = 1.004304%`。卡片 `0.1%` 是 `0.1004%` 的显示值，10 × 0.100430% 恰好等于标题的 1.0043%，脚本无误（`sum(rate) == slot_total` 实测相等）。
+- **验证**：`npx tsc --noEmit` 通过、`npm run lint` 0 error、Prettier 通过；SSG 构建 2980 页成功；8081 HTTP 200；静态 HTML 中装备槽依次为「小型神器 ×10 · 累计 1.0043% 500金」+ 10 张卡（血缚/吸血之刃/永饮弓/阴森帷幕披风/迷乱之刃/献魂册/盗法者权杖/静谧长靴/缠丝长裤/荆棘之盾，各显示 `史诗 0.1004% 概率 500金`），随后是 独特/传奇/史诗 三组汇总行；小型神器组内不再出现饰品/护甲/武器子行；Playwright 截图核对通过。
