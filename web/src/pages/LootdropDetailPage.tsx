@@ -1064,7 +1064,7 @@ export default function LootdropDetailPage({
           Math.round(((baseScore * g.positions.size) / g.vc) * 10000) / 10000;
       }
     }
-    return applyModuleSpawnRate(total, item.mod?.name || item.mapName);
+    return applyModuleSpawnRate(total, item.mod);
   }, []);
 
   const sortedGroups = useMemo(() => {
@@ -1830,7 +1830,7 @@ export default function LootdropDetailPage({
                       mod?.translation_key,
                       mod?.translation || mod?.name || mapName
                     )}
-                    {getRareModuleSpawnRate(mod?.name || mapName) > 0 && (
+                    {getRareModuleSpawnRate(mod) > 0 && (
                       <>
                         {' '}
                         <span
@@ -1843,7 +1843,7 @@ export default function LootdropDetailPage({
                         >
                           {ut('ui.detail.module_spawn_rate').replace(
                             '{rate}',
-                            String(getRareModuleSpawnRate(mod?.name || mapName))
+                            String(getRareModuleSpawnRate(mod))
                           )}
                         </span>
                       </>

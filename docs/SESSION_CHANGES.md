@@ -33,6 +33,21 @@
   3. **模块详情测试改用稳定模块**：`ModuleDetail` 三条测试的路径从 `ShipGraveyard/ShipGraveyard_BladehandRefuge` 改为 `Crypt/Crypt_BlindfallPit`（盲坑，20 实体 / 179 位置点），仍是稀有模块，SEO 描述格式一致。
   4. **黄金房武器断言反转**：`Weapon_GoldenRoom` 只出现在 `ShipGraveyard_ShipRest`，随该模块一并移除；`Weapon_MysticalTreasureRoom` 位于仍在收录的 `Cave_Rooms`，保留。因此 ja / zh-Hant 两条测试中「黄金房武器 (1)」的 `expected` 由 `true` 改为 `false`，并加注释说明原因。
 - **验证**：`python3 -m unittest discover -s tests` 182 个全通过；`api/lint.sh`（ruff + black）通过；完整管道 38.50s 通过，日志含 `filtered 8643 spawners outside collected modules`、`[VALIDATE] all module images OK`；SSG 构建 2979 页 / 13763 HTML；本地 `vite preview` 在 8081 端口运行 `npm run test:i18n` 得 **Pass 29 / Fail 0**。
+### feat: 稀有模块生成概率改为按 5x5 收录范围实时计算
+
+- **改动原因**：用户要求 `zh-Hans/items/GrimveilCloak` 显示的模块生成概率 `0.84%` 按 5x5 模块重新计算。排查发现该值原先由前端 `web/src/utils/moduleSpawnRate.ts` 硬编码为常量，稀有池固定 5 个 Crypt 模块，与「收录入口改为 5x5」之后的数据脱钩；同时 17 个 Ruins 的 `bIsRare` 模块会被错误套用 Crypt 的布局统计。
+- **变更文件**：
+  - 后端：`api/src/module_spawn_rate.py`（新增）、`api/src/module_builder.py`、`api/src/db/_helpers.py`、`api/src/db/schema.py`、`api/src/db/importers/modules.py`、`api/src/db/repositories/modules.py`；
+  - 前端：`web/src/utils/moduleSpawnRate.ts`、`web/src/types/data.ts`、`web/src/pages/DetailPage.tsx`、`web/src/pages/LootdropDetailPage.tsx`；
+  - 测试：`api/tests/test_module_spawn_rate.py`（新增 8 个用例）、`api/tests/test_module_entries.py`（`_write_dungeon` 支持 `extra`）；
+  - 文档：`docs/BLINDFALL_PIT_PROBABILITY_RECORD.md`。
+- **关键逻辑/映射关系**：
+  1. **稀有槽存在性按组判定**：新增 `rare_groups()`，只认 `DCDungeonDataAsset.Properties.NumMaxRares > 0` 的地图组。当前只有 Crypt 的 9 个随机地牢声明了 `NumMaxRares = 1`，FireDeep / GoblinCave / IceAbyss / IceCavern / Inferno / Ruins 均无该字段，因此只有 Crypt 会产出概率。
+  2. **稀有池实时统计**：`rare_pool_sizes()` 按 `module_group` 统计 `is_rare` 模块数。DB 与导出新增 `is_rare` 列（映射资产 `bIsRare`），当前 Crypt = 5。
+  3. **布局因子按组隔离**：`layout_stats()` 从 `DungeonLayout/*.json` 的 `SlotType == Rare` / `Fixed` 统计，文件名第二段作为地图组。资产缺失时退回 `BASELINE_LAYOUT_FACTORS = {"Crypt": (40, 2)}`（实测值），`source` 字段标记 `baseline` / `assets`，游戏恢复布局资产后自动切换。
+  4. **覆盖修正实时读取**：`SlotType == Fixed` 指向的模块按 `DungeonModule.Size` 累加占地，`CenterTower` 为 2×2，`(25 - 4) / 25` 系数由资产算出而非写死。
+  5. **前端只读不算**：`getRareModuleSpawnRate(module)` 直接返回 `module.spawn_rate`，`applyModuleSpawnRate(rate, module)` 同；两个调用页（物品详情、掉落详情）改为传模块对象而非模块名。
+- **验证**：`python3 -m unittest discover -s tests` **190 个全通过**（新增 8 个）；CI 等价环境（把所有 `config` 游戏路径常量指向不存在目录）同样 190 个通过；`api/lint.sh`（ruff + black）通过；完整管道通过，`[VALIDATE] all module images OK`；导出 `dungeon_modules.json` 中恰好 5 个模块带 `spawn_rate = 0.84`（全部 Crypt），Ruins 的 17 个稀有模块为 0；SSG 构建 2979 页；Playwright 实测 `zh-Hans/items/GrimveilCloak/` 显示「盲坑 0.84%」「综合爆率 0.5208%」且无页面错误，`Ruins_Passage_Outer_04` 页面不出现任何百分比；`npm run check` 通过（0 错误，20 条既有 warning）。
 ## 2026-10-22
 
 ### fix: 【工匠】页保护药水显示护盾值与持续时间

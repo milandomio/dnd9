@@ -244,6 +244,11 @@ def module_placement_flags(properties) -> tuple[bool, bool]:
     return bool(props.get("bEdgeOnly")), bool(props.get("bCornerOnly"))
 
 
+def module_is_rare(properties) -> bool:
+    """bIsRare 标记的模块只能由布局中的 Rare 槽抽取。"""
+    return bool((properties or {}).get("bIsRare"))
+
+
 def has_map_file(ue_path: str) -> bool:
     fs = ue_to_fs_path(ue_path)
     if not fs:

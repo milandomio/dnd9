@@ -16,6 +16,7 @@ from .._helpers import (
     extract_dungeon_module_name,
     has_map_file,
     load_json_dir,
+    module_is_rare,
     module_placement_flags,
     sl_base_name,
     ue_asset_base_name,
@@ -239,11 +240,12 @@ class ModulesImporter:
                     rot,
                     int(is_edge),
                     int(is_corner),
+                    int(module_is_rare(props)),
                 )
             )
             inserted_names.add(module_name)
         c.executemany(
-            "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases, rotation, is_edge, is_corner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases, rotation, is_edge, is_corner, is_rare) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             rows,
         )
         if skipped_names:
@@ -260,12 +262,12 @@ class ModulesImporter:
                     if stripped != base_name:
                         tk = sl_base_to_key.get(stripped, "") or module_name_to_key.get(stripped, "")
                 extra_rows.append(
-                    (base_name, tk, group, 1, 1, "", "", "[]", module_rotations.get(base_name, 270), 0, 0)
+                    (base_name, tk, group, 1, 1, "", "", "[]", module_rotations.get(base_name, 270), 0, 0, 0)
                 )
                 inserted_names.add(base_name)
         if extra_rows:
             c.executemany(
-                "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases, rotation, is_edge, is_corner) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT OR REPLACE INTO dungeon_modules (module_name, translation_key, module_group, size_x, size_y, sl_base_name, map_image_name, aliases, rotation, is_edge, is_corner, is_rare) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 extra_rows,
             )
         c.execute("DELETE FROM dungeon_modules WHERE module_group = '' OR module_group IS NULL")

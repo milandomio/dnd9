@@ -1,5 +1,22 @@
 # Blindfall Pit 概率计算记录
 
+## 实现状态（2026-10-23 更新）
+
+概率已从「前端硬编码 1%」改为**由游戏资产实时计算**，实现位于 `api/src/module_spawn_rate.py`，结果写入 `data/json/dungeon_modules.json` 的 `spawn_rate` 字段，前端只读取不再计算。
+
+三个因子的实际来源：
+
+| 因子 | 来源 | 当前状态 |
+|------|------|---------|
+| 稀有槽存在性 | `DCDungeonDataAsset.Properties.NumMaxRares` | 仅 Crypt 声明了 `= 1`，其他组无此字段 → 不产生概率 |
+| 稀有池规模 | 同 `ModuleType` 下 `bIsRare == true` 且被 5x5 收录的模块数 | Crypt = 5（实时统计） |
+| 布局因子 | `DCDungeonLayoutDataAsset` 的 Rare 槽分布 | **资产缺失**，退回本文档实测值 2/40 |
+| 覆盖修正 | `SlotType == Fixed` 指向的固定模块 `Size` | `CenterTower` 2×2 = 4 格（实时读取） |
+
+当前游戏导出中 `Data/Generated/V2/Dungeon/DungeonLayout/` 目录不存在，`Id_Dungeon_Random*.json` 也不含 `Layouts` 字段，因此布局因子无法从资产统计。代码在布局缺失时使用 `BASELINE_LAYOUT_FACTORS = {"Crypt": (40, 2)}` 并在管道日志中标注 `source=baseline`；一旦游戏重新提供布局资产，会自动切到 `source=assets` 按真实槽位计算，无需改代码。
+
+重新计算后的结果与本文档结论一致：Crypt 的 5 个稀有模块均为 `0.84%`；Ruins 的 17 个 `bIsRare` 模块因该组没有 `NumMaxRares` 而**不显示概率**（此前会错误套用 Crypt 的 2/40）。
+
 ## 结论
 
 Blindfall Pit 的基础模块出现概率不是固定配置，而是由 Crypt 随机地牢的 Dungeon、DungeonLayout 和 DungeonModule 三层资产共同推导：

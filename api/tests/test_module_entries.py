@@ -14,16 +14,25 @@ from db.importers.modules import (  # noqa: E402
 )
 
 
-def _write_dungeon(root: Path, name: str, *, module_type: str, level_asset: str) -> None:
+def _write_dungeon(
+    root: Path,
+    name: str,
+    *,
+    module_type: str,
+    level_asset: str,
+    extra: dict | None = None,
+) -> None:
+    properties = {
+        "ModuleType": f"EDCDungeonModuleType::{module_type}",
+        "LevelAsset": {"AssetPathName": level_asset, "SubPathString": ""},
+        "LayoutSize": _layout_size(level_asset),
+    }
+    properties.update(extra or {})
     payload = [
         {
             "Type": "DCDungeonDataAsset",
             "Name": name,
-            "Properties": {
-                "ModuleType": f"EDCDungeonModuleType::{module_type}",
-                "LevelAsset": {"AssetPathName": level_asset, "SubPathString": ""},
-                "LayoutSize": _layout_size(level_asset),
-            },
+            "Properties": properties,
         }
     ]
     (root / f"{name}.json").write_text(json.dumps(payload), encoding="utf-8")

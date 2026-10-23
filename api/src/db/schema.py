@@ -52,7 +52,8 @@ class SchemaManager:
                 aliases TEXT NOT NULL DEFAULT '[]',
                 rotation REAL DEFAULT 270,
                 is_edge INTEGER NOT NULL DEFAULT 0,
-                is_corner INTEGER NOT NULL DEFAULT 0
+                is_corner INTEGER NOT NULL DEFAULT 0,
+                is_rare INTEGER NOT NULL DEFAULT 0
             );
 
             CREATE TABLE IF NOT EXISTS lootdrop_items (
@@ -356,6 +357,8 @@ class SchemaManager:
             c.execute("ALTER TABLE dungeon_modules ADD COLUMN is_edge INTEGER NOT NULL DEFAULT 0")
         if "is_corner" not in columns:
             c.execute("ALTER TABLE dungeon_modules ADD COLUMN is_corner INTEGER NOT NULL DEFAULT 0")
+        if "is_rare" not in columns:
+            c.execute("ALTER TABLE dungeon_modules ADD COLUMN is_rare INTEGER NOT NULL DEFAULT 0")
 
     def _migrate_explore_targets_table(self):
         c = self.conn.cursor()

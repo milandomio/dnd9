@@ -14,6 +14,7 @@ from config import (
     RARE_MODULE_TRANSLATIONS,
     SUPERHOARD_I18N_KEY,
 )
+from module_spawn_rate import compute_spawn_rates
 from translator import (
     DEBUG_VARIANT_RE,
     DUMMY_AS_MONSTER,
@@ -93,6 +94,7 @@ def _resolve_img(art_root: Path, group: str, sl: str, webp_cache: Path | None = 
 def build_modules_map(db, resolve_name, module_rotations: dict | None = None) -> dict[str, dict]:
     """Build modules_map from DB dungeon modules. Rotation is read from DB."""
     modules = db.get_dungeon_modules()
+    spawn_rates = compute_spawn_rates(modules)
     modules_map: dict[str, dict] = {}
     for r in modules:
         override = MODULE_DISPLAY_OVERRIDE.get(r["module_name"], {})
@@ -174,6 +176,8 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
             "aliases": aliases,
             "is_edge": bool(r.get("is_edge")),
             "is_corner": bool(r.get("is_corner")),
+            "is_rare": bool(r.get("is_rare")),
+            "spawn_rate": spawn_rates.get(module_name, 0),
         }
     for override_name, override_translation in MODULE_NAME_OVERRIDE.items():
         if override_name not in modules_map:
@@ -193,6 +197,8 @@ def build_modules_map(db, resolve_name, module_rotations: dict | None = None) ->
                 "range": 0,
                 "is_edge": False,
                 "is_corner": False,
+                "is_rare": False,
+                "spawn_rate": 0,
             }
     return modules_map
 

@@ -853,9 +853,7 @@ export default function DetailPage() {
                   labelMatch(coord.label || '', entry.translation)
                 )
               );
-              const rareModuleSpawnRate = getRareModuleSpawnRate(
-                mod?.name || mapName
-              );
+              const rareModuleSpawnRate = getRareModuleSpawnRate(mod);
               const baseModuleCompositeRate =
                 subPoolRate > 0 && matchedDropRate
                   ? (subPoolRate *
@@ -864,7 +862,7 @@ export default function DetailPage() {
                   : itemScore({ coords: mapCoords }, sec.gdi);
               const moduleCompositeRate = applyModuleSpawnRate(
                 baseModuleCompositeRate,
-                mod?.name || mapName
+                mod
               );
               const sx = mod?.size_x ?? 1;
               const sy = mod?.size_y ?? 1;
