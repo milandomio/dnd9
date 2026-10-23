@@ -82,7 +82,8 @@ const PAGES = [
     lang: 'ja',
     textChecks: [
       { pattern: /神秘の宝物庫の武器 \(1\)/, expected: true },
-      { pattern: /黄金部屋の武器 \(1\)/, expected: true },
+      // 黄金房武器只存在于 ShipGraveyard_ShipRest（7x7），已不在 5x5 收录范围
+      { pattern: /黄金部屋の武器 \(1\)/, expected: false },
       {
         pattern:
           /技術オブジェクト: Weapon (?:Mystical Treasure Room|Golden Room)/,
@@ -96,7 +97,8 @@ const PAGES = [
     lang: 'zh-Hant',
     textChecks: [
       { pattern: /神秘寶藏房-武器 \(1\)/, expected: true },
-      { pattern: /黃金房-武器 \(1\)/, expected: true },
+      // 黃金房武器只存在於 ShipGraveyard_ShipRest（7x7），已不在 5x5 收錄範圍
+      { pattern: /黃金房-武器 \(1\)/, expected: false },
       {
         pattern: /技術物件：Weapon (?:Mystical Treasure Room|Golden Room)/,
         expected: false,
@@ -117,19 +119,19 @@ const PAGES = [
     forbiddenHrefs: ['/en/lootdrops/Bandage_6001/'],
   },
   {
-    path: '/zh-Hans/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
+    path: '/zh-Hans/dungeon_modules/Crypt/Crypt_BlindfallPit/',
     desc: 'ModuleDetail',
     lang: 'zh-Hans',
     staticDescriptionChecks: [/包含 \d+ 个实体/, /和 \d+ 个位置点/],
   },
   {
-    path: '/en/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
+    path: '/en/dungeon_modules/Crypt/Crypt_BlindfallPit/',
     desc: 'ModuleDetail(en)',
     lang: 'en',
     staticDescriptionChecks: [/with \d+ entities/, /and \d+ positions/],
   },
   {
-    path: '/ja/dungeon_modules/ShipGraveyard/ShipGraveyard_BladehandRefuge/',
+    path: '/ja/dungeon_modules/Crypt/Crypt_BlindfallPit/',
     desc: 'ModuleDetail(ja)',
     lang: 'ja',
     staticDescriptionChecks: [/\d+ エンティティ/, /\d+ 地点/],
@@ -304,27 +306,42 @@ async function testPage(
 
 function denseModuleHoverTarget() {
   const dataDir = path.join(REPO_ROOT, 'data', 'json');
-  const moduleName = 'ShipGraveyard_PiratePrison';
   const modules = JSON.parse(
     fs.readFileSync(path.join(dataDir, 'dungeon_modules.json'), 'utf8')
-  );
-  const module = modules.find((entry) => entry.name === moduleName);
-  if (!module) throw new Error(`missing test module: ${moduleName}`);
-
-  const coordsData = JSON.parse(
-    fs.readFileSync(
-      path.join(dataDir, 'dungeon_modules_coords', `${moduleName}.json`),
-      'utf8'
-    )
   );
   const locale = JSON.parse(
     fs.readFileSync(path.join(dataDir, 'locale', 'zh-Hans.json'), 'utf8')
   );
+
+  // 收录集合会随游戏版本变化（例如 ShipGraveyard 已不在 5x5 布局中），
+  // 所以不写死模块名，实时挑坐标点最多且仍被收录的模块。
+  let module = null;
+  let coordsData = null;
+  let totalPoints = 0;
+  for (const entry of modules) {
+    const coordsPath = path.join(
+      dataDir,
+      'dungeon_modules_coords',
+      `${entry.name}.json`
+    );
+    if (!fs.existsSync(coordsPath)) continue;
+    const candidate = JSON.parse(fs.readFileSync(coordsPath, 'utf8'));
+    const points = (candidate.entities ?? []).reduce(
+      (count, entity) => count + (entity.coords?.length ?? 0),
+      0
+    );
+    if (points > totalPoints) {
+      module = entry;
+      coordsData = candidate;
+      totalPoints = points;
+    }
+  }
+  if (!module || !coordsData) {
+    throw new Error('no collected module has coordinates for dense map test');
+  }
+  const moduleName = module.name;
+  const modulePath = `${module.group || ''}/${moduleName}`;
   const entities = coordsData.entities ?? [];
-  const totalPoints = entities.reduce(
-    (count, entity) => count + (entity.coords?.length ?? 0),
-    0
-  );
   const sx = module.size_x || 1;
   const sy = module.size_y || 1;
   const range = module.range || Math.max(sx, sy) * 1600 || 1600;
@@ -360,7 +377,7 @@ function denseModuleHoverTarget() {
   }
 
   if (!target) throw new Error(`no visible dot in test module: ${moduleName}`);
-  return { totalPoints, target, titles: [...titles] };
+  return { totalPoints, target, titles: [...titles], modulePath };
 }
 
 async function testDenseMapLayer(browser) {
@@ -379,7 +396,7 @@ async function testDenseMapLayer(browser) {
       );
     }
     const response = await page.goto(
-      `${BASE}/zh-Hans/dungeon_modules/ShipGraveyard/ShipGraveyard_PiratePrison/`,
+      `${BASE}/zh-Hans/dungeon_modules/${data.modulePath}/`,
       { waitUntil: 'domcontentloaded', timeout: TIMEOUT }
     );
     if (!response?.ok()) {

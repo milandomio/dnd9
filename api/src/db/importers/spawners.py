@@ -181,11 +181,28 @@ class SpawnersImporter:
     def extract_spawners(
         self, has_lootdrop_map: dict[str, bool], multi_entity_spawners: dict[str, list[dict]]
     ) -> list[dict]:
-        return extract_all_spawners(
+        spawners = extract_all_spawners(
             MAPS_DIR,
             has_lootdrop_map=has_lootdrop_map,
             multi_entity_spawners=multi_entity_spawners,
         )
+        return self._filter_to_collected_modules(spawners)
+
+    def _filter_to_collected_modules(self, spawners: list[dict]) -> list[dict]:
+        # dungeon_modules only holds modules reachable from a 5x5 random dungeon,
+        # but MAPS_DIR still contains every exported module directory (for example
+        # the legacy 7x7 ShipGraveyard modules). Filtering here keeps spawner rows,
+        # module coordinates and drop-rate lookups in sync.
+        c = self.conn.cursor()
+        c.execute("SELECT module_name FROM dungeon_modules")
+        collected = {row[0] for row in c.fetchall()}
+        if not collected:
+            return spawners
+        kept = [s for s in spawners if s.get("map_base") in collected]
+        dropped = len(spawners) - len(kept)
+        if dropped:
+            print(f"  filtered {dropped} spawners outside collected modules")
+        return kept
 
     def import_lootdrop_groups(self) -> int:
         c = self.conn.cursor()

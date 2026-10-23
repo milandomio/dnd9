@@ -20,6 +20,19 @@
   5. **附带修正**：`ModuleType` 为空且无法通过前缀推断的模块现在直接跳过，不再写入空分组后被 `DELETE FROM dungeon_modules WHERE module_group = ''` 静默删除。
 - **验证**：`python3 -m unittest tests.test_module_entries` 9/9 通过；完整管道 `python3 main.py`（41.34s）通过，`[VALIDATE] all module images OK`；导出 `dungeon_modules.json` 234 条，分组 `Crypt 60 / Ruins 43 / Inferno 27 / IceCavern 27 / GoblinCave 26 / FireDeep 25 / IceAbyss 22`，`is_edge` 20 条、`is_corner` 9 条，ShipGraveyard 0 条；`npx tsc --noEmit`、`npm run format:check`、`npm run lint`（0 错误，20 条既有 warning）均通过。
 
+### fix: spawners 与 dungeon_modules 收录范围对齐，修复 CI 测试硬编码
+
+- **改动原因**：上一个提交把 `dungeon_modules` 收敛到 5x5 入口后，CI 在「Test localized pages」步骤失败。排查确认两类问题：`web/tests/i18n.mjs` 有三处硬编码了 `ShipGraveyard_ShipRest` / `ShipGraveyard_PiratePrison` / `ShipGraveyard_BladehandRefuge`，这些模块已不在收录范围；同时发现 `spawners` 表未随 `dungeon_modules` 一起过滤，残留 8,643 行孤儿坐标（含全部 ShipGraveyard），导致 `Weapon_GoldenRoom` 这类只存在于废弃模块的道具仍被当成掉落源。
+- **变更文件**：
+  - 后端：`api/src/db/importers/spawners.py`；
+  - 测试：`web/tests/i18n.mjs`；
+  - 文档：`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **spawners 同步过滤**：新增 `SpawnersImporter._filter_to_collected_modules()`，在 `extract_spawners()` 返回后按 `dungeon_modules.module_name` 白名单过滤 `map_base`。导入顺序本就保证 `import_dungeon_modules` 先于 `extract_and_store_spawners`，因此白名单可用。结果：spawners 从 55,147 降为 46,504，孤儿坐标从 8,643 降为 0，ShipGraveyard 坐标文件从 30 个降为 0。
+  2. **密集地图测试改为动态选点**：`denseModuleHoverTarget()` 不再写死 `ShipGraveyard_PiratePrison`，改为遍历全部已收录模块、选取坐标点最多且仍存在 coords 文件者（当前命中 `Crypt_LightlessTomb_01`，578 点），并从模块记录读取 `group` 构造路由。
+  3. **模块详情测试改用稳定模块**：`ModuleDetail` 三条测试的路径从 `ShipGraveyard/ShipGraveyard_BladehandRefuge` 改为 `Crypt/Crypt_BlindfallPit`（盲坑，20 实体 / 179 位置点），仍是稀有模块，SEO 描述格式一致。
+  4. **黄金房武器断言反转**：`Weapon_GoldenRoom` 只出现在 `ShipGraveyard_ShipRest`，随该模块一并移除；`Weapon_MysticalTreasureRoom` 位于仍在收录的 `Cave_Rooms`，保留。因此 ja / zh-Hant 两条测试中「黄金房武器 (1)」的 `expected` 由 `true` 改为 `false`，并加注释说明原因。
+- **验证**：`python3 -m unittest discover -s tests` 182 个全通过；`api/lint.sh`（ruff + black）通过；完整管道 38.50s 通过，日志含 `filtered 8643 spawners outside collected modules`、`[VALIDATE] all module images OK`；SSG 构建 2979 页 / 13763 HTML；本地 `vite preview` 在 8081 端口运行 `npm run test:i18n` 得 **Pass 29 / Fail 0**。
 ## 2026-10-22
 
 ### fix: 【工匠】页保护药水显示护盾值与持续时间
