@@ -49,6 +49,19 @@
   5. **前端只读不算**：`getRareModuleSpawnRate(module)` 直接返回 `module.spawn_rate`，`applyModuleSpawnRate(rate, module)` 同；两个调用页（物品详情、掉落详情）改为传模块对象而非模块名。
   6. **结果缓存进 DB**：首版实现由前端读 `spawn_rate` 字段，但 CI 没有游戏导出目录，`db_freshness` 跳过导入，导致线上所有模块概率为 0。改为 `ModulesImporter._store_spawn_rates()` 在导入时把概率写回 `dungeon_modules.spawn_rate`，`module_builder` 直接读该列；导入时若资产缺失算不出概率，保留 DB 既有值并打印提示，不清零。
 - **验证**：`python3 -m unittest discover -s tests` **190 个全通过**（新增 8 个）；CI 等价环境（把所有 `config` 游戏路径常量指向不存在目录）同样 190 个通过；`api/lint.sh`（ruff + black）通过；完整管道通过，`[VALIDATE] all module images OK`；导出 `dungeon_modules.json` 中恰好 5 个模块带 `spawn_rate = 0.84`（全部 Crypt），Ruins 的 17 个稀有模块为 0；SSG 构建 2979 页；Playwright 实测 `zh-Hans/items/GrimveilCloak/` 显示「盲坑 0.84%」「综合爆率 0.5208%」且无页面错误，`Ruins_Passage_Outer_04` 页面不出现任何百分比；`npm run check` 通过（0 错误，20 条既有 warning）。
+### feat: deploy.sh 适配无游戏文件的普通用户，新增 README
+
+- **改动原因**：用户要求「deploy.sh 修改成适合普通用户（无游戏文件）使用的部署脚本，其中 git 提交明显是不合理的，然后增加 README.md 对本项目简单介绍，可以脱离游戏部署」。原 `deploy.sh` 有三个问题：①末尾 `git add -A && git commit -m "chore: deploy $(date)"` 会自动提交工作区全部改动，包括未完成的 WIP 与本地配置，属于破坏性操作；②默认端口 8080 与本机 nginx 冲突；③没有任何环境校验，缺少 DB 或版本过低时只会在管道深处报错。项目此前也没有 README，新用户无法得知「不需要游戏文件」这一关键前提。
+- **变更文件**：`deploy.sh`（重写）、`README.md`（新增）、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **移除全部 git 操作**：脚本只做「环境检查 → 导出数据 → 安装依赖 → 构建 → 预览」，不再 `git add/commit`。提交交由开发者按 `docs/DEVELOPMENT_WORKFLOW.md` 手动执行。
+  2. **环境预检前置**：新增 Python ≥ 3.10、Node ≥ 20、npm 存在性检查，以及 `api/data/darkfindv5.db` 存在性检查。任一不满足立即 `fail` 并给出可执行的修复提示，不进入管道。
+  3. **端口与进程管理**：默认端口改为 8081（8080 被本机 nginx 占用），新增 `--port` 覆盖；启动前用 `lsof` 检测并停止占用该端口的进程，配合 `--strictPort` 避免 vite 静默跳端口。
+  4. **新增 `--build-only`**：只构建不启动预览，用于 CI 或上传静态托管。脚本会校验 `web/dist/index.html` 存在后才报告成功。
+  5. **依赖安装幂等**：`web/node_modules` 已存在时跳过 `npm ci`，避免重复安装耗时；提示用户删除目录可强制重装。
+  6. **README 说明脱离游戏的原理**：核心是 `api/src/db_freshness.py` 的三态决策——数据源完整 → `REBUILD_REQUIRED`；数据源缺失 → `DB_ONLY`（直接用仓库内 47 MB 的 `api/data/darkfindv5.db` 导出 JSON）；两者都缺 → `FAIL_FAST`。普通用户环境没有 `Output/Exports/`，自动走 `DB_ONLY`，几十秒完成。
+  7. **README 数据核对**：文中数字均取自当前导出实测——816 物品、732 怪物、570 实体、234 地图模块、524 掉落条目、2980 条路由、13774 个 HTML、10 种语言。
+- **验证**：`bash -n deploy.sh` 语法通过；`./deploy.sh --help` 输出完整说明；实际运行 `./deploy.sh` 全流程通过——`[DB] state=DB_ONLY` 正确识别无游戏源、管道导出成功、SSG 2980 页、`[5/5]` 返回 HTTP 200；模拟普通用户（将所有 `config` 游戏路径指向不存在目录）调用 `inspect_database()` 得到 `state=DB_ONLY / import_required=False`，确认无需游戏文件即可构建；README 内 7 个文档链接与 3 条命令均校验存在。
 ## 2026-10-22
 
 ### fix: 【工匠】页保护药水显示护盾值与持续时间
