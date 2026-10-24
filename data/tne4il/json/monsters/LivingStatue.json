@@ -1,0 +1,233 @@
+{
+  "name": "LivingStatue",
+  "translation": "石像鬼",
+  "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+  "coords": [
+    {
+      "x": 200.00000000000009,
+      "y": 0.0,
+      "z": -200.0,
+      "yaw": 185.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "LivingStatue",
+      "group_parent": "BP_GameSpawnerGroup_C_2"
+    },
+    {
+      "x": -205.0,
+      "y": 10.0,
+      "z": -200.0,
+      "yaw": 0.0,
+      "map": "Inferno_Drain",
+      "file": "Inferno_Drain_HR_D.json",
+      "version": "",
+      "label": "LivingStatue",
+      "group_parent": "BP_GameSpawnerGroup_C_1"
+    },
+    {
+      "x": -555.0,
+      "y": 15.0,
+      "z": 105.0,
+      "yaw": 180.0,
+      "map": "Ruins_Bath",
+      "file": "Ruins_Bath_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -320.0,
+      "y": -1125.0,
+      "z": 135.0,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": 330.0,
+      "y": -1125.0,
+      "z": 135.0,
+      "yaw": 270.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -320.00003,
+      "y": 975.0,
+      "z": 135.0,
+      "yaw": 90.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": 329.99997,
+      "y": 975.0,
+      "z": 135.0,
+      "yaw": 90.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": 505.0,
+      "y": -1080.0,
+      "z": 100.0001,
+      "yaw": 270.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -515.0,
+      "y": -1080.0,
+      "z": 100.0001,
+      "yaw": 270.0,
+      "map": "Ruins_Grave",
+      "file": "Ruins_Grave_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -3905.0,
+      "y": -315.0,
+      "z": 100.0001,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    },
+    {
+      "x": -3905.0,
+      "y": 315.0,
+      "z": 100.0001,
+      "yaw": 0.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LivingStatue"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_LivingStatue",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_LivingStatue",
+      "translation": "石像鬼",
+      "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "Glaive_6001",
+          "page": "Glaive",
+          "translation": "偃月刀",
+          "translation_key": "Text_DesignData_Item_Item_Glaive_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrusaderHelm_6001",
+          "page": "CrusaderHelm",
+          "translation": "十字军巨盔",
+          "translation_key": "Text_DesingData_Item_Item_CrusaderHelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CrusaderArmor_6001",
+          "page": "CrusaderArmor",
+          "translation": "十字军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_CrusaderArmor_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TemplarArmor_6001",
+          "page": "TemplarArmor",
+          "translation": "圣殿铠甲",
+          "translation_key": "Text_DesignData_Item_Item_TemplarArmor_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GreatHelm_6001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Halberd_6001",
+          "page": "Halberd",
+          "translation": "长戟",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_LivingStatue_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_LivingStatue_Spoils",
+      "translation": "石像鬼",
+      "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "Pebble",
+          "page": "Pebble",
+          "translation": "鹅卵石",
+          "translation_key": "Text_DesignData_Item_Item_Pebble",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "StoneFragment",
+          "page": "StoneFragment",
+          "translation": "小碎石",
+          "translation_key": "Text_DesignData_Item_Item_StoneFragment",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "石像鬼",
+        "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 12.1333,
+          "普通": 12.1333,
+          "豪客赛": 12.8333,
+          "逆袭赛": 12.8333
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "石像鬼",
+        "translation_key": "Text_DesignData_Monster_Monster_LivingStatue",
+        "spawn_rate": 85.0,
+        "drop_rates": {
+          "PVE": 13.0,
+          "普通": 13.0,
+          "豪客赛": 12.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

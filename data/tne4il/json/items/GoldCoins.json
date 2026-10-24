@@ -1,0 +1,2076 @@
+{
+  "name": "GoldCoins",
+  "translation": "金币",
+  "translation_key": "Text_DesignData_Item_Item_GoldCoins",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [
+    "AshPile",
+    "Bookshelf",
+    "CofferSmall",
+    "Coffin_01",
+    "Coffin_02",
+    "Coffin_03",
+    "Coffin_04",
+    "Coffin_05",
+    "Coffin_06",
+    "CursedSealedChest",
+    "FallenDwarf01",
+    "FallenDwarf02",
+    "FallenDwarf03",
+    "FlatChestLarge",
+    "FlatChestLarge_UnderSea",
+    "FrostSkeletonWoodenBarrer",
+    "GoldChest",
+    "GoldChest_UnderSea",
+    "Ground",
+    "LavaGolem",
+    "LootGoblin",
+    "MarvelousChest",
+    "Mimic_Large_Flat",
+    "Mimic_Large_MidLevel",
+    "Mimic_Large_MidLevel_Unique",
+    "Mimic_Large_Ornate",
+    "Mimic_Large_Simple",
+    "Mimic_Medium_MidLevel",
+    "Mimic_Medium_MidLevel_Unique",
+    "Mimic_Medium_Ornate",
+    "Mimic_Medium_Simple",
+    "Mimic_Small_MidLevel",
+    "Mimic_Small_MidLevel_Unique",
+    "Mimic_Small_Ornate",
+    "Mimic_Small_Simple",
+    "MonsterGold_Boss_Common",
+    "MonsterGold_Boss_Elite",
+    "MonsterGold_Boss_Nightmare",
+    "MonsterGold_Normal_Common",
+    "MonsterGold_Normal_Elite",
+    "MonsterGold_Normal_Nightmare",
+    "MonsterGold_SubBoss_Common",
+    "MonsterGold_SubBoss_Elite",
+    "MonsterGold_SubBoss_Nightmare",
+    "OrnateChestLarge",
+    "OrnateChestLarge_Locked",
+    "OrnateChestLarge_Locked_UnderSea",
+    "OrnateChestLarge_UnderSea",
+    "OrnateChestMedium",
+    "OrnateChestMedium_Locked",
+    "OrnateChestMedium_Locked_UnderSea",
+    "OrnateChestMedium_UnderSea",
+    "OrnateChestSmall",
+    "OrnateChestSmall_Locked",
+    "SimpleChestLarge",
+    "SimpleChestLarge_UnderSea",
+    "SimpleChestMedium",
+    "SimpleChestMedium_UnderSea",
+    "SimpleChestSmall",
+    "SimpleChestSmall_UnderSea",
+    "SkeletonCorpse01",
+    "SkeletonCorpse01_UnderSea",
+    "SkeletonCorpse02",
+    "SkeletonCorpse02_UnderSea",
+    "SkeletonCorpse03",
+    "SkeletonCorpse03_UnderSea",
+    "SkeletonWoodenBarrel",
+    "StoneTomb01",
+    "WoodenBarrel",
+    "WoodenBarrel01",
+    "WoodenBarrel02",
+    "WoodenBarrel04",
+    "WoodenBarrel_Firedeep"
+  ],
+  "coords": [
+    {
+      "x": -150.0,
+      "y": -150.0,
+      "z": -350.0,
+      "yaw": 0.0,
+      "map": "CaveTown",
+      "file": "CaveTown_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": -400.0,
+      "y": -650.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Cave_AntsNest",
+      "file": "Cave_AntsNest_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": 200.0,
+      "y": 200.0,
+      "z": -350.0,
+      "yaw": 0.0,
+      "map": "Cave_Valley_02",
+      "file": "Cave_Valley_02_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": 400.0,
+      "y": 250.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": -550.0,
+      "y": 150.0,
+      "z": 109.66509,
+      "yaw": 0.0,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": -200.0,
+      "y": 250.0,
+      "z": -200.0,
+      "yaw": 0.0,
+      "map": "IceCave_CaveSwamp",
+      "file": "IceCave_CaveSwamp_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": -950.0,
+      "y": 650.0,
+      "z": 400.0,
+      "yaw": 0.0,
+      "map": "IceCave_FrozenLake",
+      "file": "IceCave_FrozenLake_D.json",
+      "version": "(D)",
+      "label": "LootGoblin"
+    },
+    {
+      "x": -250.0,
+      "y": -400.0,
+      "z": 750.0,
+      "yaw": 0.0,
+      "map": "IceCave_MountainPass",
+      "file": "IceCave_MountainPass_D.json",
+      "version": "(D)",
+      "label": "LootGoblin"
+    },
+    {
+      "x": 50.0,
+      "y": -150.0,
+      "z": 350.0,
+      "yaw": 0.0,
+      "map": "IceCave_Quarry",
+      "file": "IceCave_Quarry_D.json",
+      "version": "(D)",
+      "label": "LootGoblin"
+    },
+    {
+      "x": -100.0,
+      "y": -200.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "IceCave_Spiral",
+      "file": "IceCave_Spiral_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": 100.0,
+      "y": -350.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Forest_02",
+      "file": "Ruins_Forest_02_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": 380.0,
+      "y": -405.0,
+      "z": -505.0,
+      "yaw": 0.0,
+      "map": "Ruins_ForsakenCloister",
+      "file": "Ruins_ForsakenCloister_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": 650.0,
+      "y": -1250.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": 27.323568,
+      "y": -46.161453,
+      "z": 0.0,
+      "yaw": 50.0,
+      "map": "Ruins_Tower_01_Destroyed",
+      "file": "Ruins_Tower_01_Destroyed_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    },
+    {
+      "x": 100.0,
+      "y": -250.0,
+      "z": 0.0,
+      "yaw": 0.0,
+      "map": "Ruins_Watchtower",
+      "file": "Ruins_Watchtower_HR_D.json",
+      "version": "",
+      "label": "LootGoblin"
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.8588,
+          "普通": 7.8588,
+          "豪客赛": 10.3482,
+          "逆袭赛": 10.3482
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.9099,
+          "逆袭赛": 5.9099
+        }
+      },
+      {
+        "translation": "灰烬堆",
+        "translation_key": "Text_DesignData_Props_Props_AshPile",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "矮人亡骸组",
+        "translation_key": "Text_DesignData_Props_Props_FallenDwarf",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "熔岩魔像",
+        "translation_key": "Text_DesignData_Monster_Monster_LavaGolem",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 10.0,
+          "普通": 10.0,
+          "豪客赛": 5.0,
+          "逆袭赛": 5.0
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8989,
+          "逆袭赛": 5.8989
+        }
+      },
+      {
+        "translation": "矮人木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel_Firedeep",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "书架",
+        "translation_key": "",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.7596,
+          "普通": 1.7596,
+          "豪客赛": 1.7622,
+          "逆袭赛": 1.7622
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 20.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "受诅咒的箱子(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8989,
+          "逆袭赛": 5.8989
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8989,
+          "逆袭赛": 5.8989
+        }
+      },
+      {
+        "translation": "重型华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.6494,
+          "普通": 7.6494,
+          "豪客赛": 9.3304,
+          "逆袭赛": 9.7411
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8897,
+          "逆袭赛": 5.9007
+        }
+      },
+      {
+        "translation": "精致棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_01",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8853,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "旧棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_02",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8853,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_03",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8853,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "木棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_05",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8853,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "皇家棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_06",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8853,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "重型华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "石棺",
+        "translation_key": "Text_DesignData_Props_Props_StoneTomb01",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 67.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8853,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "木桶(随机)",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "书架",
+        "translation_key": "",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.7755,
+          "普通": 1.7755,
+          "豪客赛": 1.7215,
+          "逆袭赛": 1.7425
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 20.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "受诅咒的箱子(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8853,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8853,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "重型华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "宝藏哥布林",
+        "translation_key": "Text_DesignData_Monster_Monster_LootGoblin_Unique",
+        "spawn_rate": 0.0,
+        "drop_rates": {
+          "PVE": 30.8824,
+          "普通": 30.8824,
+          "豪客赛": 30.8824,
+          "逆袭赛": 30.8824
+        }
+      }
+    ],
+    "Crypt": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.6948,
+          "普通": 7.6948,
+          "豪客赛": 9.7411,
+          "逆袭赛": 9.7411
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.9007,
+          "逆袭赛": 5.9007
+        }
+      },
+      {
+        "translation": "精致棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_01",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "旧棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_02",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_03",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "木棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_05",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "皇家棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_06",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "重型华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "石棺",
+        "translation_key": "Text_DesignData_Props_Props_StoneTomb01",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "巨型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Large_Simple",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Medium_MidLevel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型宝箱怪",
+        "translation_key": "Text_DesignData_Monster_Monster_Mimic_Small_Simple",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(随机)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 67.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "木桶(随机)",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "书架",
+        "translation_key": "",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.7707,
+          "普通": 1.7707,
+          "豪客赛": 1.7425,
+          "逆袭赛": 1.7425
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 20.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "受诅咒的箱子(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "重型华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      }
+    ],
+    "IceCavern": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.6948,
+          "普通": 7.6948,
+          "豪客赛": 9.7411,
+          "逆袭赛": 9.7411
+        }
+      },
+      {
+        "translation": "棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_03",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "皇家棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_06",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "木桶(随机)",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "书架",
+        "translation_key": "",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 1.7707,
+          "普通": 1.7707,
+          "豪客赛": 1.7425,
+          "逆袭赛": 1.7425
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 20.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "受诅咒的箱子(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "重型华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "宝藏哥布林",
+        "translation_key": "Text_DesignData_Monster_Monster_LootGoblin_Unique",
+        "spawn_rate": 0.0,
+        "drop_rates": {
+          "PVE": 30.8824,
+          "普通": 30.8824,
+          "豪客赛": 30.8824,
+          "逆袭赛": 30.8824
+        }
+      }
+    ],
+    "GoblinCave": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.6948,
+          "普通": 7.6948,
+          "豪客赛": 9.7411,
+          "逆袭赛": 9.7411
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.9007,
+          "逆袭赛": 5.9007
+        }
+      },
+      {
+        "translation": "旧棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_02",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_03",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "木棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_05",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "皇家棺材",
+        "translation_key": "Text_DesignData_Props_Props_Coffin_06",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "方型宝箱",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "木桶(随机)",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 20.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "受诅咒的箱子(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8934,
+          "逆袭赛": 5.8934
+        }
+      },
+      {
+        "translation": "重型华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8835,
+          "逆袭赛": 5.8835
+        }
+      },
+      {
+        "translation": "宝藏哥布林",
+        "translation_key": "Text_DesignData_Monster_Monster_LootGoblin_Unique",
+        "spawn_rate": 0.0,
+        "drop_rates": {
+          "PVE": 30.8824,
+          "普通": 30.8824,
+          "豪客赛": 30.8824,
+          "逆袭赛": 30.8824
+        }
+      }
+    ],
+    "IceAbyss": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.8588,
+          "普通": 7.8588,
+          "豪客赛": 10.3482,
+          "逆袭赛": 10.3482
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.9099,
+          "逆袭赛": 5.9099
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "方型宝箱",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "大型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8989,
+          "逆袭赛": 5.8989
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 20.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "受诅咒的箱子(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8989,
+          "逆袭赛": 5.8989
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8989,
+          "逆袭赛": 5.8989
+        }
+      },
+      {
+        "translation": "重型华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      }
+    ],
+    "Inferno": [
+      {
+        "translation": "地面",
+        "translation_key": "df5.hardcoded.Ground",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 7.8588,
+          "普通": 7.8588,
+          "豪客赛": 10.3482,
+          "逆袭赛": 10.3482
+        }
+      },
+      {
+        "translation": "卓越宝箱",
+        "translation_key": "Text_DesignData_Props_Props_MarvelousChest",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.9099,
+          "逆袭赛": 5.9099
+        }
+      },
+      {
+        "translation": "狮头宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "重型华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "遗骸组",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "狮头宝箱(特殊)(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+        "spawn_rate": 65.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "大型橡木宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestLarge",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+        "spawn_rate": 54.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "小型橡木宝箱组",
+        "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+        "spawn_rate": 51.996,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "黄金宝箱",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 50.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8989,
+          "逆袭赛": 5.8989
+        }
+      },
+      {
+        "translation": "木桶",
+        "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 2.9412,
+          "普通": 2.9412,
+          "豪客赛": 2.9412,
+          "逆袭赛": 2.9412
+        }
+      },
+      {
+        "translation": "遗骸(随机)",
+        "translation_key": "Text_DesignData_Props_Props_SkeletonCorpse",
+        "spawn_rate": 33.3333,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "方型宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_FlatChestLarge",
+        "spawn_rate": 20.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8824,
+          "逆袭赛": 5.8824
+        }
+      },
+      {
+        "translation": "受诅咒的箱子(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8989,
+          "逆袭赛": 5.8989
+        }
+      },
+      {
+        "translation": "黄金宝箱(特殊)",
+        "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+        "spawn_rate": 17.5,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.8989,
+          "逆袭赛": 5.8989
+        }
+      },
+      {
+        "translation": "重型华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      },
+      {
+        "translation": "青铜华丽宝箱组(可能上锁)",
+        "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+        "spawn_rate": 5.0,
+        "drop_rates": {
+          "PVE": 5.8824,
+          "普通": 5.8824,
+          "豪客赛": 5.886,
+          "逆袭赛": 5.886
+        }
+      }
+    ]
+  }
+}
