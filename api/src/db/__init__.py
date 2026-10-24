@@ -217,6 +217,9 @@ class DatabaseManager:
     def get_all_spawner_entries(self) -> list[dict]:
         return self.repos.lootdrops.get_all_spawner_entries()
 
+    def get_self_placed_item_keywords(self) -> set[str]:
+        return self.repos.lootdrops.get_self_placed_item_keywords()
+
     def get_session_spawn_limits(self) -> dict[str, int]:
         return self.repos.lootdrops.get_session_spawn_limits()
 

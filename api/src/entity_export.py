@@ -50,15 +50,22 @@ def export_items(
     sub_pool_info: dict | None = None,
     entity_data_out: dict[str, dict] | None = None,
     point_pools: dict | None = None,
+    self_placed_items: set[str] | None = None,
 ) -> list[dict]:
-    """Export items index + individual detail files. Returns items_index."""
+    """Export items index + individual detail files. Returns items_index.
+
+    `self_placed_items` lists lootdrop spawner keywords that place the item
+    itself on the ground (empty spawner `entity_name`). Those must stay on
+    /items even when a monster loot group references the same item name.
+    """
+    self_placed = self_placed_items or set()
     items_index = []
     for r in items:
         name = r["item_name"]
         if name in skip_variants:
             continue
         _mons = merged_loot.get(name, [])
-        if _mons and "Ground" not in _mons:
+        if _mons and "Ground" not in _mons and name not in self_placed:
             continue
         coords = filter_coords(all_coords.get(name, []), item_names)
         if not coords:

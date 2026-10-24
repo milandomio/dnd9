@@ -67,6 +67,38 @@ class LootdropsRepository:
             )
         return results
 
+    def get_self_placed_item_keywords(self) -> set[str]:
+        """Spawner keywords that place the lootdrop itself on the ground.
+
+        A spawner entry with an empty `entity_name` means the spawner is not
+        tied to a monster/prop and its group is the placed entity itself
+        (e.g. `Id_Spawner_Lootdrop_BronzeScale`). Props-type spawners are
+        excluded because those entities are exported to /props.
+        """
+        c = self.conn.cursor()
+        # Only keywords with a real map spawner count: an entry without one
+        # never places anything on the ground (it is a loot table only).
+        # Some entries are `Spawn_`-prefixed while the spawner row is not
+        # (`Spawn_FrostWyvernEgg` → `FrostWyvernEgg`).
+        c.execute(
+            "SELECT DISTINCT s.keyword AS kw "
+            "FROM spawner_entries se "
+            "JOIN spawners s ON s.keyword = se.spawner_keyword "
+            "WHERE se.entity_name = '' AND s.spawner_type != 'props'"
+        )
+        result = {row["kw"] for row in c.fetchall()}
+        c.execute(
+            "SELECT DISTINCT s.keyword AS kw "
+            "FROM spawner_entries se "
+            "JOIN spawners s ON s.keyword = substr(se.spawner_keyword, ?) "
+            "WHERE se.entity_name = '' "
+            "AND substr(se.spawner_keyword, 1, ?) = ? "
+            "AND s.spawner_type != 'props'",
+            (len("Spawn_") + 1, len("Spawn_"), "Spawn_"),
+        )
+        result.update(row["kw"] for row in c.fetchall())
+        return result
+
     def get_session_spawn_limits(self) -> dict[str, int]:
         """Max per-session spawn limit per entity name (0 = unlimited)."""
         c = self.conn.cursor()

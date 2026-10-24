@@ -2,6 +2,18 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-24
+
+### fix: 物品表收录自身地面生成器掉落的物品（青铜天秤、坏眼镜等）
+
+- **改动原因**：用户反馈「青铜天秤现在会作为实体生成，为什么没有收录」。排查发现数据链路完整（游戏解包有 `Id_Spawner_Lootdrop_BronzeScale`，DB `spawners` 有 2 行坐标，`coords/BronzeScale.json` 有 2 个点），但被 `export_items()` 的 `5c9d5b62` 规则拦掉：该规则认定「`monsters` 非空且不含 `Ground`」= 仅怪物/箱子产出，移到 `/lootdrops`。而 `BronzeScale` 恰好也被骷髅法师的 `QuestItem_VolcanicAsh` 掉落组引用，导致 `merged_loot["BronzeScale"] = ["SkeletonMage"]`，被误判成怪物掉落物，自身 2 个地面生成点完全不可见。
+- **变更文件**：`api/src/db/repositories/lootdrops.py`、`api/src/db/__init__.py`、`api/src/collector.py`、`api/src/entity_export.py`、`api/tests/test_item_export_placement.py`（新增）、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **判定口径**：新增 `LootdropsRepository.get_self_placed_item_keywords()`，取 `spawner_entries.entity_name = ''`（无实体绑定 = 该组就是被放置物本身）**且**在 `spawners` 表里存在真实地图生成器（否则只是纯掉落表，从未在地面刷出）**且** `spawner_type != 'props'`（`Lifeleaf` / `PhantomFlower` / `Wardweed` 同时是 props 实体，归 `/props` 页面）。
+  2. **前缀兼容**：部分条目的关键字带 `Spawn_` 前缀而 `spawners` 行没有（`Spawn_FrostWyvernEgg` → `FrostWyvernEgg`），用 `substr` 做第二条 JOIN 补齐，使 `FrostWyvernEgg` 也能收录。
+  3. **放行条件**：`export_items()` 过滤改为 `if _mons and "Ground" not in _mons and name not in self_placed`，其余规则不变；`collector.py` 在导出前取一次集合并以第 13 个参数传入。
+- **验证**：`data/json/items.json` 30 → 44 条，新增 `Bellows`（风箱）、`BrokenGlasses`（坏眼镜）、`BronzeScale`（青铜天秤）、`CaveTrollsPreciousRock`、`CeremonialDagger`、`ChroniclesoftheCursedCrown`、`FrostWyvernEgg`（冰霜飞龙蛋）、`GoldWaterpot`、`HumanRemains`、`LargeScroll`、`ManuscriptsoftheWarlord`、`RedApple`、`SkullKey`、`SturdyCloth`，无任何条目减少；`BronzeScale` 详情 2 个坐标（`DarkMagicLibrary_Center`、`Ruins_Keep`），`BrokenGlasses` 2 个（`Barracks`、`Ruins_Chapel`）；`search_index.json` 两者同时产出 `/items/…` 与 `/lootdrops/…` 两条记录。新增 7 条单测（`api/tests/test_item_export_placement.py`），后端全量 209 项 OK，`./api/lint.sh` 通过。
+
 ## 2026-10-23
 
 ### feat: 地图模块改以 5x5 布局为收录入口，并新增边缘/角落属性

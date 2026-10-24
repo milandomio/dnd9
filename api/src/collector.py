@@ -291,6 +291,12 @@ def run(
                 "has_lootdrop": row["has_lootdrop"],
             }
 
+        # Self-placed lootdrops (ground spawners whose entry has no entity_name)
+        # must stay on /items even though a monster loot group also references
+        # them (e.g. BronzeScale: own spawner + SkeletonMage quest-item group).
+        _self_placed_items = db.get_self_placed_item_keywords()
+        pipe.log(f"[JSON] self-placed item keywords: {len(_self_placed_items)}")
+
         _item_names = {r["item_name"] for r in items}
         _monster_names = {r["monster_name"] for r in monsters}
         _prop_names = {r["asset_name"] for r in props}
@@ -485,6 +491,7 @@ def run(
                 _sub_pool_info,
                 entity_data_by_type["items"],
                 _point_pools,
+                _self_placed_items,
             )
             # P005: Build from actual exported entities, not raw DB data
             for e in items_index:
