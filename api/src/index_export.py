@@ -4,9 +4,6 @@ import json
 import urllib.parse
 from pathlib import Path
 
-from config import HARDCODED_TRANSLATIONS
-from translator import resolve_group_label, resolve_translation_key
-
 
 def _save(output_dir: Path, filename: str, data: list | dict):
     path = output_dir / filename
@@ -24,219 +21,6 @@ def save_quest_data(db, output_dir: Path) -> tuple[int, int, list[dict]]:
     _save(output_dir, "quest_items.json", quest_items_data)
     _save(output_dir, "quest_npc.json", quest_npcs_data)
     return quest_items_count, quest_npc_count, quest_npcs_data
-
-
-def generate_quest_items_groups(
-    db,
-    merged_loot,
-    resolve_name,
-    all_coords,
-    modules,
-    output_dir: Path,
-    group_label_resolver=None,
-):
-    """Generate quest items groups with coordinates."""
-    import logging
-
-    quest_items_path = output_dir / "quest_items.json"
-    if not quest_items_path.exists():
-        logging.getLogger(__name__).warning("quest_items.json not found, skipping quest items groups")
-        return
-    with open(quest_items_path) as f:
-        quest_items = json.load(f)
-
-    entity_classification = db.get_entity_classification()
-    entity_classification_lower = {name.lower(): value for name, value in entity_classification.items()}
-
-    def entity_meta(name: str) -> dict:
-        exact = entity_classification.get(name) or entity_classification_lower.get(name.lower())
-        if exact:
-            return exact
-        name_lower = name.lower()
-        for candidate in sorted(entity_classification, key=len):
-            if candidate.lower().startswith(f"{name_lower}_"):
-                metadata = entity_classification[candidate]
-                if metadata.get("translation_key"):
-                    return metadata
-        return {}
-
-    def entity_type_and_scope(name: str) -> tuple[str, str]:
-        types = entity_meta(name).get("types", [])
-        if "monster" in types:
-            return "monster", "monster"
-        if "props" in types:
-            return "props", "props"
-        if "item" in types:
-            return "item", "item"
-        return "monster", "monster"
-
-    # Build map_base -> module_group lookup
-    map_to_group = {}
-    for m in modules:
-        g = m.get("module_group", "") or ""
-        if g:
-            map_to_group[m["module_name"]] = g
-            if m.get("sl_base_name"):
-                map_to_group[m["sl_base_name"]] = g
-
-    item_names = sorted(set(qi["item_name"] for qi in quest_items))
-    quest_map = {}
-    for qi in quest_items:
-        quest_map.setdefault(qi["item_name"], []).append(qi)
-
-    _COLORS = [  # noqa: N806
-        "#E74C3C",
-        "#3498DB",
-        "#2ECC71",
-        "#E67E22",
-        "#9B59B6",
-        "#1ABC9C",
-        "#F39C12",
-        "#2980B9",
-        "#D35400",
-        "#C0392B",
-        "#7F8C8D",
-        "#27AE60",
-        "#16A085",
-        "#8E44AD",
-        "#2C3E50",
-        "#F1C40F",
-    ]
-
-    groups = {}
-    ci = 0
-    for item_name in item_names:
-        info_list = quest_map.get(item_name, [])
-        trans = info_list[0]["item_translation"] if info_list else item_name
-        item_translation_key = resolve_translation_key(item_name, entity_meta(item_name).get("translation_key"))
-
-        icoords = all_coords.get(item_name, [])
-        mnames = merged_loot.get(item_name, [])
-        for c in icoords:
-            mb = c["map_base"]
-            mt = map_to_group.get(mb, "")
-            if not mt:
-                continue
-            groups.setdefault(mt, {"group": mt, "entities": {}})
-            ek = f"item::{item_name}"
-            if ek not in groups[mt]["entities"]:
-                groups[mt]["entities"][ek] = {
-                    "name": item_name,
-                    "translation": trans,
-                    "translation_key": item_translation_key,
-                    "type": "item",
-                    "color": _COLORS[ci % len(_COLORS)],
-                    "coords": [],
-                    "quest_npcs": [
-                        {
-                            "npc_name": qi["npc_name"],
-                            "npc_name_cn": qi["npc_name_cn"],
-                            "quest_number": qi["quest_number"],
-                            "count": qi["count"],
-                        }
-                        for qi in info_list
-                    ],
-                }
-                ci += 1
-            groups[mt]["entities"][ek]["coords"].append(
-                {
-                    "x": c["x"],
-                    "y": c["y"],
-                    "z": c["z"],
-                    "yaw": c.get("yaw", 0),
-                    "map": mb,
-                    "file": c["json_filename"],
-                    "version": c["version"],
-                    "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
-                }
-            )
-        for mn in sorted(mnames):
-            if mn == item_name:
-                continue
-            entity_type, scope = entity_type_and_scope(mn)
-            raw_translation_key = entity_meta(mn).get("translation_key")
-            mtrans = resolve_name(mn, raw_translation_key, scope)
-            monster_translation_key = resolve_translation_key(mn, raw_translation_key)
-            mcoords = all_coords.get(mn, [])
-            for c in mcoords:
-                mb = c["map_base"]
-                mt = map_to_group.get(mb, "")
-                if not mt:
-                    continue
-                groups.setdefault(mt, {"group": mt, "entities": {}})
-                ek = f"monster::{mn}"
-                if ek not in groups[mt]["entities"]:
-                    groups[mt]["entities"][ek] = {
-                        "name": mn,
-                        "translation": mtrans,
-                        "translation_key": monster_translation_key,
-                        "type": entity_type,
-                        "color": _COLORS[ci % len(_COLORS)],
-                        "coords": [],
-                        "quest_items": [item_name],
-                        "_seen_coords": set(),
-                    }
-                    ci += 1
-                else:
-                    if item_name not in groups[mt]["entities"][ek]["quest_items"]:
-                        groups[mt]["entities"][ek]["quest_items"].append(item_name)
-                coord_key = (c["x"], c["y"], c["z"], mb, c["json_filename"])
-                if coord_key not in groups[mt]["entities"][ek]["_seen_coords"]:
-                    groups[mt]["entities"][ek]["_seen_coords"].add(coord_key)
-                    groups[mt]["entities"][ek]["coords"].append(
-                        {
-                            "x": c["x"],
-                            "y": c["y"],
-                            "z": c["z"],
-                            "yaw": c.get("yaw", 0),
-                            "map": mb,
-                            "file": c["json_filename"],
-                            "version": c["version"],
-                            "label": HARDCODED_TRANSLATIONS.get(c["original_keyword"], c["original_keyword"]),
-                        }
-                    )
-
-    groups_index = []
-    for gname in sorted(groups):
-        g = groups[gname]
-        g["group_display"] = group_label_resolver(gname) if group_label_resolver else gname
-        gl = resolve_group_label(gname)
-        group_key = gl["slot_key"] if gl else gname
-        group_floor = gl["floor"] if gl else 1
-        group_sub_key = gl["sub_key"] if gl else None
-        entities = list(g["entities"].values())
-        for e in entities:
-            e.pop("_seen_coords", None)
-        pos_count = sum(len(e["coords"]) for e in entities)
-        groups_index.append(
-            {
-                "group": gname,
-                "group_display": g["group_display"],
-                "group_key": group_key,
-                "group_floor": group_floor,
-                "group_sub_key": group_sub_key,
-                "entity_count": len(entities),
-                "position_count": pos_count,
-            }
-        )
-        _save(
-            output_dir,
-            f"quest_items_groups/{gname}.json",
-            {
-                "group": gname,
-                "group_display": g["group_display"],
-                "group_key": group_key,
-                "group_floor": group_floor,
-                "group_sub_key": group_sub_key,
-                "entities": entities,
-            },
-        )
-    _save(output_dir, "quest_items_groups.json", groups_index)
-
-
-# Quest objectives with no seekable target of their own (a raw damage or hold
-# event); they would only add noise to the nav search.
-QUEST_OBJECTIVE_SKIP_TYPES = frozenset({"Damage", "Hold"})
 
 
 def _search_url(path: str, params: dict[str, str]) -> str:
@@ -358,6 +142,11 @@ def _iter_craft_search_entries(crafts_payload: dict | None) -> list[dict]:
     return entries
 
 
+# Quest objectives with no seekable target of their own (a raw damage or hold
+# event); they would only add noise to the nav search.
+QUEST_OBJECTIVE_SKIP_TYPES = frozenset({"Damage", "Hold"})
+
+
 def _iter_quest_objective_entries(quest_npcs_data: list[dict]) -> list[dict]:
     """One search entry per quest objective, so an item is searchable by who takes it.
 
@@ -402,7 +191,6 @@ def build_and_save_indexes(
     props_index: list[dict],
     loot_index: list[dict],
     modules_data: list[dict],
-    quest_items_count: int,
     quest_npc_count: int,
     quest_npcs_data: list[dict],
     output_dir: Path,
@@ -418,16 +206,15 @@ def build_and_save_indexes(
         {
             "_comment": "该文件由 api/src/collector.py 自动生成，请勿手动编辑。如需修改，请编辑 collector.py 中的 index_data 列表。"
         },
+        {"page": "dungeon_shops", "label": "地牢商店", "count": shop_regions},
+        {"page": "crafts", "label": "工匠", "count": craft_count},
+        {"page": "lights", "label": "灯", "count": light_count},
+        {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
         {"page": "items", "label": "物品表", "count": len(items_index)},
         {"page": "props", "label": "实体表", "count": len(props_index)},
         {"page": "monsters", "label": "怪物表", "count": len(monsters_index)},
         {"page": "lootdrops", "label": "掉落表", "count": len(loot_index)},
-        {"page": "quest_npc", "label": "任务NPC表", "count": quest_npc_count},
-        {"page": "quest_items", "label": "任务物品表", "count": quest_items_count},
         {"page": "dungeon_modules", "label": "地图模块表", "count": len(modules_data)},
-        {"page": "dungeon_shops", "label": "地牢商店", "count": shop_regions},
-        {"page": "lights", "label": "灯", "count": light_count},
-        {"page": "crafts", "label": "工匠", "count": craft_count},
     ]
     _save(output_dir, "index.json", index_data)
 
@@ -540,16 +327,17 @@ def build_and_save_indexes(
                 "url": f"/dungeon_modules/{urllib.parse.quote(m.get('group', '') or '', safe='')}/{urllib.parse.quote(m['name'], safe='')}/",
             }
         )
+    # 顺序与首页菜单一致（index.json 的 index_data 同序）。
     LIST_PAGES = [  # noqa: N806
-        {"name": "items", "translation": "物品表", "page": "_nav", "url": "/items/"},
-        {"name": "monsters", "translation": "怪物表", "page": "_nav", "url": "/monsters/"},
-        {"name": "props", "translation": "实体表", "page": "_nav", "url": "/props/"},
-        {"name": "lootdrops", "translation": "掉落表", "page": "_nav", "url": "/lootdrops/"},
-        {"name": "quest_npc", "translation": "任务NPC表", "page": "_nav", "url": "/quest_npc/"},
-        {"name": "dungeon_modules", "translation": "地图模块表", "page": "_nav", "url": "/dungeon_modules/"},
         {"name": "dungeon_shops", "translation": "地牢商店", "page": "_nav", "url": "/dungeon_shops/"},
-        {"name": "lights", "translation": "灯", "page": "_nav", "url": "/lights/"},
         {"name": "crafts", "translation": "工匠", "page": "_nav", "url": "/crafts/"},
+        {"name": "lights", "translation": "灯", "page": "_nav", "url": "/lights/"},
+        {"name": "quest_npc", "translation": "任务NPC表", "page": "_nav", "url": "/quest_npc/"},
+        {"name": "items", "translation": "物品表", "page": "_nav", "url": "/items/"},
+        {"name": "props", "translation": "实体表", "page": "_nav", "url": "/props/"},
+        {"name": "monsters", "translation": "怪物表", "page": "_nav", "url": "/monsters/"},
+        {"name": "lootdrops", "translation": "掉落表", "page": "_nav", "url": "/lootdrops/"},
+        {"name": "dungeon_modules", "translation": "地图模块表", "page": "_nav", "url": "/dungeon_modules/"},
     ]
     search_index.extend(LIST_PAGES)
     _save(output_dir, "search_index.json", search_index)

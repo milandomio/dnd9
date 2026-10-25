@@ -14,7 +14,7 @@ from drop_rate import DropRateEngine
 from enrichment import enrich_all_entities
 from entity_export import export_items, export_monsters, export_props
 from image_utils import sync_webp_images
-from index_export import build_and_save_indexes, generate_quest_items_groups, save_quest_data
+from index_export import build_and_save_indexes, save_quest_data
 from label_type import GOLDCHEST_SPECIAL, split_goldchest_special_coords
 from light_builder import build_and_save_lights
 from locale_builder import build_locale_files
@@ -434,7 +434,6 @@ def run(
         merged_loot, skip_variants = build_merged_loot_map(db)
 
         pipe.log("[JSON] building modules_map...")
-        modules = db.get_dungeon_modules()
         modules_map = build_modules_map(db, resolver.resolve, module_rotations=None)
         map_to_module, module_to_maps = build_map_mappings(modules_map)
         # 注入分组显示名
@@ -721,20 +720,11 @@ def run(
 
         with pipe.step("quest data export") as ctx:
             print("\nExporting quest data from DB...")
-            quest_items_count, quest_npc_count, quest_npcs_data = save_quest_data(db, OUTPUT_DIR)
-            print(f"  quest items: {quest_items_count}, quest NPCs: {quest_npc_count}")
-            ctx.set_result(f"items={quest_items_count}, npcs={quest_npc_count}")
-
-        with pipe.step("quest_items_groups"):
-            generate_quest_items_groups(
-                db,
-                merged_loot,
-                resolver.resolve,
-                all_coords,
-                modules,
-                OUTPUT_DIR,
-                group_label_resolver=lambda g: _resolve_group_display(g, translations),
-            )
+            # quest_items.json 仍是管道内部文件（交付时跳过），任务物品表栏目已归档，
+            # 因此只保留 NPC 侧的统计。
+            _quest_items_count, quest_npc_count, quest_npcs_data = save_quest_data(db, OUTPUT_DIR)
+            print(f"  quest items: {_quest_items_count}, quest NPCs: {quest_npc_count}")
+            ctx.set_result(f"items={_quest_items_count}, npcs={quest_npc_count}")
 
         with pipe.step("search_index") as ctx:
             index_data = build_and_save_indexes(
@@ -743,7 +733,6 @@ def run(
                 props_index,
                 loot_index,
                 modules_data,
-                quest_items_count,
                 quest_npc_count,
                 quest_npcs_data,
                 OUTPUT_DIR,

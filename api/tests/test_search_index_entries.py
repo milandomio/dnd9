@@ -247,7 +247,6 @@ class BuildSearchIndexTest(unittest.TestCase):
                 [],
                 [],
                 [],
-                0,
                 1,
                 QUEST_NPCS,
                 root,
@@ -262,12 +261,45 @@ class BuildSearchIndexTest(unittest.TestCase):
         self.assertEqual(pages.count("crafts"), 3)
         # 1 NPC entry + 1 quest objective entry.
         self.assertEqual(pages.count("quest_npc"), 2)
-        # 【任务探索表】已归档，不再进入 index.json / search_index.json。
+        # 【任务探索表】【任务物品表】已归档，不再进入 index.json / search_index.json。
         self.assertNotIn("explore", pages)
+        self.assertNotIn("quest_items", pages)
+        # 导航搜索的列表页条目与首页菜单同序。
+        nav_urls = [e["url"] for e in search_index if e["page"] == "_nav"]
+        self.assertEqual(
+            nav_urls,
+            [
+                "/dungeon_shops/",
+                "/crafts/",
+                "/lights/",
+                "/quest_npc/",
+                "/items/",
+                "/props/",
+                "/monsters/",
+                "/lootdrops/",
+                "/dungeon_modules/",
+            ],
+        )
         counts = {entry["page"]: entry["count"] for entry in index_data if "page" in entry}
         self.assertEqual(counts["dungeon_shops"], 1)
         self.assertEqual(counts["crafts"], 1)
         self.assertNotIn("explore", counts)
+        self.assertNotIn("quest_items", counts)
+        # 菜单次序：地牢商店 → 工匠 → 灯 → 任务NPC表 → 物品表 → 实体表 → 怪物表 → 掉落表 → 地图模块表
+        self.assertEqual(
+            [entry["page"] for entry in index_data if "page" in entry],
+            [
+                "dungeon_shops",
+                "crafts",
+                "lights",
+                "quest_npc",
+                "items",
+                "props",
+                "monsters",
+                "lootdrops",
+                "dungeon_modules",
+            ],
+        )
 
 
 if __name__ == "__main__":

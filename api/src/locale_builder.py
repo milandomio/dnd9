@@ -73,10 +73,11 @@ def _load_used_keys(output_dir: Path, lootdrop_keys: set[str] | None = None) -> 
             if tk:
                 used.add(tk)
 
+    # quest_items_groups 已随【任务物品表】栏目归档（见 api/src/_archived/）。
     subdirs = (
-        ("items", "monsters", "props", "quest_items_groups", "dungeon_shops")
+        ("items", "monsters", "props", "dungeon_shops")
         if lootdrop_keys is not None
-        else ("items", "monsters", "props", "lootdrops", "quest_items_groups", "dungeon_shops")
+        else ("items", "monsters", "props", "lootdrops", "dungeon_shops")
     )
     loot_index_path = output_dir / "lootdrops.json"
     if loot_index_path.exists():

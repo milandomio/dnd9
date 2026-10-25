@@ -248,10 +248,10 @@ const DETAIL_TEMPLATE_PAGES = new Set([
   'monsters',
   'props',
   'lootdrops',
-  'quest_items',
 ]);
+// 【任务物品表】栏目已归档（web/src/_archived/QuestItemsPage.tsx），
+// 不再生成 /quest_items 与 /quest_items/:group 路由。
 const SINGLE = [
-  'quest_items',
   'quest_npc',
   'dungeon_modules',
   'dungeon_shops',
@@ -272,9 +272,6 @@ const LANGS = [
   'zh-Hant',
 ];
 
-// Quest items groups
-const questGroups = readJSON(join(DATA, 'quest_items_groups.json'));
-
 // Discover all routes — always generate shell files for detail pages (CSR in quick mode)
 const routes = [{ path: '/', file: 'index.html' }];
 for (const p of PAGES)
@@ -287,12 +284,6 @@ for (const p of SINGLE)
     path: `/${DEFAULT_LANG}/${p}`,
     file: `${DEFAULT_LANG}/${p}/index.html`,
   });
-for (const g of questGroups) {
-  routes.push({
-    path: `/${DEFAULT_LANG}/quest_items/${g.group}`,
-    file: `${DEFAULT_LANG}/quest_items/${g.group}/index.html`,
-  });
-}
 
 // Dungeon modules: group pages and module detail pages
 const dmGroups = new Set(moduleData.map((m) => m.group).filter(Boolean));
@@ -431,33 +422,7 @@ for (const p of SINGLE) {
     ssrDataMap['dungeon_shops'] = readJSON(join(DATA, 'dungeon_shops.json'));
     continue;
   }
-  // quest_items: pipeline-internal file, use quest_items_groups.json instead
-  if (p === 'quest_items') {
-    ssrDataMap[p] = readJSON(join(DATA, 'quest_items_groups.json'));
-    continue;
-  }
   ssrDataMap[p] = readJSON(join(DATA, `${p}.json`));
-}
-
-// Quest items group detail pages
-for (const g of questGroups) {
-  if (!QUICK) {
-    try {
-      const qg = readJSON(join(DATA, 'quest_items_groups', `${g.group}.json`));
-      ssrDataMap[`quest_items_groups/${g.group}`] = qg;
-    } catch {}
-  } else {
-    ssrDataMap[`quest_items_groups/${g.group}`] = {
-      group: g.group,
-      group_key: g.group_key,
-      group_floor: g.group_floor,
-      group_sub_key: g.group_sub_key,
-      group_display: g.group_display,
-      entity_count: g.entity_count,
-      position_count: g.position_count,
-      entities: [],
-    };
-  }
 }
 
 // Dungeon modules group pages
@@ -673,9 +638,6 @@ function routeDataKey(path) {
   if (stripped.startsWith('/lootdrops/')) {
     return `lootdrops/${decodeURIComponent(stripped.slice('/lootdrops/'.length))}`;
   }
-  if (stripped.startsWith('/quest_items/'))
-    return `quest_items_groups/${stripped.split('/')[2]}`;
-  if (stripped === '/quest_items') return 'quest_items';
   if (stripped === '/quest_npc') return 'quest_npc';
   if (stripped.startsWith('/quest_npc/')) return 'quest_npc';
   if (stripped === '/dungeon_modules') return 'dungeon_modules';
@@ -775,31 +737,6 @@ function modulePlacementSuffix(routeData, lang) {
   return '';
 }
 
-const GROUP_FLOOR_SUFFIX = {
-  'zh-Hans': '层',
-  'zh-Hant': '層',
-  en: 'F',
-  de: 'F',
-  es: 'F',
-  fr: 'F',
-  ja: '階',
-  ko: '층',
-  'pt-BR': 'F',
-  ru: ' этаж',
-};
-
-function localizedQuestGroupTitle(routeData, localeDict, lang) {
-  if (!routeData) return '';
-  const base = routeData.group_key ? localeDict[routeData.group_key] : '';
-  if (!base) return routeData.group_display || routeData.group || '';
-  const floor = routeData.group_floor ?? 1;
-  const suffix = GROUP_FLOOR_SUFFIX[lang] ?? '';
-  const sub = routeData.group_sub_key
-    ? localeDict[routeData.group_sub_key]
-    : '';
-  return `${base}${floor}${suffix}${sub ? `（${sub}）` : ''}`;
-}
-
 function localizedTitle(
   routeData,
   localeDict,
@@ -810,9 +747,6 @@ function localizedTitle(
     return (
       HOME_TITLE_DESCRIPTIONS[lang] || HOME_TITLE_DESCRIPTIONS[DEFAULT_LANG]
     );
-  }
-  if (/\/quest_items\/[^/]+\/?$/.test(routePath)) {
-    return localizedQuestGroupTitle(routeData, localeDict, lang);
   }
   const entity = firstTranslatable(routeData);
   if (!entity) return '';
@@ -919,20 +853,6 @@ function templateDescription(route, routeData, localeDict, lang) {
   const name = localizedTitle(routeData, localeDict, route.path, lang);
   if (section === 'lootdrops') {
     return buildSeoDescription(lang, 'lootdrop', { name });
-  }
-  if (section === 'quest_items') {
-    const entities = routeData?.entities?.length || routeData?.entity_count;
-    const locations = routeData?.entities
-      ? routeData.entities.reduce(
-          (count, entity) => count + (entity.coords?.length || 0),
-          0
-        )
-      : routeData?.position_count;
-    return buildSeoDescription(lang, 'questGroup', {
-      name,
-      entities: entities || undefined,
-      locations: locations || undefined,
-    });
   }
   if (section === 'dungeon_modules') {
     const module = routeData?.module;
@@ -1365,7 +1285,7 @@ function sitemapPriority(path) {
   if (path.startsWith('/lootdrops/')) return ['0.5', 'weekly'];
   if (path.startsWith('/dungeon_modules/')) return ['0.5', 'weekly'];
   if (path.startsWith('/crafts/')) return ['0.5', 'weekly'];
-  if (path.startsWith('/quest_')) return ['0.4', 'monthly'];
+  if (path.startsWith('/quest_npc')) return ['0.4', 'monthly'];
   // list pages
   if (path.split('/').length <= 2) return ['0.8', 'weekly'];
   return ['0.3', 'monthly'];

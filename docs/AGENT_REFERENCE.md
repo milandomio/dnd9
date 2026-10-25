@@ -53,7 +53,7 @@ DarkFindV5/
 │   │   ├── App.tsx              # 客户端入口（Provider 包装）
 │   │   ├── AppInner.tsx         # 路由定义（Routes/Route 声明）
 │   │   ├── pages/               # 页面组件
-│   │   ├── _archived/           # 已下线页面（ExplorePage.tsx =【任务探索表】）
+│   │   ├── _archived/           # 已下线页面（ExplorePage.tsx =【任务探索表】、QuestItemsPage.tsx =【任务物品表】、QuestGroupMode.tsx = 任务物品分组模式说明）
 │   │   ├── components/          # MapDebug, MapPanel, Disclaimer, DebugCoordTable, NavBar, QuestSearchBar
 │   │   ├── hooks/               # useDebug, useTheme, useDungeonModules, useDataVersion, useSearchIndex
 │   │   ├── context/             # SSRDataContext
@@ -71,9 +71,8 @@ Lootdrop 变体的静态范围：普通变体只生成默认变体实体 HTML，
 | 页面 | 路由 | 列数 |
 |------|------|------|
 | 主页 | `/` | 4 |
-| 列表页 | `/items` `/monsters` `/props` `/lootdrops` `/quest_items` `/quest_npc` | 3 |
+| 列表页 | `/items` `/monsters` `/props` `/lootdrops` `/quest_npc` | 3 |
 | 详情页 | `/items/:name` 等 | 4 (CSS Grid, 1x1/2x1/1x2/2x2) |
-| 任务物品分组 | `/quest_items/:group` | 3 |
 | 任务 NPC 详情 | `/quest_npc/:npc_name` | 4 |
 | 地图模块表 | `/dungeon_modules` | 4 (分组列表) |
 | 地图模块分组 | `/dungeon_modules/:group` | 4 |

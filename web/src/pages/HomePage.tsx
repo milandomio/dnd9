@@ -54,14 +54,6 @@ const CARD_THEME: Record<string, CardTheme> = {
     titleColor: '#fff',
     titleColorLight: '#1565c0',
   },
-  quest_items: {
-    border: '#E91E63',
-    hoverBg: 'linear-gradient(145deg, #4a2a3a, #5a3a4a)',
-    hoverBgLight: 'linear-gradient(145deg, #fce4ec, #f8bbd0)',
-    icon: '📋',
-    titleColor: '#F06292',
-    titleColorLight: '#c2185b',
-  },
   quest_npc: {
     border: '#FFC107',
     hoverBg: 'linear-gradient(145deg, #4a4a2a, #5a5a3a)',
@@ -216,7 +208,7 @@ export default function HomePage() {
                   【{ut(`ui.home.card_labels.${entry.page}`)}】
                 </div>
                 <div style={{ color: t.titleColor, fontSize: 13 }}>
-                  {entry.page === 'quest_items' || entry.page === 'quest_npc'
+                  {entry.page === 'quest_npc'
                     ? ut('ui.home.quest_count').replace(
                         '{count}',
                         String(entry.count)
@@ -235,8 +227,6 @@ export default function HomePage() {
                   {entry.page === 'monsters' && ut('ui.home.view_monsters')}
                   {entry.page === 'props' && ut('ui.home.view_props')}
                   {entry.page === 'lootdrops' && ut('ui.home.view_lootdrops')}
-                  {entry.page === 'quest_items' &&
-                    ut('ui.home.view_quest_items')}
                   {entry.page === 'quest_npc' && ut('ui.home.view_quest_npc')}
                   {entry.page === 'dungeon_modules' &&
                     ut('ui.home.view_dungeon_modules')}

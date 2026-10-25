@@ -20,9 +20,6 @@ function hasRouteSsrData(): boolean {
   if (['items', 'monsters', 'props', 'lootdrops'].includes(page) && parts[1]) {
     return Boolean(ssrData[`${page}/${decodeURIComponent(parts[1])}`]);
   }
-  if (page === 'quest_items' && parts[1]) {
-    return Boolean(ssrData[`quest_items_groups/${parts[1]}`]);
-  }
   if (page === 'dungeon_modules' && parts[1] && parts[2]) {
     return Boolean(ssrData[`dungeon_modules_detail/${parts[1]}/${parts[2]}`]);
   }

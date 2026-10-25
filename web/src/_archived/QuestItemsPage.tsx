@@ -1,3 +1,33 @@
+/**
+ * 归档：【任务物品表】列表页（`/:lang/quest_items`）。
+ *
+ * 迁移日期：2026-10-25
+ * 迁移原因：用户要求把【任务物品表】栏目的代码存档、不再使用，并从主页移除入口。
+ *           该栏目的分组详情页（`/:lang/quest_items/:group`）由
+ *           `LootdropDetailPage mode="quest_group"` 承担，相关逻辑一并
+ *           归档在 `web/src/_archived/QuestGroupMode.tsx`。
+ *
+ * 恢复方式：
+ *   1. 移回 `web/src/pages/QuestItemsPage.tsx`；
+ *   2. `web/src/AppInner.tsx` 恢复 `import QuestItemsPage` 与
+ *      `<Route path="/:lang/quest_items" element={<QuestItemsPage />} />`、
+ *      `<Route path="/:lang/quest_items/:group" element={<LootdropDetailPage mode="quest_group" />} />`；
+ *   3. 按 `QuestGroupMode.tsx` 头部说明恢复 `LootdropDetailPage` 的 quest 分支；
+ *   4. `web/src/components/NavBar.tsx` 恢复 `quest_items` 的面包屑/搜索标签映射；
+ *   5. `web/src/pages/HomePage.tsx` 恢复 `CARD_THEME.quest_items` 与
+ *      `quest_items` 的副标题、查看链接分支；
+ *   6. `web/scripts/ssg.mjs` 恢复 `SINGLE`/`DETAIL_TEMPLATE_PAGES` 中的 `'quest_items'`、
+ *      `questGroups` 路由生成、`ssrDataMap` 注入、`routeDataKey` 分支、
+ *      `localizedQuestGroupTitle`、`templateDescription` 的 `quest_items` 分支；
+ *   7. 后端恢复 `api/src/_archived/quest_items_groups_export.py` 中的
+ *      `generate_quest_items_groups()` 与 `collector.py` 中的调用，
+ *      以及 `index_export.build_and_save_indexes()` 的 `quest_items_count` 形参
+ *      与 `index.json` 的 `{"page": "quest_items"}` 卡片。
+ *
+ * 注意：DB 的 `quest_items` 表、`db.import_quest_items()` / `get_quest_items()`、
+ *       `save_quest_data()` 的 `quest_items.json` 导出仍在活跃使用（任务 NPC 数据链路），
+ *       不属于本次归档范围。
+ */
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';

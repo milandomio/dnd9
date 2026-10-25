@@ -4,6 +4,25 @@
 
 ## 2026-10-25
 
+### chore: 归档【任务物品表】栏目（下线 /quest_items）并调整首页菜单次序
+
+- **改动原因**：用户要求「zh-Hans/quest_items/ 栏目的代码做存档不再使用，该栏目从 home 页面移出」；随后给出新菜单次序「地牢商店、工匠、灯、任务NPC表、物品表、实体表、怪物表、掉落表、地图模块表」。
+- **变更文件**：
+  - 前端归档：`web/src/pages/QuestItemsPage.tsx` → `web/src/_archived/QuestItemsPage.tsx`（文件头写明恢复步骤）、新增 `web/src/_archived/QuestGroupMode.tsx`（记录被摘除的 `mode="quest_group"` 分支）。
+  - 前端活跃：`web/src/AppInner.tsx`、`web/src/main.tsx`、`web/src/components/NavBar.tsx`、`web/src/pages/HomePage.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`web/scripts/ssg.mjs`。
+  - 后端归档：新增 `api/src/_archived/quest_items_groups_export.py`（`generate_quest_items_groups()` 原文）。
+  - 后端活跃：`api/src/index_export.py`、`api/src/collector.py`、`api/src/locale_builder.py`、`api/tests/test_search_index_entries.py`。
+  - 文档：`docs/AGENT_REFERENCE.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **前端下线**：`AppInner` 删除 `QuestItemsPage` 引入与 `/:lang/quest_items`、`/:lang/quest_items/:group` 两条路由；`main.tsx` 删除 `hasRouteSsrData()` 的 `quest_items` 分支；`NavBar` 删除 `NAV_LABEL_KEYS.quest_items`（面包屑）与 `PAGE_TAG_KEYS.quest_items`（搜索标签）；`HomePage` 删除 `CARD_THEME.quest_items`、`ui.home.view_quest_items` 分支，并把 `quest_npc` 的「任务数量」副标题判断从「quest_items 或 quest_npc」收窄为只判 `quest_npc`。
+  2. **详情页剥离 quest 模式**：`LootdropDetailPage` 移除 `mode` prop、`QuestGroupEntity`/`QuestGroupData` 类型、`normalizeQuestGroup()`、`quest_items_groups` 的 SSR/客户端加载分支、`taskGroupData` 状态，以及标题/SEO 的 `questGroup` 分支；掉落率筛选栏与 `CompositeRate` 不再需要 `!isQuestGroupPage` 条件包裹。掉落详情页行为与原 `mode='lootdrop'` 完全一致。
+  3. **SSG 收敛**：`ssg.mjs` 从 `DETAIL_TEMPLATE_PAGES` 与 `SINGLE` 移除 `'quest_items'`；删除 `questGroups` 读取、分组路由生成、`ssrDataMap` 注入、`routeDataKey` 的 `/quest_items` 分支、`localizedQuestGroupTitle()` 与 `GROUP_FLOOR_SUFFIX`、`templateDescription` 的 `quest_items` 分支；sitemap 的 `/quest_` 优先级收窄为 `/quest_npc`。
+  4. **后端归档**：`generate_quest_items_groups()`（原 `index_export.py` 第 29-234 行，213 行）移入 `api/src/_archived/quest_items_groups_export.py`；`index_export.py` 删除 `HARDCODED_TRANSLATIONS` / `resolve_group_label` / `resolve_translation_key` 三个随之失效的导入；`collector.py` 移除该函数导入与 `pipe.step("quest_items_groups")` 调用块（同时去掉未使用的 `modules = db.get_dungeon_modules()`）；`locale_builder.py` 的 `subdirs` 去掉 `quest_items_groups`。
+  5. **菜单次序**：`index_export.build_and_save_indexes()` 的 `index_data` 与 `search_index.json` 的 `LIST_PAGES` 同步改为「地牢商店 → 工匠 → 灯 → 任务NPC表 → 物品表 → 实体表 → 怪物表 → 掉落表 → 地图模块表」，卡片从 10 项降为 9 项；`build_and_save_indexes()` 的 `quest_items_count` 形参一并移除。
+  6. **明确保留（仍活跃）**：DB `quest_items` 表、`db.import_quest_items()` / `get_quest_items()`、`save_quest_data()` 的 `quest_items.json` 导出（交付时 `skip_deliver` 跳过，无消费者）、任务 NPC 页面与 `_iter_quest_objective_entries()`（其 `QUEST_OBJECTIVE_SKIP_TYPES` 常量保留在 `index_export.py`）、`ui.quest_items.*` / `ui.home.view_quest_items` / `ui.home.card_labels.quest_items` / `ui.nav.quest_items` / `ui.search.tag.quest` 文案键与 `seoTemplate` 的 `questItems` / `questGroup` 模板，均保留以便日后恢复。
+- **结果**：`index.json` 9 张卡片（无 `quest_items`）；`search_index.json` 3351 条，`quest_items` 命中 0，`_nav` 9 条且与首页同序；管道不再产出 `data/json/quest_items_groups.json` 与 `quest_items_groups/` 目录；SSG 2976 → 页数较上轮 2984 减少 8 页/语言组，`dist/zh-Hans/quest_items/` 不存在，sitemap 与 `_redirects` 均无 `quest_items`。
+- **验证**：后端 `python3 -m unittest discover -s tests` 218 项通过、`./api/lint.sh` 通过（70 文件）；前端 `npx tsc --noEmit` 通过、`npm run lint` 0 错误（20 条既有 warning）、`npm run format:check` 通过；`python3 main.py` 管道 40.55s 完成，`[VALIDATE] all module images OK`；`npm run build` 2976 页 / 15338 文件；8081 preview 首页卡片顺序实测为「地牢商店、工匠、灯、任务NPC表、物品表、实体表、怪物表、掉落表、地图模块表」，`/zh-Hans/items/` `/zh-Hans/quest_npc/` `/zh-Hans/dungeon_modules/` `/zh-Hans/lootdrops/BronzeScale/` 均 200。
+
 ### fix: 找回寒渊之流第 3 个哥布林走私者，移除 Ruins 稀有模块（Forgotten Plots）
 
 - **改动原因**：用户反馈 The Ice Cavern 2F（The Ice Abyss / 寒渊之流）页面只有 2 个哥布林走私者，实际应有 3 个；同时反馈 7x7 时代的稀有模块 Forgotten Plots（被遗忘的庄园）仍出现在 Ruins 模块列表中。

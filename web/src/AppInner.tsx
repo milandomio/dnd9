@@ -10,7 +10,6 @@ import HomePage from './pages/HomePage';
 import ListPage from './pages/ListPage';
 import DetailPage from './pages/DetailPage';
 import LootdropDetailPage from './pages/LootdropDetailPage';
-import QuestItemsPage from './pages/QuestItemsPage';
 import QuestNPCPage from './pages/QuestNPCPage';
 import QuestNPCDetailPage from './pages/QuestNPCDetailPage';
 import DungeonModulesPage from './pages/DungeonModulesPage';
@@ -55,11 +54,6 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/:lang" element={<HomePage />} />
-      <Route path="/:lang/quest_items" element={<QuestItemsPage />} />
-      <Route
-        path="/:lang/quest_items/:group"
-        element={<LootdropDetailPage mode="quest_group" />}
-      />
       <Route path="/:lang/quest_npc" element={<QuestNPCPage />} />
       <Route
         path="/:lang/quest_npc/:npc_name"

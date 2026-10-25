@@ -49,23 +49,6 @@ import { localizedSeoDescription } from '../i18n/seo';
 import { isRecognizableMapImage, mapImageUrl } from '../utils/mapImage';
 import type { MapImageTemplate } from '../utils/mapImageRecognition';
 
-interface QuestGroupEntity {
-  name: string;
-  translation: string;
-  translation_key?: string;
-  color: string;
-  coords: LootdropCoord[];
-}
-
-interface QuestGroupData {
-  group: string;
-  group_key?: string;
-  group_floor?: number;
-  group_sub_key?: string | null;
-  group_display: string;
-  entities: QuestGroupEntity[];
-}
-
 interface LootdropSsrData {
   item: LootdropItem;
   modules: DungeonModule[];
@@ -156,22 +139,6 @@ function hiddenForSources(
     }
   }
   return hidden;
-}
-
-function normalizeQuestGroup(group: QuestGroupData): LootdropItem {
-  return {
-    name: group.group,
-    translation: group.group_display,
-    monsters: group.entities.map((entity) => ({
-      name: entity.name,
-      entity_name: entity.name,
-      translation: entity.translation,
-      translation_key: entity.translation_key,
-      source_id: entity.name,
-      color: entity.color,
-      coords: entity.coords,
-    })),
-  };
 }
 
 function lootdropSourceTranslationKey(
@@ -292,21 +259,12 @@ function resetGlobalCaches(dataVersion: string) {
   _globalCacheVersion = dataVersion;
 }
 
-interface LootdropDetailPageProps {
-  mode?: 'lootdrop' | 'quest_group';
-}
-
-export default function LootdropDetailPage({
-  mode = 'lootdrop',
-}: LootdropDetailPageProps) {
-  const { name, group } = useParams<{ name: string; group: string }>();
+export default function LootdropDetailPage() {
+  const { name } = useParams<{ name: string }>();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const isQuestGroupPage = mode === 'quest_group';
-  const decodedName = decodeURIComponent(
-    (isQuestGroupPage ? group : name) ?? ''
-  );
-  const variantMatch = isQuestGroupPage ? null : decodedName.match(VARIANT_RE);
+  const decodedName = decodeURIComponent(name ?? '');
+  const variantMatch = decodedName.match(VARIANT_RE);
   // _8001 artifacts are independent entries, not variants of a base item
   const isVariant = variantMatch && variantMatch[2] !== '8001';
   const baseName = isVariant ? variantMatch![1] : decodedName;
@@ -317,37 +275,22 @@ export default function LootdropDetailPage({
       : null;
   // itemName is always the base item name (without any variant suffix), used for navigation
   const itemName = variantMatch ? variantMatch[1] : decodedName;
-  const dataKey = isQuestGroupPage
-    ? `quest_items_groups/${decodedName}`
-    : `lootdrops/${decodedName}`;
-  const baseDataKey = isQuestGroupPage ? '' : `lootdrops/${baseName}`;
-  const ssrData = useSSRData<LootdropSsrData>(isQuestGroupPage ? '' : dataKey);
+  const dataKey = `lootdrops/${decodedName}`;
+  const baseDataKey = `lootdrops/${baseName}`;
+  const ssrData = useSSRData<LootdropSsrData>(dataKey);
   const baseSsrData = useSSRData<LootdropSsrData>(baseDataKey);
-  const ssrQuestData = useSSRData<QuestGroupData>(
-    isQuestGroupPage ? dataKey : ''
-  );
-  const fullQuestSsrData =
-    isQuestGroupPage && ssrQuestData?.entities?.length ? ssrQuestData : null;
-  const questSsrItem = useMemo(
-    () => (fullQuestSsrData ? normalizeQuestGroup(fullQuestSsrData) : null),
-    [fullQuestSsrData]
-  );
   const effectiveSsrData = useMemo(
     () =>
-      isQuestGroupPage
-        ? questSsrItem
-          ? { item: questSsrItem, modules: [] }
-          : null
-        : hasLootdropDetail(ssrData?.item)
-          ? ssrData
-          : hasLootdropDetail(baseSsrData?.item)
-            ? baseSsrData
-            : ssrData?.item?.name
-              ? ssrData
-              : baseSsrData?.item?.name
-                ? baseSsrData
-                : null,
-    [isQuestGroupPage, questSsrItem, ssrData, baseSsrData]
+      hasLootdropDetail(ssrData?.item)
+        ? ssrData
+        : hasLootdropDetail(baseSsrData?.item)
+          ? baseSsrData
+          : ssrData?.item?.name
+            ? ssrData
+            : baseSsrData?.item?.name
+              ? baseSsrData
+              : null,
+    [ssrData, baseSsrData]
   );
   const [data, setData] = useState<LootdropItem | null>(
     hasLootdropDetail(effectiveSsrData?.item)
@@ -355,9 +298,6 @@ export default function LootdropDetailPage({
       : effectiveSsrData?.item?.name
         ? (effectiveSsrData.item as LootdropItem)
         : null
-  );
-  const [questGroupData, setQuestGroupData] = useState<QuestGroupData | null>(
-    fullQuestSsrData
   );
   const dataVersion = useDataVersion();
   const { modules: globalModules } = useDungeonModules();
@@ -453,50 +393,6 @@ export default function LootdropDetailPage({
   useEffect(() => {
     if (!baseName) return;
     if (dataVersion) resetGlobalCaches(dataVersion);
-    if (isQuestGroupPage) {
-      let cancelled = false;
-      if (fullQuestSsrData) {
-        setQuestGroupData(fullQuestSsrData);
-        const selected = normalizeQuestGroup(fullQuestSsrData);
-        setData(selected);
-        setThreshold(defaultThreshold);
-        setHidden(initialHiddenFor(selected.monsters ?? [], defaultThreshold));
-        return () => {
-          cancelled = true;
-        };
-      }
-      setQuestGroupData(null);
-      setData(null);
-      setHidden(new Set());
-      if (!dataVersion) return;
-      fetch(
-        dataUrl(
-          dataVersion,
-          `/data/json/quest_items_groups/${encodeURIComponent(decodedName)}.json`
-        )
-      )
-        .then((response) => {
-          if (!response.ok)
-            throw new Error(`quest item group HTTP ${response.status}`);
-          return response.json() as Promise<QuestGroupData>;
-        })
-        .then((groupData) => {
-          if (cancelled) return;
-          const selected = normalizeQuestGroup(groupData);
-          setQuestGroupData(groupData);
-          setData(selected);
-          setThreshold(defaultThreshold);
-          setHidden(
-            initialHiddenFor(selected.monsters ?? [], defaultThreshold)
-          );
-        })
-        .catch((error: unknown) => {
-          if (!cancelled) console.error(error);
-        });
-      return () => {
-        cancelled = true;
-      };
-    }
     if (hasLootdropDetail(effectiveSsrData?.item)) {
       const selected = selectLootdropVariant(
         effectiveSsrData!.item,
@@ -554,19 +450,10 @@ export default function LootdropDetailPage({
     return () => {
       cancelled = true;
     };
-  }, [
-    baseName,
-    currentSuffix,
-    dataVersion,
-    decodedName,
-    effectiveSsrData,
-    fullQuestSsrData,
-    isQuestGroupPage,
-  ]);
+  }, [baseName, currentSuffix, dataVersion, decodedName, effectiveSsrData]);
 
   // Base URLs redirect to a real variant; explicit unavailable variants stay at 0%.
   useEffect(() => {
-    if (isQuestGroupPage) return;
     const suffixes = data?.variants ? Object.keys(data.variants) : [];
     if (suffixes.length <= 1) return;
     if (currentSuffix) return;
@@ -575,7 +462,7 @@ export default function LootdropDetailPage({
     navigate(`/${lang}/lootdrops/${itemName}_${defaultSuffix}/`, {
       replace: true,
     });
-  }, [data, currentSuffix, itemName, lang, navigate, isQuestGroupPage]);
+  }, [data, currentSuffix, itemName, lang, navigate]);
 
   const [visibleMaps, setVisibleMaps] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -754,7 +641,6 @@ export default function LootdropDetailPage({
   // Called from the visibility controls (never from URL-driven effects), using
   // ``replace`` so toggling sources does not pollute the history stack.
   const updateSourcesParam = (nextHidden: Set<string>) => {
-    if (isQuestGroupPage) return;
     const all = resolvedMonsters.length > 0 ? resolvedMonsters : monsters;
     if (all.length === 0) return;
     const visible = all
@@ -787,7 +673,6 @@ export default function LootdropDetailPage({
   // only after mount; ``skipSelectionApplyRef`` drops the echo of our own
   // URL writes (the visibility state is already up to date then).
   useEffect(() => {
-    if (isQuestGroupPage) return;
     if (!data) return;
     const all = resolvedMonsters.length > 0 ? resolvedMonsters : monsters;
     if (all.length === 0) return;
@@ -1308,38 +1193,20 @@ export default function LootdropDetailPage({
       </div>
     );
 
-  const questGroupLabel = questGroupData
-    ? formatGroupLabel(questGroupData, t, ut)
-    : data.translation || decodedName;
-  const itemLabel = isQuestGroupPage
-    ? questGroupLabel
-    : stripTrailingParenthetical(
-        t(data.translation_key, data.translation || data.name)
-      );
+  const itemLabel = stripTrailingParenthetical(
+    t(data.translation_key, data.translation || data.name)
+  );
   const rarityLabel =
     currentSuffix && data.variant_rarity?.[currentSuffix]
       ? `(${t(data.variant_rarity[currentSuffix].translation_key, data.variant_rarity[currentSuffix].name)})`
       : '';
-  const pageLabel = isQuestGroupPage
-    ? ut('ui.nav.quest_items')
-    : ut('ui.nav.lootdrops');
+  const pageLabel = ut('ui.nav.lootdrops');
   const helmetTitle = `${itemLabel}${rarityLabel} -${pageLabel}`;
-  const description = localizedSeoDescription(
-    lang,
-    dict,
-    isQuestGroupPage ? 'questGroup' : 'lootdrop',
-    isQuestGroupPage
-      ? {
-          name: itemLabel,
-          entities: monsters.length || undefined,
-          locations: rawLocationCount || undefined,
-        }
-      : {
-          name: itemLabel,
-          sources: monsters.length || undefined,
-          locations: rawLocationCount || undefined,
-        }
-  );
+  const description = localizedSeoDescription(lang, dict, 'lootdrop', {
+    name: itemLabel,
+    sources: monsters.length || undefined,
+    locations: rawLocationCount || undefined,
+  });
 
   return (
     <div
@@ -1441,41 +1308,37 @@ export default function LootdropDetailPage({
             alignItems: 'center',
           }}
         >
-          {!isQuestGroupPage && (
-            <>
-              <span style={{ color: tokens.muted }}>
-                {ut('ui.filter.drop_rate')}：
-              </span>
-              <select
-                value={modeFilter}
-                onChange={(e) => setModeFilter(e.target.value)}
-                style={{
-                  background: tokens.bg,
-                  color: tokens.text,
-                  border: `1px solid ${tokens.border}`,
-                  borderRadius: 4,
-                  padding: '2px 6px',
-                  fontSize: 13,
-                  cursor: 'pointer',
-                }}
-              >
-                <option value="">{ut('ui.filter.all')}</option>
-                <option value="PVE">{ut('ui.filter.pve')}</option>
-                <option value="普通">{ut('ui.filter.normal')}</option>
-                <option value="豪客赛">{ut('ui.filter.high_roller')}</option>
-                <option value="逆袭赛">{ut('ui.filter.counter_raid')}</option>
-              </select>
-              <label style={{ cursor: 'pointer', userSelect: 'none' }}>
-                <input
-                  type="checkbox"
-                  checked={hideZeroRate}
-                  onChange={(e) => setHideZeroRate(e.target.checked)}
-                  style={{ marginRight: 3, cursor: 'pointer' }}
-                />
-                {ut('ui.filter.hide_zero_rate')}
-              </label>
-            </>
-          )}
+          <span style={{ color: tokens.muted }}>
+            {ut('ui.filter.drop_rate')}：
+          </span>
+          <select
+            value={modeFilter}
+            onChange={(e) => setModeFilter(e.target.value)}
+            style={{
+              background: tokens.bg,
+              color: tokens.text,
+              border: `1px solid ${tokens.border}`,
+              borderRadius: 4,
+              padding: '2px 6px',
+              fontSize: 13,
+              cursor: 'pointer',
+            }}
+          >
+            <option value="">{ut('ui.filter.all')}</option>
+            <option value="PVE">{ut('ui.filter.pve')}</option>
+            <option value="普通">{ut('ui.filter.normal')}</option>
+            <option value="豪客赛">{ut('ui.filter.high_roller')}</option>
+            <option value="逆袭赛">{ut('ui.filter.counter_raid')}</option>
+          </select>
+          <label style={{ cursor: 'pointer', userSelect: 'none' }}>
+            <input
+              type="checkbox"
+              checked={hideZeroRate}
+              onChange={(e) => setHideZeroRate(e.target.checked)}
+              style={{ marginRight: 3, cursor: 'pointer' }}
+            />
+            {ut('ui.filter.hide_zero_rate')}
+          </label>
           <MapImageRecognition
             templates={recognitionTemplates}
             enabled={mapRecognitionEnabled}
@@ -2367,14 +2230,12 @@ export default function LootdropDetailPage({
                       );
                     })}
                   </div>
-                  {!isQuestGroupPage && (
-                    <CompositeRate
-                      rate={computeModuleScore(
-                        { mod, dots },
-                        groupDropRateLookup.get(groupName) ?? new Map()
-                      )}
-                    />
-                  )}
+                  <CompositeRate
+                    rate={computeModuleScore(
+                      { mod, dots },
+                      groupDropRateLookup.get(groupName) ?? new Map()
+                    )}
+                  />
                 </div>
               );
             })}
