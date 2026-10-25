@@ -11,7 +11,7 @@ from config import (
     LAYOUT_DIR,
     MAPS_DIR,
 )
-from module_spawn_rate import compute_spawn_rates
+from module_spawn_rate import compute_spawn_rates, rare_groups
 
 from .._helpers import (
     extract_dungeon_module_name,
@@ -106,6 +106,24 @@ def load_entry_groups(dungeon_dir: Path = DUNGEON_DIR) -> dict[str, int]:
     return groups
 
 
+def module_is_collectable(
+    module_type: str,
+    is_rare: bool,
+    entry_groups: dict[str, int],
+    active_rare_groups: set[str],
+) -> bool:
+    """Whether a module belongs to the collected 5x5 pool.
+
+    Two data-driven conditions: the group must own a 5x5 random dungeon, and a
+    rare module may only come from a group declaring rare slots
+    (NumMaxRares > 0). Groups without rare slots still ship their whole rare
+    module set, which is not part of the 5x5 pool.
+    """
+    if entry_groups and module_type not in entry_groups:
+        return False
+    return not (is_rare and module_type not in active_rare_groups)
+
+
 class ModulesImporter:
     def __init__(self, conn):
         self.conn = conn
@@ -116,6 +134,12 @@ class ModulesImporter:
         entry_groups = load_entry_groups()
         if entry_groups:
             path_group_map = {k: v for k, v in path_group_map.items() if v in entry_groups}
+        # Rare modules only spawn in groups that declare rare slots
+        # (DCDungeonDataAsset.NumMaxRares > 0). A group that merely gained a 5x5
+        # random dungeon still ships its whole rare module set; those modules are
+        # not part of the 5x5 pool and must stay off the site
+        # (e.g. Ruins_ForgottenPlots, a rare module from the 7x7 layout era).
+        active_rare_groups = rare_groups()
         files = load_json_dir(DUNGEON_MODULE_DIR)
         c = self.conn.cursor()
         c.execute("DELETE FROM dungeon_modules")
@@ -136,6 +160,10 @@ class ModulesImporter:
         rows = []
         inserted_names: set[str] = set()
         skipped_names: list[str] = []
+        # Modules rejected by the rare-pool rule must not come back through the
+        # map-directory sweep below, which only exists for modules that had no
+        # usable DungeonModule asset.
+        rare_excluded: set[str] = set()
         for raw_name, data_list in files.items():
             if not data_list:
                 continue
@@ -216,8 +244,11 @@ class ModulesImporter:
             if not module_type:
                 skipped_names.append(module_name)
                 continue
-            if entry_groups and module_type not in entry_groups:
+            is_rare = module_is_rare(props)
+            if not module_is_collectable(module_type, is_rare, entry_groups, active_rare_groups):
                 skipped_names.append(module_name)
+                if is_rare and module_type in entry_groups:
+                    rare_excluded.add(module_name)
                 continue
             mi_asset = (props.get("MapImage") or {}).get("AssetPathName", "")
             map_image = ue_asset_base_name(mi_asset) or ""
@@ -241,7 +272,7 @@ class ModulesImporter:
                     rot,
                     int(is_edge),
                     int(is_corner),
-                    int(module_is_rare(props)),
+                    int(is_rare),
                 )
             )
             inserted_names.add(module_name)
@@ -256,6 +287,8 @@ class ModulesImporter:
         _variant_suffix_re = re.compile(r"_(Resize|Test|BossTest|DistantView)$")
         extra_rows = []
         for base_name, group in path_group_map.items():
+            if base_name in rare_excluded:
+                continue
             if base_name not in inserted_names:
                 tk = sl_base_to_key.get(base_name, "") or module_name_to_key.get(base_name, "")
                 if not tk:

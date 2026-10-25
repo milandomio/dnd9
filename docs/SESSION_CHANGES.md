@@ -2,6 +2,23 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-25
+
+### fix: 找回寒渊之流第 3 个哥布林走私者，移除 Ruins 稀有模块（Forgotten Plots）
+
+- **改动原因**：用户反馈 The Ice Cavern 2F（The Ice Abyss / 寒渊之流）页面只有 2 个哥布林走私者，实际应有 3 个；同时反馈 7x7 时代的稀有模块 Forgotten Plots（被遗忘的庄园）仍出现在 Ruins 模块列表中。
+- **变更文件**：`api/src/db/importers/spawner_coordinates.py`、`api/src/db/importers/modules.py`、`api/tests/test_spawner_coordinates.py`、`api/tests/test_module_entries.py`、`api/data/darkfindv5.db`（重建）、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **D / HR_D 去重补上 Z 轴**：原条件只有 `coord_distance(coord[:2], c[:2]) < 120`，只用 XY 判定重复。`IceAbyss_DeepFlow` 是多层模块，`IceGiantSpider` 位于 z=415、`GoblinSmuggler` 位于 z=-100，二者的 XY 平面距离仅 106.2，走私者被当成重叠行丢弃。现改为 `coord_distance(...) < 120 and abs(coord[2] - c[2]) < 120`，XY 阈值保持 120 不变。
+  2. **稀有模块只在声明稀有槽的组内收录**：`ModulesImporter.import_all()` 原先只按 `module_group`（5x5 入口）过滤，Ruins 因新增 5x5 随机地牢而整组 50 个模块全收，其中 17 个 `bIsRare` 模块（`Ruins_Inner_01..05`、`Ruins_Outer_01..12`）根本不存在于该组的随机地牢中。游戏数据里 `Id_Dungeon_RandomRuins_*.json` 的 `NumMaxRares` 全部为空，只有 Crypt 的随机地牢声明了 `NumMaxRares = 1`。新增 `module_is_collectable()`：组必须在 5x5 入口集合内，且稀有模块只能来自 `module_spawn_rate.rare_groups()`（即 `NumMaxRares > 0` 的组）。
+  3. **避免稀有模块经地图目录回流**：`_build_path_group_map()` 会为没有可用 `SubLevelAsset` 的模块补行（`extra_rows`）。被稀有规则拒绝的模块名记入 `rare_excluded`，补行循环跳过它们，否则 `Ruins_Passage_Outer_03` 等仍会以空翻译键的形式回到表里。
+- **验证**：
+  - `dungeon_modules` 中 Ruins 由 50 条降为 33 条（17 个稀有模块全部消失），Forgotten Plots 在 DB、`data/json/dungeon_modules.json`、`search_index.json` 中均已不存在；Crypt 60 条（含 5 个稀有模块）不受影响。
+  - `spawners` 表新增 `IceAbyss_DeepFlow_D.json` 的 `GoblinSmuggler`（x=-632.90204, y=716.92523, z=-100.0, yaw=280.0），`coords/Id_NPC_GoblinSmuggler_IceCavern_N.json` 的 IceAbyss 点位由 2 个变 3 个（寒渊之流 / 冰霜之喉 / 冰川）。
+  - 去重规则影响面：旧规则 40479 个生成点，新规则 40504 个，恢复 25 个跨楼层误删点（含 `IceAbyss_DeepFlow` 走私者、`Cave_Altar_Center` 的 `PedestalPortal`、`FourWayConnect` 的多层箱子和蜡烛等），其中 11,837 个同层重复仍按原阈值正常去重，无误伤。
+  - 前端 SSG 重新构建：2984 页 / 15434 文件，`zh-Hans/dungeon_modules/Ruins/index.html` 只剩 34 个模块名（无 Passage / Forgotten），`IceAbyss_DeepFlow` 详情页已含哥布林走私者；8081 预览返回 200。
+  - 后端 `python3 -m unittest discover -s tests` 218 项全通过；`./api/lint.sh` 通过（69 文件）；前端 `npm run lint` 0 错误（20 条既有 warning）、`npm run format:check` 通过。
+
 ## 2026-10-24
 
 ### fix: 物品表收录自身地面生成器掉落的物品（青铜天秤、坏眼镜等）

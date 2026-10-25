@@ -534,7 +534,12 @@ def extract_all_spawners(
             coord = (s["x"], s["y"], s["z"])
             if is_hr:
                 hr_coords.setdefault(base, []).append(coord)
-            elif is_d and any(coord_distance(coord[:2], c[:2]) < 120 for c in hr_coords.get(base, [])):
+            elif is_d and any(
+                coord_distance(coord[:2], c[:2]) < 120 and abs(coord[2] - c[2]) < 120 for c in hr_coords.get(base, [])
+            ):
+                # X/Y alone is not enough: a module can stack multiple floors
+                # (e.g. IceAbyss_DeepFlow), where two unrelated spawners sit at
+                # nearly the same X/Y but hundreds of units apart on Z.
                 continue
             all_spawners.append(s)
 

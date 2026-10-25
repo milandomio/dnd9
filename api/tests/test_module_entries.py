@@ -11,7 +11,9 @@ from db.importers.modules import (  # noqa: E402
     ENTRY_LAYOUT_SIZE,
     _layout_size,
     load_entry_groups,
+    module_is_collectable,
 )
+from module_spawn_rate import rare_groups  # noqa: E402
 
 
 def _write_dungeon(
@@ -95,6 +97,47 @@ class ModulePlacementFlagsTest(unittest.TestCase):
 
     def test_none_properties(self):
         self.assertEqual(module_placement_flags(None), (False, False))
+
+
+class ModuleCollectableTest(unittest.TestCase):
+    """只收录 5x5 池内的模块：组必须拥有 5x5 随机地牢，且稀有模块只能来自声明稀有槽的组。"""
+
+    def test_rare_module_of_group_without_rare_slots_is_excluded(self):
+        # Ruins 现在有 5x5 随机地牢，但没有 NumMaxRares，其 bIsRare 模块不属于 5x5 池
+        self.assertFalse(module_is_collectable("Ruins", True, {"Ruins": 5}, {"Crypt"}))
+
+    def test_rare_module_of_group_with_rare_slots_is_kept(self):
+        self.assertTrue(module_is_collectable("Crypt", True, {"Crypt": 5}, {"Crypt"}))
+
+    def test_plain_module_is_kept(self):
+        self.assertTrue(module_is_collectable("Ruins", False, {"Ruins": 5}, {"Crypt"}))
+
+    def test_group_without_entry_is_excluded(self):
+        self.assertFalse(module_is_collectable("ShipGraveyard", False, {"Ruins": 5}, {"Crypt"}))
+
+    def test_empty_entry_groups_keeps_everything_not_rare(self):
+        self.assertTrue(module_is_collectable("ShipGraveyard", False, {}, set()))
+        self.assertFalse(module_is_collectable("ShipGraveyard", True, {}, set()))
+
+
+class RareGroupsTest(unittest.TestCase):
+    def test_detects_group_declaring_rare_slots(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_dungeon(
+                root,
+                "Id_Dungeon_RandomCrypt_N_Solo",
+                module_type="Crypt",
+                level_asset="Crypt_5x5_HR_R_P.Crypt_5x5_HR_R_P",
+                extra={"NumMaxRares": 2},
+            )
+            _write_dungeon(
+                root,
+                "Id_Dungeon_RandomRuins_N_Solo",
+                module_type="Ruins",
+                level_asset="Ruins_5x5_HR_R_P.Ruins_5x5_HR_R_P",
+            )
+            self.assertEqual(rare_groups(root), {"Crypt"})
 
 
 if __name__ == "__main__":
