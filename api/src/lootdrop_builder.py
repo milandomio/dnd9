@@ -1262,6 +1262,22 @@ def build_and_save_lootdrop_details(
 
     # Update lootdrops.json index with max_score, hr100, variant_suffixes and filtered monsters
     _index_finalize_started = time.perf_counter()
+    # An item only reaches item_max_score when a detail file was written above.
+    # Sources living outside the collected module pool (legacy 7x7 ShipGraveyard
+    # modules, chest-mimic families without usable spawner coords) resolve to no
+    # coordinates, so their detail is never produced. Publishing them in the
+    # index leaves dead links in the list page, search index and sitemap, so the
+    # index is trimmed to exactly the detail files on disk.
+    _unpublished = [_entry["name"] for _entry in loot_index if _entry["name"] not in item_max_score]
+    if _unpublished:
+        _unpublished_set = set(_unpublished)
+        loot_index[:] = [_entry for _entry in loot_index if _entry["name"] not in _unpublished_set]
+        if log_fn:
+            log_fn(
+                f"[JSON] dropped {len(_unpublished)} lootdrop entries without detail files: "
+                + ", ".join(_unpublished[:10])
+                + (" ..." if len(_unpublished) > 10 else "")
+            )
     for _entry in loot_index:
         _iname = _entry["name"]
         _entry["max_score"] = item_max_score.get(_iname, 0.0)

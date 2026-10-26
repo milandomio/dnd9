@@ -2,6 +2,21 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-26
+
+### fix: 掉落表索引剔除无详情文件的条目，修复 /lootdrops/TidestoneOres 等 28 个死链
+
+- **改动原因**：用户反馈 `/zh-Hans/lootdrops/TidestoneOres` 打不开。实测页面 HTML 存在但详情 JSON 缺失，前端 fetch 命中 SPA fallback（200 + text/html），`response.json()` 抛错后只 `console.error`，页面永远停在 loading 骨架。
+- **根因**：`data/json/lootdrops.json` 有 524 条，`data/json/lootdrops/` 只有 496 个详情文件。缺失的 28 条来源全部位于 `ShipGraveyard`（7x7 时代深海图），自 `d03c2af18` 起 `spawners._filter_to_collected_modules()` 会过滤掉非 5x5 收录模块的 spawner，导致 `all_coords` 无对应关键词 → `merged` 为空 → `build_and_save_lootdrop_details()` 不写详情。但 `build_loot_index()` 直接由 `lootdrop_items` 关系表构建，未做收录范围过滤，索引里仍保留这 28 条，因而列表页、搜索索引、sitemap 与 280 个多语言占位页全部挂着死链。
+- **变更文件**：`api/src/lootdrop_builder.py`、`api/tests/test_lootdrop_builder.py`（新增）、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **过滤位置**：在 `build_and_save_lootdrop_details()` 的索引定稿段（写 `lootdrops.json` 之前）就地裁剪 `loot_index`。判据复用已有的 `item_max_score`——该字典只在详情文件成功写出后才写入条目，因此「不在 `item_max_score`」与「没有详情文件」等价，无需重复实现坐标解析链（`all_coords` → `QUALITY_RE` 去质量后缀 → `TRANSLATION_ALIAS_MAP` → `og_to_keywords` → `entity_spawners` 交叉过滤）。
+  2. **口径对齐**：这使掉落表的收录范围与 `spawners`/命中详情的实际能力一致，与 `d03c2af18` 的「收录范围对齐」思路相同。索引 524 → 496，与详情文件数完全相等。
+  3. **下游自动收敛**：`loot_index` 在裁剪后继续被 `enrich_all_entities()`、`shop_item_index`（商店标签回退）、`build_and_save_indexes()`（列表页卡片 + 搜索索引）与 SSG 的 `DETAIL_TEMPLATE_PAGES` 路由生成复用，因此一处裁剪即同时消除列表页条目、search_index 命中与 sitemap 条目，不必逐层修补。
+  4. **日志**：裁剪时输出 `[JSON] dropped N lootdrop entries without detail files: ...`（最多列前 10 个），便于日后从管道日志判断是否有新一批来源掉出收录范围。
+- **未采纳方案**：仅在前端把 fetch 失败渲染为「暂无数据」——只能掩盖症状，列表页/搜索/sitemap 的死链仍在。
+- **验证**：`python3 -m unittest discover -s tests` 220 项通过（新增 2 项：`test_index_drops_entries_without_detail_files`、`test_index_keeps_every_entry_that_produced_a_detail`）；`./api/lint.sh` 通过（70 文件）。管道 30.81s 完成，日志输出 `dropped 28 lootdrop entries without detail files`；`lootdrops.json` 496 条与 `lootdrops/` 496 个文件双向差集为空；`search_index` 3351 → 3323 条（残留的 `TidestoneOres` 命中为 `/crafts/ores/` 的产物标签，非掉落页，属正常）。`npm run build`（数据版本 `tnigis`）2948 页 / 15030 文件 / 11720 条 sitemap URL；`dist/**/lootdrops/{TidestoneOres,Starfish,Tar,AntiquatedCoin}/` 均不存在，sitemap 无对应条目；8081 preview 下 `/`、`/zh-Hans/lootdrops/`、`/zh-Hans/lootdrops/Ale/` 均 200，`/data/tnigis/json/lootdrops/Ale.json` 返回 `application/json`。
+
 ## 2026-10-25
 
 ### chore: 归档【任务物品表】栏目（下线 /quest_items）并调整首页菜单次序
