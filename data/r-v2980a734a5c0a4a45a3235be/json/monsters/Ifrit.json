@@ -1,0 +1,352 @@
+{
+  "name": "Ifrit",
+  "translation": "炎魔",
+  "translation_key": "Text_DesignData_Monster_Monster_Ifrit",
+  "coords": [
+    {
+      "x": -145.0,
+      "y": 380.0,
+      "z": -87.62408,
+      "yaw": 120.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "ifrit",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -45.0,
+      "y": -250.0,
+      "z": 2.8484504,
+      "yaw": 0.0,
+      "map": "Firedeep_BlazeTunnel",
+      "file": "Firedeep_BlazeTunnel_D.json",
+      "version": "(D)",
+      "label": "ifrit",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 28,
+      "variant_names": []
+    },
+    {
+      "x": -132.0,
+      "y": 1217.0,
+      "z": 6.0,
+      "yaw": 180.0,
+      "map": "Firedeep_DwarvenGreatHall",
+      "file": "Firedeep_DwarvenGreatHall_D.json",
+      "version": "(D)",
+      "label": "ifrit",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "df5.hardcoded.ifrit",
+          "name": "火元素"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DwarfKnight",
+          "name": "矮人骑士"
+        }
+      ]
+    },
+    {
+      "x": 110.0,
+      "y": -65.0,
+      "z": 195.0,
+      "yaw": 0.0,
+      "map": "Firedeep_MagmaFalls",
+      "file": "Firedeep_MagmaFalls_D.json",
+      "version": "(D)",
+      "label": "ifrit"
+    },
+    {
+      "x": -385.0,
+      "y": 210.0,
+      "z": -580.0,
+      "yaw": 0.0,
+      "map": "Firedeep_Sinkhole",
+      "file": "Firedeep_Sinkhole_D.json",
+      "version": "(D)",
+      "label": "ifrit"
+    },
+    {
+      "x": -144.0,
+      "y": -3.0,
+      "z": 204.0,
+      "yaw": 0.0,
+      "map": "Firedeep_StonepillarHall",
+      "file": "Firedeep_StonepillarHall_D.json",
+      "version": "(D)",
+      "label": "ifrit"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "EmberGem",
+          "page": "EmberGem",
+          "translation": "余烬宝石",
+          "translation_key": "Text_DesignData_Item_Item_EmberGem",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_All",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_All",
+      "translation": "披风",
+      "translation_key": "df5.lootpool.Cloak_All",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "RadiantCloak_7001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SplendidCloak_7001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WatchmanCloak_7001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Ifrit",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Ifrit",
+      "translation": "炎魔",
+      "translation_key": "Text_DesignData_Monster_Monster_Ifrit",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "Mitre_7001",
+          "page": "Mitre",
+          "translation": "主教冠",
+          "translation_key": "Text_DesignData_Item_Item_Mitre_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CeremonialHeaddress_7001",
+          "page": "CeremonialHeaddress",
+          "translation": "仪式法帽",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialHeaddress_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RitualRobe_7001",
+          "page": "RitualRobe",
+          "translation": "仪式长袍",
+          "translation_key": "Text_DesignData_Item_Item_RitualRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RuggedBoots_7001",
+          "page": "RuggedBoots",
+          "translation": "加固长靴",
+          "translation_key": "Text_DesignData_Item_Item_RuggedBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DashingBoots_7001",
+          "page": "DashingBoots",
+          "translation": "华丽长靴",
+          "translation_key": "Text_DesignData_Item_Item_DashingBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TimewornRobe_7001",
+          "page": "TimewornRobe",
+          "translation": "古典长袍",
+          "translation_key": "Text_DesignData_Item_Item_TimewornRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Falchion_7001",
+          "page": "Falchion",
+          "translation": "弯刃大刀",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkleafBoots_7001",
+          "page": "DarkleafBoots",
+          "translation": "暗叶靴子",
+          "translation_key": "Text_DesignData_Item_Item_DarkleafBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistRobe_7001",
+          "page": "OccultistRobe",
+          "translation": "术士长袍",
+          "translation_key": "Text_DesignData_Item_Item_OccultistRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ForestBoots_7001",
+          "page": "ForestBoots",
+          "translation": "林地靴子",
+          "translation_key": "Text_DesignData_Item_Item_ForestBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrystalBall_7001",
+          "page": "CrystalBall",
+          "translation": "水晶球",
+          "translation_key": "Text_DesignData_Item_Item_CrystalBall_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MysticVestments_7001",
+          "page": "MysticVestments",
+          "translation": "神秘法衣",
+          "translation_key": "Text_DesignData_Item_Item_MysticVestments_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OracleRobe_7001",
+          "page": "OracleRobe",
+          "translation": "神谕长袍",
+          "translation_key": "Text_DesignData_Item_Item_OracleRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StitchedTurnshoe_7001",
+          "page": "StitchedTurnshoe",
+          "translation": "缝合翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_StitchedTurnshoe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Pigache_7001",
+          "page": "Pigache",
+          "translation": "翘头鞋",
+          "translation_key": "Text_DesignData_Item_Item_Pigache_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightfootBoots_7001",
+          "page": "LightfootBoots",
+          "translation": "轻便长靴",
+          "translation_key": "Text_DesignData_Item_Item_LightfootBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ElkwoodCrown_7001",
+          "page": "ElkwoodCrown",
+          "translation": "鹿角木头冠",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodCrown_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Brimstone",
+          "page": "Brimstone",
+          "translation": "硫磺",
+          "translation_key": "Text_DesignData_Item_Item_Brimstone",
+          "suffix": null,
+          "luck_grade": 3
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "炎魔",
+        "translation_key": "Text_DesignData_Monster_Monster_Ifrit",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 30.0,
+          "普通": 30.0,
+          "豪客赛": 40.0,
+          "逆袭赛": 40.0
+        }
+      }
+    ]
+  }
+}

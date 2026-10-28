@@ -1,0 +1,60 @@
+{
+  "name": "BrokenGlasses",
+  "translation": "坏眼镜",
+  "translation_key": "Text_DesignData_Item_Item_BrokenGlasses",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [
+    "DemonImp"
+  ],
+  "coords": [
+    {
+      "x": 830.0,
+      "y": 255.0,
+      "z": 100.0,
+      "yaw": 0.0,
+      "map": "Barracks",
+      "file": "Barracks_HR_D.json",
+      "version": "",
+      "label": "BrokenGlasses"
+    },
+    {
+      "x": -860.0,
+      "y": 85.0,
+      "z": -508.11237,
+      "yaw": 260.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "BrokenGlasses"
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "坏眼镜",
+        "translation_key": "Text_DesignData_Item_Item_BrokenGlasses",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 25.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "坏眼镜",
+        "translation_key": "Text_DesignData_Item_Item_BrokenGlasses",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 25.0,
+          "逆袭赛": 25.0
+        }
+      }
+    ]
+  }
+}

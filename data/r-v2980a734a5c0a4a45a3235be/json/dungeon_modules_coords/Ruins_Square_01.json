@@ -1,0 +1,3117 @@
+{
+  "map_base": "Ruins_Square_01",
+  "entities": [
+    {
+      "name": "BlackRose",
+      "translation": "黑玫瑰",
+      "translation_key": "Text_DesignData_Item_Item_BlackRose_1001",
+      "type": "props",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 270.0,
+          "y": 240.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "BlackRoseRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -200.0,
+          "y": 240.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "BlackRoseRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -565.0,
+          "y": 260.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "BlackRoseRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 595.0,
+          "y": -40.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "BlackRoseRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 595.0,
+          "y": 80.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "(D)",
+          "label": "BlackRoseRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Candle_Noframe",
+      "translation": "无框蜡烛",
+      "translation_key": "df5.hardcoded.Candle_Noframe",
+      "type": "decoration",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": 941.0,
+          "y": -270.0,
+          "z": -371.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "无框蜡烛",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "CursedSealedChest",
+      "translation": "受诅咒的箱子",
+      "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+      "type": "props",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": 388.0,
+          "y": 632.0,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+              "name": "受诅咒的箱子"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+              "name": "黄金宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+              "name": "狮头宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+          "name": "黄金宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+          "name": "狮头宝箱"
+        }
+      ],
+      "point_pool_count": 1
+    },
+    {
+      "name": "DCAkPortalSync",
+      "translation": "DCAkPortalSync",
+      "translation_key": "",
+      "type": "decoration",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -38.209553,
+          "y": 421.85736,
+          "z": -99.71972,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "DCAkPortalSync",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -38.209557,
+          "y": -403.5421,
+          "z": -99.71972,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "DCAkPortalSync",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DCHitBox",
+      "translation": "碰撞箱",
+      "translation_key": "df5.hardcoded.DCHitBox",
+      "type": "decoration",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "碰撞箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_key": "df5.hardcoded.DungeonModule",
+      "type": "decoration",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FallingDebrisActor_Crypt",
+      "translation": "坠落碎石",
+      "translation_key": "df5.hardcoded.FallingDebrisActor_Crypt",
+      "type": "decoration",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": -390.0,
+          "y": 10.0,
+          "z": -195.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "坠落碎石",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_1",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 440.0,
+          "y": 20.0,
+          "z": -215.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "坠落碎石",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_3",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "FallingIcicleArea",
+      "translation": "坠冰区域",
+      "translation_key": "df5.hardcoded.FallingIcicleArea",
+      "type": "decoration",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 445.0,
+          "y": 5.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "坠冰区域",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_3",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -400.0,
+          "y": 5.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "坠冰区域",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_1",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "FloorLever",
+      "translation": "拉杆",
+      "translation_key": "Text_DesignData_Props_Props_FloorLever",
+      "type": "decoration",
+      "color": "#C0392B",
+      "coords": [
+        {
+          "x": 271.99998,
+          "y": 526.0,
+          "z": -599.99990681153,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "拉杆",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_2",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -248.00002,
+          "y": -565.0,
+          "z": -594.9999,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "拉杆",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FloorPortal",
+      "translation": "传送门",
+      "translation_key": "Text_DesignData_Props_Props_FloorPortal",
+      "type": "decoration",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -494.0,
+          "y": -292.0,
+          "z": -99.9999,
+          "yaw": 0.0,
+          "version": "",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1120.0,
+          "y": 570.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1010.0,
+          "y": 1220.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1140.0,
+          "y": -590.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1210.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 407.0,
+          "y": 3.0,
+          "z": -99.9999,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 190.0,
+          "y": 1040.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1130.0,
+          "y": 1100.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1100.0,
+          "y": 210.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1100.0,
+          "y": -570.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1360.0,
+          "y": -1310.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -640.0,
+          "y": -1130.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 550.0,
+          "y": -1130.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1070.0,
+          "y": -1130.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameObjectLinker",
+      "translation": "对象链接器",
+      "translation_key": "df5.hardcoded.GameObjectLinker",
+      "type": "decoration",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -380.0,
+          "y": 5.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "对象链接器",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_1",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 455.0,
+          "y": 25.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "对象链接器",
+          "group_parent": "BP_GameSpawnerGroup_C_2",
+          "sub_group_parent": "BP_GameObjectLinker_C_3",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 0.0,
+          "y": -390.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 70.0,
+          "y": 260.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "translation_key": "df5.hardcoded.GameSpawnerGroup",
+      "type": "decoration",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": -1378.0,
+          "y": 203.0,
+          "z": 0.314065,
+          "yaw": 180.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -30.0,
+          "y": 440.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -20.0,
+          "y": 295.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -270.0,
+          "y": 230.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "生成器组",
+          "group_parent": "BP_GameSpawnerGroup_C_3",
+          "sub_group_parent": "BP_GameObjectLinker_C_0",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Gems",
+      "translation": "宝石",
+      "translation_key": "Text_Code_DCDataBlueprintLibrary_Type_Item_Misc_Gem",
+      "type": "item",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": -23.0,
+          "y": 187.0,
+          "z": -13.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "宝石",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -188.0,
+          "y": 30.0,
+          "z": -14.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "宝石",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 180.0,
+          "y": 10.0,
+          "z": -15.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "宝石",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GiantWorm",
+      "translation": "巨型蠕虫",
+      "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+      "type": "monster",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": 41.00001,
+          "y": 390.0,
+          "z": -599.999899,
+          "yaw": 90.0,
+          "version": "",
+          "label": "GiantWorm",
+          "group_parent": "BP_GameSpawnerGroup_C_1",
+          "sub_group_parent": "",
+          "point_pool_size": 2,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+              "name": "巨型蠕虫"
+            },
+            {
+              "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+              "name": "废墟魔像"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+          "name": "废墟魔像"
+        }
+      ],
+      "point_pool_count": 1
+    },
+    {
+      "name": "GoldChest",
+      "translation": "黄金宝箱",
+      "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+      "type": "props",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 388.0,
+          "y": 632.0,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+              "name": "受诅咒的箱子"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+              "name": "黄金宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+              "name": "狮头宝箱"
+            }
+          ]
+        },
+        {
+          "x": 388.0,
+          "y": 632.0,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+              "name": "受诅咒的箱子"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+              "name": "黄金宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+              "name": "狮头宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+          "name": "受诅咒的箱子"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+          "name": "狮头宝箱"
+        }
+      ],
+      "point_pool_count": 2
+    },
+    {
+      "name": "Ground",
+      "translation": "地面",
+      "translation_key": "df5.hardcoded.Ground",
+      "type": "item",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 324.0,
+          "y": -569.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 303.0,
+          "y": 500.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 589.0,
+          "y": -513.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 887.0,
+          "y": -239.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1290.0,
+          "y": 1250.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1210.0,
+          "y": 1310.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 846.0,
+          "y": -200.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 783.0,
+          "y": -376.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 861.0,
+          "y": -342.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 850.0,
+          "y": -270.0,
+          "z": -599.9999,
+          "yaw": 0.0,
+          "version": "",
+          "label": "地面",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Lamp02On",
+      "translation": "灯",
+      "translation_key": "Text_DesignData_Props_Props_Lamp",
+      "type": "decoration",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": 381.0,
+          "y": 675.0,
+          "z": -450.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 240.0,
+          "y": -1.0,
+          "z": -450.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -578.0,
+          "y": -378.0,
+          "z": -450.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 644.0,
+          "y": 362.0,
+          "z": -450.0,
+          "yaw": 360.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -578.0,
+          "y": 362.0,
+          "z": -450.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -225.0,
+          "y": -7.0,
+          "z": -450.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 15.0,
+          "y": -562.0,
+          "z": -450.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -320.0,
+          "y": 675.0,
+          "z": -450.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 620.0,
+          "y": -1455.0,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1465.0,
+          "y": -565.0,
+          "z": 150.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -578.4868,
+          "y": 1460.9604,
+          "z": 150.00002,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -874.678,
+          "y": -1.1976104,
+          "z": 150.00002,
+          "yaw": 360.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 39.42072,
+          "y": -910.89417,
+          "z": 150.00003,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1455.0,
+          "y": -572.0,
+          "z": 150.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1460.0,
+          "y": 1046.0,
+          "z": 150.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1354.1873,
+          "y": 398.82108,
+          "z": 150.00003,
+          "yaw": 360.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1047.0005,
+          "y": 1458.7219,
+          "z": 150.00003,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -612.83136,
+          "y": -1452.0,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 261.09335,
+          "y": 1448.7219,
+          "z": 150.00002,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "Lamp02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LevelSequenceActor",
+      "translation": "过场动画",
+      "translation_key": "df5.hardcoded.LevelSequenceActor",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "过场动画",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "过场动画",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LevelSequenceSoundActor",
+      "translation": "过场音效",
+      "translation_key": "df5.hardcoded.LevelSequenceSoundActor",
+      "type": "decoration",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": 16.0,
+          "y": -434.0,
+          "z": -327.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "过场音效",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_0",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 2.0,
+          "y": 365.0,
+          "z": -342.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "过场音效",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_2",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "MurderofCrowsVolume",
+      "translation": "鸦群",
+      "translation_key": "Text_DesignData_Props_Props_MurderofCrowsVolume",
+      "type": "decoration",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": -1600.0,
+          "y": -1600.0,
+          "z": 600.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "MurderofCrowsVolume",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Ore_CopperOre_Low",
+      "translation": "铜矿",
+      "translation_key": "Text_DesignData_Props_Props_Ore_CopperOre",
+      "type": "props",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": -555.139,
+          "y": -714.82056,
+          "z": -478.9999,
+          "yaw": 220.0,
+          "version": "",
+          "label": "Ore_CopperOreRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 2,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_Ore_CopperOre",
+              "name": "铜矿"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_Ore_IronOre",
+              "name": "铁矿"
+            }
+          ]
+        },
+        {
+          "x": 606.37067,
+          "y": 456.44568,
+          "z": -599.9999,
+          "yaw": 180.0,
+          "version": "",
+          "label": "Ore_CopperOreRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 2,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_Ore_CopperOre",
+              "name": "铜矿"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_Ore_IronOre",
+              "name": "铁矿"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null,
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Ore_IronOre",
+          "name": "铁矿"
+        }
+      ],
+      "point_pool_count": 2
+    },
+    {
+      "name": "Ore_IronOre_Low",
+      "translation": "铁矿",
+      "translation_key": "Text_DesignData_Props_Props_Ore_IronOre",
+      "type": "props",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": -555.139,
+          "y": -714.82056,
+          "z": -478.9999,
+          "yaw": 220.0,
+          "version": "",
+          "label": "Ore_CopperOreRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 2,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_Ore_CopperOre",
+              "name": "铜矿"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_Ore_IronOre",
+              "name": "铁矿"
+            }
+          ]
+        },
+        {
+          "x": 606.37067,
+          "y": 456.44568,
+          "z": -599.9999,
+          "yaw": 180.0,
+          "version": "",
+          "label": "Ore_CopperOreRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 2,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_Ore_CopperOre",
+              "name": "铜矿"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_Ore_IronOre",
+              "name": "铁矿"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null,
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Ore_CopperOre",
+          "name": "铜矿"
+        }
+      ],
+      "point_pool_count": 2
+    },
+    {
+      "name": "Ore_RubysilverOre_Low",
+      "translation": "红宝石银矿",
+      "translation_key": "Text_DesignData_Props_Props_Ore_RubysilverOre",
+      "type": "props",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": -299.97336,
+          "y": -710.8818,
+          "z": -599.9999,
+          "yaw": 320.0,
+          "version": "",
+          "label": "Ore_RubysilverOre",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "OrnateChestLarge",
+      "translation": "狮头宝箱",
+      "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+      "type": "props",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 388.0,
+          "y": 632.0,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+              "name": "受诅咒的箱子"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+              "name": "黄金宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+              "name": "狮头宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+          "name": "受诅咒的箱子"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+          "name": "黄金宝箱"
+        }
+      ],
+      "point_pool_count": 1
+    },
+    {
+      "name": "OrnateChestMedium",
+      "translation": "重型华丽宝箱",
+      "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+      "type": "props",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -314.62933,
+          "y": 650.4457,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -527.62933,
+          "y": 451.44568,
+          "z": -599.9999,
+          "yaw": 0.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+          "name": "橡木宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+          "name": "加固宝箱"
+        }
+      ],
+      "point_pool_count": 2
+    },
+    {
+      "name": "OrnateChestSmall",
+      "translation": "青铜华丽宝箱",
+      "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+      "type": "props",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": 930.07996,
+          "y": -313.19315,
+          "z": -599.9999,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -552.62933,
+          "y": -2.554313,
+          "z": -599.9999,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1402.0,
+          "y": -214.0,
+          "z": 0.314065,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 1404.0,
+          "y": 209.0,
+          "z": 0.314065,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 1404.0,
+          "y": -211.0,
+          "z": 0.3140658,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+          "name": "小型橡木宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+          "name": "小型加固宝箱"
+        }
+      ],
+      "point_pool_count": 5
+    },
+    {
+      "name": "Potion",
+      "translation": "药水",
+      "translation_key": "df5.hardcoded.Potion",
+      "type": "item",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": 990.0,
+          "y": -289.0,
+          "z": -578.17725,
+          "yaw": 0.0,
+          "version": "",
+          "label": "药水",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Roaster02On",
+      "translation": "灯架子",
+      "translation_key": "Text_DesignData_Props_Props_Roaster",
+      "type": "decoration",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 320.0,
+          "y": 451.0,
+          "z": -74.9999,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 794.0,
+          "y": -430.0,
+          "z": -600.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -386.0,
+          "y": -662.0,
+          "z": -576.47266,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 490.0,
+          "y": -613.0,
+          "z": -560.3379,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1048.4641,
+          "y": -1025.0,
+          "z": 3.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "Roaster02On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -336.69653,
+          "y": 960.1577,
+          "z": 20.44218,
+          "yaw": 11.2,
+          "version": "(A)",
+          "label": "Roaster03On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -916.0,
+          "y": 759.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster03On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 250.0,
+          "y": -390.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -250.0,
+          "y": 413.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -330.0,
+          "y": -430.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "Roaster05On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "RuinsGolem",
+      "translation": "废墟魔像",
+      "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+      "type": "monster",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": 41.00001,
+          "y": 390.0,
+          "z": -599.999899,
+          "yaw": 90.0,
+          "version": "",
+          "label": "RuinsGolem",
+          "group_parent": "BP_GameSpawnerGroup_C_1",
+          "sub_group_parent": "",
+          "point_pool_size": 2,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+              "name": "巨型蠕虫"
+            },
+            {
+              "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+              "name": "废墟魔像"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+          "name": "巨型蠕虫"
+        }
+      ],
+      "point_pool_count": 1
+    },
+    {
+      "name": "RuinsModuleConnector",
+      "translation": "木门",
+      "translation_key": "Text_DesignData_Props_Props_WoodenDoor",
+      "type": "decoration",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "RuinsModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestMedium",
+      "translation": "橡木宝箱",
+      "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+      "type": "props",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": -314.62933,
+          "y": 650.4457,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -527.62933,
+          "y": 451.44568,
+          "z": -599.9999,
+          "yaw": 0.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+          "name": "重型华丽宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+          "name": "加固宝箱"
+        }
+      ],
+      "point_pool_count": 2
+    },
+    {
+      "name": "SimpleChestSmall",
+      "translation": "小型橡木宝箱",
+      "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+      "type": "props",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": 930.07996,
+          "y": -313.19315,
+          "z": -599.9999,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -552.62933,
+          "y": -2.554313,
+          "z": -599.9999,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1402.0,
+          "y": -214.0,
+          "z": 0.314065,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 1404.0,
+          "y": 209.0,
+          "z": 0.314065,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 1404.0,
+          "y": -211.0,
+          "z": 0.3140658,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+          "name": "青铜华丽宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+          "name": "小型加固宝箱"
+        }
+      ],
+      "point_pool_count": 5
+    },
+    {
+      "name": "SkeletonFootmanFromFakeDeath",
+      "translation": "骷髅步兵",
+      "translation_key": "Text_DesignData_Monster_Monster_SkeletonFootman",
+      "type": "monster",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 308.0,
+          "y": 301.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -471.0,
+          "y": -314.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -200.0,
+          "y": 1286.0,
+          "z": 0.314065,
+          "yaw": 0.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -202.0,
+          "y": -1383.0,
+          "z": 0.314065,
+          "yaw": 90.0,
+          "version": "",
+          "label": "SkeletonFootmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SkeletonGuardmanFromFakeDeath",
+      "translation": "骷髅卫士",
+      "translation_key": "Text_DesignData_Monster_Monster_SkeletonGuardman",
+      "type": "monster",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 390.0,
+          "y": -361.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 379.0,
+          "z": -100.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "骷髅卫兵（装死）",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SpiderWeb",
+      "translation": "蜘蛛网",
+      "translation_key": "Text_DesignData_Props_Props_SpiderWeb",
+      "type": "decoration",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": 415.0,
+          "y": -134.0,
+          "z": -431.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "SpiderWeb",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -393.0,
+          "y": 153.0,
+          "z": -431.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "SpiderWeb",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Statue01",
+      "translation": "生命神坛",
+      "translation_key": "Text_DesignData_Props_Props_SageStatue",
+      "type": "decoration",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 1275.6411,
+          "y": -1273.1041,
+          "z": 0.314065,
+          "yaw": 135.0,
+          "version": "",
+          "label": "生命神坛",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Statue04",
+      "translation": "速度之泉",
+      "translation_key": "Text_DesignData_Props_Props_Fountain",
+      "type": "decoration",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": -1378.0,
+          "y": 203.0,
+          "z": 0.314065,
+          "yaw": 180.0,
+          "version": "",
+          "label": "速度之泉",
+          "group_parent": "BP_GameSpawnerGroup_C_0",
+          "sub_group_parent": "",
+          "point_pool_size": 2,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_Fountain",
+              "name": "速度之泉"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedPowerShrine",
+              "name": "受诅咒的伤害神坛"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_CursedPowerShrine",
+          "name": "受诅咒的伤害神坛"
+        }
+      ],
+      "point_pool_count": 1
+    },
+    {
+      "name": "StatueCursedPower",
+      "translation": "受诅咒的伤害神坛",
+      "translation_key": "Text_DesignData_Props_Props_CursedPowerShrine",
+      "type": "decoration",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": -1378.0,
+          "y": 203.0,
+          "z": 0.314065,
+          "yaw": 270.0,
+          "version": "",
+          "label": "CursedStatue01",
+          "group_parent": "BP_GameSpawnerGroup_C_0",
+          "sub_group_parent": "",
+          "point_pool_size": 2,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_Fountain",
+              "name": "速度之泉"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedPowerShrine",
+              "name": "受诅咒的伤害神坛"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_Fountain",
+          "name": "速度之泉"
+        }
+      ],
+      "point_pool_count": 1
+    },
+    {
+      "name": "StatueLever",
+      "translation": "隐蔽雕像拉杆",
+      "translation_key": "Text_DesignData_Props_Props_StatueLever",
+      "type": "decoration",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": 493.36260000000004,
+          "y": 530.8437200000001,
+          "z": -15.773674,
+          "yaw": 225.0,
+          "version": "(A)",
+          "label": "隐蔽雕像拉杆",
+          "group_parent": "BP_GameSpawnerGroup_C_3",
+          "sub_group_parent": "BP_GameObjectLinker_C_0",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -543.85992,
+          "y": 537.12122,
+          "z": -16.229439999999997,
+          "yaw": 315.0,
+          "version": "(A)",
+          "label": "隐蔽雕像拉杆",
+          "group_parent": "BP_GameSpawnerGroup_C_3",
+          "sub_group_parent": "BP_GameObjectLinker_C_0",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 549.1768,
+          "y": -538.7041,
+          "z": -15.773674,
+          "yaw": 135.0,
+          "version": "(A)",
+          "label": "隐蔽雕像拉杆",
+          "group_parent": "BP_GameSpawnerGroup_C_3",
+          "sub_group_parent": "BP_GameObjectLinker_C_0",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -543.85992,
+          "y": -542.8788,
+          "z": -16.229439999999997,
+          "yaw": 45.0,
+          "version": "(A)",
+          "label": "隐蔽雕像拉杆",
+          "group_parent": "BP_GameSpawnerGroup_C_3",
+          "sub_group_parent": "BP_GameObjectLinker_C_0",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "WoodChestMedium",
+      "translation": "加固宝箱",
+      "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+      "type": "props",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -314.62933,
+          "y": 650.4457,
+          "z": -599.9999,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -527.62933,
+          "y": 451.44568,
+          "z": -599.9999,
+          "yaw": 0.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+          "name": "重型华丽宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+          "name": "橡木宝箱"
+        }
+      ],
+      "point_pool_count": 2
+    },
+    {
+      "name": "WoodChestSmall",
+      "translation": "小型加固宝箱",
+      "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+      "type": "props",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 930.07996,
+          "y": -313.19315,
+          "z": -599.9999,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -552.62933,
+          "y": -2.554313,
+          "z": -599.9999,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1402.0,
+          "y": -214.0,
+          "z": 0.314065,
+          "yaw": 0.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 1404.0,
+          "y": 209.0,
+          "z": 0.314065,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 1404.0,
+          "y": -211.0,
+          "z": 0.3140658,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+          "name": "青铜华丽宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+          "name": "小型橡木宝箱"
+        }
+      ],
+      "point_pool_count": 5
+    },
+    {
+      "name": "WoodenBarrel01",
+      "translation": "木桶",
+      "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+      "type": "props",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": -1036.0,
+          "y": -1277.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1265.0,
+          "y": -4.0,
+          "z": 0.314065,
+          "yaw": 90.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1068.0,
+          "y": -4.0,
+          "z": 0.314065,
+          "yaw": 90.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1215.0,
+          "y": 1261.0,
+          "z": 0.314065,
+          "yaw": 90.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 981.0,
+          "y": 3.0,
+          "z": 102.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1019.0,
+          "y": -1401.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenBarricateSmall",
+      "translation": "小型木路障",
+      "translation_key": "df5.hardcoded.WoodenBarricateSmall",
+      "type": "decoration",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 670.0,
+          "y": -304.0,
+          "z": -597.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "小型木路障",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodenCrateSmall",
+      "translation": "小型木板箱",
+      "translation_key": "Text_DesignData_Props_Props_WoodenCrateSmall",
+      "type": "props",
+      "color": "#16A085",
+      "coords": [
+        {
+          "x": 967.0,
+          "y": 8.0,
+          "z": 0.0,
+          "yaw": 345.0,
+          "version": "",
+          "label": "WoodenCrateSmall",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -819.0,
+          "y": -1400.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "",
+          "label": "WoodenCrateSmall",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#141414" />
+    
+    <meta name="application-name" content="DND闪电指南" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <link rel="icon" href="/favicon.ico?v=3" sizes="any" />
+    <link rel="apple-touch-icon" href="/icons/icon-192-v2.png?v=3" />
+    <style>
+      html,
+      body,
+      #root {
+        margin: 0;
+        padding: 0;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        min-height: 100%;
+        background: #2c2c2c;
+      }
+      :root {
+        /*
+         * Content shell width: 1200px at a 1200px viewport, growing linearly
+         * to 1400px at 1920px, capped there. Below 1200px the computed value
+         * exceeds the viewport, so the layout keeps its previous full-width
+         * behaviour (tablet / mobile breakpoints unchanged).
+         */
+        --shell-max: min(1400px, calc(1200px + (100vw - 1200px) * 0.27778));
+      }
+      @media (max-width: 950px) {
+        [style*='repeat(4, 1fr)'] {
+          grid-template-columns: repeat(3, 1fr) !important;
+        }
+      }
+      @media (max-width: 750px) {
+        [style*='repeat(4, 1fr)'],
+        [style*='repeat(3, 1fr)'] {
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+      }
+    </style>
+    <link rel="canonical" href="/de/lootdrops/MoldyBread/">
+    <base href="/">
+    <meta name="df5-version" content="v2980a734a5c0a4a45a3235be">
+    <script type="module" src="/assets/index-BncWN8B_.js"></script>
+    <link rel="modulepreload" href="/assets/react-D2lPH995.js">
+    <link rel="modulepreload" href="/assets/antd-C9Xzi8Y3.js">
+  <link rel="manifest" href="/manifest.webmanifest">    <link rel="preload" href="/data/r-v2980a734a5c0a4a45a3235be/json/lootdrops/MoldyBread.json" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="/data/r-v2980a734a5c0a4a45a3235be/json/locale/de.json" as="fetch" crossorigin="anonymous">
+<script>window.__SSR_DATA__={"__lang":"de","__ssrLang":"de","__localizedTitle":"Schimmliges Brot | 越来越黑暗闪电指南 DarkFlashNav","__localizedDescription":"Schimmliges Brot-Beutequellen in Dark and Darker. Prüfe Monster, Koordinaten und Beutedetails für deine Route."}</script>
+<meta data-rh="true" name="description" content="Schimmliges Brot-Beutequellen in Dark and Darker. Prüfe Monster, Koordinaten und Beutedetails für deine Route.">
+<meta data-rh="true" property="og:description" content="Schimmliges Brot-Beutequellen in Dark and Darker. Prüfe Monster, Koordinaten und Beutedetails für deine Route.">
+    <link rel="alternate" hreflang="zh-Hans" href="https://dnd9.icetar.com/zh-Hans/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="en" href="https://dnd9.icetar.com/en/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="de" href="https://dnd9.icetar.com/de/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="es" href="https://dnd9.icetar.com/es/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="fr" href="https://dnd9.icetar.com/fr/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="ja" href="https://dnd9.icetar.com/ja/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="ko" href="https://dnd9.icetar.com/ko/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="pt-BR" href="https://dnd9.icetar.com/pt-BR/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="ru" href="https://dnd9.icetar.com/ru/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="zh-Hant" href="https://dnd9.icetar.com/zh-Hant/lootdrops/MoldyBread/">
+    <link rel="alternate" hreflang="x-default" href="https://dnd9.icetar.com/zh-Hans/lootdrops/MoldyBread/">
+    <title>Schimmliges Brot | 越来越黑暗闪电指南 DarkFlashNav</title>
+</head>
+  <body>
+    <div id="root" data-detail-placeholder><main aria-busy="false" style="max-width:calc(var(--shell-max) + 32px);min-height:100vh;margin:0 auto;padding:16px;box-sizing:border-box;background:#141414;color:#f5f5f5">
+  <h1 style="margin:0 0 16px;text-align:center;color:#ffc107;font-size:32px">Schimmliges Brot</h1>
+  <section aria-label="Dungeon-Module" style="color:#f5f5f5">
+    <h2 style="margin:0 0 10px;font-size:22px;color:#ffc107">Dungeon-Module</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px"><article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Goblin-Stadt A</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/CaveTown.webp" alt="Goblin-Stadt A" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Tal A</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_Valley.webp" alt="Tal A" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Höhlensee A</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/CavernLake_02.webp" alt="Höhlensee A" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Kobold-Gefängnisse A</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/GoblinJail_Center.webp" alt="Kobold-Gefängnisse A" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Kobold-Mine</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/GoblinMineCenter_01.webp" alt="Kobold-Mine" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Höhlen-Versteck A</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/HideoutCave_Center.webp" alt="Höhlen-Versteck A" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Steingräber A</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/StoneGrave_Center.webp" alt="Steingräber A" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Goblin-Labyrinth B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/CaveMaze_02.webp" alt="Goblin-Labyrinth B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Höhlengrubenhalle</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_PitHall.webp" alt="Höhlengrubenhalle" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Höhlentunnel</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/GoblinCaveCorner_01.webp" alt="Höhlentunnel" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Kobold-Gefängnisse B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/GoblinJail_Center_02.webp" alt="Kobold-Gefängnisse B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Goblin-Stadt B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/CaveTown_02.webp" alt="Goblin-Stadt B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Höhlenaltar A</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_Altar_Center.webp" alt="Höhlenaltar A" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Ameisennest</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_AntsNest.webp" alt="Ameisennest" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Maulwurfstunnel</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_MoleTunnel.webp" alt="Maulwurfstunnel" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Tal B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_Valley_02.webp" alt="Tal B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Höhlensee B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/CavernLake_03.webp" alt="Höhlensee B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Höhlen-Versteck B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/HideoutCave_02.webp" alt="Höhlen-Versteck B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Höhlenaltar B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_Altar_02.webp" alt="Höhlenaltar B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Goblin Banditen</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_BanditCamp_Center.webp" alt="Goblin Banditen" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Goblin-Labyrinth A</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/CaveMaze.webp" alt="Goblin-Labyrinth A" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Sargräume</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cemetery_02.webp" alt="Sargräume" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Rad</h3>
+  <div style="aspect-ratio:2 / 2;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/CenterTower.webp" alt="Rad" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Korridore</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Hallways.webp" alt="Korridore" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Leichenhaus</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceAbyss_CharnelHouse.webp" alt="Leichenhaus" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Eiszapfenhöhle</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceCave_IcicleCave.webp" alt="Eiszapfenhöhle" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Tunnel</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceCave_Turnnel.webp" alt="Tunnel" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Rundschreiben</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/OssuaryEdge.webp" alt="Rundschreiben" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Äußeres Mausoleum</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_Cemetery_01.webp" alt="Äußeres Mausoleum" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Wald B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_Forest_02.webp" alt="Wald B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Verborgener Altar</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_UndergroundAltar_01.webp" alt="Verborgener Altar" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Heiligtum</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Sanctum.webp" alt="Heiligtum" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Dämonen Thron</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/ThroneRoom_02.webp" alt="Dämonen Thron" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Gräber</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Tomb_Center.webp" alt="Gräber" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Spinnennest</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_SpiderNest_02.webp" alt="Spinnennest" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Höhlengräber</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Cave_Tomb_Center.webp" alt="Höhlengräber" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Klippen</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/CliffBridge.webp" alt="Klippen" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Schwefelbrücke</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/ConectorDoubleBridge.webp" alt="Schwefelbrücke" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Altarraum</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/AltarRoomAB.webp" alt="Altarraum" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Kryptische Dungeons</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Crypt_Dungeon.webp" alt="Kryptische Dungeons" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Bibliothek der dunklen Magie</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/DarkMagicLibrary_Center.webp" alt="Bibliothek der dunklen Magie" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Todesaltar</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/DeathAltar.webp" alt="Todesaltar" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Zentrum Altar</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/FourWayConnect.webp" alt="Zentrum Altar" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Tiefe Strömung</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceAbyss_DeepFlow.webp" alt="Tiefe Strömung" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Dämonenhöhle</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceAbyss_DemonicDen.webp" alt="Dämonenhöhle" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Frostschlund</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceAbyss_FrostMaw.webp" alt="Frostschlund" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Gefrorene Festung</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceAbyss_FrozenHold.webp" alt="Gefrorene Festung" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Tal der Hunde</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceAbyss_HoundVale.webp" alt="Tal der Hunde" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Monolithen</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceAbyss_Monoliths.webp" alt="Monolithen" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Sinkende Säulen</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceAbyss_SinkingPillars.webp" alt="Sinkende Säulen" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Bergpass</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceCave_MountainPass.webp" alt="Bergpass" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Pfad A</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceCave_Path.webp" alt="Pfad A" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Pyramide</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceCave_Pyramid.webp" alt="Pyramide" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Steinbruch</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceCave_Quarry.webp" alt="Steinbruch" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Wolfshöhle</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceCave_WolfCave.webp" alt="Wolfshöhle" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Schwefel-Burg</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/InfernoCastleConner.webp" alt="Schwefel-Burg" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Dämonenmund</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/InfernoMouth.webp" alt="Dämonenmund" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Schwefelfluss</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/InfernoRiver.webp" alt="Schwefelfluss" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Banditen-Wald</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_BanditForest.webp" alt="Banditen-Wald" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Verlassenes Heiligtum</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_Chapel.webp" alt="Verlassenes Heiligtum" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Stirnwand</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_EndWall.webp" alt="Stirnwand" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Gefallener Wald</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_Forest_06.webp" alt="Gefallener Wald" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Turmbrücke</h3>
+  <div style="aspect-ratio:1 / 2;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_TowerBridge_Destroyed.webp" alt="Turmbrücke" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Wachturm</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_Watchtower.webp" alt="Wachturm" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Wolfsbau</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_WollfColony.webp" alt="Wolfsbau" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Steingräber B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/StoneGrave_Center_02.webp" alt="Steingräber B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Sumpf</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Swamp.webp" alt="Sumpf" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Kaserne</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Barracks.webp" alt="Kaserne" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Katakomben</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Catacomb.webp" alt="Katakomben" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Geschlossene Räume</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/ComplexHall.webp" alt="Geschlossene Räume" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Kreuzweg</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/CrossRoad.webp" alt="Kreuzweg" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Dämonenhöhle</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/DemonDen.webp" alt="Dämonenhöhle" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Hohepriester</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/HighPriestOssuary.webp" alt="Hohepriester" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Pyramide</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/LowPyramid.webp" alt="Pyramide" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Labyrinth</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Maze.webp" alt="Labyrinth" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Mimik-Lager</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/MimicRoom.webp" alt="Mimik-Lager" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Gefängnisse B</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Prison_01.webp" alt="Gefängnisse B" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Burg-Waffenlager</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_Armory.webp" alt="Burg-Waffenlager" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Kanalisation</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Sewers.webp" alt="Kanalisation" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Skelett-Zimmer</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/SkeletonPit.webp" alt="Skelett-Zimmer" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Bienenstock</h3>
+  <div style="aspect-ratio:1 / 2;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/IceCave_Hive_03.webp" alt="Bienenstock" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article>
+<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
+  <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">Barbakane</h3>
+  <div style="aspect-ratio:1 / 1;overflow:hidden;border-radius:3px;background:#141414">
+    <img src="/data/r-v2980a734a5c0a4a45a3235be/img/Ruins_Barbican_01.webp" alt="Barbakane" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover">
+  </div>
+</article></div>
+  </section>
+</main></div>
+  </body>
+</html>

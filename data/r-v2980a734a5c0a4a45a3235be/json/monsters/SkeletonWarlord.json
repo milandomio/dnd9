@@ -1,0 +1,347 @@
+{
+  "name": "SkeletonWarlord",
+  "translation": "骷髅督军",
+  "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -25.0,
+      "yaw": 180.0,
+      "map": "Crypt_DarkRitualRoom_01",
+      "file": "Crypt_DarkRitualRoom_01_HR_D.json",
+      "version": "",
+      "label": "SkeletonWarlord",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "sub_group_parent": "BP_GameObjectLinker_C_0",
+      "sub_pool_size": 3,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        }
+      ],
+      "parent_pool_size": 1,
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        }
+      ],
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "artifact",
+      "kind": "artifact",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "Zweihander_8001",
+          "page": "Zweihander_8001",
+          "translation": "嗜血",
+          "translation_key": "Text_DesignData_Item_Item_Zweihander_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "ArmingSword_8001",
+          "page": "ArmingSword_8001",
+          "translation": "库玛龙爪",
+          "translation_key": "Text_DesignData_Item_Item_ArmingSword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Falchion_8001",
+          "page": "Falchion_8001",
+          "translation": "库玛龙牙",
+          "translation_key": "Text_DesignData_Item_Item_Falchion_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "RondelDagger_8001",
+          "page": "RondelDagger_8001",
+          "translation": "影噬",
+          "translation_key": "Text_DesignData_Item_Item_RondelDagger_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Rapier_8001",
+          "page": "Rapier_8001",
+          "translation": "紫罗兰",
+          "translation_key": "Text_DesignData_Item_Item_Rapier_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Longsword_8001",
+          "page": "Longsword_8001",
+          "translation": "雷剑璨光",
+          "translation_key": "Text_DesignData_Item_Item_Longsword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        }
+      ]
+    },
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "CursedBell",
+          "page": "CursedBell",
+          "translation": "毒咒铃铛",
+          "translation_key": "Text_DesignData_Item_Item_CursedBell",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "SkullKey",
+          "page": "SkullKey",
+          "translation": "骷髅钥匙",
+          "translation_key": "Text_DesignData_Item_Item_SkullKey",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldenKey",
+          "page": "GoldenKey",
+          "translation": "黄金钥匙",
+          "translation_key": "Text_DesignData_Item_Item_GoldenKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_All",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_All",
+      "translation": "披风",
+      "translation_key": "df5.lootpool.Cloak_All",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "RadiantCloak_7001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SplendidCloak_7001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WatchmanCloak_7001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Warlord",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Warlord",
+      "translation": "骷髅督军",
+      "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "Zweihander_7001",
+          "page": "Zweihander",
+          "translation": "巨剑",
+          "translation_key": "Text_DesignData_Item_Item_Zweihander_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GreatHelm_7001",
+          "page": "GreatHelm",
+          "translation": "巨盔",
+          "translation_key": "Text_DesingData_Item_Item_GreatHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlatePants_7001",
+          "page": "PlatePants",
+          "translation": "板甲裤",
+          "translation_key": "Text_DesignData_Item_Item_PlatePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PlateBoots_7001",
+          "page": "PlateBoots",
+          "translation": "板甲靴",
+          "translation_key": "Text_DesignData_Item_Item_PlateBoots_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGauntlet_7001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPlateArmor_7001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "ManuscriptsoftheWarlord",
+          "page": "ManuscriptsoftheWarlord",
+          "translation": "督军文献",
+          "translation_key": "Text_DesignData_Item_Item_ManuscriptsoftheWarlord",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "GraveEssence",
+          "page": "GraveEssence",
+          "translation": "坟墓精华",
+          "translation_key": "Text_DesignData_Item_Item_GraveEssence",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "OldCloth",
+          "page": "OldCloth",
+          "translation": "旧布",
+          "translation_key": "Text_DesignData_Item_Item_OldCloth",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "WarlordsBrokenSwordBlade",
+          "page": "WarlordsBrokenSwordBlade",
+          "translation": "督军的断剑",
+          "translation_key": "Text_DesignData_Item_Item_WarlordsBrokenSwordBlade",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "WarlordsArmorShard",
+          "page": "WarlordsArmorShard",
+          "translation": "督军的铠甲残片",
+          "translation_key": "Text_DesignData_Item_Item_WarlordsArmorShard",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Maggots",
+          "page": "Maggots",
+          "translation": "蛆虫",
+          "translation_key": "Text_DesignData_Item_Item_Maggots",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "骷髅督军",
+        "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0,
+          "逆袭赛": 100.0
+        }
+      }
+    ]
+  }
+}

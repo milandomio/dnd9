@@ -1,0 +1,207 @@
+{
+  "name": "Cerberus",
+  "translation": "地狱三头犬",
+  "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+  "coords": [
+    {
+      "x": 331.0,
+      "y": 382.0,
+      "z": -449.9999,
+      "yaw": 230.0,
+      "map": "InfernoColumns",
+      "file": "InfernoColumns_HR_D.json",
+      "version": "",
+      "label": "Cerberus"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 150.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "Cerberus",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+          "name": "地狱三头犬"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+          "name": "地狱猎手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+          "name": "憎恶"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        }
+      ],
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+          "name": "憎恶"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+          "name": "地狱三头犬"
+        }
+      ]
+    },
+    {
+      "x": -70.0,
+      "y": 0.0,
+      "z": 400.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "Cerberus",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -500.0,
+      "yaw": 0.0,
+      "map": "Inferno_Hellcrossbridge",
+      "file": "Inferno_Hellcrossbridge_HR_D.json",
+      "version": "",
+      "label": "Cerberus",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 986.1547,
+      "y": -59.017056,
+      "z": 0.000101,
+      "yaw": 185.0,
+      "map": "ThroneRoom_02",
+      "file": "ThroneRoom_02_HR_D.json",
+      "version": "",
+      "label": "Cerberus"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "SkullKey",
+          "page": "SkullKey",
+          "translation": "骷髅钥匙",
+          "translation_key": "Text_DesignData_Item_Item_SkullKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Gems",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Gems",
+      "translation": "宝石",
+      "translation_key": "Text_Code_DCDataBlueprintLibrary_Type_Item_Misc_Gem",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "Ruby_7001",
+          "page": "Ruby",
+          "translation": "红宝石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Ruby_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Emerald_7001",
+          "page": "Emerald",
+          "translation": "翡翠（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Emerald_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BlueSapphire_7001",
+          "page": "BlueSapphire",
+          "translation": "蓝宝石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_BlueSapphire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Diamond_7001",
+          "page": "Diamond",
+          "translation": "钻石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Diamond_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "GlowingOrangeEye",
+          "page": "GlowingOrangeEye",
+          "translation": "发光的橙色眼睛",
+          "translation_key": "Text_DesignData_Item_Item_GlowingOrangeEye",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "DemonBlood",
+          "page": "DemonBlood",
+          "translation": "恶魔之血",
+          "translation_key": "Text_DesignData_Item_Item_DemonBlood",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "ThickForefoot",
+          "page": "ThickForefoot",
+          "translation": "粗厚前足",
+          "translation_key": "Text_DesignData_Item_Item_ThickForefoot",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "StickyTongue",
+          "page": "StickyTongue",
+          "translation": "黏舌头",
+          "translation_key": "Text_DesignData_Item_Item_StickyTongue",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "地狱三头犬",
+        "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

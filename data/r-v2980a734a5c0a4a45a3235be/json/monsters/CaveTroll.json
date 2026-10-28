@@ -1,0 +1,204 @@
+{
+  "name": "CaveTroll",
+  "translation": "洞穴巨魔",
+  "translation_key": "Text_DesignData_Monster_Monster_CaveTroll",
+  "coords": [
+    {
+      "x": 387.47646,
+      "y": -7.702599999999961,
+      "z": -1667.9999,
+      "yaw": 85.0,
+      "map": "CaveTown_02",
+      "file": "CaveTown_02_HR_D.json",
+      "version": "",
+      "label": "CaveTroll",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "artifact",
+      "kind": "artifact",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "HeaterShield_8001",
+          "page": "HeaterShield_8001",
+          "translation": "不朽神盾",
+          "translation_key": "Text_DesignData_Item_Item_HeaterShield_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "WarMaul_8001",
+          "page": "WarMaul_8001",
+          "translation": "利维坦",
+          "translation_key": "Text_DesignData_Item_Item_WarMaul_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "RoundShield_8001",
+          "page": "RoundShield_8001",
+          "translation": "树妖之怒",
+          "translation_key": "Text_DesignData_Item_Item_RoundShield_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Buckler_8001",
+          "page": "Buckler_8001",
+          "translation": "狂乱",
+          "translation_key": "Text_DesignData_Item_Item_Buckler_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "MorningStar_8001",
+          "page": "MorningStar_8001",
+          "translation": "粉碎祈祷",
+          "translation_key": "Text_DesignData_Item_Item_MorningStar_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        }
+      ]
+    },
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "MysticalGem",
+          "page": "MysticalGem",
+          "translation": "神秘宝石",
+          "translation_key": "Text_DesignData_Item_Item_MysticalGem",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_CaveTroll",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_CaveTroll",
+      "translation": "洞穴巨魔",
+      "translation_key": "Text_DesignData_Monster_Monster_CaveTroll",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "GrandBrigandine_7001",
+          "page": "GrandBrigandine",
+          "translation": "华丽镶嵌甲",
+          "translation_key": "Text_DesignData_Item_Item_GrandBrigandine_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Club_7001",
+          "page": "Club",
+          "translation": "棍棒",
+          "translation_key": "Text_DesignData_Item_Item_Club_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherLamellar_7001",
+          "page": "LeatherLamellar",
+          "translation": "皮革札甲",
+          "translation_key": "Text_DesignData_Item_Item_LeatherLamellar_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "StuddedLeather_7001",
+          "page": "StuddedLeather",
+          "translation": "镶钉皮甲",
+          "translation_key": "Text_DesignData_Item_Item_StuddedLeather_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ScaledArmor_7001",
+          "page": "ScaledArmor",
+          "translation": "鳞甲",
+          "translation_key": "Text_DesignData_Item_Item_ScaledArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_CaveTroll_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_CaveTroll_Spoils",
+      "translation": "洞穴巨魔",
+      "translation_key": "Text_DesignData_Monster_Monster_CaveTroll",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "TrollBlood_5001",
+          "page": "TrollBlood",
+          "translation": "巨魔之血",
+          "translation_key": "Text_DesignData_Item_Item_TrollBlood_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "CaveTrollsPreciousRock",
+          "page": "CaveTrollsPreciousRock",
+          "translation": "洞穴巨魔的宝贝石头",
+          "translation_key": "Text_DesignData_Item_Item_CaveTrollsPreciousRock",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "TrollBlood_5001",
+          "page": "TrollBlood",
+          "translation": "巨魔之血",
+          "translation_key": "Text_DesignData_Item_Item_TrollBlood_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "TrollsClub",
+          "page": "TrollsClub",
+          "translation": "巨魔之棒",
+          "translation_key": "Text_DesignData_Item_Item_TrollsClub",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "TrollPelt",
+          "page": "TrollPelt",
+          "translation": "巨魔之皮",
+          "translation_key": "Text_DesignData_Item_Item_TrollPelt",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "洞穴巨魔",
+        "translation_key": "Text_DesignData_Monster_Monster_CaveTroll",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

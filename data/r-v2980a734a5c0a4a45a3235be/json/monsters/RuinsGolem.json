@@ -1,0 +1,228 @@
+{
+  "name": "RuinsGolem",
+  "translation": "废墟魔像",
+  "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+  "coords": [
+    {
+      "x": 41.00001,
+      "y": 390.0,
+      "z": -599.999899,
+      "yaw": 90.0,
+      "map": "Ruins_Square_01",
+      "file": "Ruins_Square_01_HR_D.json",
+      "version": "",
+      "label": "RuinsGolem",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+          "name": "废墟魔像"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+          "name": "巨型蠕虫"
+        }
+      ],
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantWorm",
+          "name": "巨型蠕虫"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+          "name": "废墟魔像"
+        }
+      ]
+    },
+    {
+      "x": -366.9998699999999,
+      "y": 24.999900000000025,
+      "z": 0.0,
+      "yaw": 180.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "RuinsGolem",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    },
+    {
+      "x": 374.000003,
+      "y": 671.0,
+      "z": -899.999922,
+      "yaw": 270.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "RuinsGolem",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+          "name": "废墟魔像"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cockatrice",
+          "name": "蛇尾鸡"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "BrokenWarHorn",
+          "page": "BrokenWarHorn",
+          "translation": "折断的战号",
+          "translation_key": "Text_DesignData_Item_Item_BrokenWarHorn",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "OldRustyKey",
+          "page": "OldRustyKey",
+          "translation": "生锈的旧钥匙",
+          "translation_key": "Text_DesignData_Item_Item_OldRustyKey",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldenKey",
+          "page": "GoldenKey",
+          "translation": "黄金钥匙",
+          "translation_key": "Text_DesignData_Item_Item_GoldenKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_RuinsGolem",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_RuinsGolem",
+      "translation": "废墟魔像",
+      "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "CrusaderArmor_7001",
+          "page": "CrusaderArmor",
+          "translation": "十字军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_CrusaderArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TemplarArmor_7001",
+          "page": "TemplarArmor",
+          "translation": "圣殿铠甲",
+          "translation_key": "Text_DesignData_Item_Item_TemplarArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WarMaul_7001",
+          "page": "WarMaul",
+          "translation": "大铁锤",
+          "translation_key": "Text_DesignData_Item_Item_WarMaul_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPlateArmor_7001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_RuinsGolem_Ore",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_RuinsGolem_Ore",
+      "translation": "废墟魔像",
+      "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+      "sub_label": "df5.lootpool.Ore",
+      "items": [
+        {
+          "name": "GoldOres_5001",
+          "page": "GoldOres",
+          "translation": "金矿",
+          "translation_key": "Text_DesignData_Item_Item_GoldOres_5001",
+          "suffix": "5001",
+          "luck_grade": 5
+        },
+        {
+          "name": "CobaltOres_4001",
+          "page": "CobaltOres",
+          "translation": "钴矿",
+          "translation_key": "Text_DesignData_Item_Item_CobaltOres_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "CopperOres_3001",
+          "page": "CopperOres",
+          "translation": "铜矿",
+          "translation_key": "Text_DesignData_Item_Item_CopperOres_3001",
+          "suffix": "3001",
+          "luck_grade": 3
+        },
+        {
+          "name": "IronOres_2001",
+          "page": "IronOres",
+          "translation": "铁矿",
+          "translation_key": "Text_DesignData_Item_Item_IronOres_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "StoneFragment",
+          "page": "StoneFragment",
+          "translation": "小碎石",
+          "translation_key": "Text_DesignData_Item_Item_StoneFragment",
+          "suffix": null,
+          "luck_grade": 3
+        },
+        {
+          "name": "FireflyAbdomen",
+          "page": "FireflyAbdomen",
+          "translation": "萤火虫之腹",
+          "translation_key": "Text_DesignData_Item_Item_FireflyAbdomen",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "废墟魔像",
+        "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 47.0,
+          "普通": 47.0,
+          "豪客赛": 37.0,
+          "逆袭赛": 37.0
+        }
+      }
+    ]
+  }
+}

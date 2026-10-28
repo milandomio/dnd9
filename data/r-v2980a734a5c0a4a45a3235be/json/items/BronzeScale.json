@@ -1,0 +1,60 @@
+{
+  "name": "BronzeScale",
+  "translation": "青铜天秤",
+  "translation_key": "Text_DesignData_Item_Item_BronzeScale",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [
+    "SkeletonMage"
+  ],
+  "coords": [
+    {
+      "x": 421.0,
+      "y": -1028.0,
+      "z": 104.0,
+      "yaw": 70.0,
+      "map": "DarkMagicLibrary_Center",
+      "file": "DarkMagicLibrary_Center_HR_D.json",
+      "version": "",
+      "label": "BronzeScale"
+    },
+    {
+      "x": 658.0,
+      "y": -802.0,
+      "z": 699.0,
+      "yaw": 0.0,
+      "map": "Ruins_Keep",
+      "file": "Ruins_Keep_HR_D.json",
+      "version": "",
+      "label": "BronzeScale"
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "青铜天秤",
+        "translation_key": "Text_DesignData_Item_Item_BronzeScale",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "青铜天秤",
+        "translation_key": "Text_DesignData_Item_Item_BronzeScale",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}
