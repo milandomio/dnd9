@@ -75,6 +75,13 @@ try {
     ),
     version
   );
+  assert.notEqual(
+    createBuildVersion(
+      collectBuildInputs(root, true, { ...options, seasonVersion: 11 })
+    ),
+    version,
+    'season version must invalidate the release'
+  );
 } finally {
   rmSync(root, { recursive: true, force: true });
 }

@@ -53,7 +53,7 @@ def _deliver(timer: PipelineTimer | None = None):
     # (used by the frontend to version data URLs and enable locale loading)
     from datetime import date
 
-    meta = {"dataDate": date.today().strftime("%Y%m%d"), "seasonVersion": 9}
+    meta = {"dataDate": date.today().strftime("%Y%m%d"), "seasonVersion": 11}
     (json_dst / "meta.json").write_text(json.dumps(meta, separators=(",", ":")), encoding="utf-8")
     img_dst = dst / "img"
     img_dst.mkdir(parents=True, exist_ok=True)

@@ -29,6 +29,7 @@
 - `useDataVersion()`：返回构建期嵌入的 release 版本；`DataVersionLoader` 在首屏后检查 meta，版本变化通过统一事件交给 `SWUpdateBanner` 切换。
 - `useDungeonModules()`：共享 `cachedModules`、promise 和版本号，并通过 `dataUrl()` 请求版本化模块 JSON。
 - `useSearchIndex()`：共享搜索索引，也服务列表页客户端渲染。
+- `questProgress.ts`：任务页手动清空和赛季迁移共用同一清理逻辑，只删除 `quest_npc_` 前缀记录；列表页标题下方的“清空本赛季任务进度”按钮在确认后重建界面并同步其他标签页。
 
 ## Hydration 约束
 

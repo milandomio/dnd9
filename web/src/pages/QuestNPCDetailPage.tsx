@@ -10,6 +10,10 @@ import { Helmet } from 'react-helmet-async';
 import { SearchOutlined } from '@ant-design/icons';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
+import {
+  isQuestSeasonCurrent,
+  resetQuestProgress,
+} from '../utils/questProgress';
 import { useTheme } from '../hooks/useTheme';
 import { useSearchTargetSignal } from '../hooks/useSearchTargetSignal';
 import { useLocale } from '../i18n/useLocale';
@@ -118,6 +122,7 @@ export default function QuestNPCDetailPage() {
 
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [allNpcs, setAllNpcs] = useState<NPCEntry[]>(ssrData || []);
+  const [, forceProgressRender] = useState(0);
   const [search, setSearch] = useState('');
   const [onlyFetch, setOnlyFetch] = useState(false);
   const [onlySuggested, setOnlySuggested] = useState(false);
@@ -156,18 +161,24 @@ export default function QuestNPCDetailPage() {
 
   // Only clear quest_npc_* localStorage keys when season version changes
   useEffect(() => {
-    if (!seasonVersion) return;
-    const storedVer = localStorage.getItem('quest_npc_season');
-    if (storedVer !== String(seasonVersion)) {
-      const toRemove: string[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key?.startsWith('quest_npc_')) toRemove.push(key);
-      }
-      toRemove.forEach((k) => localStorage.removeItem(k));
-      localStorage.setItem('quest_npc_season', String(seasonVersion));
+    if (!seasonVersion || isQuestSeasonCurrent(seasonVersion)) return;
+    try {
+      resetQuestProgress(seasonVersion);
+    } catch {
+      return;
     }
+    forceProgressRender((v) => v + 1);
   }, [seasonVersion]);
+
+  // A reset from the list page (or another tab) must uncheck this page too.
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (!event.key || event.key.startsWith('quest_npc_'))
+        forceProgressRender((v) => v + 1);
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
 
   const npc = allNpcs.find((n) => n.npc_name === npc_name);
 

@@ -219,6 +219,7 @@ SW 由 `vite-plugin-pwa` + Workbox 生成（`web/vite.config.ts`）：
 - 新资源统一位于 `/data/r-${version}/`；`/data/r-*` 与 `/assets/*` 设为一年 immutable，meta 和旧路径跳转设为 `no-store`。Cloudflare `_headers` 每条 pattern 只用一个 `*`，不使用全局 `/*`。
 - SSG `_redirects` 将 `dataDate` 的 base36 JSON 路径及稳定 `/data/img/*` 302 到当前 release 目录，兼容旧客户端。
 - 版本不匹配时先检查目标 HTML 和必需资源，再发 `SKIP_WAITING`；新 HTML 写入对应 release cache 后只 reload 一次。
+- 任务 NPC 进度按 `quest_npc_` 前缀保存在 localStorage；赛季变化会自动重置一次，玩家也可在列表页标题下手动清空。当前赛季值由 SSG/Pipeline 统一写入 `meta.json`，2026-10-28 起为 S11。
 
 DB 在 `.gitignore` 中，默认不跟踪。推送时临时加入，推送后立即取消本地跟踪，确保远程有 DB（供 Actions 部署）而本地不跟踪。
 

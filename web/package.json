@@ -21,7 +21,8 @@
     "test": "npm run check && npm run test:cache",
     "test:i18n": "node tests/i18n.mjs",
     "test:map-recognition": "node tests/map-recognition-consent.mjs",
-    "test:cls": "node tests/cls.mjs"
+    "test:cls": "node tests/cls.mjs",
+    "test:quest-reset": "node tests/quest-reset.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.0",

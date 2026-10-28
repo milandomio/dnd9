@@ -68,13 +68,18 @@ function scanDir(dir) {
 }
 scanDir(DATA);
 const dataDate = String(Math.floor(latestMtime / 1000));
+const SEASON_VERSION = 11;
 const dataVersion = createBuildVersion(
-  collectBuildInputs(ROOT, QUICK, { base: BASE, dataDate })
+  collectBuildInputs(ROOT, QUICK, {
+    base: BASE,
+    dataDate,
+    seasonVersion: SEASON_VERSION,
+  })
 );
 const dataPathVersion = `r-${dataVersion}`;
 process.env.VITE_DATA_VERSION = dataVersion;
 process.env.VITE_DATA_DATE = dataDate;
-process.env.VITE_SEASON_VERSION = '9';
+process.env.VITE_SEASON_VERSION = String(SEASON_VERSION);
 console.log(`[ssg] release version: ${dataVersion}, data date: ${dataDate}`);
 
 // ---- step 1: build client ----
@@ -109,7 +114,7 @@ writeFileSync(
     schemaVersion: 2,
     version: dataVersion,
     dataDate,
-    seasonVersion: 9,
+    seasonVersion: SEASON_VERSION,
   })
 );
 copyDeep(publicJsonDir, vJsonDir);

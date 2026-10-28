@@ -4,6 +4,16 @@
 
 ## 2026-10-28
 
+### feat: 任务 NPC 支持手动清空赛季进度，并更新至 S11
+
+- **改动原因**：此前仅靠 `meta.json` 的赛季版本自动清理玩家本地任务勾选；实际多个赛季未落实更新，玩家无法自行重置。现增加手动按钮，并同步把当前赛季更正为 11。
+- **变更文件**：`api/main.py`、`web/scripts/ssg.mjs`、`web/src/hooks/useDataVersion.ts`、`web/src/utils/questProgress.ts`（新增）、`web/src/pages/QuestNPCPage.tsx`、`web/src/pages/QuestNPCDetailPage.tsx`、`web/src/i18n/uiLocale.ts`、`web/package.json`、`web/tests/build-version.mjs`、`web/tests/quest-reset.mjs`（新增）、`.github/workflows/deploy.yml`、`docs/AGENT_REFERENCE.md`、`docs/REFERENCE_FRONTEND_DATA.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 列表页标题下方新增“清空本赛季任务进度”危险按钮，经确认弹窗后调用共享 `resetQuestProgress()`；只删除 `quest_npc_` 前缀记录并写入当前赛季，保留主题、语言等无关设置。
+  2. 列表页与详情页共用赛季判断/清理函数；旧赛季记录在任一页面首次加载时自动重置一次。两者都监听 `storage` 与本地重绘状态，手动清空会立即取消勾选并同步其他已打开标签页。
+  3. 数据管道与 SSG 统一输出 `seasonVersion: 11`；SSG 的 `VITE_SEASON_VERSION`、最终 `meta.json` 及前端 fallback 一致。`seasonVersion` 纳入 release 构建选项摘要，单独变更赛季也会触发发布更新。
+- **验证**：`npm test` 通过（0 error，20 条既有 lint warnings）；`api/lint.sh` 通过；数据管道 exit 0 且 `data/json/meta.json` 为 `{"dataDate":"20261028","seasonVersion":11}`；生产 SSG 2948 routes / 15030 files / 11720 sitemap URLs，`dist/data/json/meta.json` 的 `seasonVersion` 为 11；`BASE_URL=http://localhost:8082 npm run test:quest-reset` 通过（取消保留、确认清空、界面同步、旧赛季迁移）；`test:cache-browser` 通过；`test:i18n` Pass 29 / Fail 0；preview 首页 HTTP 200。
+
 ### fix: 恢复本地优先缓存与版本协同切换
 
 - **改动原因**：版本探测不应阻塞首屏；缓存先命中浏览器本地，网络回源仅在本地未命中时发生；数据、图片和页面需按同一 release 协调切换，避免缩短时间戳造成路径碰撞或版本混用。

@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { Button, Modal } from 'antd';
 import { useSSRData } from '../context/SSRDataContext';
 import { useDataVersion, useSeasonVersion } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { dataUrl } from '../utils/dataUrl';
+import {
+  isQuestSeasonCurrent,
+  resetQuestProgress,
+} from '../utils/questProgress';
 import QuestSearchBar from '../components/QuestSearchBar';
 import type { QuestSearchResult } from '../components/QuestSearchBar';
 import type { NPCEntry } from '../types/quest';
@@ -47,6 +52,10 @@ const checkboxStyle: React.CSSProperties = {
 export default function QuestNPCPage() {
   const ssrData = useSSRData<NPCEntry[]>('quest_npc');
   const [data, setData] = useState<NPCEntry[]>(ssrData || []);
+  const [, forceProgressRender] = useState(0);
+  const [clearStatus, setClearStatus] = useState<null | 'done' | 'failed'>(
+    null
+  );
   const dataVersion = useDataVersion();
   const seasonVersion = useSeasonVersion();
   const { tokens, dark } = useTheme();
@@ -67,18 +76,35 @@ export default function QuestNPCPage() {
 
   // Only clear quest_npc_* localStorage keys when season version changes
   useEffect(() => {
-    if (!seasonVersion) return;
-    const storedVer = localStorage.getItem('quest_npc_season');
-    if (storedVer !== String(seasonVersion)) {
-      const toRemove: string[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key?.startsWith('quest_npc_')) toRemove.push(key);
-      }
-      toRemove.forEach((k) => localStorage.removeItem(k));
-      localStorage.setItem('quest_npc_season', String(seasonVersion));
+    if (!seasonVersion || isQuestSeasonCurrent(seasonVersion)) return;
+    try {
+      resetQuestProgress(seasonVersion);
+    } catch {
+      return;
     }
+    forceProgressRender((v) => v + 1);
   }, [seasonVersion]);
+
+  // Keep other open quest tabs in sync after a manual or automatic reset.
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (!event.key || event.key.startsWith('quest_npc_'))
+        forceProgressRender((v) => v + 1);
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
+  const handleClearProgress = () => {
+    try {
+      resetQuestProgress(seasonVersion);
+      setClearStatus('done');
+      forceProgressRender((v) => v + 1);
+    } catch {
+      setClearStatus('failed');
+    }
+    window.setTimeout(() => setClearStatus(null), 4000);
+  };
 
   const grouped = new Map<string, NPCEntry[]>();
   for (const npc of data) {
@@ -155,6 +181,41 @@ export default function QuestNPCPage() {
             }}
           >
             {ut('ui.quest_npc.active').replace('{count}', String(data.length))}
+          </div>
+          <div style={{ marginTop: 10 }}>
+            <Button
+              danger
+              size="small"
+              onClick={() =>
+                Modal.confirm({
+                  title: ut('ui.quest_npc.clear_title'),
+                  content: ut('ui.quest_npc.clear_confirm'),
+                  okText: ut('ui.quest_npc.clear_ok'),
+                  cancelText: ut('ui.quest_npc.clear_cancel'),
+                  okButtonProps: { danger: true },
+                  onOk: handleClearProgress,
+                })
+              }
+            >
+              {ut('ui.quest_npc.clear')}
+            </Button>
+            {clearStatus && (
+              <div
+                role="status"
+                aria-live="polite"
+                style={{
+                  marginTop: 6,
+                  fontSize: 13,
+                  color: clearStatus === 'done' ? tokens.accent : tokens.muted,
+                }}
+              >
+                {ut(
+                  clearStatus === 'done'
+                    ? 'ui.quest_npc.clear_done'
+                    : 'ui.quest_npc.clear_failed'
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 const BUILD_VERSION = import.meta.env.VITE_DATA_VERSION || 'dev';
 const BUILD_DATA_DATE = import.meta.env.VITE_DATA_DATE || '';
-const BUILD_SEASON_VERSION = Number(import.meta.env.VITE_SEASON_VERSION || 9);
+const BUILD_SEASON_VERSION = Number(import.meta.env.VITE_SEASON_VERSION || 11);
 let lastCheckAt = 0;
 let checkPromise: Promise<void> | null = null;
 let scheduled = false;
