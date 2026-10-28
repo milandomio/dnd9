@@ -1,4 +1,5 @@
 import type { DungeonModule } from '../types/data';
+import { dataUrl } from './dataUrl';
 
 export function mapImageUrl(
   module: DungeonModule | undefined,
@@ -7,7 +8,10 @@ export function mapImageUrl(
   const imageName = placeholder
     ? 'RareModule_1x1'
     : module?.img_name || module?.sl_base_name || 'RareModule_1x1';
-  return `/data/img/${imageName}.webp`;
+  return dataUrl(
+    import.meta.env.VITE_DATA_VERSION || 'dev',
+    `/data/img/${imageName}.webp`
+  );
 }
 
 export function isRecognizableMapImage(url: string): boolean {

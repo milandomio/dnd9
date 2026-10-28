@@ -6,14 +6,14 @@
 
 所有数据 `fetch()` 和 CSS `url()` 使用绝对路径 `/data/...`。嵌套路由下使用相对路径会把请求解析到 `/items/name/data/...`，命中 HTML fallback 后造成页面空白。
 
-版本化数据路径由 `dataUrl()` 统一生成；`dataVersion` 未就绪时不要发起依赖版本的请求。
+`dataUrl()` 是唯一版本路径映射：release hash `v` + 24 位 hex → `/data/r-${version}/...`，开发版 → `/data/dev/...`，数字旧版 → base36 兼容路径。meta 固定在 `/data/json/meta.json`，不 preload；`DataVersionLoader` 在 load 后 idle 以 no-store 后台检查。
 
 ## SSR 数据源
 
 - 列表页 SSR 和客户端主数据源统一为 `search_index.json`，按 `page` 过滤；独立 `{page}.json` 只作为最终回退。
 - 详情页 SSR 使用实体详情 JSON；`--quick` 模式只注入 `{name, translation}`，客户端仍须 fetch 完整数据。
 - `dungeon_modules.json` 由 `useDungeonModules()` 全局缓存，详情页通过坐标的 `c.map` 查共享 Map。
-- `AppInner.tsx` 顶层主动预取模块数据，SSG 还可注入版本化 preload，避免详情页首次渲染串行等待。
+- `NavBar.tsx` 以 `useDungeonModules({ defer: true })` 在当前页面绘制后预热模块数据；SSG 可为路由注入版本化详情 preload，但不 preload `meta.json`。
 
 ## Lootdrop 变体 SSG/CSR 规则
 
@@ -26,8 +26,8 @@
 
 ## 共享 Hook
 
-- `useDataVersion()`：模块级 listeners 同步所有调用者，避免只有触发 fetch 的组件拿到新版本。
-- `useDungeonModules()`：共享 `cachedModules`、promise 和版本号，避免重复请求。
+- `useDataVersion()`：返回构建期嵌入的 release 版本；`DataVersionLoader` 在首屏后检查 meta，版本变化通过统一事件交给 `SWUpdateBanner` 切换。
+- `useDungeonModules()`：共享 `cachedModules`、promise 和版本号，并通过 `dataUrl()` 请求版本化模块 JSON。
 - `useSearchIndex()`：共享搜索索引，也服务列表页客户端渲染。
 
 ## Hydration 约束

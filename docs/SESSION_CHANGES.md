@@ -2,6 +2,19 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-10-28
+
+### fix: 恢复本地优先缓存与版本协同切换
+
+- **改动原因**：版本探测不应阻塞首屏；缓存先命中浏览器本地，网络回源仅在本地未命中时发生；数据、图片和页面需按同一 release 协调切换，避免缩短时间戳造成路径碰撞或版本混用。
+- **变更文件**：`.github/workflows/deploy.yml`、`web/package.json`、`web/public/_headers`、`web/scripts/buildVersion.mjs`、`web/scripts/ssg.mjs`、`web/src/components/Disclaimer.tsx`、`web/src/components/SWUpdateBanner.tsx`、`web/src/hooks/useDataVersion.ts`、`web/src/hooks/useDungeonModules.ts`、`web/src/pages/DungeonModuleDetailPage.tsx`、`web/src/pages/DungeonModuleGroupPage.tsx`、`web/src/utils/dataUrl.ts`、`web/src/utils/mapImage.ts`、`web/src/vite-env.d.ts`、`web/vite.config.ts`、`web/tests/{build-version,cache-first,data-url}.mjs`、`docs/AGENT_REFERENCE.md`、`docs/REFERENCE_FRONTEND_DATA.md`、`docs/PWA_ROADMAP.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. SHA-256 release hash 覆盖活跃前端源码、构建配置、JSON 和图片内容（排除生成的 `meta.json` 与 `public/data` 链接），仍使用完整 `v` + 24 位 hex 标识。新数据路径为 `/data/r-${version}/...`；`dataUrl()` 同时映射 `dev` 路径和旧客户端数字 `dataDate` 的 base36 路径。
+  2. `meta.json` 留在固定路径并设 `no-store`，SW 对其使用 `NetworkOnly`；版本检查延迟到页面 load 后的 idle 时段，带 5 秒超时和节流。静态资源与版本目录使用 Workbox `CacheFirst`，Pages 对 hash 资源设 immutable。
+  3. SSG 最终 `_redirects` 把旧 base36 JSON 和稳定图片路径 302 到当前 `r-vHash`，旧跳转不缓存；headers 使用单 splat pattern，避免全局 `/*`。
+  4. 修复 `useDungeonModules()` 仍自行把 release hash 转成 base36、产生 `/data/NaN/...` 的问题；所有模块 JSON 与图片统一经 `dataUrl()`。SW 更新需先验证新 HTML/资源，等待激活、预缓存对应 HTML 后仅刷新一次。
+- **验证**：`npm ci --cache .npm-cache` 成功；`npm test` 通过（0 error，20 条既有 lint warnings）；生产 SSG 2948 routes / 15030 files / 11720 sitemap URLs；`npm run test:cache-browser` 通过；`BASE_URL=http://localhost:8082 npm run test:i18n` Pass 29 / Fail 0；本次 preview 首页 HTTP 200。
+
 ## 2026-10-26
 
 ### fix: 掉落表索引剔除无详情文件的条目，修复 /lootdrops/TidestoneOres 等 28 个死链

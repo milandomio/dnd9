@@ -6,8 +6,8 @@
 ## 当前状态（6/6 已完成）
 
 已有 `vite-plugin-pwa` + Workbox，完成：
-- Service Worker 自动注册（`registerSW.js`）
-- Workbox runtime 缓存（NetworkFirst / StaleWhileRevalidate）
+- Service Worker 由 `SWUpdateBanner` 自定义注册（`injectRegister: false`，`registerType: 'prompt'`）
+- Workbox 导航 HTML 与版本化 JSON/图片使用 `CacheFirst`，固定 `/data/json/meta.json` 使用 `NetworkOnly`
 - 基础 manifest（name / short_name / start_url / icons）
 - SWUpdateBanner 离线就绪提示
 
@@ -55,7 +55,7 @@
 重写 `SWUpdateBanner.tsx`：
 - 使用 Service Worker `updatefound` / `statechange` 监听安装状态
 - 首次安装 → "离线模式已就绪"
-- 版本更新 → "新版本已下载，点击刷新以应用" + 刷新按钮
+- 版本更新 → 后台检查新 HTML 和资源，等待新 SW 激活、缓存新版本 HTML 后只刷新一次
 
 **涉及文件：** `src/components/SWUpdateBanner.tsx`
 
@@ -72,7 +72,7 @@
 
 | 特性 | 原因 |
 |------|------|
-| `navigateFallback`（SW 级） | 会与 SSG NetworkFirst 缓存冲突，详见 `docs/archive/fixes/PWA_SW_PLAN.md`（已归档） |
+| `navigateFallback`（SW 级） | SSG 每条路由输出独立 HTML；开启后深链可能回退到 SPA shell，破坏 SSR 页面与数据，不启用 |
 | Background Sync | 当前无离线提交需求 |
 | Push Notification | 无需推送 |
 | Periodic Sync | 数据更新由用户主动刷新触发 |

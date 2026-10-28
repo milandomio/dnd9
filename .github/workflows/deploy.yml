@@ -61,6 +61,7 @@ jobs:
             sleep 1
           done
           curl --fail --silent http://127.0.0.1:8080/ >/dev/null
+          npm run test:cache-browser
           npm run test:i18n
 
       - name: Deploy to gh-pages

@@ -1,11 +1,11 @@
 import type { CSSProperties } from 'react';
-import { useDataVersion } from '../hooks/useDataVersion';
+import { useDataDate } from '../hooks/useDataVersion';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 
 export default function Disclaimer() {
   const { tokens } = useTheme();
-  const date = useDataVersion();
+  const date = useDataDate();
   const { ut } = useLocale();
   const box: CSSProperties = {
     textAlign: 'center',

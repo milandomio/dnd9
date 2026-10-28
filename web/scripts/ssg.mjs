@@ -26,6 +26,7 @@ import {
 } from 'fs';
 import { join, dirname } from 'path';
 import { buildSeoDescription } from '../src/i18n/seoTemplate.mjs';
+import { collectBuildInputs, createBuildVersion } from './buildVersion.mjs';
 
 const QUICK = process.argv.includes('--quick');
 const WEB = new URL('..', import.meta.url).pathname;
@@ -61,24 +62,32 @@ function scanDir(dir) {
     const fp = join(dir, f);
     const st = statSync(fp);
     if (st.isDirectory()) scanDir(fp);
-    else if (f.endsWith('.json'))
+    else if (f.endsWith('.json') && f !== 'meta.json')
       latestMtime = Math.max(latestMtime, st.mtimeMs);
   }
 }
 scanDir(DATA);
 const dataDate = String(Math.floor(latestMtime / 1000));
-process.env.VITE_DATA_VERSION = dataDate;
-console.log(`[ssg] data version: ${dataDate}`);
+const dataVersion = createBuildVersion(
+  collectBuildInputs(ROOT, QUICK, { base: BASE, dataDate })
+);
+const dataPathVersion = `r-${dataVersion}`;
+process.env.VITE_DATA_VERSION = dataVersion;
+process.env.VITE_DATA_DATE = dataDate;
+process.env.VITE_SEASON_VERSION = '9';
+console.log(`[ssg] release version: ${dataVersion}, data date: ${dataDate}`);
 
 // ---- step 1: build client ----
 console.log('[ssg] building client SPA…');
 execSync('node node_modules/.bin/vite build', { cwd: WEB, stdio: 'pipe' });
 
-// ---- step 1.5: create versioned data copies for CDN cache busting ----
-const shortVer = Number(dataDate).toString(36);
+// ---- step 1.5: publish immutable, versioned data and migration redirects ----
 const publicJsonDir = join(DIST, 'data', 'json');
-const vJsonDir = join(DIST, 'data', shortVer, 'json');
+const vJsonDir = join(DIST, 'data', dataPathVersion, 'json');
+const publicImgDir = join(DIST, 'data', 'img');
+const vImgDir = join(DIST, 'data', dataPathVersion, 'img');
 mkdirSync(vJsonDir, { recursive: true });
+mkdirSync(vImgDir, { recursive: true });
 function copyDeep(src, dest) {
   for (const f of readdirSync(src)) {
     const sp = join(src, f);
@@ -96,13 +105,32 @@ function copyDeep(src, dest) {
 // version checks while large JSON files live only under /data/{version}/json/.
 writeFileSync(
   join(DATA, 'meta.json'),
-  JSON.stringify({ dataDate, seasonVersion: 9 })
+  JSON.stringify({
+    schemaVersion: 2,
+    version: dataVersion,
+    dataDate,
+    seasonVersion: 9,
+  })
 );
 copyDeep(publicJsonDir, vJsonDir);
+copyDeep(publicImgDir, vImgDir);
 rmSync(join(vJsonDir, 'meta.json'), { force: true });
 rmSync(publicJsonDir, { recursive: true, force: true });
 mkdirSync(publicJsonDir, { recursive: true });
 cpSync(join(DATA, 'meta.json'), join(publicJsonDir, 'meta.json'));
+
+const legacyDataVersion = Number(dataDate).toString(36);
+rmSync(publicImgDir, { recursive: true, force: true });
+const headersPath = join(DIST, '_headers');
+const existingHeaders = readFileSync(headersPath, 'utf8');
+const legacyHeader =
+  '/data/' + legacyDataVersion + '/json/*\n  Cache-Control: no-store\n\n';
+writeFileSync(
+  headersPath,
+  existingHeaders.includes('/data/' + legacyDataVersion + '/json/*')
+    ? existingHeaders
+    : existingHeaders.trimEnd() + '\n\n' + legacyHeader.trimEnd() + '\n'
+);
 
 // ---- step 2: build SSR bundle ----
 console.log('[ssg] building SSR bundle…');
@@ -958,7 +986,7 @@ function detailPreloads(urlPath, lang) {
       detailName = lootdropBaseName(detailName);
     }
     preloads.push(
-      `<link rel="preload" href="/data/${shortVer}/json/${detailMatch[1]}/${detailName}.json" as="fetch" crossorigin="anonymous">`
+      `<link rel="preload" href="/data/${dataPathVersion}/json/${detailMatch[1]}/${detailName}.json" as="fetch" crossorigin="anonymous">`
     );
   }
   const moduleMatch = urlPath.match(
@@ -966,12 +994,12 @@ function detailPreloads(urlPath, lang) {
   );
   if (moduleMatch) {
     preloads.push(
-      `<link rel="preload" href="/data/${shortVer}/json/dungeon_modules_coords/${moduleMatch[1]}.json" as="fetch" crossorigin="anonymous">`
+      `<link rel="preload" href="/data/${dataPathVersion}/json/dungeon_modules_coords/${moduleMatch[1]}.json" as="fetch" crossorigin="anonymous">`
     );
   }
   if (lang && lang !== DEFAULT_LANG) {
     preloads.push(
-      `<link rel="preload" href="/data/${shortVer}/json/locale/${lang}.json" as="fetch" crossorigin="anonymous">`
+      `<link rel="preload" href="/data/${dataPathVersion}/json/locale/${lang}.json" as="fetch" crossorigin="anonymous">`
     );
   }
   return preloads.length > 0 ? `    ${preloads.join('\n    ')}\n` : '';
@@ -1011,7 +1039,7 @@ function detailPlaceholder(title, modules, localeDict, lang) {
       const imageName = module.img_name || module.sl_base_name;
       const sx = Number(module.size_x) || 1;
       const sy = Number(module.size_y) || 1;
-      const imageUrl = `/data/img/${imageName}.webp`;
+      const imageUrl = `/data/${dataPathVersion}/img/${imageName}.webp`;
       return `<article style="min-width:0;border:1px solid #434343;border-radius:5px;padding:8px;background:#1f1f1f">
   <h3 style="margin:0 0 6px;text-align:center;font-size:18px;line-height:1.3;color:#ffc107">${escapeHtml(name)}</h3>
   <div style="aspect-ratio:${sx} / ${sy};overflow:hidden;border-radius:3px;background:#141414">
@@ -1084,13 +1112,13 @@ for (let i = 0; i < routes.length; i++) {
   );
   if (entityMatch) {
     detailPreloads.push(
-      `<link rel="preload" href="/data/${shortVer}/json/${entityMatch[1]}/${entityMatch[2]}.json" as="fetch" crossorigin="anonymous">`
+      `<link rel="preload" href="/data/${dataPathVersion}/json/${entityMatch[1]}/${entityMatch[2]}.json" as="fetch" crossorigin="anonymous">`
     );
   }
   const lootdropMatch = urlPath.match(/^\/(?:[^/]+\/)?lootdrops\/(.+)$/);
   if (lootdropMatch) {
     detailPreloads.push(
-      `<link rel="preload" href="/data/${shortVer}/json/lootdrops/${lootdropBaseName(lootdropMatch[1])}.json" as="fetch" crossorigin="anonymous">`
+      `<link rel="preload" href="/data/${dataPathVersion}/json/lootdrops/${lootdropBaseName(lootdropMatch[1])}.json" as="fetch" crossorigin="anonymous">`
     );
   }
   const moduleMatch = urlPath.match(
@@ -1098,8 +1126,8 @@ for (let i = 0; i < routes.length; i++) {
   );
   if (moduleMatch) {
     detailPreloads.push(
-      `<link rel="preload" href="/data/${shortVer}/json/dungeon_modules_coords/${moduleMatch[1]}.json" as="fetch" crossorigin="anonymous">`,
-      `<link rel="preload" href="/data/img/${moduleMatch[1]}.webp" as="fetch" crossorigin="anonymous">`
+      `<link rel="preload" href="/data/${dataPathVersion}/json/dungeon_modules_coords/${moduleMatch[1]}.json" as="fetch" crossorigin="anonymous">`,
+      `<link rel="preload" href="/data/${dataPathVersion}/img/${moduleMatch[1]}.webp" as="fetch" crossorigin="anonymous">`
     );
   }
   const preloadHtml =
@@ -1252,6 +1280,14 @@ for (const section of [...PAGES, ...SINGLE]) {
   redirectRules.push(`/${section} /${DEFAULT_LANG}/${section}/ 301`);
   redirectRules.push(`/${section}/* /${DEFAULT_LANG}/${section}/:splat 301`);
 }
+redirectRules.push(
+  '/data/' +
+    legacyDataVersion +
+    '/json/* /data/' +
+    dataPathVersion +
+    '/json/:splat 302',
+  '/data/img/* /data/' + dataPathVersion + '/img/:splat 302'
+);
 writeFileSync(
   join(DIST, '_redirects'),
   `${redirectRules.join('\n')}\n`,

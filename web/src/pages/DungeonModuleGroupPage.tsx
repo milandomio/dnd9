@@ -8,7 +8,7 @@ import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
 import { useLocale } from '../i18n/useLocale';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
-import { modulePlacementSuffix } from '../utils/mapImage';
+import { mapImageUrl, modulePlacementSuffix } from '../utils/mapImage';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 import type { DungeonModule } from '../types/data';
 import { localizedSeoDescription } from '../i18n/seo';
@@ -203,7 +203,7 @@ export default function DungeonModuleGroupPage() {
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      backgroundImage: `url(/data/img/${mod.img_name || mod.sl_base_name || 'RareModule_1x1'}.webp)`,
+                      backgroundImage: `url(${mapImageUrl(mod)})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}

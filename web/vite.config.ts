@@ -32,12 +32,9 @@ export default defineConfig(() => {
           const ver = process.env.VITE_DATA_VERSION;
           const out = html.replaceAll(' crossorigin', '');
           if (!ver) return out;
-          const preloads = [
-            `<link rel="preload" href="/data/json/meta.json" as="fetch" crossorigin="anonymous">`,
-          ];
           return out.replace(
             '</title>',
-            `</title>\n    ${preloads.join('\n    ')}`
+            `</title>\n    <meta name="df5-version" content="${ver}">`
           );
         },
       },
@@ -51,45 +48,35 @@ export default defineConfig(() => {
           // navigateFallback 未启用：SSG 路由的独立 HTML（含 SSR 数据）由 NetworkFirst 接管，
           // 访问后缓存，离线重复访问正常显示（含 SSR 数据）；首次离线深度链接无缓存时浏览器报错。
           navigateFallback: undefined,
+          clientsClaim: true,
           // OpenCV.js is loaded only after the screenshot-recognition switch is enabled;
           // keeping its large dynamic chunk out of the install-time precache preserves PWA startup cost.
           globIgnores: ['**/opencv-*.js'],
           globPatterns: ['assets/**/*.{js,css}', 'offline.html'],
           runtimeCaching: [
             {
-              // Version-based invalidation via refreshNow() clears df5-* caches;
-              // no maxAgeSeconds needed — cache lives until user triggers refresh.
+              // Keep each published HTML generation available to older open tabs.
               urlPattern: ({ request }) => request.mode === 'navigate',
-              handler: 'NetworkFirst',
+              handler: 'CacheFirst',
               options: {
-                cacheName: 'df5-html',
+                cacheName: `df5-html-${process.env.VITE_DATA_VERSION || 'dev'}`,
                 expiration: { maxEntries: 1300 },
               },
             },
             {
               // Always prefer the deployed version online; retain the last response for offline startup.
               urlPattern: ({ url }) => url.pathname === '/data/json/meta.json',
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'df5-meta',
-                expiration: { maxEntries: 1 },
-              },
+              handler: 'NetworkOnly',
             },
             {
               urlPattern: ({ url }) =>
-                /^\/data\/(?:[a-z0-9]+\/)?json\//.test(url.pathname),
-              handler: 'StaleWhileRevalidate',
+                /^\/data\/(?:r-v[0-9a-f]{24}|[a-z0-9]+)\/(?:json|img)\//.test(
+                  url.pathname
+                ),
+              handler: 'CacheFirst',
               options: {
-                cacheName: 'df5-data-json',
+                cacheName: 'df5-versioned-data',
                 expiration: { maxEntries: 3300 },
-              },
-            },
-            {
-              urlPattern: ({ url }) => url.pathname.startsWith('/data/img/'),
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'df5-data-img',
-                expiration: { maxEntries: 300 },
               },
             },
           ],
@@ -153,9 +140,11 @@ export default defineConfig(() => {
         name: 'dev-versioned-data',
         configureServer(server) {
           server.middlewares.use((req, res, next) => {
-            const match = req.url?.match(/^\/data\/[a-z0-9]+\/json\/(.+)/);
+            const match = req.url?.match(
+              /^\/data\/(?:r-v[0-9a-f]{24}|dev|[a-z0-9]+)\/(json|img)\/(.+)/
+            );
             if (match) {
-              const originalUrl = `/data/json/${match[1]}`;
+              const originalUrl = `/data/${match[1]}/${match[2]}`;
               req.url = originalUrl;
             }
             next();

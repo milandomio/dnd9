@@ -1,92 +1,87 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-const STORAGE_KEY = 'df5_data_version';
-let cachedDate = '';
-let cachedSeason = 0;
-const listeners = new Set<(v: string) => void>();
-const seasonListeners = new Set<(v: number) => void>();
-let loadingPromise: Promise<void> | null = null;
-let retryTimer: ReturnType<typeof setTimeout> | null = null;
+const BUILD_VERSION = import.meta.env.VITE_DATA_VERSION || 'dev';
+const BUILD_DATA_DATE = import.meta.env.VITE_DATA_DATE || '';
+const BUILD_SEASON_VERSION = Number(import.meta.env.VITE_SEASON_VERSION || 9);
+let lastCheckAt = 0;
+let checkPromise: Promise<void> | null = null;
+let scheduled = false;
 
-function notify() {
-  for (const fn of listeners) fn(cachedDate);
-}
-
-function notifySeason() {
-  for (const fn of seasonListeners) fn(cachedSeason);
-}
-
-function loadDataVersion() {
-  if (cachedDate || loadingPromise || typeof window === 'undefined') return;
-
-  loadingPromise = fetch('/data/json/meta.json', { cache: 'no-store' })
-    .then((r) => {
-      if (!r.ok) throw new Error(`meta.json request failed: ${r.status}`);
-      return r.json();
+async function checkRelease() {
+  if (checkPromise) return checkPromise;
+  if (Date.now() - lastCheckAt < 60_000) return;
+  lastCheckAt = Date.now();
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+  checkPromise = fetch('/data/json/meta.json', {
+    cache: 'no-store',
+    signal: controller.signal,
+  })
+    .then((response) => {
+      if (!response.ok)
+        throw new Error(`release manifest request failed: ${response.status}`);
+      return response.json() as Promise<{
+        version?: string;
+        dataDate?: string;
+        seasonVersion?: number;
+      }>;
     })
-    .then((d: { dataDate?: string; seasonVersion?: number }) => {
-      const remote = d.dataDate || '';
-      cachedSeason = d.seasonVersion ?? 0;
-      notifySeason();
-      if (!remote) throw new Error('meta.json has no dataDate');
-
-      cachedDate = remote;
-      notify();
-      localStorage.setItem(STORAGE_KEY, remote);
+    .then((release) => {
+      if (release.version && release.version !== BUILD_VERSION) {
+        window.dispatchEvent(
+          new CustomEvent('df5:update-available', { detail: release })
+        );
+      }
     })
-    .catch(() => {
-      // Keep retrying instead of allowing consumers to fall back to stale paths.
-      retryTimer ??= setTimeout(() => {
-        retryTimer = null;
-        loadDataVersion();
-      }, 5000);
-    })
+    .catch(() => {})
     .finally(() => {
-      loadingPromise = null;
+      clearTimeout(timeout);
+      checkPromise = null;
     });
+  return checkPromise;
 }
 
-/** Mounted by NavBar so every routed page shares one version bootstrap. */
+function scheduleReleaseCheck() {
+  if (import.meta.env.DEV || scheduled || typeof window === 'undefined') return;
+  scheduled = true;
+  const run = () => {
+    scheduled = false;
+    void checkRelease();
+  };
+  const idle = (
+    window as Window & { requestIdleCallback?: (cb: () => void) => number }
+  ).requestIdleCallback;
+  if (idle) idle(run);
+  else window.setTimeout(run, 1000);
+}
+
 export function DataVersionLoader() {
   useEffect(() => {
-    loadDataVersion();
+    const schedule = () => scheduleReleaseCheck();
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') scheduleReleaseCheck();
+    };
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once: true });
+    window.addEventListener('online', schedule);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      window.removeEventListener('load', schedule);
+      window.removeEventListener('online', schedule);
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
   }, []);
   return null;
 }
 
-/**
- * Returns the current data version (dataDate from meta.json).
- * Shared across all consumers via module-level subscription.
- */
 export function useDataVersion(): string {
-  const [date, setDate] = useState(cachedDate);
-
-  useEffect(() => {
-    listeners.add(setDate);
-    if (cachedDate) setDate(cachedDate);
-    loadDataVersion();
-    return () => {
-      listeners.delete(setDate);
-    };
-  }, []);
-
-  return date;
+  return BUILD_VERSION;
 }
 
-/**
- * Returns the current season version from meta.json.
- * Used for localStorage cleanup — only clears quest_npc_* keys on season change.
- */
+export function useDataDate(): string {
+  return BUILD_DATA_DATE;
+}
+
 export function useSeasonVersion(): number {
-  const [season, setSeason] = useState(cachedSeason);
-
-  useEffect(() => {
-    seasonListeners.add(setSeason);
-    if (cachedSeason) setSeason(cachedSeason);
-    return () => {
-      seasonListeners.delete(setSeason);
-    };
-  }, []);
-
-  return season;
+  return BUILD_SEASON_VERSION;
 }

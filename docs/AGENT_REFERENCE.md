@@ -92,7 +92,7 @@ Lootdrop 变体的静态范围：普通变体只生成默认变体实体 HTML，
 | `useDebug.tsx` | 调试开关/偏移量 | Detail, LootdropDetail |
 | `useTheme.tsx` | 主题切换 | 全局 |
 | `useDungeonModules.ts` | 地图模块数据（详情页已改用 `_modules` 内联） | DungeonModules/Group |
-| `useDataVersion.ts` | 数据版本（缓存 bust） | Disclaimer, NavBar, List |
+| `useDataVersion.ts` | 构建期 release 版本 + 懒加载发布检查 | Disclaimer, NavBar, List |
 | `useSearchIndex.ts` | 搜索索引（全局缓存 search_index.json） | NavBar |
 
 ## 详情页同步规则
@@ -117,17 +117,13 @@ Lootdrop 变体的静态范围：普通变体只生成默认变体实体 HTML，
 
 所有 `fetch()` 和 CSS `url()` 中的数据路径必须使用绝对路径（`/data/...`），不能使用相对路径（`./data/...`）。
 
+版本路径统一由 `dataUrl(version, path)` 生成：生产版本 `v` + 24 位 SHA-256 前缀映射到 `/data/r-${version}/...`，开发版本映射到 `/data/dev/...`，旧客户端的数字 `dataDate` 映射到 base36 兼容路径。不要在 loader 中自行调用 `Number(version).toString(36)`。固定路径 `/data/json/meta.json` 只在首屏完成后的 idle 时段后台检查，不参与首屏阻塞。
+
 原因：嵌套路由（如 `/items/Bandage/`）刷新时，相对路径 `./data/json/items/Bandage.json` 会解析为 `/items/Bandage/data/json/items/Bandage.json`，命中 SPA fallback 返回 HTML 而非 JSON，导致页面空白。
 
-部署环境：自定义域名 `dnd9.icetar.com`，部署在根路径，`vite.config.ts` 中 `base: '/'`。
+## useDataVersion 发布检查
 
-## useDataVersion 状态同步
-
-多个组件各自调用同一个自定义 hook 时，每个组件有独立的 `useState`。如果 hook 内部通过异步操作更新状态，只有触发该操作的组件实例会被更新，其他调用者的 state 保持初始值。
-
-踩坑记录：`useDataVersion()` 被 `Disclaimer` 和 `DetailPage` 等多个组件调用。fetch `meta.json` 后 `setDate()` 只更新了 `Disclaimer` 的 state，`DetailPage` 的 `dataVersion` 始终为空，导致详情页 F5 刷新后不加载数据。
-
-解决方式：使用模块级 `listeners` 集合 + `notify()` 模式，fetch 完成后通知所有订阅者更新 state。
+`useDataVersion()` 返回随 SSG 构建嵌入的稳定 release 版本，不再由多个 hook 实例异步更新。`DataVersionLoader` 在 `load` 后的 idle 时段懒检查固定路径 `meta.json`；发现版本不同后派发统一更新事件，由 `SWUpdateBanner` 预检新 HTML 与资源、激活 waiting Worker 并执行一次切换。
 
 ## React Hydration 规则
 
@@ -214,13 +210,15 @@ const [data, setData] = useState(
 
 ## PWA / Service Worker 缓存规则
 
-SW 通过 `vite-plugin-pwa` + Workbox 生成（`web/vite.config.ts`），配置要点：
+## PWA / Service Worker 缓存规则
 
-- `registerType: 'autoUpdate'` — 新版本静默更新，不弹用户提示条
-- `maxEntries` 必须等于实际资源数量，由 `vite.config.ts` 中 hardcode：`df5-html=1300`、`df5-data-json=3300`、`df5-data-img=250`、`df5-meta=1`
-- 新部署后 `StaleWhileRevalidate` / `NetworkFirst` 策略自动用新数据更新同名缓存，`maxEntries` 够大不会被 LRU 驱逐
+SW 由 `vite-plugin-pwa` + Workbox 生成（`web/vite.config.ts`）：
 
-## 推送到 dnd9（含 DB）
+- 导航 HTML 使用按 release 命名的 `CacheFirst`（最多 1300 项）；版本化 JSON/图片使用 `CacheFirst`（最多 3300 项）。
+- `/data/json/meta.json` 使用 `NetworkOnly`；前端在首屏后以 `cache: no-store` 懒检查。
+- 新资源统一位于 `/data/r-${version}/`；`/data/r-*` 与 `/assets/*` 设为一年 immutable，meta 和旧路径跳转设为 `no-store`。Cloudflare `_headers` 每条 pattern 只用一个 `*`，不使用全局 `/*`。
+- SSG `_redirects` 将 `dataDate` 的 base36 JSON 路径及稳定 `/data/img/*` 302 到当前 release 目录，兼容旧客户端。
+- 版本不匹配时先检查目标 HTML 和必需资源，再发 `SKIP_WAITING`；新 HTML 写入对应 release cache 后只 reload 一次。
 
 DB 在 `.gitignore` 中，默认不跟踪。推送时临时加入，推送后立即取消本地跟踪，确保远程有 DB（供 Actions 部署）而本地不跟踪。
 

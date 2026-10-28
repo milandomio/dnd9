@@ -6,7 +6,7 @@ import { useDebug } from '../hooks/useDebug';
 import { useTheme } from '../hooks/useTheme';
 import { dataUrl } from '../utils/dataUrl';
 import { formatGroupLabel } from '../utils/formatGroupLabel';
-import { modulePlacementSuffix } from '../utils/mapImage';
+import { mapImageUrl, modulePlacementSuffix } from '../utils/mapImage';
 import DebugPanel from '../components/DebugPanel';
 import { useDungeonModules } from '../hooks/useDungeonModules';
 import { useSSRData } from '../context/SSRDataContext';
@@ -279,7 +279,7 @@ export default function DungeonModuleDetailPage() {
           }}
         >
           <MapPanel
-            imageSrc={`/data/img/${m.img_name || m.sl_base_name || 'RareModule_1x1'}.webp`}
+            imageSrc={mapImageUrl(m)}
             sx={sx}
             sy={sy}
             dots={dots.map((d) => ({

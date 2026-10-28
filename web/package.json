@@ -9,6 +9,8 @@
     "build:full": "NODE_OPTIONS='--max-old-space-size=4096' node scripts/ssg.mjs",
     "indexnow:submit": "node scripts/submit-indexnow.mjs",
     "typecheck": "tsc --noEmit",
+    "test:cache": "node tests/data-url.mjs && node tests/build-version.mjs",
+    "test:cache-browser": "node tests/cache-first.mjs",
     "preview": "vite preview",
     "prepare": "husky",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -16,7 +18,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,md}\" \"scripts/**/*.mjs\" \"tests/**/*.mjs\" \"*.{js,ts,json}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,md}\" \"scripts/**/*.mjs\" \"tests/**/*.mjs\" \"*.{js,ts,json}\"",
     "check": "npm run lint && npm run format:check && npm run typecheck",
-    "test": "npm run check",
+    "test": "npm run check && npm run test:cache",
     "test:i18n": "node tests/i18n.mjs",
     "test:map-recognition": "node tests/map-recognition-consent.mjs",
     "test:cls": "node tests/cls.mjs"
