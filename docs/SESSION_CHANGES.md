@@ -4,6 +4,19 @@
 
 ## 2026-10-28
 
+### chore: 补丁部署——同步 FMOD 解包并全量重建 DB 后推送 main
+
+- **改动原因**：用户要求执行「补丁部署」。按 `docs/BUILD_AND_DEPLOY.md`「更新部署」流程，把最新游戏解包同步进本地、全量重建 SQLite，并将含新 DB 的 `main` 推到 `origin/main`，供 GitHub Actions 在无游戏源的环境下导出 JSON。本次未改任何代码，只刷新数据。
+- **变更文件**：`api/data/darkfindv5.db`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **同步**：`~/sync_fmod.sh`（`rsync -avu /mnt/e/Game/fmod/Output/ ~/fmod/Output/`），传输 410 MB，目标总量 1.79 GB。同步后 `pipeline_meta.source_manifest` 记为 generated_data 21830 文件、localization 11 文件、maps 1237 文件。
+  2. **全量重建**：`rm -f api/data/darkfindv5.db` → `[DB] state=REBUILD_REQUIRED: DB missing`；管道写 `.building` 后 `os.replace` 原子替换，总耗时 41.87s，`import_completed_at = 2026-10-28T08:17:08Z`、`import_complete = 1`、`source_latest_mtime_ns = 1793175049097408800`。
+  3. **收录口径**：`extract_all_spawners DONE -> 46177`，其中 `filtered 9269 spawners outside collected modules`（非 5x5 收录模块的 spawner 被过滤，含 7x7 时代 ShipGraveyard）；`dungeon_modules` 仍为 221 条收录 + 3 条 path 补录共 224 条导出。
+  4. **掉落表裁剪生效**：管道日志输出 `[JSON] dropped 28 lootdrop entries without detail files`，`data/json/lootdrops.json` 496 条与 `data/json/lootdrops/` 496 个详情文件双向一致——`3b608729c` 的修复在全新 DB 上依然成立。
+  5. **DB 增量（对 HEAD 版本逐表哈希比对）**：`spawners` 46111 → 46177、`lootdrop_groups` 70938 → 71032、`lootdrop_items` 15561 → 15562、`lootdrop_rate_items` 24794 → 24798、`lootdrop_rate_weights` 35859 → 36300、`props_entities` 570 → 571、`translations` 13623 → 13626（各语言表同步）；`item_entities` 816、`monster_entities` 742、`dungeon_modules` 221、`craft_recipes` 333 未变。36 张非 FTS 表中 18 张哈希一致，其余为本次新解包的增量。
+- **验证**：`PRAGMA integrity_check = ok`，37 张非 FTS 表，`pipeline_meta.import_complete = 1`，`[VALIDATE] all module images OK`；本流程按文档不跑 `npm run build` 与 `vite preview`，前端 SSG 由 Actions 拿到新 DB 后完成。
+- **推送**：`api/data/darkfindv5.db` 默认 `skip-worktree`，推送时 `--no-skip-worktree` + `git add -f` 建 `chore: update DB` 提交，推送后 `git reset HEAD~1` 并恢复 `skip-worktree`。
+
 ### feat: 任务 NPC 支持手动清空赛季进度，并更新至 S11
 
 - **改动原因**：此前仅靠 `meta.json` 的赛季版本自动清理玩家本地任务勾选；实际多个赛季未落实更新，玩家无法自行重置。现增加手动按钮，并同步把当前赛季更正为 11。
