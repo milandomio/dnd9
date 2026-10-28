@@ -1,16 +1,35 @@
 # Blindfall Pit Probability Calculation Record
 
-## 1. Executive Summary
+## 0. Current Implementation (updated 2026-10-28)
 
-The probability of `Blindfall Pit` is not a fixed value stored in a single
-configuration field. It is derived from three layers of Crypt random-dungeon
-assets:
+The displayed probability now comes **directly from**
+`DCDungeonDataAsset.Properties.RareChance`, read by
+`api/src/module_spawn_rate.py`. Crypt declares `RareChance = 15`, so all five
+Crypt rare modules show `15%`.
+
+Why the layout-based model was replaced: the game moved to 5x5 random maps.
+Since the 2026-10-16 export, `Data/Generated/V2/Dungeon/DungeonLayout/` no
+longer exists and `Id_Dungeon_Random*.json` no longer carries the `Layouts`
+field. The old `2 / 40` layout factor therefore had no live data source and
+was frozen at a pre-change baseline.
+
+Open question: the exact scope of `RareChance` (per-run, per-slot, or a pool
+weight) has not been confirmed in-game. The current implementation treats it
+as the rare module's appearance probability in percent.
+
+Sections 1 onward preserve the 2026-10-23 layout derivation as historical
+reference; their `0.84%` result no longer matches the current displayed value.
+
+## 1. Executive Summary (historical, 2026-10-23)
+
+The probability of `Blindfall Pit` was derived from three layers of Crypt
+random-dungeon assets:
 
 1. The `Dungeon` asset selects one of its referenced layouts.
 2. The selected `DungeonLayout` may provide a `Rare` module slot.
 3. The Crypt rare-module pool selects one rare module.
 
-For the Crypt 5x5 N_Solo mode, the calculation is:
+For the Crypt 5x5 N_Solo mode, the calculation was:
 
 ```text
 P(Blindfall Pit before map coverage)

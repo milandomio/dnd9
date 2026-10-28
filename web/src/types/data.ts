@@ -164,7 +164,7 @@ export interface DungeonModule {
   is_edge?: boolean;
   is_corner?: boolean;
   is_rare?: boolean;
-  /** 稀有模块出现概率（百分比），由后端按 5x5 布局统计计算 */
+  /** 稀有模块出现概率（百分比），由后端读取 RareChance 计算 */
   spawn_rate?: number;
   offset_x: number;
   offset_y: number;

@@ -4,6 +4,19 @@
 
 ## 2026-10-28
 
+### feat: 稀有模块出现概率改为读取 RareChance
+
+- **改动原因**：游戏模式已切换为 5x5 随机地图，2026-10-16 之后的导出中 `DungeonLayout` 资产目录消失，`Id_Dungeon_Random*.json` 也移除了 `Layouts` 字段。原「含 Rare 槽布局数 / 布局总数」模型只能永久依赖改版前的 `BASELINE_LAYOUT_FACTORS = {"Crypt": (40, 2)}` 历史实测值。用户要求先改为 15%，后续再核实 `RareChance` 的精确作用域。
+- **变更文件**：`api/src/module_spawn_rate.py`、`api/src/db/importers/modules.py`、`api/tests/test_module_spawn_rate.py`、`web/src/utils/moduleSpawnRate.ts`、`web/src/types/data.ts`、`docs/BLINDFALL_PIT_PROBABILITY_RECORD.md`、`docs/BLINDFALL_PIT_PROBABILITY_RECORD_EN.md`、`api/data/darkfindv5.db`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 移除 `layout_stats()` / `rare_pool_sizes()` / `BASELINE_LAYOUT_FACTORS` / `BASELINE_FIXED_MODULES` 与全部布局统计代码；`module_spawn_rate.py` 只保留 `rare_groups()`、新增 `rare_chances()` 和 `compute_spawn_rates()`。
+  2. `rare_groups()` 仍以 `NumMaxRares > 0` 判定稀有组（决定哪些 `bIsRare` 模块可收录）；`rare_chances()` 从同组随机地牢读取 `RareChance`，同组多模式取最大值以保证确定性，当前 Crypt = 15。
+  3. `compute_spawn_rates()` 直接把组级 `RareChance` 写入该组每个 `is_rare` 模块的 `spawn_rate`，不再乘布局因子、稀有池倒数或覆盖修正。Crypt 5 个稀有模块由 `0.84` 变为 `15.0`；Ruins 仍无 `NumMaxRares`，不产生概率。
+  4. `ModulesImporter._store_spawn_rates(chances=...)` 参数由 `stats` 改为 `chances`；资产缺失时保留 DB 既有值的兜底不变。前端只改注释，读取逻辑未变。
+  5. 两份概率文档顶部新增 2026-10-28 实现状态与「RareChance 作用域待确认」说明，原 0.84% 推导保留为历史章节。
+- **验证**：`api/lint.sh` 通过；`python3 -m unittest discover -s tests -p 'test_*.py'` 220 个全通过；`npx tsc --noEmit` 通过；`python main.py --rebuild-db` exit 0（42.96s，`[VALIDATE] all module images OK`）；`data/json/dungeon_modules.json` 与 DB 中 5 个 Crypt 稀有模块 `spawn_rate` 均为 `15.0`，无其他模块带概率。
+- **备注**：本机 sqlite 在默认 `TMPDIR=/tmp` 下执行排序查询会报 `unable to open database file`，重建管道时临时改用 `TMPDIR=<repo>/.tmp/sqlite` 规避；未改动代码。
+
 ### chore: 补丁部署——同步 FMOD 解包并全量重建 DB 后推送 main
 
 - **改动原因**：用户要求执行「补丁部署」。按 `docs/BUILD_AND_DEPLOY.md`「更新部署」流程，把最新游戏解包同步进本地、全量重建 SQLite，并将含新 DB 的 `main` 推到 `origin/main`，供 GitHub Actions 在无游戏源的环境下导出 JSON。本次未改任何代码，只刷新数据。

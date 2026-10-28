@@ -1,23 +1,24 @@
 # Blindfall Pit 概率计算记录
 
-## 实现状态（2026-10-23 更新）
+## 实现状态（2026-10-28 更新）
 
-概率已从「前端硬编码 1%」改为**由游戏资产实时计算**，实现位于 `api/src/module_spawn_rate.py`，结果写入 `data/json/dungeon_modules.json` 的 `spawn_rate` 字段，前端只读取不再计算。
-
-三个因子的实际来源：
+概率**改为直接读取 `DCDungeonDataAsset.Properties.RareChance`**，实现仍位于 `api/src/module_spawn_rate.py`，结果写入 `data/json/dungeon_modules.json` 的 `spawn_rate` 字段，前端只读取不再计算。
 
 | 因子 | 来源 | 当前状态 |
 |------|------|---------|
 | 稀有槽存在性 | `DCDungeonDataAsset.Properties.NumMaxRares` | 仅 Crypt 声明了 `= 1`，其他组无此字段 → 不产生概率 |
-| 稀有池规模 | 同 `ModuleType` 下 `bIsRare == true` 且被 5x5 收录的模块数 | Crypt = 5（实时统计） |
-| 布局因子 | `DCDungeonLayoutDataAsset` 的 Rare 槽分布 | **资产缺失**，退回本文档实测值 2/40 |
-| 覆盖修正 | `SlotType == Fixed` 指向的固定模块 `Size` | `CenterTower` 2×2 = 4 格（实时读取） |
+| 出现概率 | `DCDungeonDataAsset.Properties.RareChance` | Crypt = 15 → 5 个稀有模块均为 `15%` |
+| 稀有池规模 | 同 `ModuleType` 下 `bIsRare == true` 且被 5x5 收录的模块数 | Crypt = 5（仅用于收录判定，不参与概率系数） |
 
-当前游戏导出中 `Data/Generated/V2/Dungeon/DungeonLayout/` 目录不存在，`Id_Dungeon_Random*.json` 也不含 `Layouts` 字段，因此布局因子无法从资产统计。代码在布局缺失时使用 `BASELINE_LAYOUT_FACTORS = {"Crypt": (40, 2)}` 并在管道日志中标注 `source=baseline`；一旦游戏重新提供布局资产，会自动切到 `source=assets` 按真实槽位计算，无需改代码。
+**改动原因**：游戏模式已切换为 5x5 随机地图，2026-10-16 之后的导出中 `Data/Generated/V2/Dungeon/DungeonLayout/` 目录消失，`Id_Dungeon_Random*.json` 也移除了 `Layouts` 字段。原「含 Rare 槽布局数 / 布局总数」模型失去数据来源，只能永久依赖 `BASELINE_LAYOUT_FACTORS = {"Crypt": (40, 2)}` 这个改版前的历史实测值。现改为 `RareChance` 直接把游戏内的数值落到 `spawn_rate`。
+
+**待确认**：`RareChance` 的精确作用域（按局判定、按槽判定，还是稀有池权重）尚未由游戏内实测证实。当前实现把它当作「稀有模块出现概率（%）」直接展示；确认后只需调整 `module_spawn_rate.compute_spawn_rates()`。
 
 **结果缓存**：CI 没有游戏导出目录，导入阶段会被 `db_freshness` 跳过，届时无法重新计算。因此 `ModulesImporter._store_spawn_rates()` 会把算出的概率写回 `dungeon_modules.spawn_rate`，导出时直接读该列；`module_builder` 不再重复计算。这样仓库里提交的 DB 就是概率的唯一来源，CI 与本地结果一致。若导入时资产缺失且算不出概率，代码保留 DB 里的既有值并打印提示，不会清零。
 
-重新计算后的结果与本文档结论一致：Crypt 的 5 个稀有模块均为 `0.84%`；Ruins 的 17 个 `bIsRare` 模块因该组没有 `NumMaxRares` 而**不显示概率**（此前会错误套用 Crypt 的 2/40）。
+当前结果：Crypt 的 5 个稀有模块均为 `15%`；Ruins 的 17 个 `bIsRare` 模块因该组没有 `NumMaxRares` 而**不显示概率**。
+
+> 以下章节保留 2026-10-23 的布局层推导，作为历史依据与改版前的核对方法；其 `0.84%` 结论已不再对应当前展示值。
 
 ## 结论
 
