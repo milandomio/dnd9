@@ -399,3 +399,17 @@
   4. **导出校验**：`data/json/dungeon_shops/Crypts.json` 装备槽 631 项全部带 `item_category_key`，`pool` 为 `tier 621 / mini_artifact 10`，小型神器累计 1.0043%，示例 `Bloodbound_5001`（血缚）显示 `史诗 / 武器 / 500`。
   5. **不跑前端**：按流程不在本次执行 `npm run build` / `vite preview`，SSG 由 GitHub Actions 拿到新 DB 后完成。
 - **验证**：后端 202 项单测全部 OK；`./api/lint.sh` 通过（ruff + black）；DB 表数与大表行数正常；导出 JSON 字段与增长后一致。
+
+# 2026-11-02 会话修改记录
+
+## feat: 新增独立 CUE4Parse 导出模块并导出简体中文 Game.locres
+
+- **改动原因**：用户要求直接读取已安装游戏的 `.pak` / `.utoc/.ucas` 导出 JSON，并将工具放在与 `api/`、`web/` 同级的独立目录；首个导出目标为 `DungeonCrawler/Content/Localization/Game/zh-Hans/Game.locres`。
+- **变更文件**：新增 `extractor/Extractor.csproj`、`extractor/Program.cs`、`extractor/packages.lock.json`、`extractor/README.md`；更新 `.gitignore`、`docs/AGENT_REFERENCE.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. `extractor/` 为独立 Linux .NET 10 命令行模块，精确固定 CUE4Parse `1.2.2.202611` 并提交依赖锁；本机用户目录安装 SDK `10.0.403`。直接扫描 Paks 根目录，不依赖 repak/retoc，不读取子目录的备份或模组。
+  2. 提供 `--paks`、`--asset`、`--output`、`--usmap`、`--aes-file`、`--game` 参数；默认读取用户指定的游戏 Paks 及 `/mnt/e/Game/fmod/aes.txt`（存在时），密钥仅从本地文件读取，不输出内容。默认 `GAME_UE5_6` 为可覆盖的读取配置，不宣称自动检测引擎版本。
+  3. CUE4Parse 按容器读取优先级选择最新补丁资源；有目录索引的容器挂载失败时停止，避免静默退回旧资源；无目录索引的 global 容器不因此判为失败。本次挂载 184 个容器，剩余 1 个不含目录索引，实际来源为 `pakchunk0-Windows_0_P.pak`。
+  4. `.locres` → 命名空间/翻译键/原始文本字典 → UTF-8 无 BOM JSON；按命名空间及键排序，不清洗文本，完整解析并序列化后原子替换目标文件。输出保留 `DC` 字典，兼容现有 Python 的 `Game.json` 读取结构。
+  5. 实际生成 `extractor/output/DungeonCrawler/Content/Localization/Game/zh-Hans/Game.json`：8 个命名空间、14364 条翻译，其中 `DC` 为 13626 条，文件 1609542 字节，SHA-256 `b8f0267955b3a03ba77b5d7880123271b7e8e50d48214ec5e8bb488f9538dba1`。导出文件、编译产物、日志及本地解压库忽略提交；后续再接入 Python 导入流程。
+- **验证**：`dotnet restore --locked-mode`、Release build（0 warning / 0 error）、`dotnet format whitespace --verify-no-changes --no-restore`、`git diff --check` 通过；实际默认导出与显式指定 AES 文件及 `season11hotfix130.usmap` 的自定义路径导出逐字节一致；JSON 可重新加载，13389 条文本包含汉字、376 条文本包含换行；help 和 8 项 CLI 失败场景符合预期，资源不存在时已有输出保持不变；全部导出及验证日志均不含 AES 密钥。本次仅新增独立导出工具，未运行网站数据管道或部署。

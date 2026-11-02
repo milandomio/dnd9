@@ -22,6 +22,13 @@ api/output/
 api/logs/
 *.log
 
+# CUE4Parse extractor outputs and local decompression libraries
+extractor/bin/
+extractor/obj/
+extractor/output/
+extractor/*.so
+extractor/*.dll
+
 # DB - normally ignored; temporarily force-add only during the documented push flow
 *.db
 *.csv

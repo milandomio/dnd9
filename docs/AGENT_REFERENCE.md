@@ -13,6 +13,8 @@
 
 ```
 DarkFindV5/
+├── extractor/            # C# / CUE4Parse 游戏容器读取与原始 JSON 导出（见 extractor/README.md）
+│   └── output/              # 按游戏虚拟路径保存导出结果，不提交
 ├── api/                  # 后端
 │   ├── main.py               # 入口（运行管道 + 自动交付到 data/）
 │   ├── src/
