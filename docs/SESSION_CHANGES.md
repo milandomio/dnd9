@@ -438,3 +438,16 @@
 - **变更文件**：`README.md`、`AGENTS.md`、`docs/BUILD_AND_DEPLOY.md`、`docs/AGENT_REFERENCE.md`、`extractor/README.md`、`docs/SESSION_CHANGES.md`。
 - **关键逻辑/映射关系**：根 README 增加普通部署与维护者补丁更新的流程表、模块目录与文档入口；普通部署为 DB_ONLY → JSON → Web，仅补丁部署执行 extractor → 14 目录更新 → DB 重建。AGENTS 和部署文档同步该边界；无源环境保留仓库 DB，不使用 `--rebuild-db`，缺失或不可用时取得完整 DB，不自动解包。按现有 `db_freshness.py` 补正 README 的 DB_READY / REBUILD_REQUIRED / DB_ONLY / FAIL_FAST 判据。
 - **验证**：`git diff --check`、文档引用路径检查通过；核查 `deploy.sh`、`api/main.py`、`web/package.json` 和 CI 构建配置，没有自动调用 extractor；仅修改文档，未运行解包、数据管道或 Web 构建。
+
+
+## chore: 删除本地 DB 全量重建并对比远程 main 数据库
+
+- **改动原因**：用户要求删除 DB 后重建，并核对与线上 DB 的数据变化。
+- **变更文件**：`api/data/darkfindv5.db`（本地重建，未 stage）、`docs/SESSION_CHANGES.md`；备份、远程快照与完整差异保存在 `.tmp/db-compare-20261102-225952/`，不提交。
+- **关键逻辑/映射关系**：
+  1. `git fetch origin main` 后以远程 commit `65a3ffc2f9a1cc211afbf7dc11b76fe90ba5cbfa` 中的 DB 为线上基准。先备份本地 DB 为 `before-rebuild.db`，删除正式 DB，再运行 `api/main.py`；入口判定 DB missing，完成全量导入及原子替换。管道 46.26s、exit 0，图片校验通过。
+  2. 所有数据库查询经 sqlite-debug MCP；导出完整表并按列名及完整行规范化排序后计算 SHA-256，保留重复行。排除 SQLite 内部表和 FTS 派生索引后共 36 张表，结构一致；28 张内容相同，7 张业务表变化，另 1 张为 pipeline_meta 元数据变化。
+  3. 业务差异：dungeon_modules 的 5 个 Crypt 稀有模块概率 0.84→15；item_properties 25 个物品属性变化；lootdrop_groups 47 条 drop_count、lootdrop_rate_items 18 条 drop_count、lootdrop_rate_weights 2 条 weight 变化；Tailor 第 10 条任务目标及翻译键改为冰霜骷髅弓手；spawners 46177→46176。
+  4. spawners 按 id 对比的 23326 条更新主要来自自增 ID 重排，已额外排除 id 核查：普通 `StoneGrave_Center_02_D.json` 的 SpiderPot 记录不再出现；`StoneGrave_Center_02_HR_D.json` 的 SpiderPot 坐标/yaw 改变，其余完整业务字段一致。未将 ID 重排误报为大量游戏坐标改变。
+  5. 重建前本地 DB 与本次重建的 35 张业务表完整内容相同，仅 pipeline_meta.import_completed_at 更新。因此对远程的差异为当前本地代码和解包源的累计差异，本次删除重建未额外产生业务变动。
+- **验证**：远程、重建前本地、重建后三份 DB 的 integrity_check 均为 ok；完整逐行差异、结构化 JSON 字段差异和生成点 ID 排除对比完成，摘要见 `.tmp/db-compare-20261102-225952/REPORT.md`，详情见 `comparison.json`、`semantic-diff.json`；`git diff --check` 通过。本次未推送远程。
