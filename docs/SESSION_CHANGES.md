@@ -430,3 +430,11 @@
   8. 更新部署文档改为最新映射→容器更新 14 目录→API 全量重建→Web 构建和预览；dev 保留跳过 SSG 的规则，推送仍需明确授权。
 - **验证**：锁定依赖恢复、Release build（0 warning / 0 error）、C# whitespace、`git diff --check` 通过；实际 AES/usmap 的 locres、物品、简单地图导出通过，旧 locres 哈希不变；Buff 6 个对象、复杂地图 1195 个对象与备份的 FModel JSON 结构和值完全相等。合成目录验证旧文件清理、完整备份、范围外保留、空匹配拒绝，以及第二目录替换失败后第一目录回滚；临时独立复制模块后恢复、编译、扫描、UObject 导出及 Git 忽略密钥均通过；文档经独立读者检查通过。
 - **下游验证**：`python main.py --rebuild-db` exit 0，管道 36.73s，图片校验通过；sqlite-debug MCP 验证 integrity_check=ok、37 张非 FTS 表、import_complete=1、spawners=46176、dungeon_modules=221、translations=13626。Node 20 `npm ci` 和 `npm run build` 成功（2949 routes、15042 文件），8081 preview HTTP 200，多语言回归 29 通过 / 0 失败。运行日志、报告、备份与本地密钥均不提交；本次仅本地提交，不推送。
+
+
+## docs: 明确 extractor 仅用于补丁部署，普通部署使用仓库 DB
+
+- **改动原因**：用户要求主文档明确解包模块的调用时机；普通用户拉取线上仓库后没有游戏目录和解包文件，应仅通过已有 DB 部署。
+- **变更文件**：`README.md`、`AGENTS.md`、`docs/BUILD_AND_DEPLOY.md`、`docs/AGENT_REFERENCE.md`、`extractor/README.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：根 README 增加普通部署与维护者补丁更新的流程表、模块目录与文档入口；普通部署为 DB_ONLY → JSON → Web，仅补丁部署执行 extractor → 14 目录更新 → DB 重建。AGENTS 和部署文档同步该边界；无源环境保留仓库 DB，不使用 `--rebuild-db`，缺失或不可用时取得完整 DB，不自动解包。按现有 `db_freshness.py` 补正 README 的 DB_READY / REBUILD_REQUIRED / DB_ONLY / FAIL_FAST 判据。
+- **验证**：`git diff --check`、文档引用路径检查通过；核查 `deploy.sh`、`api/main.py`、`web/package.json` 和 CI 构建配置，没有自动调用 extractor；仅修改文档，未运行解包、数据管道或 Web 构建。

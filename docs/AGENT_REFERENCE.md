@@ -13,7 +13,7 @@
 
 ```
 DarkFindV5/
-├── extractor/            # C# / CUE4Parse 游戏容器读取与原始 JSON 导出（见 extractor/README.md）
+├── extractor/            # 仅维护者补丁部署调用；普通部署用 DB（见 extractor/README.md）
 │   ├── config.json          # 通用配置；config.local.json 覆盖本机 Paks 路径，不提交
 │   ├── keys/                # 本地 AES + usmap，除 README 外不提交
 │   ├── update-scope.json    # 14 个递归目录，全部成功后备份、清理并替换

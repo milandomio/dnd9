@@ -10,6 +10,8 @@
 
 游戏原始 JSON → Python 清洗 → React SSG (Vite + Ant Design) + PWA (vite-plugin-pwa / Workbox) → 静态部署。
 
+**解包调用边界**：部署流程中仅维护者的「补丁部署 / 更新游戏数据」调用 `extractor/`。普通用户拉取仓库后无游戏目录或解包文件，使用随仓库 DB 走 `DB_ONLY` → JSON → Web 构建；保留 DB，不调用解包、不要求 AES/usmap/.NET、不使用 `--rebuild-db`。DB 缺失或不可用时报告并取得完整 DB，不自动转为解包。
+
 ## 子文档查阅规则
 
 遇到对应任务时必须先查对应文档：

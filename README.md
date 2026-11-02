@@ -37,12 +37,24 @@ cd dnd9
 数据管道的入口会先判断数据源是否可用：
 
 ```
-数据源完整  → REBUILD_REQUIRED  重新解析游戏资产、重建 DB
-数据源缺失  → DB_ONLY          直接用仓库里的 DB 导出 JSON
-两者都缺    → FAIL_FAST        报错退出
+解包源完整且需重建  → REBUILD_REQUIRED  导入已有解包 JSON、重建 DB
+解包源与 DB 已匹配  → DB_READY          复用 DB 导出 JSON
+解包源缺失、DB 可用 → DB_ONLY           直接用仓库里的 DB 导出 JSON
+解包源缺失、DB 不可用 → FAIL_FAST       报错退出
 ```
 
 判断逻辑位于 `api/src/db_freshness.py`。普通用户的环境里没有 `Output/Exports/` 目录，因此自动走 **DB_ONLY**，跳过所有游戏资产解析，只做「DB → JSON → 静态页面」这一段，几十秒即可完成。
+
+### extractor 的调用时机
+
+| 场景 | 数据流程 | 是否调用 `extractor/` |
+|------|----------|---------------------|
+| 普通用户拉取仓库后本地部署、重新构建或 CI 构建 | 仓库 DB → JSON → Web 构建 | 否 |
+| 维护者更新游戏补丁数据（补丁部署） | 游戏容器 → 14 个目录解包更新 → 重建 DB → JSON → Web 构建 | 是 |
+
+`extractor/` 仅用于维护者的补丁数据更新，独立于日常部署入口。`deploy.sh`、`api/main.py` 和 Web 构建均不会自动调用它。普通用户无需游戏目录、解包文件、AES、usmap 或 .NET SDK；保留仓库提供的 DB，直接执行 `./deploy.sh`。
+
+没有游戏解包源时，不要删除 DB 或使用 `--rebuild-db`。DB 缺失或不可用时需取得完整 DB，部署流程不会自动解包补救。维护者的补丁更新步骤见 [更新部署](docs/BUILD_AND_DEPLOY.md#更新部署)。
 
 ### 部署到静态托管
 
@@ -57,6 +69,7 @@ cd dnd9
 
 ```
 .
+├── extractor/              维护者补丁更新工具（普通部署不调用）
 ├── api/                    数据管道（Python）
 │   ├── main.py             管道入口
 │   ├── data/darkfindv5.db  预生成数据库（普通用户的数据源）
@@ -109,17 +122,14 @@ cd web && npm run check                 # eslint + prettier + tsc
 cd api && python3 -m unittest discover -s tests
 ```
 
-需要重新解析游戏资产时（仅项目维护者）：
-
-```bash
-cd api && python3 main.py --rebuild-db
-```
+维护者更新游戏补丁数据时，按 [更新部署](docs/BUILD_AND_DEPLOY.md#更新部署) 先调用 `extractor/` 更新解包源，再运行 API 全量重建。普通用户继续使用仓库 DB 部署。
 
 ## 文档
 
 | 文档 | 内容 |
 |------|------|
 | [docs/BUILD_AND_DEPLOY.md](docs/BUILD_AND_DEPLOY.md) | 构建、启动、部署流程 |
+| [extractor/README.md](extractor/README.md) | 维护者补丁解包、AES/usmap 配置与资源扫描 |
 | [docs/DEVELOPMENT_WORKFLOW.md](docs/DEVELOPMENT_WORKFLOW.md) | 开发与提交规范 |
 | [docs/AGENT_REFERENCE.md](docs/AGENT_REFERENCE.md) | 项目结构与组件职责 |
 | [docs/REFERENCE_DATA_PIPELINE.md](docs/REFERENCE_DATA_PIPELINE.md) | 数据管道细节 |

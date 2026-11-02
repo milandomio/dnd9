@@ -2,6 +2,8 @@
 
 独立的 .NET 10 / CUE4Parse 命令行模块，直接读取 `.pak` 和 `.utoc/.ucas`，无需先用 repak、retoc 或 FModel 解包。可复制整个 `extractor/` 单独使用，不依赖 `api/`、`web/` 或 MCP 服务。
 
+本项目的部署流程中，仅维护者更新游戏补丁数据时调用本模块。普通用户拉取仓库后通过随仓库 DB 进行本地部署，无需配置本模块；`deploy.sh`、API 入口和 Web 构建均不会自动调用解包。
+
 支持容器索引扫描、单文件 JSON 导出、递归目录更新。`.locres` 输出命名空间字典，`.uasset` / `.umap` 输出 FModel 兼容的对象数组。当前尚未实现纹理转 PNG。
 
 ## 首次配置

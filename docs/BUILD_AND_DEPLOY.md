@@ -4,6 +4,8 @@
 
 ## 完整构建
 
+普通用户拉取仓库后的本地部署及 CI 构建使用随仓库的 `api/data/darkfindv5.db`，无游戏解包源时自动走 `DB_ONLY`。本流程不调用 `extractor/`，无需游戏目录、解包文件、AES、usmap 或 .NET SDK；保留 DB，运行 `./deploy.sh` 或下列构建步骤。DB 缺失或不可用时应取得完整 DB，不执行补丁解包，也不使用 `--rebuild-db`。
+
 构建前先按 `docs/DEVELOPMENT_WORKFLOW.md` 检查并分类工作区；不要为了开始构建而提交未验证功能。只有已有本任务 WIP 需要保护时，才先创建 `wip:` checkpoint；干净工作区跳过。
 
 ```bash
@@ -19,6 +21,8 @@ sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8081/
 `python main.py` 在 search_index 步骤后自动运行 `build_locale_files`，生成 `data/json/locale/{lang}.json`（10种语言）。`npm run build` 中的 `ssg.mjs` 使用这些 locale 字典为每种语言生成 HTML 副本（dist/{lang}/...）。完整构建产物约 1.28 GB。
 
 ## 更新部署
+
+本节专指维护者更新游戏补丁数据，是部署流程中唯一调用 `extractor/` 的场景。拉取仓库后使用已有 DB 部署，按上方「完整构建」执行。
 
 用户说「更新部署」「补丁部署」时执行本流程：使用最新 usmap 直接从已安装游戏的容器更新 14 个目录，再全量重建 SQLite、运行 API 清洗、构建 Web 并验证预览。解包替代原来的 `~/sync_fmod.sh` 和手动 FModel 导出；后续数据处理与 Web 构建入口不变。
 
@@ -98,13 +102,14 @@ cd web && kill $(lsof -t -i:8081) 2>/dev/null; sleep 0.5; nohup npx vite preview
 ## 数据流
 
 ```
-游戏 JSON → api/main.py → api/output/json/ + api/src/img/
+仅补丁更新：extractor/ → 游戏 JSON → API 全量导入 → DB
+所有构建：DB → api/main.py → api/output/json/ + api/src/img/
 → 自动交付 → data/{json/, img/}
 → npm run build → web/public/data/ → dist/data/
 → GitHub Actions → gh-pages 分支 → Cloudflare Pages → 浏览器 fetch → 注水渲染
 ```
 
-无游戏文件部署：DB 含全部数据，`python main.py` 可直接生成所有 JSON。
+无游戏文件部署：DB 含全部数据，`python main.py` 以 `DB_ONLY` 直接生成所有 JSON；`deploy.sh`、API 入口和 Web 构建均不会自动启动 `extractor/`。
 
 ## 远端
 
