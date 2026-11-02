@@ -20,21 +20,33 @@ sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8081/
 
 ## 更新部署
 
-与「完整构建」独立。用户说「更新部署」「补丁部署」时执行本流程，不要改走完整构建或仅前端构建。目的是同步最新游戏解包、全量重建 SQLite，并把含新 DB 的 `main` 推到 `origin/main`（供 Actions 无游戏源时导出 JSON）。
+用户说「更新部署」「补丁部署」时执行本流程：使用最新 usmap 直接从已安装游戏的容器更新 14 个目录，再全量重建 SQLite、运行 API 清洗、构建 Web 并验证预览。解包替代原来的 `~/sync_fmod.sh` 和手动 FModel 导出；后续数据处理与 Web 构建入口不变。
+
+先按 [`extractor/README.md`](../extractor/README.md) 配置 `extractor/config.local.json` 的 `paksDirectory`，把最新 AES 和匹配游戏版本的 usmap 放在 `extractor/keys/`。固定范围由 `extractor/update-scope.json` 维护，包含所有子目录与新增资源；定位其他资源见 [`extractor/docs/FOLDER_DISCOVERY.md`](../extractor/docs/FOLDER_DISCOVERY.md)。
 
 ```bash
 git status --short
-~/sync_fmod.sh                                      # 1. 同步 FMOD Output → ~/fmod/Output/
-rm -f api/data/darkfindv5.db                        # 2. 删除本地 DB，强制全量重建
-cd api && nohup python main.py > pipeline.log 2>&1 &  # 3. 数据管道生成新 DB 与 JSON
-# 4. 管道成功且 DB 可用后，按下方「推送到 dnd9（含 DB）」提交并推送 origin/main
+# 1. 在 extractor/ 中，锁定恢复与构建成功后运行（各步后台执行并检查日志）
+nohup setsid dotnet bin/Release/net10.0/Extractor.dll \
+  --manifest update-scope.json \
+  --output-root output/update/Content \
+  --apply-to /home/mio/fmod/Output/Exports/DungeonCrawler/Content \
+  --report output/update/update-report.json > update.log 2>&1 < /dev/null &
+# 2. 仅在报告确认解包替换全部成功后，在 api/ 中运行
+nohup setsid python main.py --rebuild-db > pipeline.log 2>&1 < /dev/null &
+# 3. 非 dev 分支：管道成功且 DB 可用后，在 web/ 中运行；dev 直接启动 Vite
+nohup setsid npm run build > build.log 2>&1 < /dev/null &
+# 4. 构建完成后按「完整构建」启动 preview，验证 HTTP 200 与适用回归
+# 5. 按 DEVELOPMENT_WORKFLOW 记录并本地提交；推送需用户明确授权
 ```
 
 规则：
-- 同步脚本路径固定为 `/home/mio/sync_fmod.sh`（`rsync -avu /mnt/e/Game/fmod/Output/ ~/fmod/Output/`）。
-- 管道必须后台跑并检查 `api/pipeline.log`；成功后用 sqlite-debug 确认 DB 可读、表数量正常。
-- 不在本流程中跑 `npm run build` / `vite preview`；前端 SSG 由 GitHub Actions 在拿到新 DB 后完成。
-- 推送前更新 `docs/SESSION_CHANGES.md`；只 stage 本次文档与临时跟踪的 DB，不要混入 `.playwright-mcp/` 等无关文件。
+
+- 解包进程结束且报告 `Completed=true`、`Applied=true`、`Failed=0`、`ApplyError=null` 后，才能运行 API 管道。任一资源解析失败时保留全部旧目录；修正配置后重跑。
+- 每个范围目录整体备份并替换，因此会清理旧文件。报告的 `BackupRoot` 保存完整旧目录；范围外目录保持原状。需要恢复时按解包模块文档操作。
+- `--rebuild-db` 强制全量重建，由管道完成新 DB 的替换；管道必须后台跑并检查 `api/pipeline.log`，成功后用 sqlite-debug 确认 DB 可读、表数量正常。
+- 非 `dev` 分支：管道成功后再运行 Web 构建，构建完成必须验证 preview HTTP 200。`dev` 分支跳过 Web 构建，按 AGENTS.md 启动 Vite 开发模式，无需验证 HTTP 200。
+- 验证通过后更新 `docs/SESSION_CHANGES.md` 并精确 stage、本地提交；用户明确要求推送时才按下方「推送到 dnd9（含 DB）」执行，不要混入 `.playwright-mcp/` 等无关文件。
 - 本地 DB 默认 `skip-worktree`；rebase/checkout 被 DB 挡住时，先 `--no-skip-worktree` 并移走文件，完成后再恢复。
 
 ## Lootdrop 变体构建范围

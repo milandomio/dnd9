@@ -14,7 +14,11 @@
 ```
 DarkFindV5/
 ├── extractor/            # C# / CUE4Parse 游戏容器读取与原始 JSON 导出（见 extractor/README.md）
-│   └── output/              # 按游戏虚拟路径保存导出结果，不提交
+│   ├── config.json          # 通用配置；config.local.json 覆盖本机 Paks 路径，不提交
+│   ├── keys/                # 本地 AES + usmap，除 README 外不提交
+│   ├── update-scope.json    # 14 个递归目录，全部成功后备份、清理并替换
+│   ├── docs/FOLDER_DISCOVERY.md # 索引扫描与新目录试导出
+│   └── output/              # 暂存 JSON、逐文件来源报告与旧目录备份，不提交
 ├── api/                  # 后端
 │   ├── main.py               # 入口（运行管道 + 自动交付到 data/）
 │   ├── src/

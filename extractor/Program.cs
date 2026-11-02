@@ -1,45 +1,48 @@
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using CUE4Parse.Compression;
 using CUE4Parse.Encryption.Aes;
 using CUE4Parse.FileProvider;
 using CUE4Parse.MappingsProvider.Usmap;
-using CUE4Parse.UE4.Localization;
 using CUE4Parse.UE4.Versions;
 using CUE4Parse.UE4.VirtualFileSystem;
 using Serilog;
 using Serilog.Events;
 
-const string defaultPaks = "/mnt/e/soft/Steam/steamapps/common/Dark and Darker/DungeonCrawler/Content/Paks";
 const string defaultAsset = "DungeonCrawler/Content/Localization/Game/zh-Hans/Game.locres";
-const string defaultAesFile = "/mnt/e/Game/fmod/aes.txt";
 
 if (args.Contains("--help") || args.Contains("-h"))
 {
     Console.WriteLine("""
         Usage: dotnet run -- [--paks DIRECTORY] [--asset PATH] [--output FILE]
-                             [--usmap FILE] [--aes-file FILE] [--game GAME_UE5_6]
+                             [--usmap FILE] [--aes-file FILE] [--game GAME_UE5_8]
+               dotnet run -- --manifest FILE --output-root DIRECTORY [--apply-to CONTENT_ROOT]
+                             [--report FILE] [--usmap FILE] [--usmap-dir DIRECTORY]
+               dotnet run -- --scan KEYWORD_OR_PATH [--output INVENTORY_JSON]
+        All modes accept --config FILE (default: module config.json plus config.local.json).
 
-        Reads game containers directly and exports a .locres as UTF-8 JSON.
-        Defaults: installed Dark and Darker Paks; zh-Hans/Game.locres;
+        Reads game containers directly and exports .locres/.uasset/.umap as UTF-8 JSON.
+        Defaults: configured Paks directory; zh-Hans/Game.locres;
                   output/<asset path with .json extension>, relative to working directory.
         --usmap optionally loads an explicit mapping file; .locres does not require one.
-        --aes-file reads a single hex AES key; defaults to /mnt/e/Game/fmod/aes.txt if present.
-        --game selects a CUE4Parse EGame name (default: GAME_UE5_6).
+        UObject/batch exports default to the newest .usmap in configured keys/.
+        --manifest accepts root/folders configuration and optional files from fmodel-query.
+        Batch mode recursively exports all resources under the configured folders.
+        --apply-to backs up and replaces complete folders after every export succeeds.
+        --aes-file reads a single hex AES key; defaults to configured keys/aes.txt if present.
+        --game selects a CUE4Parse EGame name (default: GAME_UE5_8).
         """);
     return 0;
 }
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
+    .WriteTo.Sink(new ExportDiagnostics())
     .WriteTo.Console(standardErrorFromLevel: LogEventLevel.Verbose)
     .CreateLogger();
 
 try
 {
     var options = new Dictionary<string, string>(StringComparer.Ordinal);
-    string[] knownOptions = ["--paks", "--asset", "--output", "--usmap", "--aes-file", "--game"];
+    string[] knownOptions = ["--paks", "--asset", "--output", "--usmap", "--usmap-dir", "--aes-file", "--game",
+        "--manifest", "--output-root", "--apply-to", "--report", "--scan", "--config"];
     for (var i = 0; i < args.Length; i += 2)
     {
         if (!knownOptions.Contains(args[i]))
@@ -50,26 +53,50 @@ try
             throw new ArgumentException($"Repeated option: {args[i]}.");
     }
 
-    var paks = Path.GetFullPath(options.GetValueOrDefault("--paks", defaultPaks));
+    var batch = options.ContainsKey("--manifest");
+    var scan = options.ContainsKey("--scan");
+    if (scan && (batch || options.ContainsKey("--asset")))
+        throw new ArgumentException("Use --scan separately from --manifest/--asset.");
+    if (batch && (options.ContainsKey("--asset") || options.ContainsKey("--output")))
+        throw new ArgumentException("Use --output-root in batch mode, without --asset/--output.");
+    if (!batch && new[] { "--output-root", "--apply-to", "--report" }.Any(options.ContainsKey))
+        throw new ArgumentException("--output-root/--apply-to/--report require --manifest.");
+
+    var settings = ExtractorSettings.Load(options.GetValueOrDefault("--config"));
+    var configuredPaks = options.GetValueOrDefault("--paks", settings.PaksDirectory);
+    if (string.IsNullOrWhiteSpace(configuredPaks))
+        throw new ArgumentException("Set paksDirectory in config.local.json or pass --paks DIRECTORY.");
+    var paks = Path.GetFullPath(configuredPaks);
     if (!Directory.Exists(paks))
         throw new DirectoryNotFoundException($"Paks directory not found: {paks}");
 
     var asset = options.GetValueOrDefault("--asset", defaultAsset).Replace('\\', '/');
     if (Path.IsPathRooted(asset) || asset.Split('/').Any(part => part is ".." or "." or ""))
         throw new ArgumentException("--asset must be a relative virtual resource path.");
-    if (!asset.EndsWith(".locres", StringComparison.OrdinalIgnoreCase))
-        throw new ArgumentException("This version exports .locres resources only.");
+    if (!AssetExporter.Supports(asset))
+        throw new ArgumentException("Supported resources: .locres, .uasset and .umap.");
 
     var output = Path.GetFullPath(options.GetValueOrDefault("--output",
         Path.Combine("output", Path.ChangeExtension(asset, ".json"))));
-    var gameName = options.GetValueOrDefault("--game", "GAME_UE5_6");
+    var gameName = options.GetValueOrDefault("--game", settings.Game);
     if (!Enum.TryParse<EGame>(gameName, out var game) || !Enum.IsDefined(game)
         || !gameName.StartsWith("GAME_", StringComparison.Ordinal))
         throw new ArgumentException($"Unknown CUE4Parse game version: {gameName}.");
 
     using var provider = new DefaultFileProvider(paks, SearchOption.TopDirectoryOnly,
         new VersionContainer(game), StringComparer.OrdinalIgnoreCase);
-    if (options.TryGetValue("--usmap", out var usmap))
+    var usmap = options.GetValueOrDefault("--usmap");
+    if (usmap is null && (batch || !asset.EndsWith(".locres", StringComparison.OrdinalIgnoreCase)))
+    {
+        var mappingsDirectory = options.GetValueOrDefault("--usmap-dir", settings.UsmapDirectory);
+        usmap = Directory.Exists(mappingsDirectory)
+            ? Directory.EnumerateFiles(mappingsDirectory, "*.usmap")
+                .OrderByDescending(File.GetLastWriteTimeUtc).ThenBy(path => path, StringComparer.Ordinal).FirstOrDefault()
+            : null;
+        if (usmap is null)
+            throw new FileNotFoundException("UObject exports require a .usmap. Set --usmap or --usmap-dir.");
+    }
+    if (usmap is not null)
     {
         usmap = Path.GetFullPath(usmap);
         if (!File.Exists(usmap))
@@ -79,7 +106,7 @@ try
     }
 
     FAesKey? aesKey = null;
-    var aesFile = options.GetValueOrDefault("--aes-file", defaultAesFile);
+    var aesFile = options.GetValueOrDefault("--aes-file", settings.AesFile);
     if (File.Exists(aesFile))
     {
         var keyText = (await File.ReadAllTextAsync(aesFile)).Trim();
@@ -101,73 +128,33 @@ try
         await provider.SubmitKeysAsync(keys);
     }
     provider.Mount();
+    provider.PostMount();
     Console.WriteLine($"Containers: {provider.MountedVfs.Count} mounted, {provider.UnloadedVfs.Count} unmounted");
     var failedContainers = provider.UnloadedVfs.Where(reader => reader.HasDirectoryIndex).ToArray();
     if (failedContainers.Length > 0)
         throw new InvalidOperationException("Some indexed containers could not be mounted: "
             + string.Join(", ", failedContainers.Select(reader => reader.Name)) + ". Check the AES file and container errors. "
             + "Export stopped to avoid silently using an older resource.");
+
+    CUE4Parse.Globals.FatalObjectSerializationErrors = true;
+    if (scan)
+        return await ContainerScan.RunAsync(provider, options["--scan"], options.GetValueOrDefault("--output"));
+    if (batch || !asset.EndsWith(".locres", StringComparison.OrdinalIgnoreCase))
+    {
+        provider.LoadVirtualPaths();
+        provider.ChangeCulture("en");
+    }
+    if (batch)
+        return await BatchExport.RunAsync(provider, options);
+
     if (!provider.TryGetGameFile(asset, out var file))
         throw new FileNotFoundException($"Resource not found in mounted containers: {asset}");
 
     Console.WriteLine($"Asset: {file.Path}");
     Console.WriteLine($"Source: {(file is VfsEntry entry ? entry.Vfs.Path : "loose file")}");
 
-    // Only initialize Oodle when the selected resource actually needs it.
-    FTextLocalizationResource resource;
-    try
-    {
-        using var reader = file.CreateReader();
-        resource = new FTextLocalizationResource(reader);
-    }
-    catch (FileLoadException error) when (OodleHelper.Instance is null
-        && error.Message.StartsWith("Failed to decompress Oodle data", StringComparison.Ordinal))
-    {
-        Console.WriteLine("Initializing Linux-compatible Oodle decompression...");
-        await OodleHelper.InitializeAsync();
-        if (OodleHelper.Instance is null)
-            throw new InvalidOperationException("Oodle initialization failed; see the download/decompression errors above.");
-        using var reader = file.CreateReader();
-        resource = new FTextLocalizationResource(reader);
-    }
-
-    var data = new SortedDictionary<string, SortedDictionary<string, string>>(StringComparer.Ordinal);
-    foreach (var (ns, entries) in resource.Entries)
-    {
-        var translations = new SortedDictionary<string, string>(StringComparer.Ordinal);
-        foreach (var (key, value) in entries)
-        {
-            if (value.LocalizedString is null)
-                throw new InvalidDataException($"Missing localized text for {ns.Str}/{key.Str}.");
-            translations.Add(key.Str, value.LocalizedString);
-        }
-        data.Add(ns.Str, translations);
-    }
-
-    var count = data.Values.Sum(entries => entries.Count);
-    if (count == 0)
-        throw new InvalidDataException("The localization resource contains no translations.");
-
-    var json = JsonSerializer.Serialize(data, new JsonSerializerOptions
-    {
-        WriteIndented = true,
-        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-    }) + "\n";
-    Directory.CreateDirectory(Path.GetDirectoryName(output)!);
-    // Replace only after the full resource has parsed and serialized successfully.
-    var temporary = output + "." + Guid.NewGuid().ToString("N") + ".tmp";
-    try
-    {
-        await File.WriteAllTextAsync(temporary, json, new UTF8Encoding(false));
-        File.Move(temporary, output, overwrite: true);
-    }
-    finally
-    {
-        if (File.Exists(temporary))
-            File.Delete(temporary);
-    }
-
-    Console.WriteLine($"Namespaces: {data.Count}; translations: {count}");
+    var json = await AssetExporter.SerializeAsync(provider, file);
+    await AssetExporter.WriteAtomicAsync(output, json);
     Console.WriteLine($"Output: {output}");
     return 0;
 }

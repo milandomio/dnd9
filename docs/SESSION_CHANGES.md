@@ -413,3 +413,20 @@
   4. `.locres` → 命名空间/翻译键/原始文本字典 → UTF-8 无 BOM JSON；按命名空间及键排序，不清洗文本，完整解析并序列化后原子替换目标文件。输出保留 `DC` 字典，兼容现有 Python 的 `Game.json` 读取结构。
   5. 实际生成 `extractor/output/DungeonCrawler/Content/Localization/Game/zh-Hans/Game.json`：8 个命名空间、14364 条翻译，其中 `DC` 为 13626 条，文件 1609542 字节，SHA-256 `b8f0267955b3a03ba77b5d7880123271b7e8e50d48214ec5e8bb488f9538dba1`。导出文件、编译产物、日志及本地解压库忽略提交；后续再接入 Python 导入流程。
 - **验证**：`dotnet restore --locked-mode`、Release build（0 warning / 0 error）、`dotnet format whitespace --verify-no-changes --no-restore`、`git diff --check` 通过；实际默认导出与显式指定 AES 文件及 `season11hotfix130.usmap` 的自定义路径导出逐字节一致；JSON 可重新加载，13389 条文本包含汉字、376 条文本包含换行；help 和 8 项 CLI 失败场景符合预期，资源不存在时已有输出保持不变；全部导出及验证日志均不含 AES 密钥。本次仅新增独立导出工具，未运行网站数据管道或部署。
+
+
+## feat: 递归更新 14 个游戏资源目录，完善独立配置与扫描文档
+
+- **改动原因**：用户要求直接从本体及补丁容器更新指定的 14 个目录及全部子目录，清理旧导出，替代手动 FModel 解包和 `~/sync_fmod.sh`；模块需能单独复制使用，并支持扫描定位其他资源文件夹。
+- **变更文件**：`extractor/Program.cs`、`extractor/AssetExporter.cs`、`extractor/BatchExport.cs`、`extractor/ContainerScan.cs`、`extractor/ExportDiagnostics.cs`、`extractor/ExtractorSettings.cs`、`extractor/.gitignore`、`extractor/config.json`、`extractor/config.local.json.example`、`extractor/update-scope.json`、`extractor/keys/README.md`、`extractor/README.md`、`extractor/docs/FOLDER_DISCOVERY.md`、`AGENTS.md`、`docs/AGENT_REFERENCE.md`、`docs/BUILD_AND_DEPLOY.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 新增单文件 UObject 导出、`--scan` 索引扫描、`--manifest` 递归批量模式；`.locres` 保留命名空间字典，`.uasset/.umap` 使用原生转换器输出对象数组，保留英文属性本地化及对象引用。严格检查解析错误，避免输出半解析对象。
+  2. `update-scope.json` 固定 14 个 Content 相对目录，包含新增资源和所有子目录。先导出、校验 JSON 与 SHA-256，全部成功后才完整备份并替换每个目录；失败不应用，替换异常反向回滚。报告记录逐文件来源、哈希、状态与 `BackupRoot`，范围外目录保留。
+  3. 本体与补丁同时挂载，同虚拟路径经 CUE4Parse 的 `ReadOrder` 降序选取，再由 `provider[path]` 读取；本次本体 order=3、`_0_P` 补丁 order=103，补丁优先、本体补缺，不依赖枚举顺序或修改时间。有索引的容器挂载失败则停止，避免静默退回本体。
+  4. 默认配置 → 同目录 `config.local.json` → CLI 覆盖；本地 Paks 可配置，相对配置路径以配置目录为基准。AES 和最新 usmap 已放入模块 `keys/`，真实文件不提交；独立模块自带 `.gitignore`。UObject 默认按修改时间选择 usmap，亦可显式指定；索引扫描和 locres 无需映射。
+  5. 首次以 `GAME_UE5_6` 批量导出有 1089 个资源解析失败，旧目录未被替换。核对本机 FModel 日志后将读取配置修正为 `GAME_UE5_8`；Buff 和复杂地图恢复成功，结构和值与旧 FModel JSON 完全一致。该配置不是自动检测的引擎版本，升级时需核对。
+  6. 实际更新 `/home/mio/fmod/Output/Exports/DungeonCrawler/Content` 的 24617 个资源：全部成功，3055 个来自补丁、21562 个来自本体；旧的 `Localization/Game/Game.json` 已清理，10 个语言子目录保留。完整旧目录备份位于 `extractor/output/update-20261102-ue58/backup-20261102T133001-a33c438a/Content`；报告为同目录下 `update-report.json`（Completed/Applied=true，Failed=0，ApplyError=null）。
+  7. 地图图片扫描定位 `DungeonCrawler/Content/DungeonCrawler/Data/Art/DungeonModuleMapImage` 下 226 个资源、9 个目录，已试导出 CorridorofDarkPriests 纹理 JSON；当前尚未提供 PNG 解码。文档补齐扫描→单文件→独立范围导出→清理与恢复流程。
+  8. 更新部署文档改为最新映射→容器更新 14 目录→API 全量重建→Web 构建和预览；dev 保留跳过 SSG 的规则，推送仍需明确授权。
+- **验证**：锁定依赖恢复、Release build（0 warning / 0 error）、C# whitespace、`git diff --check` 通过；实际 AES/usmap 的 locres、物品、简单地图导出通过，旧 locres 哈希不变；Buff 6 个对象、复杂地图 1195 个对象与备份的 FModel JSON 结构和值完全相等。合成目录验证旧文件清理、完整备份、范围外保留、空匹配拒绝，以及第二目录替换失败后第一目录回滚；临时独立复制模块后恢复、编译、扫描、UObject 导出及 Git 忽略密钥均通过；文档经独立读者检查通过。
+- **下游验证**：`python main.py --rebuild-db` exit 0，管道 36.73s，图片校验通过；sqlite-debug MCP 验证 integrity_check=ok、37 张非 FTS 表、import_complete=1、spawners=46176、dungeon_modules=221、translations=13626。Node 20 `npm ci` 和 `npm run build` 成功（2949 routes、15042 文件），8081 preview HTTP 200，多语言回归 29 通过 / 0 失败。运行日志、报告、备份与本地密钥均不提交；本次仅本地提交，不推送。
