@@ -451,3 +451,11 @@
   4. spawners 按 id 对比的 23326 条更新主要来自自增 ID 重排，已额外排除 id 核查：普通 `StoneGrave_Center_02_D.json` 的 SpiderPot 记录不再出现；`StoneGrave_Center_02_HR_D.json` 的 SpiderPot 坐标/yaw 改变，其余完整业务字段一致。未将 ID 重排误报为大量游戏坐标改变。
   5. 重建前本地 DB 与本次重建的 35 张业务表完整内容相同，仅 pipeline_meta.import_completed_at 更新。因此对远程的差异为当前本地代码和解包源的累计差异，本次删除重建未额外产生业务变动。
 - **验证**：远程、重建前本地、重建后三份 DB 的 integrity_check 均为 ok；完整逐行差异、结构化 JSON 字段差异和生成点 ID 排除对比完成，摘要见 `.tmp/db-compare-20261102-225952/REPORT.md`，详情见 `comparison.json`、`semantic-diff.json`；`git diff --check` 通过。本次未推送远程。
+
+
+## chore: 推送 main 与最新重建 DB
+
+- **改动原因**：用户明确要求「推送 main 含最新 db」。
+- **变更文件**：`docs/SESSION_CHANGES.md`、`api/data/darkfindv5.db`（单独数据提交随 main 推送，随后恢复本地 skip-worktree 管理）。
+- **关键逻辑/映射关系**：本轮推送包含尚未发布的解包模块、调用边界文档、稀有模块概率改动与最新重建 DB；已 fetch 确认 main 领先 origin/main 6 个提交、无远程独有提交，可正常快进推送。DB 为本轮删除重建并经 sqlite-debug MCP 完整比较的版本，49139712 字节，SHA-256 `e2dc093ce9e2bafedbf3cdc4ecff731aecf87c48993977dd5d0a15038be2bff2`。
+- **验证**：当前 DB 与已通过 integrity_check 的 rebuilt.db 快照逐字节一致；本会话已有 API 全量管道、生产 Web 构建、preview HTTP 200 和 29 项多语言回归通过，后续仅文档和 DB 重建时间更新。`git diff --check` 通过；只提交会话记录与 DB，不包含真实 AES/usmap、本机配置、解包输出或用户未跟踪文件。推送后核对远程 main 的提交和 DB Git blob，按部署文档恢复本地 DB 管理状态。
