@@ -28,6 +28,7 @@ interface VariantSwitchProps {
   variantRarity: Record<string, { name: string; translation_key: string }>;
   itemName: string;
   currentSuffix: string | null;
+  highlightDefault?: boolean;
   /** Selected source ids to keep in ``?sources=`` when switching variants. */
   sources?: string[];
 }
@@ -36,6 +37,7 @@ export default function VariantSwitch({
   variantRarity,
   itemName,
   currentSuffix,
+  highlightDefault = true,
   sources,
 }: VariantSwitchProps) {
   const { tokens } = useTheme();
@@ -64,15 +66,18 @@ export default function VariantSwitch({
         const color = getRarityColor(vr, tokens.muted);
         const isActive =
           currentSuffix === suffix ||
-          (!currentSuffix && suffix === defaultSuffix);
+          (highlightDefault && !currentSuffix && suffix === defaultSuffix);
         return (
           <Link
+            aria-current={isActive ? 'page' : undefined}
             key={suffix}
             to={`/${lang}/lootdrops/${itemName}_${suffix}/${
               sources ? `?sources=${encodeURIComponent(sources.join(','))}` : ''
             }`}
             style={{
               padding: '8px 15px',
+              minHeight: 44,
+              boxSizing: 'border-box',
               border: `2px solid ${color}`,
               borderRadius: 5,
               cursor: 'pointer',
@@ -80,10 +85,11 @@ export default function VariantSwitch({
               fontWeight: 'bold',
               color: isActive ? '#000' : tokens.text,
               background: isActive ? color : 'transparent',
-              opacity: isActive ? 1 : 0.5,
+              opacity: isActive || !highlightDefault ? 1 : 0.5,
               transition: 'all 0.2s',
               textDecoration: 'none',
-              display: 'inline-block',
+              display: 'inline-flex',
+              alignItems: 'center',
             }}
           >
             {label}

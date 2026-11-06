@@ -98,6 +98,7 @@ export interface ItemEntity {
   category: string;
   monsters: string[];
   coords: Coord[];
+  variant_count?: number;
   group_drop_info?: Record<string, GroupDropInfo[]>;
   isDetailTemplate?: boolean;
 }

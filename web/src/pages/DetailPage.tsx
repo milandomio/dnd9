@@ -8,6 +8,7 @@ import type {
   Coord,
   DungeonModule,
   GroupDropInfo,
+  LootdropItem,
   VariantNameEntry,
 } from '../types/data';
 import { useSSRData } from '../context/SSRDataContext';
@@ -26,6 +27,7 @@ import {
 } from '../components/MapDebug';
 import Disclaimer from '../components/Disclaimer';
 import MonsterDropSwitch from '../components/MonsterDropSwitch';
+import VariantSwitch from '../components/VariantSwitch';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import ReferenceDropRates from '../components/ReferenceDropRates';
@@ -101,6 +103,16 @@ export default function DetailPage() {
   const [entity, setEntity] = useState<Entity | null>(
     ssrData?.entity?.coords ? ssrData.entity : null
   );
+  const [itemVariantData, setItemVariantData] = useState<{
+    itemName: string;
+    variantRarity: NonNullable<LootdropItem['variant_rarity']>;
+  } | null>(null);
+  const itemVariantEntity =
+    page === 'items' ? (entity as ItemEntity | null) : null;
+  const itemVariantRarity =
+    itemVariantData && itemVariantData.itemName === entity?.name
+      ? itemVariantData.variantRarity
+      : null;
   const isDetailTemplate =
     ssrData?.isDetailTemplate && entity?.isDetailTemplate;
   const { modules: globalModules } = useDungeonModules();
@@ -242,6 +254,49 @@ export default function DetailPage() {
       });
     return () => controller.abort();
   }, [page, name, ssrData, dataVersion]);
+
+  useEffect(() => {
+    if (
+      !itemVariantEntity ||
+      (itemVariantEntity.variant_count ?? 0) <= 1 ||
+      !dataVersion
+    ) {
+      setItemVariantData(null);
+      return;
+    }
+
+    const itemName = itemVariantEntity.name;
+    const controller = new AbortController();
+    setItemVariantData(null);
+    fetch(
+      dataUrl(
+        dataVersion,
+        '/data/json/lootdrops/' + encodeURIComponent(itemName) + '.json'
+      ),
+      { signal: controller.signal }
+    )
+      .then((response) => {
+        if (response.status === 404) return null;
+        if (!response.ok) {
+          throw new Error('lootdrop HTTP ' + response.status + ': ' + itemName);
+        }
+        return response.json() as Promise<LootdropItem>;
+      })
+      .then((lootdropData) => {
+        if (controller.signal.aborted) return;
+        const variantRarity = lootdropData?.variant_rarity;
+        setItemVariantData(
+          variantRarity && Object.keys(variantRarity).length > 1
+            ? { itemName, variantRarity }
+            : null
+        );
+      })
+      .catch((error: unknown) => {
+        if (!controller.signal.aborted) console.error(error);
+      });
+
+    return () => controller.abort();
+  }, [itemVariantEntity, dataVersion]);
 
   const routeName = name ? decodeURIComponent(name) : '';
   if (!entity || entity.name !== routeName)
@@ -651,6 +706,37 @@ export default function DetailPage() {
       >
         {entityLabel} {ut('ui.list.locations')}
       </h1>
+
+      {page === 'items' && itemVariantRarity && (
+        <div
+          role="group"
+          aria-labelledby="item-rarity-label"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2,
+            marginBottom: 10,
+          }}
+        >
+          <span
+            id="item-rarity-label"
+            style={{
+              color: tokens.muted,
+              fontSize: 14,
+              fontWeight: 600,
+            }}
+          >
+            {ut('ui.detail.rarity')}
+          </span>
+          <VariantSwitch
+            variantRarity={itemVariantRarity}
+            itemName={entity.name}
+            currentSuffix={null}
+            highlightDefault={false}
+          />
+        </div>
+      )}
 
       {(entity as MonsterEntity).session_spawn_limit ? (
         <div

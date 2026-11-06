@@ -26,6 +26,13 @@
   4. **回归**：新增无第三方依赖的 .NET 测试项目，验证已比对旧快照清理、无差异文档/无标记快照保留及不同项目根隔离；主 Extractor 项目排除测试源文件。
 - **验证**：`dotnet run --project tests/BackupRetention.Tests.csproj` 通过（PASS）；`dotnet build -c Release --no-restore` 成功，0 warning / 0 error；`git diff --check` 通过。未运行完整游戏资源解包，避免本次只改轮换逻辑却再次置换项目资源。
 
+### feat: Torch 与 Lantern 物品详情页提供分品质爆率入口
+
+- **改动原因**：Torch 火把与 Lantern 灯笼拥有多个稀有度对应的独立掉落率，但物品页未提供分品质入口；需要与 `Lantern_5001` 一类路由保持一致。
+- **变更文件**：`web/src/types/data.ts`、`web/src/components/VariantSwitch.tsx`、`web/src/pages/DetailPage.tsx`、`web/tests/item-rarity.mjs`、`web/package.json`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：物品页依据 `ItemEntity.variant_count` 跳过单品质条目，并读取现有 `variant_rarity` 元数据复用 `VariantSwitch`；品质后缀映射至 `/{lang}/lootdrops/{item}_{suffix}/`。物品总览不默认选中某一品质，品质详情标记当前后缀，入口高度至少 44px。
+- **验证**：`BASE_URL=http://127.0.0.1:8081 npm run test:item-rarity` 通过，覆盖 Torch/Lantern 的 7 个入口、触控尺寸、选中态和爆率文本；`npm run format:check`、`npx tsc --noEmit`、`npm run lint`（0 错误，20 条既有警告）、`git diff --check` 通过；前端构建此前已通过（2,956 routes、15,044 dist files）。
+
 ## 2026-10-28
 
 ### feat: 稀有模块出现概率改为读取 RareChance
