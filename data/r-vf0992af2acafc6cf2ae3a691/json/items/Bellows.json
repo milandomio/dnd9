@@ -1,0 +1,38 @@
+{
+  "name": "Bellows",
+  "translation": "风箱",
+  "translation_key": "Text_DesignData_Item_Item_Bellows",
+  "category": "",
+  "variant_count": 1,
+  "monsters": [
+    "DwarfAxeman",
+    "DwarfHandCannoneer"
+  ],
+  "coords": [
+    {
+      "x": 142.0,
+      "y": 1175.0,
+      "z": 485.0,
+      "yaw": 0.0,
+      "map": "Firedeep_AnvilOutpost",
+      "file": "Firedeep_AnvilOutpost_D.json",
+      "version": "(D)",
+      "label": "Bellows"
+    }
+  ],
+  "group_drop_info": {
+    "FireDeep": [
+      {
+        "translation": "风箱",
+        "translation_key": "Text_DesignData_Item_Item_Bellows",
+        "spawn_rate": 100,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 10.0,
+          "逆袭赛": 10.0
+        }
+      }
+    ]
+  }
+}

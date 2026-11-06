@@ -1,0 +1,225 @@
+{
+  "name": "GoblinBolaslinger",
+  "translation": "哥布林投石手",
+  "translation_key": "Text_DesignData_Monster_Monster_GoblinBolaslinger",
+  "coords": [
+    {
+      "x": 810.622,
+      "y": -680.5764,
+      "z": -510.0,
+      "yaw": 105.0,
+      "map": "CavernLake_02",
+      "file": "CavernLake_02_HR_D.json",
+      "version": "",
+      "label": "GoblinBolaslinger"
+    },
+    {
+      "x": -440.0,
+      "y": -210.0,
+      "z": 0.0001,
+      "yaw": 0.0,
+      "map": "GoblinJail_Center",
+      "file": "GoblinJail_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinBolaslinger"
+    },
+    {
+      "x": -495.0,
+      "y": 557.0,
+      "z": 111.23729,
+      "yaw": 180.0,
+      "map": "HideoutCave_Center",
+      "file": "HideoutCave_Center_HR_D.json",
+      "version": "",
+      "label": "GoblinBolaslinger"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_GoblinBolaslinger",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_GoblinBolaslinger",
+      "translation": "哥布林投石手",
+      "translation_key": "Text_DesignData_Monster_Monster_GoblinBolaslinger",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "RuggedBoots_6001",
+          "page": "RuggedBoots",
+          "translation": "加固长靴",
+          "translation_key": "Text_DesignData_Item_Item_RuggedBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DashingBoots_6001",
+          "page": "DashingBoots",
+          "translation": "华丽长靴",
+          "translation_key": "Text_DesignData_Item_Item_DashingBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LooseTrousers_6001",
+          "page": "LooseTrousers",
+          "translation": "宽松长裤",
+          "translation_key": "Text_DesignData_Item_Item_LooseTrousers_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ClothPants_6001",
+          "page": "ClothPants",
+          "translation": "布裤",
+          "translation_key": "Text_DesignData_Item_Item_ClothPants_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "DarkleafBoots_6001",
+          "page": "DarkleafBoots",
+          "translation": "暗叶靴子",
+          "translation_key": "Text_DesignData_Item_Item_DarkleafBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ForestBoots_6001",
+          "page": "ForestBoots",
+          "translation": "林地靴子",
+          "translation_key": "Text_DesignData_Item_Item_ForestBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "TrunkHose_6001",
+          "page": "TrunkHose",
+          "translation": "灯笼裤",
+          "translation_key": "Text_DesignData_Item_Item_TrunkHose_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "ButtonedLeggings_6001",
+          "page": "ButtonedLeggings",
+          "translation": "纽扣护腿",
+          "translation_key": "Text_DesignData_Item_Item_ButtonedLeggings_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "StitchedTurnshoe_6001",
+          "page": "StitchedTurnshoe",
+          "translation": "缝合翻面鞋",
+          "translation_key": "Text_DesignData_Item_Item_StitchedTurnshoe_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Pigache_6001",
+          "page": "Pigache",
+          "translation": "翘头鞋",
+          "translation_key": "Text_DesignData_Item_Item_Pigache_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "LightfootBoots_6001",
+          "page": "LightfootBoots",
+          "translation": "轻便长靴",
+          "translation_key": "Text_DesignData_Item_Item_LightfootBoots_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_GoblinBolaslinger_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_GoblinBolaslinger_Spoils",
+      "translation": "哥布林投石手",
+      "translation_key": "Text_DesignData_Monster_Monster_GoblinBolaslinger",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "Sling_7001",
+          "page": "Sling",
+          "translation": "投石索",
+          "translation_key": "Text_DesignData_Item_Item_Sling_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Bolas_7001",
+          "page": "Bolas",
+          "translation": "绊石索",
+          "translation_key": "Text_DesignData_Item_Item_Bolas_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HuntingTrap_4001",
+          "page": "HuntingTrap",
+          "translation": "捕兽夹",
+          "translation_key": "Text_DesignData_Item_Item_HuntingTrap_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        },
+        {
+          "name": "SlingStone_2001",
+          "page": "SlingStone",
+          "translation": "投石弹",
+          "translation_key": "Text_DesignData_Item_Item_SlingStone_2001",
+          "suffix": "2001",
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "MoldyBread",
+          "page": "MoldyBread",
+          "translation": "发霉的面包",
+          "translation_key": "Text_DesignData_Item_Item_MoldyBread",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "GoblinEars",
+          "page": "GoblinEars",
+          "translation": "哥布林耳朵",
+          "translation_key": "Text_DesignData_Item_Item_GoblinEars",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "SilverCoin",
+          "page": "SilverCoin",
+          "translation": "银币",
+          "translation_key": "Text_DesignData_Item_Item_SilverCoin",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "哥布林投石手",
+        "translation_key": "Text_DesignData_Monster_Monster_GoblinBolaslinger",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 30.0,
+          "普通": 30.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

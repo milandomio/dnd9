@@ -1,0 +1,378 @@
+{
+  "name": "Lich",
+  "translation": "巫妖",
+  "translation_key": "Text_DesignData_Monster_Monster_Lich",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -25.0,
+      "yaw": 180.0,
+      "map": "Crypt_DarkRitualRoom_01",
+      "file": "Crypt_DarkRitualRoom_01_HR_D.json",
+      "version": "",
+      "label": "Lich",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "sub_group_parent": "BP_GameObjectLinker_C_0",
+      "sub_pool_size": 3,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        }
+      ],
+      "parent_pool_size": 1,
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        }
+      ],
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GhostKing",
+          "name": "鬼王"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Lich",
+          "name": "巫妖"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SkeletonWarlord",
+          "name": "骷髅督军"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "DarkMatter",
+          "page": "DarkMatter",
+          "translation": "黑暗物质",
+          "translation_key": "Text_DesignData_Item_Item_DarkMatter",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "artifact",
+      "kind": "artifact",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "HeaterShield_8001",
+          "page": "HeaterShield_8001",
+          "translation": "不朽神盾",
+          "translation_key": "Text_DesignData_Item_Item_HeaterShield_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "Spellbook_8001",
+          "page": "Spellbook_8001",
+          "translation": "咒纹法典",
+          "translation_key": "Text_DesignData_Item_Item_Spellbook_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "WizardStaff_8001",
+          "page": "WizardStaff_8001",
+          "translation": "幻象",
+          "translation_key": "Text_DesignData_Item_Item_WizardStaff_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "CrystalSword_8001",
+          "page": "CrystalSword_8001",
+          "translation": "碎莹",
+          "translation_key": "Text_DesignData_Item_Item_CrystalSword_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        },
+        {
+          "name": "CrystalBall_8001",
+          "page": "CrystalBall_8001",
+          "translation": "茨戈奇之眼",
+          "translation_key": "Text_DesignData_Item_Item_CrystalBall_8001",
+          "suffix": "8001",
+          "luck_grade": 8
+        }
+      ]
+    },
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "CursedBell",
+          "page": "CursedBell",
+          "translation": "毒咒铃铛",
+          "translation_key": "Text_DesignData_Item_Item_CursedBell",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "SkullKey",
+          "page": "SkullKey",
+          "translation": "骷髅钥匙",
+          "translation_key": "Text_DesignData_Item_Item_SkullKey",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldenKey",
+          "page": "GoldenKey",
+          "translation": "黄金钥匙",
+          "translation_key": "Text_DesignData_Item_Item_GoldenKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Cloak_All",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Cloak_All",
+      "translation": "披风",
+      "translation_key": "df5.lootpool.Cloak_All",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "RadiantCloak_7001",
+          "page": "RadiantCloak",
+          "translation": "光辉披风",
+          "translation_key": "Text_DesignData_Item_Item_RadiantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "AdventurerCloak_7001",
+          "page": "AdventurerCloak",
+          "translation": "冒险者披风",
+          "translation_key": "Text_DesignData_Item_Item_AdventurerCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SplendidCloak_7001",
+          "page": "SplendidCloak",
+          "translation": "华丽披风",
+          "translation_key": "Text_DesignData_Item_Item_SplendidCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "WatchmanCloak_7001",
+          "page": "WatchmanCloak",
+          "translation": "守望者披风",
+          "translation_key": "Text_DesignData_Item_Item_WatchmanCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MercurialCloak_7001",
+          "page": "MercurialCloak",
+          "translation": "水银披风",
+          "translation_key": "Text_DesignData_Item_Item_MercurialCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TatteredCloak_7001",
+          "page": "TatteredCloak",
+          "translation": "破旧披风",
+          "translation_key": "Text_DesignData_Item_Item_TatteredCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VigilantCloak_7001",
+          "page": "VigilantCloak",
+          "translation": "警惕披风",
+          "translation_key": "Text_DesignData_Item_Item_VigilantCloak_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Lich",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Lich",
+      "translation": "巫妖",
+      "translation_key": "Text_DesignData_Monster_Monster_Lich",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "CeremonialHeaddress_7001",
+          "page": "CeremonialHeaddress",
+          "translation": "仪式法帽",
+          "translation_key": "Text_DesignData_Item_Item_CeremonialHeaddress_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneGloves_7001",
+          "page": "ArcaneGloves",
+          "translation": "奥术手套",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "JesterPants_7001",
+          "page": "JesterPants",
+          "translation": "小丑裤子",
+          "translation_key": "Text_DesignData_Item_Item_JesterPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistRobe_7001",
+          "page": "OccultistRobe",
+          "translation": "术士长袍",
+          "translation_key": "Text_DesignData_Item_Item_OccultistRobe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "OccultistPants_7001",
+          "page": "OccultistPants",
+          "translation": "术士长裤",
+          "translation_key": "Text_DesignData_Item_Item_OccultistPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPaddedHose_7001",
+          "page": "DarkPaddedHose",
+          "translation": "深色衬垫裤",
+          "translation_key": "Text_DesignData_Item_Item_DarkPaddedHose_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "MysticGloves_7001",
+          "page": "MysticGloves",
+          "translation": "秘法手套",
+          "translation_key": "Text_DesignData_Item_Item_MysticGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Plunderhosen_7001",
+          "page": "Plunderhosen",
+          "translation": "裂口裤",
+          "translation_key": "Text_DesignData_Item_Item_Plunderhosen_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BardicPants_7001",
+          "page": "BardicPants",
+          "translation": "诗人长裤",
+          "translation_key": "Text_DesignData_Item_Item_BardicPants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BoneHelm_7001",
+          "page": "BoneHelm",
+          "translation": "骨盔",
+          "translation_key": "Text_DesignData_Item_Item_BoneHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "GoldCrown_7001",
+          "page": "GoldCrown",
+          "translation": "金王冠（极品）",
+          "translation_key": "Text_DesignData_Item_Item_GoldCrown_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GraveEssence",
+          "page": "GraveEssence",
+          "translation": "坟墓精华",
+          "translation_key": "Text_DesignData_Item_Item_GraveEssence",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "OldCloth",
+          "page": "OldCloth",
+          "translation": "旧布",
+          "translation_key": "Text_DesignData_Item_Item_OldCloth",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "Maggots",
+          "page": "Maggots",
+          "translation": "蛆虫",
+          "translation_key": "Text_DesignData_Item_Item_Maggots",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Crypt": [
+      {
+        "translation": "巫妖",
+        "translation_key": "Text_DesignData_Monster_Monster_Lich",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 100.0,
+          "普通": 100.0,
+          "豪客赛": 100.0,
+          "逆袭赛": 100.0
+        }
+      }
+    ]
+  }
+}

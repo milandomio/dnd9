@@ -1,0 +1,2526 @@
+{
+  "map_base": "IceAbyss_DividingHill",
+  "entities": [
+    {
+      "name": "BlackRose",
+      "translation": "黑玫瑰",
+      "translation_key": "Text_DesignData_Item_Item_BlackRose_1001",
+      "type": "props",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -825.0,
+          "y": 315.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "BlackRoseRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -990.0,
+          "y": 870.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "BlackRoseRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -315.0,
+          "y": 1030.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "BlackRoseRandom",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Bloodfreeze",
+      "translation": "极寒",
+      "translation_key": "Text_DesignData_Props_Props_Bloodfreeze",
+      "type": "decoration",
+      "color": "#9370DB",
+      "coords": [
+        {
+          "x": 1600.0,
+          "y": 1600.0,
+          "z": 597.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "极寒",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -143.99998,
+          "y": 894.0,
+          "z": 418.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "极寒",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "CursedSealedChest",
+      "translation": "受诅咒的箱子",
+      "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+      "type": "props",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": -653.0,
+          "y": -416.00635,
+          "z": 0.000112,
+          "yaw": 90.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+              "name": "受诅咒的箱子"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+              "name": "黄金宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+              "name": "狮头宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+          "name": "黄金宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+          "name": "狮头宝箱"
+        }
+      ],
+      "point_pool_count": 1
+    },
+    {
+      "name": "DungeonModule",
+      "translation": "地牢模块",
+      "translation_key": "df5.hardcoded.DungeonModule",
+      "type": "decoration",
+      "color": "#DC143C",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "地牢模块",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Fireflies",
+      "translation": "萤火虫",
+      "translation_key": "df5.hardcoded.Fireflies",
+      "type": "decoration",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "萤火虫",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FloorPortal",
+      "translation": "传送门",
+      "translation_key": "Text_DesignData_Props_Props_FloorPortal",
+      "type": "decoration",
+      "color": "#E74C3C",
+      "coords": [
+        {
+          "x": 415.0,
+          "y": 850.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -105.0,
+          "y": 475.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1210.0,
+          "y": -460.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -635.0,
+          "y": -1055.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 635.0,
+          "y": 135.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -880.0,
+          "y": 1105.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1070.0,
+          "y": 155.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1050.0,
+          "y": -785.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 425.0,
+          "y": -900.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -85.0,
+          "y": -55.0,
+          "z": 0.0,
+          "yaw": 330.0,
+          "version": "(A)",
+          "label": "传送门",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FrostImp",
+      "translation": "冰霜鬼童",
+      "translation_key": "Text_DesignData_Monster_Monster_FrostImp",
+      "type": "monster",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 149.0,
+          "y": 224.0,
+          "z": 5.4594507,
+          "yaw": 90.0,
+          "version": "",
+          "label": "FrostImp",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FrostSkeletonAxemanFromFakeDeath",
+      "translation": "冰霜骷髅斧手",
+      "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonAxeman",
+      "type": "monster",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": -1305.0,
+          "y": 1317.0,
+          "z": 0.0001,
+          "yaw": 90.0,
+          "version": "",
+          "label": "FrostSkeletonAxemanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FrostSkeletonGuardmanFromFakeDeath",
+      "translation": "冰霜骷髅卫士",
+      "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonGuardman",
+      "type": "monster",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 72.0,
+          "y": 471.0,
+          "z": 5.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "FrostSkeletonGuardmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 463.0,
+          "y": 161.0,
+          "z": 5.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "FrostSkeletonGuardmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -60.0,
+          "y": 161.0,
+          "z": 5.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "FrostSkeletonGuardmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 121.0,
+          "y": -107.0,
+          "z": 5.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "FrostSkeletonGuardmanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FrostSkeletonHalberdierFromFakeDeath",
+      "translation": "冰霜骷髅戟兵",
+      "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonHalberdier",
+      "type": "monster",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": 86.0,
+          "y": -1287.0,
+          "z": 5.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "FrostSkeletonHalberdierFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 208.0,
+          "y": 1369.0,
+          "z": 5.0,
+          "yaw": 270.0,
+          "version": "",
+          "label": "FrostSkeletonHalberdierFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "FrostSkeletonMacemanFromFakeDeath",
+      "translation": "冰霜骷髅锤手",
+      "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonMaceman",
+      "type": "monster",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": -1346.0,
+          "y": -1320.0,
+          "z": 0.0001,
+          "yaw": 90.0,
+          "version": "",
+          "label": "FrostSkeletonMacemanFromFakeDeath",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameObjectLinker",
+      "translation": "对象链接器",
+      "translation_key": "df5.hardcoded.GameObjectLinker",
+      "type": "decoration",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": -828.0,
+          "y": 178.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "对象链接器",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GameSpawnerGroup",
+      "translation": "生成器组",
+      "translation_key": "df5.hardcoded.GameSpawnerGroup",
+      "type": "decoration",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -719.0,
+          "y": 160.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "",
+          "label": "生成器组",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "GoldChest",
+      "translation": "黄金宝箱",
+      "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+      "type": "props",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": -653.0,
+          "y": -416.00635,
+          "z": 0.000112,
+          "yaw": 90.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+              "name": "受诅咒的箱子"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+              "name": "黄金宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+              "name": "狮头宝箱"
+            }
+          ]
+        },
+        {
+          "x": -653.0,
+          "y": -416.00635,
+          "z": 0.000112,
+          "yaw": 90.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+              "name": "受诅咒的箱子"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+              "name": "黄金宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+              "name": "狮头宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+          "name": "受诅咒的箱子"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+          "name": "狮头宝箱"
+        }
+      ],
+      "point_pool_count": 2
+    },
+    {
+      "name": "IceAbyssModuleConnector",
+      "translation": "木门",
+      "translation_key": "Text_DesignData_Props_Props_WoodenDoor",
+      "type": "decoration",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": 800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "IceAbyssModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -800.0,
+          "y": -1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "IceAbyssModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "IceAbyssModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -800.0,
+          "y": 1600.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "IceAbyssModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "IceAbyssModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "IceAbyssModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1600.0,
+          "y": 800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "IceAbyssModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1600.0,
+          "y": -800.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "IceAbyssModuleConnector",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "IceAbyssRoaster01_On",
+      "translation": "冰渊灯架",
+      "translation_key": "Text_DesignData_Props_Props_IceAbyssRoaster",
+      "type": "decoration",
+      "color": "#8E44AD",
+      "coords": [
+        {
+          "x": 388.0,
+          "y": 28.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 583.0,
+          "y": 1426.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -567.0,
+          "y": -215.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 841.0,
+          "y": 1025.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -278.0,
+          "y": -287.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1465.0,
+          "y": 297.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 762.0,
+          "y": 481.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 356.0,
+          "y": -570.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -96.0,
+          "y": 848.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster01_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -907.50183,
+          "y": 842.25104,
+          "z": 150.00002,
+          "yaw": 325.1,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1502.0,
+          "y": -659.0,
+          "z": 150.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1503.0,
+          "y": 935.0,
+          "z": 150.0,
+          "yaw": 165.1,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 875.0,
+          "y": -1083.0001,
+          "z": 150.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 262.93222,
+          "y": 393.68106,
+          "z": 175.0,
+          "yaw": 40.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1351.0,
+          "y": -949.00006,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 1401.0,
+          "y": 961.99994,
+          "z": 150.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 400.0,
+          "y": 612.99994,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1068.0,
+          "y": 1473.0,
+          "z": 150.0,
+          "yaw": 86.3,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 612.0,
+          "y": -1498.0001,
+          "z": 150.0,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster02_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 132.0,
+          "y": -1429.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster03_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -979.0,
+          "y": -1453.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster03_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -315.0,
+          "y": 368.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster03_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 806.0,
+          "y": -300.0,
+          "z": 0.0,
+          "yaw": 90.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster03_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -828.97705,
+          "y": -755.09875,
+          "z": 7.3365207,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster03_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1445.0,
+          "y": -1405.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceAbyssRoaster03_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -1528.2455,
+          "y": -170.52386,
+          "z": 63.006393,
+          "yaw": 349.9,
+          "version": "(A)",
+          "label": "IceAbyssRoaster03_On",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null
+    },
+    {
+      "name": "IceGiantSpider",
+      "translation": "冰霜巨型蜘蛛",
+      "translation_key": "Text_DesignData_Monster_Monster_IceGiantSpider",
+      "type": "monster",
+      "color": "#2C3E50",
+      "coords": [
+        {
+          "x": -236.0,
+          "y": -917.0,
+          "z": 0.000102447266,
+          "yaw": 0.0,
+          "version": "",
+          "label": "IceGiantSpider",
+          "group_parent": "BP_GameSpawnerGroup_C_1",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -411.0,
+          "y": 174.0,
+          "z": 9.000103,
+          "yaw": 0.0,
+          "version": "",
+          "label": "IceGiantSpider",
+          "group_parent": "BP_GameSpawnerGroup_C_1",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -362.0,
+          "y": 1140.0,
+          "z": 0.00010282421,
+          "yaw": 0.0,
+          "version": "",
+          "label": "IceGiantSpider",
+          "group_parent": "BP_GameSpawnerGroup_C_1",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": true
+    },
+    {
+      "name": "IceWall_08",
+      "translation": "冰墙",
+      "translation_key": "df5.hardcoded.IceWall",
+      "type": "decoration",
+      "color": "#7F8C8D",
+      "coords": [
+        {
+          "x": -503.0,
+          "y": 324.0,
+          "z": -33.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "IceWall_08",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "KillVolume",
+      "translation": "虚空",
+      "translation_key": "Text_DesignData_Props_Props_KillVolume",
+      "type": "decoration",
+      "color": "#FF6B35",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": -1500.0,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "KillVolume",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LevelSequenceActor",
+      "translation": "过场动画",
+      "translation_key": "df5.hardcoded.LevelSequenceActor",
+      "type": "decoration",
+      "color": "#00BFFF",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "过场动画",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "LevelSequenceSoundActor",
+      "translation": "过场音效",
+      "translation_key": "df5.hardcoded.LevelSequenceSoundActor",
+      "type": "decoration",
+      "color": "#FFD700",
+      "coords": [
+        {
+          "x": -628.1424,
+          "y": 403.44012,
+          "z": 257.26584,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "过场音效",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": -645.8326,
+          "y": 66.03973,
+          "z": 271.60333,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "过场音效",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "MeshParticle_Fog_Icy_001",
+      "translation": "冰雾粒子",
+      "translation_key": "df5.hardcoded.MeshParticle_Fog_Icy_001",
+      "type": "decoration",
+      "color": "#FF69B4",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "冰雾粒子",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "MeshParticle_Snow_002",
+      "translation": "雪粒子",
+      "translation_key": "df5.hardcoded.MeshParticle_Snow_002",
+      "type": "decoration",
+      "color": "#32CD32",
+      "coords": [
+        {
+          "x": 0.0,
+          "y": 0.0,
+          "z": 0.0,
+          "yaw": 0.0,
+          "version": "(A)",
+          "label": "雪粒子",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "OrnateChestLarge",
+      "translation": "狮头宝箱",
+      "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+      "type": "props",
+      "color": "#FF4500",
+      "coords": [
+        {
+          "x": -653.0,
+          "y": -416.00635,
+          "z": 0.000112,
+          "yaw": 90.0,
+          "version": "",
+          "label": "特殊宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+              "name": "受诅咒的箱子"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+              "name": "黄金宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestLarge",
+              "name": "狮头宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_CursedSealedChest",
+          "name": "受诅咒的箱子"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_GoldenChest",
+          "name": "黄金宝箱"
+        }
+      ],
+      "point_pool_count": 1
+    },
+    {
+      "name": "OrnateChestMedium",
+      "translation": "重型华丽宝箱",
+      "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+      "type": "props",
+      "color": "#00FA9A",
+      "coords": [
+        {
+          "x": -125.11646,
+          "y": -336.8413,
+          "z": 0.000111,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1002.02954,
+          "y": -123.09349,
+          "z": 0.000100817866,
+          "yaw": 140.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1211.0,
+          "y": 1422.9878,
+          "z": 8.6376946e-05,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 809.88354,
+          "y": -174.02878,
+          "z": 0.000111083,
+          "yaw": 180.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1179.3369,
+          "y": -1432.988,
+          "z": 8.5929685e-05,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -325.11646,
+          "y": 520.1587,
+          "z": 0.000111,
+          "yaw": 0.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+          "name": "橡木宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+          "name": "加固宝箱"
+        }
+      ],
+      "point_pool_count": 6
+    },
+    {
+      "name": "OrnateChestSmall",
+      "translation": "青铜华丽宝箱",
+      "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+      "type": "props",
+      "color": "#00CED1",
+      "coords": [
+        {
+          "x": 819.0,
+          "y": -19.006348,
+          "z": 0.000100817866,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 21.46607,
+          "y": 1378.0403,
+          "z": 0.00010068206,
+          "yaw": 315.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 221.78027,
+          "y": -1433.0106,
+          "z": 0.000100817866,
+          "yaw": 90.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -890.6912,
+          "y": -634.90454,
+          "z": 0.00010048974,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -965.9551,
+          "y": 397.65472,
+          "z": 0.00010130761,
+          "yaw": 225.8,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1448.0211,
+          "y": 1228.6196,
+          "z": 0.00010048974,
+          "yaw": 0.8,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1441.7131,
+          "y": -1181.8856,
+          "z": 0.00010048974,
+          "yaw": 0.8,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "group_size": null,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+          "name": "小型橡木宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+          "name": "小型加固宝箱"
+        }
+      ],
+      "point_pool_count": 7
+    },
+    {
+      "name": "Path_01",
+      "translation": "小径",
+      "translation_key": "df5.hardcoded.Path_01",
+      "type": "decoration",
+      "color": "#3498DB",
+      "coords": [
+        {
+          "x": 630.0,
+          "y": -2.7767904e-28,
+          "z": 0.5,
+          "yaw": 270.0,
+          "version": "(A)",
+          "label": "小径",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 600.0,
+          "y": 210.0,
+          "z": 0.2,
+          "yaw": 180.0,
+          "version": "(A)",
+          "label": "小径",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "SimpleChestMedium",
+      "translation": "橡木宝箱",
+      "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+      "type": "props",
+      "color": "#2ECC71",
+      "coords": [
+        {
+          "x": -125.11646,
+          "y": -336.8413,
+          "z": 0.000111,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1002.02954,
+          "y": -123.09349,
+          "z": 0.000100817866,
+          "yaw": 140.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1211.0,
+          "y": 1422.9878,
+          "z": 8.6376946e-05,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 809.88354,
+          "y": -174.02878,
+          "z": 0.000111083,
+          "yaw": 180.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1179.3369,
+          "y": -1432.988,
+          "z": 8.5929685e-05,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -325.11646,
+          "y": 520.1587,
+          "z": 0.000111,
+          "yaw": 0.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+          "name": "重型华丽宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+          "name": "加固宝箱"
+        }
+      ],
+      "point_pool_count": 6
+    },
+    {
+      "name": "SimpleChestSmall",
+      "translation": "小型橡木宝箱",
+      "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+      "type": "props",
+      "color": "#F39C12",
+      "coords": [
+        {
+          "x": 819.0,
+          "y": -19.006348,
+          "z": 0.000100817866,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 21.46607,
+          "y": 1378.0403,
+          "z": 0.00010068206,
+          "yaw": 315.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 221.78027,
+          "y": -1433.0106,
+          "z": 0.000100817866,
+          "yaw": 90.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -890.6912,
+          "y": -634.90454,
+          "z": 0.00010048974,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -965.9551,
+          "y": 397.65472,
+          "z": 0.00010130761,
+          "yaw": 225.8,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1448.0211,
+          "y": 1228.6196,
+          "z": 0.00010048974,
+          "yaw": 0.8,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1441.7131,
+          "y": -1181.8856,
+          "z": 0.00010048974,
+          "yaw": 0.8,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+          "name": "青铜华丽宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+          "name": "小型加固宝箱"
+        }
+      ],
+      "point_pool_count": 7
+    },
+    {
+      "name": "Statue02",
+      "translation": "保护神坛",
+      "translation_key": "Text_DesignData_Props_Props_AngelStatue",
+      "type": "decoration",
+      "color": "#9B59B6",
+      "coords": [
+        {
+          "x": -1416.0114,
+          "y": 1413.5044,
+          "z": 0.0,
+          "yaw": 315.0,
+          "version": "",
+          "label": "保护神坛",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WallLever_OnlyActivate",
+      "translation": "拉杆",
+      "translation_key": "Text_DesignData_Props_Props_WallLever",
+      "type": "decoration",
+      "color": "#1ABC9C",
+      "coords": [
+        {
+          "x": -493.10825,
+          "y": 360.48048,
+          "z": 150.0,
+          "yaw": 219.2,
+          "version": "(A)",
+          "label": "WallLever_OnlyActivate",
+          "group_parent": "",
+          "sub_group_parent": "BP_GameObjectLinker_C_1",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "Wendigo",
+      "translation": "温迪戈",
+      "translation_key": "Text_DesignData_Monster_Monster_Wendigo",
+      "type": "monster",
+      "color": "#E67E22",
+      "coords": [
+        {
+          "x": -649.0,
+          "y": 625.0,
+          "z": 0.000110083,
+          "yaw": 90.0,
+          "version": "",
+          "label": "Wendigo",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    },
+    {
+      "name": "WoodChestMedium",
+      "translation": "加固宝箱",
+      "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+      "type": "props",
+      "color": "#2980B9",
+      "coords": [
+        {
+          "x": -125.11646,
+          "y": -336.8413,
+          "z": 0.000111,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1002.02954,
+          "y": -123.09349,
+          "z": 0.000100817866,
+          "yaw": 140.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1211.0,
+          "y": 1422.9878,
+          "z": 8.6376946e-05,
+          "yaw": 270.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 809.88354,
+          "y": -174.02878,
+          "z": 0.000111083,
+          "yaw": 180.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1179.3369,
+          "y": -1432.988,
+          "z": 8.5929685e-05,
+          "yaw": 90.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -325.11646,
+          "y": 520.1587,
+          "z": 0.000111,
+          "yaw": 0.0,
+          "version": "",
+          "label": "中宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+              "name": "重型华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+              "name": "橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestMedium",
+              "name": "加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestMedium",
+          "name": "重型华丽宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_SimpleChestMedium",
+          "name": "橡木宝箱"
+        }
+      ],
+      "point_pool_count": 6
+    },
+    {
+      "name": "WoodChestSmall",
+      "translation": "小型加固宝箱",
+      "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+      "type": "props",
+      "color": "#27AE60",
+      "coords": [
+        {
+          "x": 819.0,
+          "y": -19.006348,
+          "z": 0.000100817866,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 21.46607,
+          "y": 1378.0403,
+          "z": 0.00010068206,
+          "yaw": 315.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": 221.78027,
+          "y": -1433.0106,
+          "z": 0.000100817866,
+          "yaw": 90.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -890.6912,
+          "y": -634.90454,
+          "z": 0.00010048974,
+          "yaw": 180.0,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -965.9551,
+          "y": 397.65472,
+          "z": 0.00010130761,
+          "yaw": 225.8,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1448.0211,
+          "y": 1228.6196,
+          "z": 0.00010048974,
+          "yaw": 0.8,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        },
+        {
+          "x": -1441.7131,
+          "y": -1181.8856,
+          "z": 0.00010048974,
+          "yaw": 0.8,
+          "version": "",
+          "label": "小宝箱",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 3,
+          "point_pool_entries": [
+            {
+              "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+              "name": "青铜华丽宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+              "name": "小型橡木宝箱"
+            },
+            {
+              "translation_key": "Text_DesignData_Props_Props_WoodChestSmall",
+              "name": "小型加固宝箱"
+            }
+          ]
+        }
+      ],
+      "mutually_exclusive": false,
+      "point_pool_size": 3,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Props_Props_OrnateChestSmall",
+          "name": "青铜华丽宝箱"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+          "name": "小型橡木宝箱"
+        }
+      ],
+      "point_pool_count": 7
+    },
+    {
+      "name": "WoodenBarrel01",
+      "translation": "木桶",
+      "translation_key": "Text_DesignData_Props_Props_WoodBarrel",
+      "type": "props",
+      "color": "#D35400",
+      "coords": [
+        {
+          "x": -320.0,
+          "y": -190.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 590.0,
+          "y": 925.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        },
+        {
+          "x": 100.0,
+          "y": -1165.0,
+          "z": 0.0,
+          "yaw": 180.0,
+          "version": "",
+          "label": "WoodenBarrel01",
+          "group_parent": "",
+          "sub_group_parent": "",
+          "point_pool_size": 0,
+          "point_pool_entries": null
+        }
+      ],
+      "mutually_exclusive": false
+    }
+  ]
+}

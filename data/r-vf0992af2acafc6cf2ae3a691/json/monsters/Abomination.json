@@ -1,0 +1,275 @@
+{
+  "name": "Abomination",
+  "translation": "憎恶",
+  "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+  "coords": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 150.0,
+      "yaw": 0.0,
+      "map": "Inferno_Doomcage",
+      "file": "Inferno_Doomcage_HR_D.json",
+      "version": "",
+      "label": "Abomination",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+          "name": "地狱三头犬"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_HellHunter",
+          "name": "地狱猎手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+          "name": "憎恶"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DemonExecutioner",
+          "name": "恶魔处刑者"
+        }
+      ],
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+          "name": "憎恶"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cerberus",
+          "name": "地狱三头犬"
+        }
+      ]
+    },
+    {
+      "x": 960.0,
+      "y": 30.0,
+      "z": -200.0,
+      "yaw": 175.0,
+      "map": "Inferno_LavaStairway",
+      "file": "Inferno_LavaStairway_HR_D.json",
+      "version": "",
+      "label": "Abomination"
+    },
+    {
+      "x": 0.0,
+      "y": -850.0,
+      "z": 850.0001,
+      "yaw": 90.0,
+      "map": "Inferno_Painfulsteps",
+      "file": "Inferno_Painfulsteps_HR_D.json",
+      "version": "",
+      "label": "Abomination",
+      "sub_group_parent": "BP_GameObjectLinker_C_0"
+    },
+    {
+      "x": -670.0,
+      "y": -50.0,
+      "z": 400.0,
+      "yaw": 0.0,
+      "map": "ThroneRoom_02",
+      "file": "ThroneRoom_02_HR_D.json",
+      "version": "",
+      "label": "Abomination"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "CursedBell",
+          "page": "CursedBell",
+          "translation": "毒咒铃铛",
+          "translation_key": "Text_DesignData_Item_Item_CursedBell",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "SkullKey",
+          "page": "SkullKey",
+          "translation": "骷髅钥匙",
+          "translation_key": "Text_DesignData_Item_Item_SkullKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Abomination",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Abomination",
+      "translation": "憎恶",
+      "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "NormanNasalHelm_7001",
+          "page": "NormanNasalHelm",
+          "translation": "北境护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_NormanNasalHelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "CrusaderArmor_7001",
+          "page": "CrusaderArmor",
+          "translation": "十字军铠甲",
+          "translation_key": "Text_DesignData_Item_Item_CrusaderArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "TemplarArmor_7001",
+          "page": "TemplarArmor",
+          "translation": "圣殿铠甲",
+          "translation_key": "Text_DesignData_Item_Item_TemplarArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "KettleHat_7001",
+          "page": "KettleHat",
+          "translation": "壶盔",
+          "translation_key": "Text_DesignData_Item_Item_KettleHat_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BattleAxe_7001",
+          "page": "BattleAxe",
+          "translation": "战斗斧",
+          "translation_key": "Text_DesignData_Item_Item_BattleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeaterShield_7001",
+          "page": "HeaterShield",
+          "translation": "斗盾",
+          "translation_key": "Text_DesignData_Item_Item_HeaterShield_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LightGauntlets_7001",
+          "page": "LightGauntlets",
+          "translation": "轻型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_LightGauntlets_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "HeavyGauntlet_7001",
+          "page": "HeavyGauntlet",
+          "translation": "重型板甲护手",
+          "translation_key": "Text_DesignData_Item_Item_HeavyGauntlet_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Spangenhelm_7001",
+          "page": "Spangenhelm",
+          "translation": "铆钉护鼻盔",
+          "translation_key": "Text_DesingData_Item_Item_Spangenhelm_1001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ChapelDeFer_7001",
+          "page": "ChapelDeFer",
+          "translation": "锅盔",
+          "translation_key": "Text_DesignData_Item_Item_ChapelDeFer_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Halberd_7001",
+          "page": "Halberd",
+          "translation": "长戟",
+          "translation_key": "Text_DesignData_Item_Item_Halberd_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DarkPlateArmor_7001",
+          "page": "DarkPlateArmor",
+          "translation": "黑暗板甲",
+          "translation_key": "Text_DesignData_Item_Item_DarkPlateArmor_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Abomination_Spoils",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Abomination_Spoils",
+      "translation": "憎恶",
+      "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+      "sub_label": "df5.lootpool.Spoils",
+      "items": [
+        {
+          "name": "MysteriousPotion",
+          "page": "MysteriousPotion",
+          "translation": "神秘药水",
+          "translation_key": "Text_DesignData_Item_Item_MysteriousPotion",
+          "suffix": null,
+          "luck_grade": 6
+        },
+        {
+          "name": "GiantHorn",
+          "page": "GiantHorn",
+          "translation": "巨角",
+          "translation_key": "Text_DesignData_Item_Item_GiantHorn",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "DemonBlood",
+          "page": "DemonBlood",
+          "translation": "恶魔之血",
+          "translation_key": "Text_DesignData_Item_Item_DemonBlood",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "SmellyVomit",
+          "page": "SmellyVomit",
+          "translation": "恶臭的呕吐物",
+          "translation_key": "Text_DesignData_Item_Item_SmellyVomit",
+          "suffix": null,
+          "luck_grade": 4
+        },
+        {
+          "name": "RottenLump",
+          "page": "RottenLump",
+          "translation": "腐烂肉块",
+          "translation_key": "Text_DesignData_Item_Item_RottenLump",
+          "suffix": null,
+          "luck_grade": 4
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Inferno": [
+      {
+        "translation": "憎恶",
+        "translation_key": "Text_DesignData_Monster_Monster_Abomination",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 50.0,
+          "普通": 50.0,
+          "豪客赛": 50.0,
+          "逆袭赛": 50.0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "name": "FrostGiantBerserker",
+  "translation": "冰霜巨人狂战士",
+  "translation_key": "Text_DesignData_Monster_Monster_FrostGiantBerserker",
+  "coords": [
+    {
+      "x": 708.0,
+      "y": -7.0,
+      "z": 0.0001,
+      "yaw": 20.0,
+      "map": "IceCave_Barricade",
+      "file": "IceCave_Barricade_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker"
+    },
+    {
+      "x": 644.0,
+      "y": -157.00002,
+      "z": -81.902596,
+      "yaw": 180.0,
+      "map": "IceCave_Bridge",
+      "file": "IceCave_Bridge_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker"
+    },
+    {
+      "x": 161.0,
+      "y": -253.0,
+      "z": -299.99988,
+      "yaw": 0.0,
+      "map": "IceCave_DualCaverns",
+      "file": "IceCave_DualCaverns_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker"
+    },
+    {
+      "x": -21.0,
+      "y": 188.0,
+      "z": 68.46484,
+      "yaw": 0.0,
+      "map": "IceCave_NarrowBridge",
+      "file": "IceCave_NarrowBridge_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker"
+    },
+    {
+      "x": 288.999985,
+      "y": -356.0,
+      "z": -399.99989539649,
+      "yaw": 180.0,
+      "map": "IceCave_Spiral",
+      "file": "IceCave_Spiral_HR_D.json",
+      "version": "",
+      "label": "FrostGiantBerserker",
+      "group_parent": "BP_GameSpawner_C_29",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostSkeletonCrossbowman",
+          "name": "冰霜骷髅弩手"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostGiantBerserker",
+          "name": "冰霜巨人狂战士"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_FrostGiantShielder",
+          "name": "冰霜持盾巨人"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_FrostGiantBerserker",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_FrostGiantBerserker",
+      "translation": "冰霜巨人狂战士",
+      "translation_key": "Text_DesignData_Monster_Monster_FrostGiantBerserker",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "NorthernFullTunic_7001",
+          "page": "NorthernFullTunic",
+          "translation": "北境战袍",
+          "translation_key": "Text_DesignData_Item_Item_NorthernFullTunic_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "DoubleAxe_7001",
+          "page": "DoubleAxe",
+          "translation": "双刃斧",
+          "translation_key": "Text_DesignData_Item_Item_DoubleAxe_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "GlovesOfUtility_7001",
+          "page": "GlovesOfUtility",
+          "translation": "实用手套",
+          "translation_key": "Text_DesignData_Item_Item_GlovesOfUtility_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "SleekHidePants_7001",
+          "page": "SleekHidePants",
+          "translation": "抛光兽皮裤",
+          "translation_key": "Text_DesignData_Item_Item_SleekHidePants_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "RawhideGloves_7001",
+          "page": "RawhideGloves",
+          "translation": "生皮手套",
+          "translation_key": "Text_DesignData_Item_Item_RawhideGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "LeatherGloves_7001",
+          "page": "LeatherGloves",
+          "translation": "皮革手套",
+          "translation_key": "Text_DesignData_Item_Item_LeatherGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "VikingHelm_7001",
+          "page": "VikingHelm",
+          "translation": "维京战盔",
+          "translation_key": "Text_DesignData_Item_Item_VikingHelm_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "PaddedLeggings_7001",
+          "page": "PaddedLeggings",
+          "translation": "衬垫护腿",
+          "translation_key": "Text_DesignData_Item_Item_PaddedLeggings_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "ElkwoodGloves_7001",
+          "page": "ElkwoodGloves",
+          "translation": "鹿角木手套",
+          "translation_key": "Text_DesignData_Item_Item_ElkwoodGloves_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "GiantToe",
+          "page": "GiantToe",
+          "translation": "巨人脚趾",
+          "translation_key": "Text_DesignData_Item_Item_GiantToe",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "IceCavern": [
+      {
+        "translation": "冰霜巨人狂战士",
+        "translation_key": "Text_DesignData_Monster_Monster_FrostGiantBerserker",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 20.0,
+          "逆袭赛": 20.0
+        }
+      }
+    ]
+  }
+}

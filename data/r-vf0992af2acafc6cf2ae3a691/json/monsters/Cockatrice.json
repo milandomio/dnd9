@@ -1,0 +1,217 @@
+{
+  "name": "Cockatrice",
+  "translation": "蛇尾鸡",
+  "translation_key": "Text_DesignData_Monster_Monster_Cockatrice",
+  "coords": [
+    {
+      "x": 467.0,
+      "y": -1108.0,
+      "z": 0.0,
+      "yaw": 65.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -491.0,
+      "y": 1125.0,
+      "z": 0.0,
+      "yaw": 235.0,
+      "map": "Ruins_Barbican_01",
+      "file": "Ruins_Barbican_01_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -1016.0,
+      "y": -43.999979999999994,
+      "z": 0.0,
+      "yaw": 15.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 1062.0,
+      "y": 47.00001999999989,
+      "z": 0.0,
+      "yaw": 15.0,
+      "map": "Ruins_Stables_02",
+      "file": "Ruins_Stables_02_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 374.000003,
+      "y": 671.0,
+      "z": -899.999898,
+      "yaw": 270.0,
+      "map": "Ruins_TowerBridge_Destroyed",
+      "file": "Ruins_TowerBridge_Destroyed_HR_D.json",
+      "version": "",
+      "label": "Cockatrice",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_RuinsGolem",
+          "name": "废墟魔像"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Cockatrice",
+          "name": "蛇尾鸡"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "quest",
+      "kind": "quest",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "FlameGasBag",
+          "page": "FlameGasBag",
+          "translation": "喷火囊",
+          "translation_key": "Text_DesignData_Item_Item_FlameGasBag",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "consumable",
+      "kind": "consumable",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "OldRustyKey",
+          "page": "OldRustyKey",
+          "translation": "生锈的旧钥匙",
+          "translation_key": "Text_DesignData_Item_Item_OldRustyKey",
+          "suffix": null,
+          "luck_grade": 5
+        },
+        {
+          "name": "GoldenKey",
+          "page": "GoldenKey",
+          "translation": "黄金钥匙",
+          "translation_key": "Text_DesignData_Item_Item_GoldenKey",
+          "suffix": null,
+          "luck_grade": 5
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_Drop_Gems",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Gems",
+      "translation": "宝石",
+      "translation_key": "Text_Code_DCDataBlueprintLibrary_Type_Item_Misc_Gem",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "Ruby_7001",
+          "page": "Ruby",
+          "translation": "红宝石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Ruby_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Emerald_7001",
+          "page": "Emerald",
+          "translation": "翡翠（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Emerald_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "BlueSapphire_7001",
+          "page": "BlueSapphire",
+          "translation": "蓝宝石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_BlueSapphire_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        },
+        {
+          "name": "Diamond_7001",
+          "page": "Diamond",
+          "translation": "钻石（极品）",
+          "translation_key": "Text_DesignData_Item_Item_Diamond_7001",
+          "suffix": "7001",
+          "luck_grade": 7
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 7
+        },
+        {
+          "name": "FlameGasBag",
+          "page": "FlameGasBag",
+          "translation": "喷火囊",
+          "translation_key": "Text_DesignData_Item_Item_FlameGasBag",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "CockatricesLuckyFeather",
+          "page": "CockatricesLuckyFeather",
+          "translation": "蛇尾鸡的幸运羽毛",
+          "translation_key": "Text_DesignData_Item_Item_CockatricesLuckyFeather",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "CockatriceEgg",
+          "page": "CockatriceEgg",
+          "translation": "蛇尾鸡的蛋蛋",
+          "translation_key": "Text_DesignData_Item_Item_CockatriceEgg",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "蛇尾鸡",
+        "translation_key": "Text_DesignData_Monster_Monster_Cockatrice",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 20.0,
+          "普通": 20.0,
+          "豪客赛": 30.0,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}
