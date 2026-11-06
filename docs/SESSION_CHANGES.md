@@ -2,6 +2,19 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-11-06
+
+### chore: 使用 Extractor 更新补丁数据、全量重建 DB 并推送 main
+
+- **改动原因**：用户要求按更新后的补丁部署流程从已安装游戏容器更新资源，重新导入并清洗数据，构建 Web 验证，最后上传新 DB 和 main。新版流程用 Extractor 原子更新 14 个范围目录，取代手工 FModel / rsync 更新。
+- **变更文件**：跟踪文件仅为 `api/data/darkfindv5.db` 与本记录；解包报告、暂存资源、日志及备份位于忽略目录 `extractor/output/patch-20261106/`，未纳入提交。
+- **关键逻辑/映射关系**：
+  1. **解包更新**：使用已安装游戏容器、`keys/aes.txt` 与 `keys/season11hotfix130.usmap`，按 `extractor/update-scope.json` 中 14 个目录执行 `--apply-to /home/mio/fmod/Output/Exports/DungeonCrawler/Content`。报告 `Completed=true`、`Applied=true`、`Failed=0`、`ApplyError=null`；24,748 个资源中 626 更新、153 新增、23,969 未变。旧目录完整备份于 `extractor/output/patch-20261106/backup-20261106T072907-2186b002/Content`。
+  2. **DB 与 API 清洗**：`python3 main.py --rebuild-db` 强制全量导入，新 DB 49,287,168 bytes（origin 基线 49,139,712 bytes）；导入 136,400 条翻译、818 items、738 monsters、453 props、221 dungeon modules、15,608 lootdrop 关系，过滤 9,269 个非收录模块 spawner 后存 46,176 个 spawners。API 全量导出成功，`dataDate=20261106`、`seasonVersion=11`，图片验证通过。lootdrop 索引从 524 条裁为 496 条，与详情文件数一致，28 个无详情条目不会进入 SSG 搜索/路由/sitemap。
+  3. **Web 构建与回归**：Node 20 下 `npm ci`、`npm test` 与 `npm run build` 全部成功；SSG 2,956 routes、15,044 files、11,730 sitemap URLs，release version `vf83fe1c411b35e799f7a8d61`。API 220 项单测和 `api/lint.sh` 通过；`test:cache-browser`、`test:quest-reset` 通过，`test:i18n` Pass 29 / Fail 0。预览首页、简中首页、掉落列表与版本化 JSON 均 HTTP 200。
+  4. **提交与推送**：按「推送到 dnd9（含 DB）」流程，仅提交本次部署记录与 DB；DB 推送后从本地临时跟踪中移除，并恢复 `skip-worktree`。推送明确由用户授权。
+- **验证限制**：当前会话未提供 sqlite-debug MCP，且环境无 `sqlite3` CLI，因此未独立执行 `PRAGMA integrity_check`；强制重建、DB 导入、API 导出及 Web 构建均成功完成，作为本次 DB 可读性验证。
+
 ## 2026-10-28
 
 ### feat: 稀有模块出现概率改为读取 RareChance
