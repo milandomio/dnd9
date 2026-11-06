@@ -15,6 +15,17 @@
   4. **提交与推送**：按「推送到 dnd9（含 DB）」流程，仅提交本次部署记录与 DB；DB 推送后从本地临时跟踪中移除，并恢复 `skip-worktree`。推送明确由用户授权。
 - **验证限制**：当前会话未提供 sqlite-debug MCP，且环境无 `sqlite3` CLI，因此未独立执行 `PRAGMA integrity_check`；强制重建、DB 导入、API 导出及 Web 构建均成功完成，作为本次 DB 可读性验证。
 
+### feat: Extractor 轮换项目资源快照并保存更新差异
+
+- **改动原因**：用户要求补丁循环保留当前项目资源和上一轮旧资源；下一轮开始前删除已经完成对比的旧资源，再提取新资源置换项目目录、对比新旧并留下更新差异文档。
+- **变更文件**：`extractor/BackupRetention.cs`（新增）、`extractor/BatchExport.cs`、`extractor/Extractor.csproj`、`extractor/Program.cs`、`extractor/README.md`、`extractor/tests/BackupRetention.Tests.csproj` 与 `extractor/tests/Program.cs`（新增）、`docs/BUILD_AND_DEPLOY.md`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. **轮换顺序**：批次先验证资源范围；仅清理同一 `--apply-to` 项目的 `backup-<批次>/Content`，且备份目录必须同时有 `comparison-complete` 标记和对应 `update-diff-<批次>.md`。标记内容绑定原项目 Content 绝对路径，防止共享 output 目录时误删另一项目快照。无标记、无差异文档、格式不匹配或目标根不同的备份全部保留。
+  2. **资源置换与差异**：每个范围的原项目目录整体移入新 `BackupRoot`，暂存新资源再移入项目 Content；旧文件清单与新文件集合做路径差集得到 `Removed`。应用全部成功后生成持久 Markdown，列出更新、新增、删除文件与未变数量，并将 `DiffDocument` 写入 JSON 报告。
+  3. **仅完成对比才清理**：Markdown 原子写入成功后才给旧快照写完成标记；下一轮开始时才删除这份已比对旧资源，差异文档保留。替换失败会回滚；差异写入失败时不写标记，旧资源保留并报告 `DiffError`。
+  4. **回归**：新增无第三方依赖的 .NET 测试项目，验证已比对旧快照清理、无差异文档/无标记快照保留及不同项目根隔离；主 Extractor 项目排除测试源文件。
+- **验证**：`dotnet run --project tests/BackupRetention.Tests.csproj` 通过（PASS）；`dotnet build -c Release --no-restore` 成功，0 warning / 0 error；`git diff --check` 通过。未运行完整游戏资源解包，避免本次只改轮换逻辑却再次置换项目资源。
+
 ## 2026-10-28
 
 ### feat: 稀有模块出现概率改为读取 RareChance

@@ -24,7 +24,7 @@ sleep 2 && curl -s -o /dev/null -w "HTTP %{http_code}\n" http://localhost:8081/
 
 本节专指维护者更新游戏补丁数据，是部署流程中唯一调用 `extractor/` 的场景。拉取仓库后使用已有 DB 部署，按上方「完整构建」执行。
 
-用户说「更新部署」「补丁部署」时执行本流程：使用最新 usmap 直接从已安装游戏的容器更新 14 个目录，再全量重建 SQLite、运行 API 清洗、构建 Web 并验证预览。解包替代原来的 `~/sync_fmod.sh` 和手动 FModel 导出；后续数据处理与 Web 构建入口不变。
+用户说「更新部署」「补丁部署」时执行本流程：使用最新 usmap 直接从已安装游戏的容器更新 14 个目录，再全量重建 SQLite、运行 API 清洗、构建 Web 并验证预览。解包替代原来的 `~/sync_fmod.sh` 和手动 FModel 导出；每轮保留当前项目资源和上一轮旧资源，自动生成持久的资源差异 Markdown。后续数据处理与 Web 构建入口不变。
 
 先按 [`extractor/README.md`](../extractor/README.md) 配置 `extractor/config.local.json` 的 `paksDirectory`，把最新 AES 和匹配游戏版本的 usmap 放在 `extractor/keys/`。固定范围由 `extractor/update-scope.json` 维护，包含所有子目录与新增资源；定位其他资源见 [`extractor/docs/FOLDER_DISCOVERY.md`](../extractor/docs/FOLDER_DISCOVERY.md)。
 
@@ -46,8 +46,8 @@ nohup setsid npm run build > build.log 2>&1 < /dev/null &
 
 规则：
 
-- 解包进程结束且报告 `Completed=true`、`Applied=true`、`Failed=0`、`ApplyError=null` 后，才能运行 API 管道。任一资源解析失败时保留全部旧目录；修正配置后重跑。
-- 每个范围目录整体备份并替换，因此会清理旧文件。报告的 `BackupRoot` 保存完整旧目录；范围外目录保持原状。需要恢复时按解包模块文档操作。
+- 解包进程结束且报告 `Completed=true`、`Applied=true`、`Failed=0`、`ApplyError=null`、`DiffDocument` 指向已生成的差异 Markdown 后，才能运行 API 管道。任一资源解析失败时保留项目目录；修正配置后重跑。
+- 每个范围目录整体备份并替换：新资源进入项目 Content，原项目 Content 完整移动到 `BackupRoot`；差异文档统计更新、新增、删除和未变文件，保留在 `output/update/`。下一轮只清理带 `comparison-complete` 标记且对应差异文档仍存在、并且属于同一 `--apply-to` 目录的旧快照；未完成对比或其他项目的备份均保留。范围外目录保持原状。需要恢复时按解包模块文档操作。
 - `--rebuild-db` 强制全量重建，由管道完成新 DB 的替换；管道必须后台跑并检查 `api/pipeline.log`，成功后用 sqlite-debug 确认 DB 可读、表数量正常。
 - 非 `dev` 分支：管道成功后再运行 Web 构建，构建完成必须验证 preview HTTP 200。`dev` 分支跳过 Web 构建，按 AGENTS.md 启动 Vite 开发模式，无需验证 HTTP 200。
 - 验证通过后更新 `docs/SESSION_CHANGES.md` 并精确 stage、本地提交；用户明确要求推送时才按下方「推送到 dnd9（含 DB）」执行，不要混入 `.playwright-mcp/` 等无关文件。

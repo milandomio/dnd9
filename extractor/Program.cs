@@ -25,7 +25,7 @@ if (args.Contains("--help") || args.Contains("-h"))
         UObject/batch exports default to the newest .usmap in configured keys/.
         --manifest accepts root/folders configuration and optional files from fmodel-query.
         Batch mode recursively exports all resources under the configured folders.
-        --apply-to backs up and replaces complete folders after every export succeeds.
+        --apply-to backs up/replaces folders, writes a diff, and prunes only compared backups next run.
         --aes-file reads a single hex AES key; defaults to configured keys/aes.txt if present.
         --game selects a CUE4Parse EGame name (default: GAME_UE5_8).
         """);

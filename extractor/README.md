@@ -114,18 +114,21 @@ nohup setsid dotnet bin/Release/net10.0/Extractor.dll \
   --report output/update/update-report.json > update.log 2>&1 < /dev/null &
 ```
 
-独立使用时修改 `--apply-to` 为自己的 Content 目录，省略该参数仅暂存。
+独立使用时修改 `--apply-to` 为自己的 Content 目录，省略该参数仅暂存。补丁更新采用「当前项目资源 + 上一轮旧资源 + 持久差异文档」循环：
 
-1. 挂载容器并按补丁优先级选择资源，仅扫描 Paks 根目录。
-2. 全部资源导出到暂存区，校验 JSON，记录来源、SHA-256 和逐文件状态。
-3. 所有资源成功且每个配置目录匹配到资源后，校验暂存哈希，准备完整的新目录。
-4. 原目录整体移入 `BackupRoot`，再放入新目录，清理旧文件并纳入新增文件；范围外目录保留。
+1. 校验本轮资源范围后，先删除上一轮已经完成对比的旧资源快照；只有快照带有 `comparison-complete` 标记且对应的差异 Markdown 仍存在时才会清理。未完成对比的备份不会删除。
+2. 挂载容器并按补丁优先级导出新资源到暂存区，校验 JSON 与 SHA-256。
+3. 所有资源成功后，将项目 Content 目录整体移入 `BackupRoot`，再用新资源目录替换项目 Content。应用失败会回滚，旧项目资源保留。
+4. 对比旧项目资源和新项目资源，生成 `update-diff-<批次>.md`，列出更新、新增、删除文件及未变数量。差异文档保留在暂存目录旁；报告 JSON 同时记录 `Removed` 与 `DiffDocument`。
+5. 差异文档写入成功后才给旧快照写入完成标记。下次批次开始时才清理这份已对比旧资源，因此每轮保留项目当前资源和上一轮旧资源用于比较。
 
-任一解析失败时跳过全部替换，原目录保持原状。替换失败时尝试反向回滚，异常记录在 `ApplyError`。备份与原目录需位于支持目录重命名的同一文件系统；跨文件系统移动失败时也触发回滚。
+任一解析失败时跳过目录替换；替换失败时尝试反向回滚，异常记录在 `ApplyError`。差异文档写入失败时不标记旧备份，保留旧资源并报告错误。备份与原目录需位于支持目录重命名的同一文件系统。
 
-正式更新成功判据：进程结束、日志出现 `Batch complete`，报告为 `Completed=true`、`Applied=true`、`Failed=0`、`ApplyError=null`。仅暂存时应为 `Applied=false`。进度行或进程启动不代表成功。
+正式更新成功判据：进程结束、日志出现 `Batch complete`，报告为 `Completed=true`、`Applied=true`、`Failed=0`、`ApplyError=null` 且存在 `DiffDocument`。仅暂存时应为 `Applied=false`。进度行或进程启动不代表成功。
 
-报告包含所有文件的 `Asset`、`Source`、`Sha256`、`Status`。传入带 `files` 的 fmodel-query 清单时额外记录 `UnmatchedExisting`。复用暂存目录时仅应用本次报告列出的文件，旧暂存产物不会混入替换目录。完整备份保留被清理的旧文件。
+报告包含所有文件的 `Asset`、`Source`、`Sha256`、`Status`、`Removed` 和差异文档路径。传入带 `files` 的 fmodel-query 清单时额外记录 `UnmatchedExisting`。复用暂存目录时仅应用本次报告列出的文件，旧暂存产物不会混入新项目资源。
+
+运行备份轮换回归测试：`dotnet run --project tests/BackupRetention.Tests.csproj`（在 `extractor/` 目录执行）。
 
 ### 本体与补丁如何合并
 
