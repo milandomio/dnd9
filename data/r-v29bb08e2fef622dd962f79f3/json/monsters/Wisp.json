@@ -1,0 +1,153 @@
+{
+  "name": "Wisp",
+  "translation": "幻灵",
+  "translation_key": "Text_DesignData_Monster_Monster_Wisp",
+  "coords": [
+    {
+      "x": 1105.0034,
+      "y": 714.1544,
+      "z": 0.0,
+      "yaw": 175.0,
+      "map": "Ruins_Forest_01",
+      "file": "Ruins_Forest_01_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    },
+    {
+      "x": -1361.7740928,
+      "y": 634.49127,
+      "z": 0.0,
+      "yaw": 295.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "Wisp",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -1294.80454,
+      "y": -647.58749,
+      "z": 0.0,
+      "yaw": 295.0,
+      "map": "Ruins_Forest_08",
+      "file": "Ruins_Forest_08_HR_D.json",
+      "version": "",
+      "label": "Wisp",
+      "group_parent": "BP_GameSpawnerGroup_C_7",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 528.0,
+      "y": 603.00002,
+      "z": 0.0,
+      "yaw": 35.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Wisp",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Wisp",
+          "name": "幻灵"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_Slime",
+          "name": "史莱姆"
+        }
+      ]
+    },
+    {
+      "x": -359.0,
+      "y": -81.00001,
+      "z": 0.0,
+      "yaw": 35.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    },
+    {
+      "x": 244.0,
+      "y": 252.0,
+      "z": 9.318847e-05,
+      "yaw": 180.0,
+      "map": "Ruins_Wells_02",
+      "file": "Ruins_Wells_02_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    },
+    {
+      "x": -856.0,
+      "y": 827.0,
+      "z": 0.0001,
+      "yaw": 180.0,
+      "map": "Ruins_WollfColony",
+      "file": "Ruins_WollfColony_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    },
+    {
+      "x": -1096.0,
+      "y": -526.0,
+      "z": 0.0001,
+      "yaw": 180.0,
+      "map": "Ruins_WollfColony",
+      "file": "Ruins_WollfColony_HR_D.json",
+      "version": "",
+      "label": "Wisp"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "ArcaneEssence_6001",
+          "page": "ArcaneEssence",
+          "translation": "奥术精华",
+          "translation_key": "Text_DesignData_Item_Item_ArcaneEssence_6001",
+          "suffix": "6001",
+          "luck_grade": 5
+        },
+        {
+          "name": "Diamond_6001",
+          "page": "Diamond",
+          "translation": "钻石（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Diamond_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "CapturedManaFlakes",
+          "page": "CapturedManaFlakes",
+          "translation": "捕获的魔力碎片",
+          "translation_key": "Text_DesignData_Item_Item_CapturedManaFlakes",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "幻灵",
+        "translation_key": "Text_DesignData_Monster_Monster_Wisp",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 42.8571,
+          "普通": 42.8571,
+          "豪客赛": 33.9286,
+          "逆袭赛": 30.0
+        }
+      }
+    ]
+  }
+}

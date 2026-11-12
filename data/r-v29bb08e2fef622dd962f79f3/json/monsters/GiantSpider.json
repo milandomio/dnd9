@@ -1,0 +1,476 @@
+{
+  "name": "GiantSpider",
+  "translation": "巨型蜘蛛",
+  "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+  "coords": [
+    {
+      "x": -510.58752,
+      "y": 458.52625,
+      "z": 0.31406483,
+      "yaw": 325.0,
+      "map": "Cave_SpiderNest_02",
+      "file": "Cave_SpiderNest_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider"
+    },
+    {
+      "x": 82.13521,
+      "y": 898.8908,
+      "z": -400.0,
+      "yaw": 205.0,
+      "map": "HideoutCave_02",
+      "file": "HideoutCave_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider"
+    },
+    {
+      "x": -295.0,
+      "y": -248.99997,
+      "z": -399.9999,
+      "yaw": 90.0,
+      "map": "HideoutCave_02",
+      "file": "HideoutCave_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider"
+    },
+    {
+      "x": 1061.0,
+      "y": -387.0,
+      "z": -400.0,
+      "yaw": 270.0,
+      "map": "HideoutCave_02",
+      "file": "HideoutCave_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider"
+    },
+    {
+      "x": 0.0,
+      "y": 970.0,
+      "z": -600.0,
+      "yaw": 260.0,
+      "map": "Ruins_UndergroundAltar_01",
+      "file": "Ruins_UndergroundAltar_01_HR_D.json",
+      "version": "",
+      "label": "GiantSpider",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "sub_group_parent": "BP_SubGroup_C_2",
+      "sub_pool_size": 1,
+      "sub_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+          "name": "巨型蜘蛛"
+        }
+      ],
+      "parent_pool_size": 1
+    },
+    {
+      "x": -923.9034,
+      "y": -813.4376,
+      "z": 1005.0,
+      "yaw": 325.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider"
+    },
+    {
+      "x": 777.20105,
+      "y": 276.8101,
+      "z": -399.9999,
+      "yaw": 75.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider"
+    },
+    {
+      "x": -1367.68737,
+      "y": -167.61478,
+      "z": -399.9999,
+      "yaw": 100.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantDragonfly",
+          "name": "剧毒蜻蜓"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+          "name": "巨型蜘蛛"
+        }
+      ]
+    },
+    {
+      "x": -1235.367546,
+      "y": -489.6194,
+      "z": -399.9999,
+      "yaw": 110.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider",
+      "group_parent": "BP_GameSpawnerGroup_C_2",
+      "variant_count": 2,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantDragonfly",
+          "name": "剧毒蜻蜓"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+          "name": "巨型蜘蛛"
+        }
+      ]
+    },
+    {
+      "x": -1039.7664300000001,
+      "y": 672.9160999999999,
+      "z": -399.9999,
+      "yaw": 110.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider",
+      "group_parent": "BP_GameSpawnerGroup_C_3",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DeathBeetle",
+          "name": "死亡甲虫"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantBat",
+          "name": "巨型蝙蝠"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+          "name": "巨型蜘蛛"
+        }
+      ]
+    },
+    {
+      "x": -252.15967,
+      "y": 1312.224115,
+      "z": -399.9999,
+      "yaw": 320.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider",
+      "group_parent": "BP_GameSpawnerGroup_C_4",
+      "variant_count": 4,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DeathBeetle",
+          "name": "死亡甲虫"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantDragonfly",
+          "name": "剧毒蜻蜓"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+          "name": "巨型蜘蛛"
+        },
+        {
+          "translation_key": "Text_DesignData_Props_Props_SimpleChestSmall",
+          "name": "小型橡木宝箱"
+        }
+      ]
+    },
+    {
+      "x": 170.85094,
+      "y": -119.94641,
+      "z": 1005.0,
+      "yaw": 325.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider",
+      "point_pool_size": 2,
+      "point_pool_entries": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+          "name": "巨型蜘蛛"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_SpiderMummy",
+          "name": "木乃伊蜘蛛"
+        }
+      ]
+    },
+    {
+      "x": -1176.7898,
+      "y": 1035.9082,
+      "z": 0.0,
+      "yaw": 50.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider"
+    },
+    {
+      "x": -719.0,
+      "y": -164.0,
+      "z": -400.0,
+      "yaw": 0.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider"
+    },
+    {
+      "x": 1073.63102,
+      "y": 1308.7519,
+      "z": -399.9999,
+      "yaw": 290.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider",
+      "group_parent": "BP_GameSpawnerGroup_C_9",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantDragonfly",
+          "name": "剧毒蜻蜓"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_DeathBeetle",
+          "name": "死亡甲虫"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+          "name": "巨型蜘蛛"
+        }
+      ]
+    },
+    {
+      "x": 254.94606,
+      "y": -253.0598,
+      "z": -399.9999,
+      "yaw": 70.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider"
+    },
+    {
+      "x": -1221.7757793121946,
+      "y": -1088.2236706353128,
+      "z": -399.9999,
+      "yaw": 15.0,
+      "map": "StoneGrave_Center_02",
+      "file": "StoneGrave_Center_02_HR_D.json",
+      "version": "",
+      "label": "GiantSpider",
+      "group_parent": "BP_GameSpawnerGroup_C_0",
+      "variant_count": 3,
+      "variant_names": [
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantCentipede",
+          "name": "巨型蜈蚣"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+          "name": "巨型蜘蛛"
+        },
+        {
+          "translation_key": "Text_DesignData_Monster_Monster_GiantBat",
+          "name": "巨型蝙蝠"
+        }
+      ]
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_WebSpider",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_WebSpider",
+      "translation": "网蛛",
+      "translation_key": "df5.lootpool.WebSpider",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "PoisonVial_3001",
+          "page": "PoisonVial",
+          "translation": "毒药瓶",
+          "translation_key": "Text_DesignData_Item_Item_PoisonVial_3001",
+          "suffix": "3001",
+          "luck_grade": 2
+        },
+        {
+          "name": "SpiderSilk",
+          "page": "SpiderSilk",
+          "translation": "蜘蛛丝",
+          "translation_key": "Text_DesignData_Item_Item_SpiderSilk",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    },
+    {
+      "id": "ID_Lootdrop_GradedRoll_CrackedTrinkets",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_GradedRoll_CrackedTrinkets",
+      "translation": "裂开的饰品",
+      "translation_key": "df5.lootpool.GradedRoll_CrackedTrinkets",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "GoldBangle1I_6001",
+          "page": "GoldBangle1I",
+          "translation": "三宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1I_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1J_6001",
+          "page": "GoldBangle1J",
+          "translation": "叶形金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1J_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1C_6001",
+          "page": "GoldBangle1C",
+          "translation": "图案金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1C_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1D_6001",
+          "page": "GoldBangle1D",
+          "translation": "圆点金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemRing_6001",
+          "page": "GemRing",
+          "translation": "宝石戒指（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemRing_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GemNecklace_6001",
+          "page": "GemNecklace",
+          "translation": "宝石项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2G_6001",
+          "page": "GoldBangle2G",
+          "translation": "微光手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2G_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1H_6001",
+          "page": "GoldBangle1H",
+          "translation": "浅金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "PearlNecklace_6001",
+          "page": "PearlNecklace",
+          "translation": "珍珠项链（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_PearlNecklace_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1B_6001",
+          "page": "GoldBangle1B",
+          "translation": "简约金手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1B_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2D_6001",
+          "page": "GoldBangle2D",
+          "translation": "细长手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2D_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle1E_6001",
+          "page": "GoldBangle1E",
+          "translation": "绿松石宝石手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle1E_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBand_6001",
+          "page": "GoldBand",
+          "translation": "金环（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBand_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "MetalCup_6001",
+          "page": "MetalCup",
+          "translation": "银圣杯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_MetalCup_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBangle2H_6001",
+          "page": "GoldBangle2H",
+          "translation": "闪亮手镯（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBangle2H_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "GoblinCave": [
+      {
+        "translation": "巨型蜘蛛",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 35.0,
+          "普通": 35.0,
+          "豪客赛": 40.0,
+          "逆袭赛": 40.0
+        }
+      }
+    ],
+    "Ruins": [
+      {
+        "translation": "巨型蜘蛛",
+        "translation_key": "Text_DesignData_Monster_Monster_GiantSpider",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 35.0,
+          "普通": 35.0,
+          "豪客赛": 40.0,
+          "逆袭赛": 40.0
+        }
+      }
+    ]
+  }
+}
