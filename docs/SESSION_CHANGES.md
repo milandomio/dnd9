@@ -2,6 +2,20 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-11-12
+
+### chore: 按补丁流程更新游戏资源、全量重建 DB 并验证 Web
+
+- **改动原因**：游戏于 2026-11-12 更新（Steam buildid `26611772`，LastUpdated 17:24），用户要求按补丁流程重新解包、重建数据并验证。
+- **变更文件**：`api/data/darkfindv5.db`（本地提交）、`docs/SESSION_CHANGES.md`。解包报告、差异文档、旧资源备份与日志位于忽略目录 `extractor/output/update/`；新版映射 `extractor/keys/0.18.160.10688.usmap` 按 `keys/README.md` 不提交。
+- **关键逻辑/映射关系**：
+  1. **映射与两轮解包**：首次沿用 `season11hotfix130.usmap` 导出 24,700 个资源、9 个失败（1 个 `SpawnProtection_UIData`（旧导出中不存在）与 8 个地图），均为 `FPropertyTagType StructProperty` 解析错误，报告 `Completed=false`、`Applied=false`，未替换项目源。换用当前版本映射 `0.18.160.10688.usmap` 重跑后 24,709 个资源全部成功。
+  2. **资源替换**：`--apply-to` 原子替换 14 个范围目录，结果 `Completed=true`、`Applied=true`、`Failed=0`、`ApplyError=null`；更新 13,814、新增 149、删除 188、未变 10,746。差异文档 `extractor/output/update/update-diff-20261112T093351-670849de.md`，旧资源备份 `.../backup-20261112T093351-670849de/Content`。
+  3. **DB 重建**：`python main.py --rebuild-db` 37.78s，图片校验通过，`import_complete=1`；关键表 `item_entities=818`、`lootdrop_groups=74757`、`lootdrop_rate_items=25388`、`spawners=47668`、`monster_entities=740`、`props_entities=566`、`translations=13742`。
+  4. **Web 构建**：SSG 2,970 页、14,993 个 dist 文件、11,680 个 sitemap URL，release version `v4264bab6bd5ad3691e22df15`；8081 preview 首页、Torch/Lantern 物品页与 `_5001` 爆率页均 HTTP 200。
+  5. **回归**：`test:item-rarity`、`test:i18n`、`test:cache` 全部退出码 0。
+- **验证**：解包报告字段齐全（`DiffDocument` 存在、`DiffError=null`）；DB `integrity_check=ok`、48 张表、`import_complete=1`（经 `mcp-servers/sqlite-debug` 的 `query`/`list_tables` 实现核验，当前会话未注册该 MCP 端点）；构建日志无错误；`git diff --check` 通过。
+
 ## 2026-11-06
 
 ### chore: 使用 Extractor 更新补丁数据、全量重建 DB 并推送 main
