@@ -3676,7 +3676,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': '知道了',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
-      '勾选弹窗或提示音后生效：开放中的地图在最后 N 秒变蓝。',
+      '勾选弹窗或提示音后生效：开放中的地图在最后 N 秒变蓝；允许通知时使用系统通知，否则显示页面弹窗。',
     'ui.timer.final_window': '准备进入',
     'ui.timer.network_time': '网络时间',
     'ui.timer.time_drift': '相差 {seconds} 秒，设备时间不准确',
@@ -3795,7 +3795,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': 'Got it',
     'ui.timer.alert_seconds': 's',
     'ui.timer.alert_hint':
-      'Check popup and/or sound to enable: open maps turn blue for the last N seconds.',
+      'Check popup and/or sound to enable: open maps turn blue for the last N seconds; the popup uses a system notification when allowed, otherwise an in-page dialog.',
     'ui.timer.final_window': 'Get ready',
     'ui.timer.network_time': 'Network time',
     'ui.timer.time_drift': '{seconds}s off — device clock is inaccurate',
@@ -3913,7 +3913,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': '確認',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
-      'ポップアップまたは通知音をチェックすると有効になります：開放中のマップが残りN秒で青色になります。',
+      'ポップアップまたは通知音をチェックすると有効になります：開放中のマップが残りN秒で青色になります。通知が許可されていればシステム通知、なければページ内ダイアログを表示します。',
     'ui.timer.final_window': 'まもなく入場',
     'ui.timer.network_time': 'ネットワーク時刻',
     'ui.timer.time_drift': '{seconds}秒ずれています（端末時刻が不正確）',
@@ -4026,7 +4026,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': '知道了',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
-      '勾選彈窗或提示音後生效：開放中的地圖在最後 N 秒變藍。',
+      '勾選彈窗或提示音後生效：開放中的地圖在最後 N 秒變藍；允許通知時使用系統通知，否則顯示頁面彈窗。',
     'ui.timer.final_window': '準備進入',
     'ui.timer.network_time': '網路時間',
     'ui.timer.time_drift': '相差 {seconds} 秒，裝置時間不準確',

@@ -4,6 +4,18 @@
 
 ## 2026-11-16
 
+### feat: 计时器弹窗支持系统通知（Windows 11 右下角）
+
+- **改动原因**：用户希望弹窗支持 Windows 11 右下角系统通知。
+- **变更文件**：`web/src/pages/DungeonTimerPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 网页无法直接调用 Win11 Toast API；改用 Web Notifications API。Chrome/Edge 在 Windows 11 上会把 `new Notification()` 显示为右下角系统通知（行动中心）。
+  2. 勾选「弹窗」时，若通知权限为 default，则在点击手势中调用 `Notification.requestPermission()`；触发时若权限为 granted，则发送标题「轮换提醒」、正文为 Solo 当前地图与剩余秒数、`tag` 为窗口键、`silent: true`（声音由独立「提示音」通道控制），不再显示页面内弹窗。
+  3. 权限被拒绝、浏览器不支持或非安全上下文时，自动回退到原有 antd Modal，功能不受影响。
+  4. 系统通知只在页面打开时由前端触发；页面关闭后需服务端推送才能提醒，本项目无后端，不做推送。
+  5. 更新 `ui.timer.alert_hint`，说明“允许通知时使用系统通知，否则显示页面弹窗”，补齐 zh-Hans、en、ja、zh-Hant。
+- **验证**：`npx tsc --noEmit` 通过；ESLint（改动文件）0 error；Prettier 通过；重新构建成功（2971 pages）。Playwright 受控时钟 + 伪造 Notification：permission=granted 时仅产生 1 条系统通知（标题「轮换提醒」，正文含「哥布林洞」「30 秒」），DOM 中无弹窗；permission=denied 时不产生系统通知，页面内 Modal 正常显示同样正文。两种情况下倒计时均为 0:29，验证无重复提醒。仅本地提交，未推送。
+
 ### feat: 提示音改为 2 秒，新增弹窗/提示音勾选并修正重复提醒
 
 - **改动原因**：用户要求提示音缩短为 2 秒，弹窗与提示音分别勾选、勾选后才生效；并反馈在轮换结束（0 秒）时仍会再提醒一次，需要只在设定时间提醒一次。

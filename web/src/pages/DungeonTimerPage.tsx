@@ -152,8 +152,27 @@ export default function DungeonTimerPage() {
     if (lastAlertKeyRef.current === key) return;
     lastAlertKeyRef.current = key;
     if (soundEnabled) playAlert();
-    if (popupEnabled) setPopup({ mapKey: openMap.key, seconds: openMap.value });
-  }, [now, popupEnabled, soundEnabled, alertSeconds, playAlert]);
+    if (popupEnabled) {
+      const body = ut('ui.timer.popup_body')
+        .replace('{map}', ut(`ui.timer.map.${openMap.key}`))
+        .replace('{seconds}', String(openMap.value));
+      if (
+        typeof window !== 'undefined' &&
+        'Notification' in window &&
+        window.Notification.permission === 'granted'
+      ) {
+        // Chrome/Edge on Windows 11 show this as a native toast in the
+        // bottom-right notification area.
+        new window.Notification(ut('ui.timer.popup_title'), {
+          body,
+          tag: key,
+          silent: true,
+        });
+      } else {
+        setPopup({ mapKey: openMap.key, seconds: openMap.value });
+      }
+    }
+  }, [now, popupEnabled, soundEnabled, alertSeconds, playAlert, ut]);
 
   useEffect(() => {
     const tick = () => setNow(Math.floor(Date.now() / 1000));
@@ -303,7 +322,19 @@ export default function DungeonTimerPage() {
         </span>
         <Checkbox
           checked={popupEnabled}
-          onChange={(event) => setPopupEnabled(event.target.checked)}
+          onChange={(event) => {
+            setPopupEnabled(event.target.checked);
+            // Ask for permission inside the click gesture; if it is denied
+            // or unsupported the in-page modal remains the fallback.
+            if (
+              event.target.checked &&
+              typeof window !== 'undefined' &&
+              'Notification' in window &&
+              window.Notification.permission === 'default'
+            ) {
+              void window.Notification.requestPermission();
+            }
+          }}
         >
           {ut('ui.timer.popup_checkbox')}
         </Checkbox>
