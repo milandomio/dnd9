@@ -74,8 +74,11 @@ export default function DungeonTimerPage() {
   const [popupEnabled, setPopupEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [alertSeconds, setAlertSeconds] = useState(30);
+  const [alertMode, setAlertMode] = useState<Mode>('solo');
+  const [alertMapKey, setAlertMapKey] = useState('castle');
   const [popup, setPopup] = useState<{
     mapKey: string;
+    mode: Mode;
     seconds: number;
   } | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -132,15 +135,14 @@ export default function DungeonTimerPage() {
 
   useEffect(() => {
     if (now === null || (!popupEnabled && !soundEnabled)) return;
-    // The three open cells share the same remaining time; the Solo column is
-    // the one this page tells the user to watch.
-    const openMap = MAPS.map((map) => ({
-      key: map.key,
-      value: calculateCountdowns(map.startTime, now).solo,
-    })).reduce((a, b) => (a.value < b.value ? a : b));
+    // Alert only for the queue and map picked in the controls above.
+    const selectedMap = MAPS.find((map) => map.key === alertMapKey) ?? MAPS[0];
+    const remaining = calculateCountdowns(selectedMap.startTime, now)[
+      alertMode
+    ];
     // 0 means the window just rolled over; the next window will trigger at
     // its own threshold instead.
-    if (openMap.value <= 0 || openMap.value > alertSeconds) return;
+    if (remaining <= 0 || remaining > alertSeconds) return;
     const startOfDay = new Date(now * 1000).setUTCHours(0, 0, 0, 0) / 1000;
     // Use the same -1 s shift as calculateCountdowns. Without it, the last
     // second before 0:00 falls into the next cycle index and fires a second
@@ -148,14 +150,15 @@ export default function DungeonTimerPage() {
     const shifted = now - startOfDay - 1;
     const cycleIndex = Math.floor(shifted / CYCLE);
     const windowIndex = Math.floor((((shifted % CYCLE) + CYCLE) % CYCLE) / 180);
-    const key = `${cycleIndex}:${windowIndex}`;
+    const key = `${cycleIndex}:${windowIndex}:${alertMode}:${alertMapKey}`;
     if (lastAlertKeyRef.current === key) return;
     lastAlertKeyRef.current = key;
     if (soundEnabled) playAlert();
     if (popupEnabled) {
       const body = ut('ui.timer.popup_body')
-        .replace('{map}', ut(`ui.timer.map.${openMap.key}`))
-        .replace('{seconds}', String(openMap.value));
+        .replace('{queue}', ut(`ui.timer.mode.${alertMode}`))
+        .replace('{map}', ut(`ui.timer.map.${alertMapKey}`))
+        .replace('{seconds}', String(remaining));
       if (
         typeof window !== 'undefined' &&
         'Notification' in window &&
@@ -169,10 +172,19 @@ export default function DungeonTimerPage() {
           silent: true,
         });
       } else {
-        setPopup({ mapKey: openMap.key, seconds: openMap.value });
+        setPopup({ mapKey: alertMapKey, mode: alertMode, seconds: remaining });
       }
     }
-  }, [now, popupEnabled, soundEnabled, alertSeconds, playAlert, ut]);
+  }, [
+    now,
+    popupEnabled,
+    soundEnabled,
+    alertSeconds,
+    alertMode,
+    alertMapKey,
+    playAlert,
+    ut,
+  ]);
 
   useEffect(() => {
     const tick = () => setNow(Math.floor(Date.now() / 1000));
@@ -320,6 +332,32 @@ export default function DungeonTimerPage() {
         <span style={{ color: tokens.text, fontWeight: 'bold', fontSize: 14 }}>
           {ut('ui.timer.alert_toggle')}
         </span>
+        <span style={{ color: tokens.text, fontSize: 14 }}>
+          {ut('ui.timer.alert_queue')}
+        </span>
+        <Select
+          value={alertMode}
+          onChange={setAlertMode}
+          aria-label={ut('ui.timer.alert_queue')}
+          options={MODES.map((mode) => ({
+            value: mode,
+            label: ut(`ui.timer.mode.${mode}`),
+          }))}
+          style={{ width: 130 }}
+        />
+        <span style={{ color: tokens.text, fontSize: 14 }}>
+          {ut('ui.timer.alert_map')}
+        </span>
+        <Select
+          value={alertMapKey}
+          onChange={setAlertMapKey}
+          aria-label={ut('ui.timer.alert_map')}
+          options={MAPS.map((map) => ({
+            value: map.key,
+            label: ut(`ui.timer.map.${map.key}`),
+          }))}
+          style={{ width: 120 }}
+        />
         <Checkbox
           checked={popupEnabled}
           onChange={(event) => {
@@ -558,6 +596,7 @@ export default function DungeonTimerPage() {
         {popup === null
           ? null
           : ut('ui.timer.popup_body')
+              .replace('{queue}', ut(`ui.timer.mode.${popup.mode}`))
               .replace('{map}', ut(`ui.timer.map.${popup.mapKey}`))
               .replace('{seconds}', String(popup.seconds))}
       </Modal>
