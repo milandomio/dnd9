@@ -72,6 +72,10 @@ export default function DungeonTimerPage() {
   const [alertSeconds, setAlertSeconds] = useState(30);
   const audioContextRef = useRef<AudioContext | null>(null);
   const lastAlertKeyRef = useRef('');
+  const [networkOffsetMs, setNetworkOffsetMs] = useState<number | null>(null);
+  const [networkStatus, setNetworkStatus] = useState<'idle' | 'ok' | 'error'>(
+    'idle'
+  );
 
   const ensureAudioContext = useCallback(() => {
     const Ctor =
@@ -151,6 +155,45 @@ export default function DungeonTimerPage() {
     return () => window.clearInterval(timer);
   }, []);
 
+  const syncNetworkTime = useCallback(async () => {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 5000);
+    try {
+      const t0 = Date.now();
+      // Same-origin request: the HTTP Date header is readable (unlike a
+      // cross-origin NTP host, which a browser cannot query over UDP).
+      // Unique probe URL: avoids a service worker/precache hit that would
+      // hand back a stale Date header.
+      const response = await fetch(
+        `${window.location.origin}/__timer_clock_probe?t=${t0}`,
+        {
+          method: 'HEAD',
+          cache: 'no-store',
+          signal: controller.signal,
+        }
+      );
+      const t1 = Date.now();
+      const dateHeader = response.headers.get('date');
+      if (!dateHeader) throw new Error('missing Date header');
+      const serverMs = Date.parse(dateHeader);
+      if (Number.isNaN(serverMs)) throw new Error('invalid Date header');
+      // HTTP Date has one-second resolution, so +500 ms removes the average
+      // truncation bias; this is a clock comparison, not NTP precision.
+      setNetworkOffsetMs(serverMs + 500 - (t0 + t1) / 2);
+      setNetworkStatus('ok');
+    } catch {
+      setNetworkStatus('error');
+    } finally {
+      window.clearTimeout(timeout);
+    }
+  }, []);
+
+  useEffect(() => {
+    void syncNetworkTime();
+    const timer = window.setInterval(() => void syncNetworkTime(), 300000);
+    return () => window.clearInterval(timer);
+  }, [syncNetworkTime]);
+
   const openColor = dark ? '#7bd88f' : '#2e7d32';
   const openBackground = dark
     ? 'rgba(123, 216, 143, 0.12)'
@@ -159,6 +202,17 @@ export default function DungeonTimerPage() {
   const alertBackground = dark
     ? 'rgba(100, 181, 246, 0.16)'
     : 'rgba(21, 101, 192, 0.12)';
+  const driftSeconds =
+    networkOffsetMs === null ? 0 : Math.round(Math.abs(networkOffsetMs) / 1000);
+  const driftTooLarge =
+    networkStatus === 'ok' &&
+    networkOffsetMs !== null &&
+    Math.abs(networkOffsetMs) > 3000;
+  const driftColor = dark ? '#ff6b6b' : '#c62828';
+  const networkSeconds =
+    now === null || networkOffsetMs === null
+      ? null
+      : Math.floor(now + networkOffsetMs / 1000);
   const description = ut('ui.timer.description');
 
   return (
@@ -248,7 +302,7 @@ export default function DungeonTimerPage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'minmax(140px, 1.4fr) repeat(3, 1fr)',
+              gridTemplateColumns: 'minmax(200px, 1.9fr) repeat(3, 1fr)',
               background: tokens.card,
               borderBottom: `1px solid ${tokens.border}`,
               fontWeight: 'bold',
@@ -256,11 +310,42 @@ export default function DungeonTimerPage() {
               fontSize: 14,
             }}
           >
-            <div style={{ padding: '10px 14px' }}>
-              {ut('ui.timer.local_time')}:{' '}
-              <span style={{ color: tokens.accent }}>
-                {now === null ? '--:--:--' : formatLocalClock(now)}
-              </span>
+            <div style={{ padding: '10px 14px', lineHeight: 1.6 }}>
+              <div>
+                {ut('ui.timer.local_time')}:{' '}
+                <span style={{ color: tokens.accent }}>
+                  {now === null ? '--:--:--' : formatLocalClock(now)}
+                </span>
+              </div>
+              <div>
+                {ut('ui.timer.network_time')}:{' '}
+                <span
+                  style={{
+                    color: driftTooLarge
+                      ? driftColor
+                      : networkStatus === 'ok'
+                        ? tokens.text
+                        : tokens.muted,
+                  }}
+                >
+                  {networkSeconds === null
+                    ? '--:--:--'
+                    : formatLocalClock(networkSeconds)}
+                </span>
+              </div>
+              {driftTooLarge && (
+                <div style={{ color: driftColor, fontSize: 11 }}>
+                  {ut('ui.timer.time_drift').replace(
+                    '{seconds}',
+                    String(driftSeconds)
+                  )}
+                </div>
+              )}
+              {networkStatus === 'error' && (
+                <div style={{ color: tokens.muted, fontSize: 11 }}>
+                  {ut('ui.timer.network_time_unavailable')}
+                </div>
+              )}
             </div>
             {MODES.map((mode) => (
               <div
@@ -280,7 +365,7 @@ export default function DungeonTimerPage() {
                 key={map.key}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'minmax(140px, 1.4fr) repeat(3, 1fr)',
+                  gridTemplateColumns: 'minmax(200px, 1.9fr) repeat(3, 1fr)',
                   borderBottom: `1px solid ${tokens.border}`,
                 }}
               >
@@ -366,6 +451,7 @@ export default function DungeonTimerPage() {
       >
         <p style={{ margin: 0 }}>{ut('ui.timer.legend')}</p>
         <p style={{ margin: 0 }}>{ut('ui.timer.clock_note')}</p>
+        <p style={{ margin: 0 }}>{ut('ui.timer.network_time_note')}</p>
       </div>
     </div>
   );

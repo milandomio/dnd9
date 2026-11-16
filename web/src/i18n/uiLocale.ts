@@ -3667,6 +3667,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.alert_hint':
       '开启后：开放中的地图在最后 N 秒变蓝，并在进入该区间时播放 5 秒提示音。',
     'ui.timer.final_window': '准备进入',
+    'ui.timer.network_time': '网络时间',
+    'ui.timer.time_drift': '相差 {seconds} 秒，设备时间不准确',
+    'ui.timer.network_time_unavailable': '网络时间不可用',
+    'ui.timer.network_time_note':
+      '网络时间取自站点 HTTP 响应头 Date（浏览器无法直接访问 NTP），仅用于校时对比，不参与轮换计算。',
     'ui.autoscroll.play': '自动滚动到页面底部（录屏用）',
     'ui.autoscroll.pause': '暂停自动滚动',
   },
@@ -3771,6 +3776,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.alert_hint':
       'When on: open maps turn blue for the last N seconds and a 5-second alert plays when that window starts.',
     'ui.timer.final_window': 'Get ready',
+    'ui.timer.network_time': 'Network time',
+    'ui.timer.time_drift': '{seconds}s off — device clock is inaccurate',
+    'ui.timer.network_time_unavailable': 'Network time unavailable',
+    'ui.timer.network_time_note':
+      'Network time comes from the site HTTP Date response header (browsers cannot query NTP directly); it is only used to compare clocks and never feeds the rotation math.',
     'ui.autoscroll.play': 'Auto-scroll to the bottom (for recording)',
     'ui.autoscroll.pause': 'Pause auto-scroll',
   },
@@ -3873,6 +3883,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.alert_hint':
       'オンにすると、開放中のマップが残りN秒で青色になり、その区間に入ると5秒間の通知音が鳴ります。',
     'ui.timer.final_window': 'まもなく入場',
+    'ui.timer.network_time': 'ネットワーク時刻',
+    'ui.timer.time_drift': '{seconds}秒ずれています（端末時刻が不正確）',
+    'ui.timer.network_time_unavailable': 'ネットワーク時刻を取得できません',
+    'ui.timer.network_time_note':
+      'ネットワーク時刻はサイトの HTTP Date レスポンスヘッダーから取得します（ブラウザは NTP に直接アクセスできません）。時刻比較のみに使用し、ローテーション計算には使いません。',
   },
   'zh-Hant': {
     'ui.pwa.install_title': '安裝 DND閃電指南',
@@ -3970,6 +3985,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.alert_hint':
       '開啟後：開放中的地圖在最後 N 秒變藍，並在進入該區間時播放 5 秒提示音。',
     'ui.timer.final_window': '準備進入',
+    'ui.timer.network_time': '網路時間',
+    'ui.timer.time_drift': '相差 {seconds} 秒，裝置時間不準確',
+    'ui.timer.network_time_unavailable': '網路時間不可用',
+    'ui.timer.network_time_note':
+      '網路時間取自站點 HTTP 回應標頭 Date（瀏覽器無法直接存取 NTP），僅用於校時比對，不參與輪替計算。',
   },
 };
 
