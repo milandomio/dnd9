@@ -25,7 +25,6 @@ import {
   useCtrlInput,
   type AdjState,
 } from '../components/MapDebug';
-import Disclaimer from '../components/Disclaimer';
 import MonsterDropSwitch from '../components/MonsterDropSwitch';
 import VariantSwitch from '../components/VariantSwitch';
 import DebugCoordTable from '../components/DebugCoordTable';
@@ -825,8 +824,6 @@ export default function DetailPage() {
           />
         </div>
       )}
-
-      <Disclaimer />
 
       <GroupFilter
         groups={groupOptions}

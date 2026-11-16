@@ -31,7 +31,6 @@ import {
   useCtrlInput,
   type AdjState,
 } from '../components/MapDebug';
-import Disclaimer from '../components/Disclaimer';
 import DebugCoordTable from '../components/DebugCoordTable';
 import LocationStats from '../components/LocationStats';
 import ReferenceDropRates from '../components/ReferenceDropRates';
@@ -1283,8 +1282,6 @@ export default function LootdropDetailPage() {
           )}
         </span>
       </h1>
-
-      <Disclaimer />
 
       <GroupFilter
         groups={groupOptions}

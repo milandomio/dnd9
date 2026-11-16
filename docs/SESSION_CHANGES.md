@@ -4,6 +4,13 @@
 
 ## 2026-11-16
 
+### refactor: 数据误差警告改为导航下方全局显示
+
+- **改动原因**：用户要求把“数据有误差，以实际游戏内为准”警告绑定到导航下方，不再由各页面单独引用，默认所有页面显示。
+- **变更文件**：`web/src/AppInner.tsx`、`web/src/pages/HomePage.tsx`、`web/src/pages/DetailPage.tsx`、`web/src/pages/LootdropDetailPage.tsx`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：`Disclaimer` 组件移入 `AppInner` 的 `<NavBar />` 之后、路由内容之前，所有语言与所有路由统一渲染；删除首页、详情页、掉落详情页中的单独引用与 import。`web/src/_archived/` 未修改。
+- **验证**：`npx tsc --noEmit` 通过；ESLint 0 error（6 条既有 warning）；Prettier 通过；重新构建成功（2971 pages）。Playwright：首页、计时器、灯具、任务 NPC、工匠以及 `items/Bandage` 详情页均为 HTTP 200，警告文本每页只出现 1 次；警告顶边 89px、导航底边 74px，确认位于导航正下方。仅本地提交，未推送。
+
 ### feat: 提示时间改为下拉选择（30 秒 / 1 分钟 / 2 分钟）
 
 - **改动原因**：用户要求把提示秒数的数字输入框改为可下拉选择，选项为 30 秒、1 分钟、2 分钟。

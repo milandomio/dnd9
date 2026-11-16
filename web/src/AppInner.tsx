@@ -21,6 +21,7 @@ import LightsPage from './pages/LightsPage';
 import DungeonTimerPage from './pages/DungeonTimerPage';
 import CraftsPage from './pages/CraftsPage';
 import NavBar from './components/NavBar';
+import Disclaimer from './components/Disclaimer';
 import Footer from './components/Footer';
 import SWUpdateBanner from './components/SWUpdateBanner';
 import OfflineDetector from './components/OfflineDetector';
@@ -108,6 +109,7 @@ function LocalizedApp() {
         <OfflineDetector />
         <InstallPrompt />
         <NavBar />
+        <Disclaimer />
         <div aria-busy={!localeReady}>
           <AppRoutes />
         </div>

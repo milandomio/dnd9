@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import type { IndexEntry } from '../types/data';
-import Disclaimer from '../components/Disclaimer';
 import { useDataVersion } from '../hooks/useDataVersion';
 import { dataUrl } from '../utils/dataUrl';
 import { useSSRData } from '../context/SSRDataContext';
@@ -148,7 +147,6 @@ export default function HomePage() {
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
       </Helmet>
-      <Disclaimer />
       <div
         style={{
           display: 'grid',
