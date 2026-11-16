@@ -86,6 +86,14 @@ const CARD_THEME: Record<string, CardTheme> = {
     titleColor: '#FFE082',
     titleColorLight: '#f9a825',
   },
+  dungeon_timer: {
+    border: '#4DB6AC',
+    hoverBg: 'linear-gradient(145deg, #2a4a4a, #3a5a5a)',
+    hoverBgLight: 'linear-gradient(145deg, #e0f2f1, #b2dfdb)',
+    icon: '⏳',
+    titleColor: '#80CBC4',
+    titleColorLight: '#00695c',
+  },
   crafts: {
     border: '#8D6E63',
     hoverBg: 'linear-gradient(145deg, #40342c, #52443a)',
@@ -148,67 +156,70 @@ export default function HomePage() {
           gap: 14,
         }}
       >
-        {data
-          .filter((e) => !('_comment' in e))
-          .map((entry) => {
-            const t = CARD_THEME[entry.page] ?? DEFAULT_THEME;
-            return (
-              <Link
-                key={entry.page}
-                to={`/${lang}/${entry.page}/`}
+        {[
+          { page: 'dungeon_timer', label: 'dungeon_timer', count: 3 },
+          ...data.filter((e) => !('_comment' in e)),
+        ].map((entry) => {
+          const t = CARD_THEME[entry.page] ?? DEFAULT_THEME;
+          return (
+            <Link
+              key={entry.page}
+              to={`/${lang}/${entry.page}/`}
+              style={{
+                textDecoration: 'none',
+                display: 'block',
+                background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
+                border: `2px solid ${t.border}`,
+                borderRadius: 16,
+                padding: '18px 16px',
+                textAlign: 'center',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: `0 4px 6px ${tokens.darkShadow}`,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = dark
+                  ? t.hoverBg
+                  : t.hoverBgLight;
+                e.currentTarget.style.transform =
+                  'translateY(-8px) scale(1.02)';
+                e.currentTarget.style.boxShadow = `0 12px 24px ${tokens.deepShadow}`;
+                const cc = e.currentTarget.children[2] as HTMLElement;
+                if (cc)
+                  cc.style.color = dark ? t.titleColor : t.titleColorLight;
+              }}
+              onMouseLeave={(e) => {
+                const defBg = `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`;
+                e.currentTarget.style.background = defBg;
+                e.currentTarget.style.transform = 'none';
+                e.currentTarget.style.boxShadow = `0 4px 6px ${tokens.darkShadow}`;
+                const cc = e.currentTarget.children[2] as HTMLElement;
+                if (cc)
+                  cc.style.color = dark ? t.titleColor : t.titleColorLight;
+              }}
+            >
+              <div
                 style={{
-                  textDecoration: 'none',
-                  display: 'block',
-                  background: `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`,
-                  border: `2px solid ${t.border}`,
-                  borderRadius: 16,
-                  padding: '18px 16px',
-                  textAlign: 'center',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  boxShadow: `0 4px 6px ${tokens.darkShadow}`,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = dark
-                    ? t.hoverBg
-                    : t.hoverBgLight;
-                  e.currentTarget.style.transform =
-                    'translateY(-8px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = `0 12px 24px ${tokens.deepShadow}`;
-                  const cc = e.currentTarget.children[2] as HTMLElement;
-                  if (cc)
-                    cc.style.color = dark ? t.titleColor : t.titleColorLight;
-                }}
-                onMouseLeave={(e) => {
-                  const defBg = `linear-gradient(145deg, ${tokens.surface}, ${tokens.card})`;
-                  e.currentTarget.style.background = defBg;
-                  e.currentTarget.style.transform = 'none';
-                  e.currentTarget.style.boxShadow = `0 4px 6px ${tokens.darkShadow}`;
-                  const cc = e.currentTarget.children[2] as HTMLElement;
-                  if (cc)
-                    cc.style.color = dark ? t.titleColor : t.titleColorLight;
+                  fontSize: 50,
+                  marginBottom: 4,
+                  filter: `drop-shadow(0 0 8px ${t.border})`,
                 }}
               >
-                <div
-                  style={{
-                    fontSize: 50,
-                    marginBottom: 4,
-                    filter: `drop-shadow(0 0 8px ${t.border})`,
-                  }}
-                >
-                  {t.icon}
-                </div>
-                <div
-                  style={{
-                    color: tokens.text,
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                    marginBottom: 2,
-                  }}
-                >
-                  【{ut(`ui.home.card_labels.${entry.page}`)}】
-                </div>
-                <div style={{ color: t.titleColor, fontSize: 13 }}>
-                  {entry.page === 'quest_npc'
+                {t.icon}
+              </div>
+              <div
+                style={{
+                  color: tokens.text,
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  marginBottom: 2,
+                }}
+              >
+                【{ut(`ui.home.card_labels.${entry.page}`)}】
+              </div>
+              <div style={{ color: t.titleColor, fontSize: 13 }}>
+                {entry.page === 'dungeon_timer'
+                  ? ut('ui.timer.card_subtitle')
+                  : entry.page === 'quest_npc'
                     ? ut('ui.home.quest_count').replace(
                         '{count}',
                         String(entry.count)
@@ -219,25 +230,25 @@ export default function HomePage() {
                           ut(`ui.home.card_labels.${entry.page}`)
                         )
                         .replace('{count}', String(entry.count))}
-                </div>
-                <div
-                  style={{ color: tokens.muted, fontSize: 12, marginTop: 2 }}
-                >
-                  {entry.page === 'items' && ut('ui.home.view_items')}
-                  {entry.page === 'monsters' && ut('ui.home.view_monsters')}
-                  {entry.page === 'props' && ut('ui.home.view_props')}
-                  {entry.page === 'lootdrops' && ut('ui.home.view_lootdrops')}
-                  {entry.page === 'quest_npc' && ut('ui.home.view_quest_npc')}
-                  {entry.page === 'dungeon_modules' &&
-                    ut('ui.home.view_dungeon_modules')}
-                  {entry.page === 'dungeon_shops' &&
-                    ut('ui.home.view_dungeon_shops')}
-                  {entry.page === 'lights' && ut('ui.home.view_lights')}
-                  {entry.page === 'crafts' && ut('ui.home.view_crafts')}
-                </div>
-              </Link>
-            );
-          })}
+              </div>
+              <div style={{ color: tokens.muted, fontSize: 12, marginTop: 2 }}>
+                {entry.page === 'items' && ut('ui.home.view_items')}
+                {entry.page === 'monsters' && ut('ui.home.view_monsters')}
+                {entry.page === 'props' && ut('ui.home.view_props')}
+                {entry.page === 'lootdrops' && ut('ui.home.view_lootdrops')}
+                {entry.page === 'quest_npc' && ut('ui.home.view_quest_npc')}
+                {entry.page === 'dungeon_modules' &&
+                  ut('ui.home.view_dungeon_modules')}
+                {entry.page === 'dungeon_shops' &&
+                  ut('ui.home.view_dungeon_shops')}
+                {entry.page === 'lights' && ut('ui.home.view_lights')}
+                {entry.page === 'crafts' && ut('ui.home.view_crafts')}
+                {entry.page === 'dungeon_timer' &&
+                  ut('ui.home.view_dungeon_timer')}
+              </div>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

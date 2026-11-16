@@ -3639,6 +3639,29 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.effect': '效果',
     'ui.crafts.effect_random': '随机效果',
     'ui.crafts.tab.ores': '矿类',
+    'ui.nav.dungeon_timer': '轮换',
+    'ui.home.card_labels.dungeon_timer': '轮换',
+    'ui.home.view_dungeon_timer':
+      '查看三张地图在 Solo / Duo / Trio 下的轮换倒计时',
+    'ui.timer.title': '【轮换】地牢地图计时器',
+    'ui.timer.description':
+      'Dark and Darker 地牢地图 9 分钟轮换倒计时：废墟、哥布林洞、冰图在 Solo / Duo / Trio 下的开放时间。',
+    'ui.timer.notice':
+      '默认看 Solo 列（单人队列）：在轮换剩余约 20 秒时进入，高概率进入该地图。',
+    'ui.timer.notice_caveat':
+      '属于经验策略，不保证成功；房间模式与服务器匹配状态仍可能改变结果。',
+    'ui.timer.mode.solo': 'Solo',
+    'ui.timer.mode.duo': 'Duo',
+    'ui.timer.mode.trio': 'Trio',
+    'ui.timer.map.castle': '废墟',
+    'ui.timer.map.goblin': '哥布林洞',
+    'ui.timer.map.frost': '冰图',
+    'ui.timer.open': '当前开放',
+    'ui.timer.legend': '绿色 = 该模式下当前开放的地图（剩余不足 3 分钟）。',
+    'ui.timer.clock_note':
+      '倒计时按本机系统时间计算（UTC 基准），未与游戏服务器校时；本机时间有偏差时结果会同步偏移，必要时刷新页面。',
+    'ui.timer.local_time': '本机时间',
+    'ui.timer.card_subtitle': '9 分钟轮换 · 三张地图 × 三种模式',
     'ui.autoscroll.play': '自动滚动到页面底部（录屏用）',
     'ui.autoscroll.pause': '暂停自动滚动',
   },
@@ -3714,6 +3737,30 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.effect': 'Effect',
     'ui.crafts.effect_random': 'Random effect',
     'ui.crafts.tab.ores': 'Ores',
+    'ui.nav.dungeon_timer': 'Rotation',
+    'ui.home.card_labels.dungeon_timer': 'Rotation',
+    'ui.home.view_dungeon_timer':
+      'See the Solo / Duo / Trio rotation timers for all three maps',
+    'ui.timer.title': 'Dungeon Map Rotation Timer',
+    'ui.timer.description':
+      '9-minute Dark and Darker dungeon rotation timers for Ruins, Goblin Cave and Frost Mountain in Solo, Duo and Trio.',
+    'ui.timer.notice':
+      'Watch the Solo column by default: join with about 20 seconds left in the rotation for a high chance of that map.',
+    'ui.timer.notice_caveat':
+      'Practical heuristic, not a guarantee; room mode and matchmaking state can still change the result.',
+    'ui.timer.mode.solo': 'Solo',
+    'ui.timer.mode.duo': 'Duo',
+    'ui.timer.mode.trio': 'Trio',
+    'ui.timer.map.castle': 'Ruins',
+    'ui.timer.map.goblin': 'Goblin Cave',
+    'ui.timer.map.frost': 'Frost Mountain',
+    'ui.timer.open': 'Open now',
+    'ui.timer.legend':
+      'Green = the map currently open in that mode (under 3 minutes left).',
+    'ui.timer.clock_note':
+      'Timers use the local system clock (UTC based) and are not synced with the game server; clock drift shifts the result. Refresh if needed.',
+    'ui.timer.local_time': 'Local time',
+    'ui.timer.card_subtitle': '9-minute rotation · 3 maps × 3 modes',
     'ui.autoscroll.play': 'Auto-scroll to the bottom (for recording)',
     'ui.autoscroll.pause': 'Pause auto-scroll',
   },
@@ -3788,6 +3835,29 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.effect': '効果',
     'ui.crafts.effect_random': 'ランダム効果',
     'ui.crafts.tab.ores': '鉱石',
+    'ui.nav.dungeon_timer': 'ローテーション',
+    'ui.home.card_labels.dungeon_timer': 'ローテーション',
+    'ui.home.view_dungeon_timer':
+      '3マップの Solo / Duo / Trio ローテーションタイマーを見る',
+    'ui.timer.title': '【ローテーション】ダンジョンマップタイマー',
+    'ui.timer.description':
+      'Dark and Darker のダンジョンは9分周期で入れ替わります。廃墟・ゴブリン洞窟・氷山の Solo / Duo / Trio 開放時間を表示します。',
+    'ui.timer.notice':
+      '既定では Solo 列（ソロ待機列）を見ます。ローテーション残り約20秒で入ると、そのマップに入りやすいです。',
+    'ui.timer.notice_caveat':
+      '経験則であり保証ではありません。部屋モードやマッチング状況で結果は変わります。',
+    'ui.timer.mode.solo': 'Solo',
+    'ui.timer.mode.duo': 'Duo',
+    'ui.timer.mode.trio': 'Trio',
+    'ui.timer.map.castle': '廃墟',
+    'ui.timer.map.goblin': 'ゴブリン洞窟',
+    'ui.timer.map.frost': '氷山',
+    'ui.timer.open': '現在開放中',
+    'ui.timer.legend': '緑 = そのモードで現在開放中のマップ（残り3分未満）。',
+    'ui.timer.clock_note':
+      'タイマーは端末のシステム時計（UTC基準）で計算され、ゲームサーバーとは同期していません。端末時刻がずれていると結果もずれます。必要なら再読み込みしてください。',
+    'ui.timer.local_time': '端末時刻',
+    'ui.timer.card_subtitle': '9分周期 · 3マップ × 3モード',
   },
   'zh-Hant': {
     'ui.pwa.install_title': '安裝 DND閃電指南',
@@ -3857,6 +3927,29 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.effect': '效果',
     'ui.crafts.effect_random': '隨機效果',
     'ui.crafts.tab.ores': '礦類',
+    'ui.nav.dungeon_timer': '輪替',
+    'ui.home.card_labels.dungeon_timer': '輪替',
+    'ui.home.view_dungeon_timer':
+      '查看三張地圖在 Solo / Duo / Trio 下的輪替倒數',
+    'ui.timer.title': '【輪替】地牢地圖計時器',
+    'ui.timer.description':
+      'Dark and Darker 地牢地圖 9 分鐘輪替倒數：廢墟、哥布林洞、冰圖在 Solo / Duo / Trio 下的開放時間。',
+    'ui.timer.notice':
+      '預設看 Solo 欄（單人佇列）：在輪替剩餘約 20 秒時進入，高機率進入該地圖。',
+    'ui.timer.notice_caveat':
+      '屬於經驗策略，不保證成功；房間模式與伺服器配對狀態仍可能改變結果。',
+    'ui.timer.mode.solo': 'Solo',
+    'ui.timer.mode.duo': 'Duo',
+    'ui.timer.mode.trio': 'Trio',
+    'ui.timer.map.castle': '廢墟',
+    'ui.timer.map.goblin': '哥布林洞',
+    'ui.timer.map.frost': '冰圖',
+    'ui.timer.open': '目前開放',
+    'ui.timer.legend': '綠色 = 該模式下目前開放的地圖（剩餘不足 3 分鐘）。',
+    'ui.timer.clock_note':
+      '倒數依本機系統時間計算（UTC 基準），未與遊戲伺服器校時；本機時間有偏差時結果會同步偏移，必要時重新整理頁面。',
+    'ui.timer.local_time': '本機時間',
+    'ui.timer.card_subtitle': '9 分鐘輪替 · 三張地圖 × 三種模式',
   },
 };
 

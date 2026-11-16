@@ -40,6 +40,7 @@ const NAV_LABEL_KEYS: Record<string, string> = {
   dungeon_modules: 'ui.nav.dungeon_modules',
   dungeon_shops: 'ui.nav.dungeon_shops',
   lights: 'ui.nav.lights',
+  dungeon_timer: 'ui.nav.dungeon_timer',
   crafts: 'ui.nav.crafts',
 };
 

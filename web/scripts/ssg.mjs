@@ -289,6 +289,7 @@ const SINGLE = [
   'dungeon_modules',
   'dungeon_shops',
   'lights',
+  'dungeon_timer',
   'crafts',
 ];
 const DEFAULT_LANG = 'zh-Hans';
@@ -419,6 +420,11 @@ for (const p of PAGES) {
   ssrDataMap[`list-${p}`] = searchIndex.filter((e) => e.page === p);
 }
 for (const p of SINGLE) {
+  // The rotation timer is pure client-side: no JSON payload to preload.
+  if (p === 'dungeon_timer') {
+    ssrDataMap[p] = {};
+    continue;
+  }
   if (p === 'dungeon_modules') {
     const groupOrder = [
       'GoblinCave',
@@ -688,6 +694,7 @@ function routeDataKey(path) {
     return 'dungeon_shops';
   }
   if (stripped === '/lights') return 'lights';
+  if (stripped === '/dungeon_timer') return 'dungeon_timer';
   // Every crafter tab page shares the one crafts payload.
   if (stripped === '/crafts' || stripped.startsWith('/crafts/'))
     return 'crafts';

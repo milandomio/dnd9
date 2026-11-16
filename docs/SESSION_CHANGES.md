@@ -2,6 +2,21 @@
 
 当前会话记录写在本文件；历史记录已移至 [`SESSION_CHANGES_ARCHIVE.md`](SESSION_CHANGES_ARCHIVE.md)，按日期保留原始内容。
 
+## 2026-11-16
+
+### feat(web): 新增地牢地图轮换计时器栏目
+
+- **改动原因**：用户要求复刻 dad-map-timer，去掉原图片改用通用 emoji，作为独立栏目（类似 `/{lang}/lights/`）展示，并在页首提示“默认看单人队列、轮换剩余约 20 秒进入”。
+- **变更文件**：`web/src/pages/DungeonTimerPage.tsx`（新增）、`web/src/AppInner.tsx`、`web/src/components/NavBar.tsx`、`web/src/pages/HomePage.tsx`、`web/src/i18n/uiLocale.ts`、`web/scripts/ssg.mjs`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 页面复刻上游 `Map.vue` 公式：以 UTC 零点为锚、540 秒周期，Solo/Duo/Trio 依次相差 180 秒；墓碑/废墟、哥布林洞、冰图沿用上游 `startTime` 360 / 0 / 180。改为每 tick 直接读 `Date.now()`，避免上游“启动时抓一次时间戳 + performance.now()”在休眠唤醒后失步。
+  2. 图标用 emoji：🏰 废墟、👺 哥布林洞、❄️ 冰图；绿色高亮表示该模式下剩余不足 180 秒的当前开放地图；另显示本机时间，便于发现本机时钟偏差。
+  3. 新增路由 `/:lang/dungeon_timer`；SINGLE 构建清单加入 `dungeon_timer`，`routeDataKey` 与 SSR 数据映射返回空对象，使 SSG 生成静态外壳；非默认语言副本、legacy 重定向与 sitemap 由现有构建流程自动覆盖。
+  4. 首页固定插入一张“轮换”卡片（不写入自动生成的 index.json），并在面包屑映射中登记 `ui.nav.dungeon_timer`。
+  5. 文案补入 UI_EXTRA_LOCALE 的 zh-Hans、en、ja、zh-Hant；其余语言回退到 en。页首提示同时保留“经验策略、不保证成功”的边界说明。
+  6. 计时器只依赖本机系统时间，未与游戏服务器校时；页面文案已明确提示该限制。
+- **验证**：`npx tsc --noEmit` 通过；改动文件 ESLint 无 error（NavBar 仅原有 2 条 warning）；Prettier 检查通过；`npm run build` 成功（2971 routes，sitemap 每语言 1169 URL）；`/zh-Hans/dungeon_timer/` 与 `/en/dungeon_timer/` 预览 HTTP 200；Playwright 实测倒计时正常跳动（同一时刻三列 4:09 / 7:09 / 1:09，符合 180 秒相位差），每个模式各有一个绿色“当前开放”单元格，唯一控制台错误为与本页无关的 Cloudflare RUM CORS；`BASE_URL=http://localhost:8081 npm run test:i18n` 29 通过 / 0 失败。预览服务仍在 8081 运行。仅本地提交，未推送。
+
 ## 2026-11-12
 
 ### chore: 按补丁流程更新游戏资源、全量重建 DB 并验证 Web
