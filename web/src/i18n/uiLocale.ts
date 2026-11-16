@@ -3640,7 +3640,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.effect_random': '随机效果',
     'ui.crafts.tab.ores': '矿类',
     'ui.nav.dungeon_timer': '轮换',
-    'ui.home.card_labels.dungeon_timer': '轮换',
+    'ui.home.card_labels.dungeon_timer': '地图轮换',
     'ui.home.view_dungeon_timer':
       '查看三张地图在 Solo / Duo / Trio 下的轮换倒计时',
     'ui.timer.title': '【轮换】地牢地图计时器',
@@ -3958,7 +3958,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.crafts.effect_random': '隨機效果',
     'ui.crafts.tab.ores': '礦類',
     'ui.nav.dungeon_timer': '輪替',
-    'ui.home.card_labels.dungeon_timer': '輪替',
+    'ui.home.card_labels.dungeon_timer': '地圖輪替',
     'ui.home.view_dungeon_timer':
       '查看三張地圖在 Solo / Duo / Trio 下的輪替倒數',
     'ui.timer.title': '【輪替】地牢地圖計時器',
