@@ -175,6 +175,9 @@ export default function DungeonTimerPage() {
         setPopup({ mapKey: alertMapKey, mode: alertMode, seconds: remaining });
       }
     }
+    // One-shot: clear both channels so the rest of the match stays quiet.
+    setPopupEnabled(false);
+    setSoundEnabled(false);
   }, [
     now,
     popupEnabled,
