@@ -3665,6 +3665,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.local_time': '本机时间',
     'ui.timer.card_subtitle': '9 分钟轮换 · 三张地图 × 三种模式',
     'ui.timer.alert_toggle': '最后 N 秒提示',
+    'ui.timer.alert_option.30': '30 秒',
+    'ui.timer.alert_option.60': '1 分钟',
+    'ui.timer.alert_option.120': '2 分钟',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
       '开启后：开放中的地图在最后 N 秒变蓝，并在进入该区间时播放 5 秒提示音。',
@@ -3775,6 +3778,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.local_time': 'Local time',
     'ui.timer.card_subtitle': '9-minute rotation · 3 maps × 3 modes',
     'ui.timer.alert_toggle': 'Last N seconds alert',
+    'ui.timer.alert_option.30': '30 s',
+    'ui.timer.alert_option.60': '1 min',
+    'ui.timer.alert_option.120': '2 min',
     'ui.timer.alert_seconds': 's',
     'ui.timer.alert_hint':
       'When on: open maps turn blue for the last N seconds and a 5-second alert plays when that window starts.',
@@ -3884,6 +3890,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.local_time': '端末時刻',
     'ui.timer.card_subtitle': '9分周期 · 3マップ × 3モード',
     'ui.timer.alert_toggle': '残りN秒の通知',
+    'ui.timer.alert_option.30': '30秒',
+    'ui.timer.alert_option.60': '1分',
+    'ui.timer.alert_option.120': '2分',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
       'オンにすると、開放中のマップが残りN秒で青色になり、その区間に入ると5秒間の通知音が鳴ります。',
@@ -3988,6 +3997,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.local_time': '本機時間',
     'ui.timer.card_subtitle': '9 分鐘輪替 · 三張地圖 × 三種模式',
     'ui.timer.alert_toggle': '最後 N 秒提示',
+    'ui.timer.alert_option.30': '30 秒',
+    'ui.timer.alert_option.60': '1 分鐘',
+    'ui.timer.alert_option.120': '2 分鐘',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
       '開啟後：開放中的地圖在最後 N 秒變藍，並在進入該區間時播放 5 秒提示音。',

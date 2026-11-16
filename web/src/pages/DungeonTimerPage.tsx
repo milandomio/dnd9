@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { InputNumber, Switch } from 'antd';
+import { Select, Switch } from 'antd';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
@@ -12,6 +12,8 @@ const STEP = 180;
 const GREEN_BELOW = 180;
 
 const MODES = ['solo', 'duo', 'trio'] as const;
+/** Fixed alert thresholds offered by the dropdown. */
+const ALERT_OPTIONS = [30, 60, 120] as const;
 type Mode = (typeof MODES)[number];
 
 interface MapDefinition {
@@ -300,16 +302,18 @@ export default function DungeonTimerPage() {
           onChange={handleAlertToggle}
           aria-label={ut('ui.timer.alert_toggle')}
         />
-        <InputNumber
-          min={5}
-          max={180}
+        <Select
           value={alertSeconds}
           disabled={!alertEnabled}
-          onChange={(value) => {
-            if (typeof value === 'number') setAlertSeconds(value);
-          }}
-          addonAfter={ut('ui.timer.alert_seconds')}
-          style={{ width: 120 }}
+          onChange={setAlertSeconds}
+          showSearch
+          optionFilterProp="label"
+          aria-label={ut('ui.timer.alert_toggle')}
+          options={ALERT_OPTIONS.map((value) => ({
+            value,
+            label: ut(`ui.timer.alert_option.${value}`),
+          }))}
+          style={{ width: 130 }}
         />
         <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 240px' }}>
           {ut('ui.timer.alert_hint')}
