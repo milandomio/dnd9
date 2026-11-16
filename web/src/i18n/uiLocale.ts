@@ -3657,7 +3657,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.map.goblin': '哥布林洞',
     'ui.timer.map.frost': '冰图',
     'ui.timer.open': '当前开放',
-    'ui.timer.legend': '绿色 = 该模式下当前开放的地图（剩余不足 3 分钟）。',
+    'ui.timer.legend':
+      '绿色 = 该模式下当前开放的地图；黄色 = 上一张图，仍可能中途加入（残留房间）。',
+    'ui.timer.previous_window': '中途加入（残留房间）',
     'ui.timer.clock_note':
       '倒计时按本机系统时间计算（UTC 基准），未与游戏服务器校时；本机时间有偏差时结果会同步偏移，必要时刷新页面。',
     'ui.timer.local_time': '本机时间',
@@ -3766,7 +3768,8 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.map.frost': 'Frost Mountain',
     'ui.timer.open': 'Open now',
     'ui.timer.legend':
-      'Green = the map currently open in that mode (under 3 minutes left).',
+      'Green = the map currently open in that mode; yellow = the previous map, which may still allow mid-run joins (leftover rooms).',
+    'ui.timer.previous_window': 'Mid-run join (leftover room)',
     'ui.timer.clock_note':
       'Timers use the local system clock (UTC based) and are not synced with the game server; clock drift shifts the result. Refresh if needed.',
     'ui.timer.local_time': 'Local time',
@@ -3873,7 +3876,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.map.goblin': 'ゴブリン洞窟',
     'ui.timer.map.frost': '氷山',
     'ui.timer.open': '現在開放中',
-    'ui.timer.legend': '緑 = そのモードで現在開放中のマップ（残り3分未満）。',
+    'ui.timer.legend':
+      '緑 = そのモードで現在開放中のマップ；黄 = 前のマップ（残留ルームに途中参加できる場合があります）。',
+    'ui.timer.previous_window': '途中参加（残留ルーム）',
     'ui.timer.clock_note':
       'タイマーは端末のシステム時計（UTC基準）で計算され、ゲームサーバーとは同期していません。端末時刻がずれていると結果もずれます。必要なら再読み込みしてください。',
     'ui.timer.local_time': '端末時刻',
@@ -3975,7 +3980,9 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.map.goblin': '哥布林洞',
     'ui.timer.map.frost': '冰圖',
     'ui.timer.open': '目前開放',
-    'ui.timer.legend': '綠色 = 該模式下目前開放的地圖（剩餘不足 3 分鐘）。',
+    'ui.timer.legend':
+      '綠色 = 該模式下目前開放的地圖；黃色 = 上一張地圖，仍可能中途加入（殘留房間）。',
+    'ui.timer.previous_window': '中途加入（殘留房間）',
     'ui.timer.clock_note':
       '倒數依本機系統時間計算（UTC 基準），未與遊戲伺服器校時；本機時間有偏差時結果會同步偏移，必要時重新整理頁面。',
     'ui.timer.local_time': '本機時間',

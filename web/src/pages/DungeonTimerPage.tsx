@@ -22,9 +22,10 @@ interface MapDefinition {
 }
 
 // Same startTime values as the upstream dad-map-timer MapGrid.vue.
+// Display order follows the Solo rotation: Goblin Cave -> Ruins -> Frost.
 const MAPS: MapDefinition[] = [
-  { key: 'castle', icon: '🏰', startTime: 360, color: '#CE93D8' },
   { key: 'goblin', icon: '👺', startTime: 0, color: '#AED581' },
+  { key: 'castle', icon: '🏰', startTime: 360, color: '#CE93D8' },
   { key: 'frost', icon: '❄️', startTime: 180, color: '#81D4FA' },
 ];
 
@@ -213,6 +214,31 @@ export default function DungeonTimerPage() {
     now === null || networkOffsetMs === null
       ? null
       : Math.floor(now + networkOffsetMs / 1000);
+  const previousColor = dark ? '#ffd54f' : '#f57f17';
+  const previousBackground = dark
+    ? 'rgba(255, 213, 79, 0.12)'
+    : 'rgba(245, 127, 23, 0.12)';
+  // For each mode the map with the largest countdown is the one that was open
+  // in the previous rotation window; old rooms may still accept mid-run joins.
+  const previousByMode: Record<Mode, string | null> = {
+    solo: null,
+    duo: null,
+    trio: null,
+  };
+  if (now !== null) {
+    for (const mode of MODES) {
+      let previousKey: string | null = null;
+      let previousValue = -1;
+      for (const map of MAPS) {
+        const value = calculateCountdowns(map.startTime, now)[mode];
+        if (value > previousValue) {
+          previousValue = value;
+          previousKey = map.key;
+        }
+      }
+      previousByMode[mode] = previousKey;
+    }
+  }
   const description = ut('ui.timer.description');
 
   return (
@@ -396,17 +422,28 @@ export default function DungeonTimerPage() {
                   const open = seconds !== undefined && seconds < GREEN_BELOW;
                   const inAlertWindow =
                     alertEnabled && open && seconds <= alertSeconds;
-                  const highlightColor = inAlertWindow ? alertColor : openColor;
+                  const isPrevious = previousByMode[mode] === map.key;
+                  const highlightColor = inAlertWindow
+                    ? alertColor
+                    : open
+                      ? openColor
+                      : isPrevious
+                        ? previousColor
+                        : tokens.text;
                   const highlightBackground = inAlertWindow
                     ? alertBackground
-                    : openBackground;
+                    : open
+                      ? openBackground
+                      : isPrevious
+                        ? previousBackground
+                        : 'transparent';
                   return (
                     <div
                       key={mode}
                       style={{
                         padding: '10px 6px',
                         textAlign: 'center',
-                        background: open ? highlightBackground : 'transparent',
+                        background: highlightBackground,
                       }}
                     >
                       <div
@@ -414,7 +451,7 @@ export default function DungeonTimerPage() {
                           fontSize: 22,
                           fontWeight: 700,
                           fontVariantNumeric: 'tabular-nums',
-                          color: open ? highlightColor : tokens.text,
+                          color: highlightColor,
                         }}
                       >
                         {seconds === undefined ? '--:--' : formatTime(seconds)}
@@ -422,7 +459,7 @@ export default function DungeonTimerPage() {
                       <div
                         style={{
                           fontSize: 11,
-                          color: open ? highlightColor : tokens.muted,
+                          color: highlightColor,
                           minHeight: 14,
                         }}
                       >
@@ -430,7 +467,9 @@ export default function DungeonTimerPage() {
                           ? ut('ui.timer.final_window')
                           : open
                             ? ut('ui.timer.open')
-                            : ''}
+                            : isPrevious
+                              ? ut('ui.timer.previous_window')
+                              : ''}
                       </div>
                     </div>
                   );
