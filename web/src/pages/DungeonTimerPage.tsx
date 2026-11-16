@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Select, Switch } from 'antd';
+import { Checkbox, Modal, Select } from 'antd';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
@@ -71,8 +71,13 @@ export default function DungeonTimerPage() {
   // null on the server and on the first client render: keeps hydration in sync
   // and avoids baking a build-time clock into the static HTML.
   const [now, setNow] = useState<number | null>(null);
-  const [alertEnabled, setAlertEnabled] = useState(false);
+  const [popupEnabled, setPopupEnabled] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(false);
   const [alertSeconds, setAlertSeconds] = useState(30);
+  const [popup, setPopup] = useState<{
+    mapKey: string;
+    seconds: number;
+  } | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const lastAlertKeyRef = useRef('');
   const [networkOffsetMs, setNetworkOffsetMs] = useState<number | null>(null);
@@ -98,7 +103,7 @@ export default function DungeonTimerPage() {
   const playAlert = useCallback(() => {
     const ctx = ensureAudioContext();
     if (!ctx) return;
-    // Ten short pulses over five seconds, quiet enough not to startle.
+    // Four short pulses over two seconds, quiet enough not to startle.
     const start = ctx.currentTime;
     const gain = ctx.createGain();
     gain.connect(ctx.destination);
@@ -106,7 +111,7 @@ export default function DungeonTimerPage() {
     osc.type = 'square';
     osc.frequency.value = 880;
     osc.connect(gain);
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 4; i++) {
       const t = start + i * 0.5;
       gain.gain.setValueAtTime(0.0001, t);
       gain.gain.linearRampToValueAtTime(0.08, t + 0.02);
@@ -114,7 +119,7 @@ export default function DungeonTimerPage() {
       gain.gain.linearRampToValueAtTime(0.0001, t + 0.25);
     }
     osc.start(start);
-    osc.stop(start + 5.1);
+    osc.stop(start + 2.1);
   }, [ensureAudioContext]);
 
   useEffect(
@@ -126,30 +131,29 @@ export default function DungeonTimerPage() {
   );
 
   useEffect(() => {
-    if (now === null || !alertEnabled) return;
-    // The three open cells always share the same remaining time, so one
-    // trigger per rotation window covers every mode.
-    const openRemaining = Math.min(
-      ...MAPS.map((map) => calculateCountdowns(map.startTime, now).solo)
-    );
+    if (now === null || (!popupEnabled && !soundEnabled)) return;
+    // The three open cells share the same remaining time; the Solo column is
+    // the one this page tells the user to watch.
+    const openMap = MAPS.map((map) => ({
+      key: map.key,
+      value: calculateCountdowns(map.startTime, now).solo,
+    })).reduce((a, b) => (a.value < b.value ? a : b));
     // 0 means the window just rolled over; the next window will trigger at
     // its own threshold instead.
-    if (openRemaining <= 0 || openRemaining > alertSeconds) return;
+    if (openMap.value <= 0 || openMap.value > alertSeconds) return;
     const startOfDay = new Date(now * 1000).setUTCHours(0, 0, 0, 0) / 1000;
-    const dayIndex = Math.floor((now - startOfDay) / CYCLE);
-    const windowIndex = Math.floor(((now - startOfDay - 1) % CYCLE) / 180);
-    const key = `${dayIndex}:${windowIndex}`;
+    // Use the same -1 s shift as calculateCountdowns. Without it, the last
+    // second before 0:00 falls into the next cycle index and fires a second
+    // alert at rotation end.
+    const shifted = now - startOfDay - 1;
+    const cycleIndex = Math.floor(shifted / CYCLE);
+    const windowIndex = Math.floor((((shifted % CYCLE) + CYCLE) % CYCLE) / 180);
+    const key = `${cycleIndex}:${windowIndex}`;
     if (lastAlertKeyRef.current === key) return;
     lastAlertKeyRef.current = key;
-    playAlert();
-  }, [now, alertEnabled, alertSeconds, playAlert]);
-
-  const handleAlertToggle = (enabled: boolean) => {
-    setAlertEnabled(enabled);
-    // Creating/resuming here keeps the later automatic alert inside the
-    // browser's user-gesture policy.
-    if (enabled) ensureAudioContext();
-  };
+    if (soundEnabled) playAlert();
+    if (popupEnabled) setPopup({ mapKey: openMap.key, seconds: openMap.value });
+  }, [now, popupEnabled, soundEnabled, alertSeconds, playAlert]);
 
   useEffect(() => {
     const tick = () => setNow(Math.floor(Date.now() / 1000));
@@ -297,14 +301,26 @@ export default function DungeonTimerPage() {
         <span style={{ color: tokens.text, fontWeight: 'bold', fontSize: 14 }}>
           {ut('ui.timer.alert_toggle')}
         </span>
-        <Switch
-          checked={alertEnabled}
-          onChange={handleAlertToggle}
-          aria-label={ut('ui.timer.alert_toggle')}
-        />
+        <Checkbox
+          checked={popupEnabled}
+          onChange={(event) => setPopupEnabled(event.target.checked)}
+        >
+          {ut('ui.timer.popup_checkbox')}
+        </Checkbox>
+        <Checkbox
+          checked={soundEnabled}
+          onChange={(event) => {
+            setSoundEnabled(event.target.checked);
+            // Creating/resuming here keeps the later automatic alert inside
+            // the browser's user-gesture policy.
+            if (event.target.checked) ensureAudioContext();
+          }}
+        >
+          {ut('ui.timer.sound_checkbox')}
+        </Checkbox>
         <Select
           value={alertSeconds}
-          disabled={!alertEnabled}
+          disabled={!popupEnabled && !soundEnabled}
           onChange={setAlertSeconds}
           showSearch
           optionFilterProp="label"
@@ -425,7 +441,9 @@ export default function DungeonTimerPage() {
                   const seconds = countdowns?.[mode];
                   const open = seconds !== undefined && seconds < GREEN_BELOW;
                   const inAlertWindow =
-                    alertEnabled && open && seconds <= alertSeconds;
+                    (popupEnabled || soundEnabled) &&
+                    open &&
+                    seconds <= alertSeconds;
                   const isPrevious = previousByMode[mode] === map.key;
                   const highlightColor = inAlertWindow
                     ? alertColor
@@ -496,6 +514,22 @@ export default function DungeonTimerPage() {
         <p style={{ margin: 0 }}>{ut('ui.timer.clock_note')}</p>
         <p style={{ margin: 0 }}>{ut('ui.timer.network_time_note')}</p>
       </div>
+
+      <Modal
+        open={popup !== null}
+        title={ut('ui.timer.popup_title')}
+        onOk={() => setPopup(null)}
+        onCancel={() => setPopup(null)}
+        okText={ut('ui.timer.popup_close')}
+        cancelButtonProps={{ style: { display: 'none' } }}
+        centered
+      >
+        {popup === null
+          ? null
+          : ut('ui.timer.popup_body')
+              .replace('{map}', ut(`ui.timer.map.${popup.mapKey}`))
+              .replace('{seconds}', String(popup.seconds))}
+      </Modal>
     </div>
   );
 }

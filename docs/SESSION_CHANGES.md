@@ -4,6 +4,18 @@
 
 ## 2026-11-16
 
+### feat: 提示音改为 2 秒，新增弹窗/提示音勾选并修正重复提醒
+
+- **改动原因**：用户要求提示音缩短为 2 秒，弹窗与提示音分别勾选、勾选后才生效；并反馈在轮换结束（0 秒）时仍会再提醒一次，需要只在设定时间提醒一次。
+- **变更文件**：`web/src/pages/DungeonTimerPage.tsx`、`web/src/i18n/uiLocale.ts`、`docs/SESSION_CHANGES.md`。
+- **关键逻辑/映射关系**：
+  1. 移除总开关，改为「弹窗」「提示音」两个 Checkbox；选中任一后阈值下拉可用，未勾选的通道不生效。提示音勾选时创建/恢复 AudioContext，满足浏览器手势限制。
+  2. 提示音时长由 5 秒改为 2 秒：880 Hz 方波，4 次短脉冲，振荡器在约 2.1 秒停止。
+  3. 弹窗使用受控 antd Modal，标题「轮换提醒」，正文显示 Solo 当前地图与剩余秒数；只在触发窗口打开一次。
+  4. 重复提醒根因：窗口键原用未偏移的 `now - startOfDay` 计算 cycleIndex，倒计时最后 1 秒会跨入下一 cycle，与阈值触发时的键不同，导致 0 秒前再次触发。改为与 `calculateCountdowns` 相同的 `-1 秒` 偏移计算 cycleIndex 与 windowIndex，并用同一 key 去重。
+  5. 新增文案 `popup_checkbox`、`sound_checkbox`、`popup_title`、`popup_body`、`popup_close`，更新 `alert_hint`，补齐 zh-Hans、en、ja、zh-Hant。
+- **验证**：`npx tsc --noEmit` 通过；ESLint（改动文件）0 error；Prettier 通过；重新构建成功（2971 pages）。Playwright 使用暂停时钟固定在 Solo 哥布林洞剩 0:35：勾选前无弹窗且下拉禁用；勾选两通道并选 30 秒后推进 6 秒，触发 1 次弹窗与 1 次提示音，振荡器停止时间 2.1 秒，弹窗文本为「Solo 当前地图「哥布林洞」剩余不足 30 秒，可以准备进入。」；继续推进 40 秒越过 0 秒后，振荡器次数仍为 1、弹窗数量仍为 1，确认不再重复提醒。仅本地提交，未推送。
+
 ### refactor: 数据误差警告改为导航下方全局显示
 
 - **改动原因**：用户要求把“数据有误差，以实际游戏内为准”警告绑定到导航下方，不再由各页面单独引用，默认所有页面显示。
