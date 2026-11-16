@@ -3662,6 +3662,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '倒计时按本机系统时间计算（UTC 基准），未与游戏服务器校时；本机时间有偏差时结果会同步偏移，必要时刷新页面。',
     'ui.timer.local_time': '本机时间',
     'ui.timer.card_subtitle': '9 分钟轮换 · 三张地图 × 三种模式',
+    'ui.timer.alert_toggle': '最后 N 秒提示',
+    'ui.timer.alert_seconds': '秒',
+    'ui.timer.alert_hint':
+      '开启后：开放中的地图在最后 N 秒变蓝，并在进入该区间时播放 5 秒提示音。',
+    'ui.timer.final_window': '准备进入',
     'ui.autoscroll.play': '自动滚动到页面底部（录屏用）',
     'ui.autoscroll.pause': '暂停自动滚动',
   },
@@ -3761,6 +3766,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       'Timers use the local system clock (UTC based) and are not synced with the game server; clock drift shifts the result. Refresh if needed.',
     'ui.timer.local_time': 'Local time',
     'ui.timer.card_subtitle': '9-minute rotation · 3 maps × 3 modes',
+    'ui.timer.alert_toggle': 'Last N seconds alert',
+    'ui.timer.alert_seconds': 's',
+    'ui.timer.alert_hint':
+      'When on: open maps turn blue for the last N seconds and a 5-second alert plays when that window starts.',
+    'ui.timer.final_window': 'Get ready',
     'ui.autoscroll.play': 'Auto-scroll to the bottom (for recording)',
     'ui.autoscroll.pause': 'Pause auto-scroll',
   },
@@ -3858,6 +3868,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       'タイマーは端末のシステム時計（UTC基準）で計算され、ゲームサーバーとは同期していません。端末時刻がずれていると結果もずれます。必要なら再読み込みしてください。',
     'ui.timer.local_time': '端末時刻',
     'ui.timer.card_subtitle': '9分周期 · 3マップ × 3モード',
+    'ui.timer.alert_toggle': '残りN秒の通知',
+    'ui.timer.alert_seconds': '秒',
+    'ui.timer.alert_hint':
+      'オンにすると、開放中のマップが残りN秒で青色になり、その区間に入ると5秒間の通知音が鳴ります。',
+    'ui.timer.final_window': 'まもなく入場',
   },
   'zh-Hant': {
     'ui.pwa.install_title': '安裝 DND閃電指南',
@@ -3950,6 +3965,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '倒數依本機系統時間計算（UTC 基準），未與遊戲伺服器校時；本機時間有偏差時結果會同步偏移，必要時重新整理頁面。',
     'ui.timer.local_time': '本機時間',
     'ui.timer.card_subtitle': '9 分鐘輪替 · 三張地圖 × 三種模式',
+    'ui.timer.alert_toggle': '最後 N 秒提示',
+    'ui.timer.alert_seconds': '秒',
+    'ui.timer.alert_hint':
+      '開啟後：開放中的地圖在最後 N 秒變藍，並在進入該區間時播放 5 秒提示音。',
+    'ui.timer.final_window': '準備進入',
   },
 };
 

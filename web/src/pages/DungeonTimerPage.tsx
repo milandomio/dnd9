@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { InputNumber, Switch } from 'antd';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
@@ -67,6 +68,81 @@ export default function DungeonTimerPage() {
   // null on the server and on the first client render: keeps hydration in sync
   // and avoids baking a build-time clock into the static HTML.
   const [now, setNow] = useState<number | null>(null);
+  const [alertEnabled, setAlertEnabled] = useState(false);
+  const [alertSeconds, setAlertSeconds] = useState(30);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const lastAlertKeyRef = useRef('');
+
+  const ensureAudioContext = useCallback(() => {
+    const Ctor =
+      window.AudioContext ??
+      (window as Window & { webkitAudioContext?: typeof AudioContext })
+        .webkitAudioContext;
+    if (!Ctor) return null;
+    let ctx = audioContextRef.current;
+    if (!ctx) {
+      ctx = new Ctor();
+      audioContextRef.current = ctx;
+    }
+    if (ctx.state === 'suspended') void ctx.resume();
+    return ctx;
+  }, []);
+
+  const playAlert = useCallback(() => {
+    const ctx = ensureAudioContext();
+    if (!ctx) return;
+    // Ten short pulses over five seconds, quiet enough not to startle.
+    const start = ctx.currentTime;
+    const gain = ctx.createGain();
+    gain.connect(ctx.destination);
+    const osc = ctx.createOscillator();
+    osc.type = 'square';
+    osc.frequency.value = 880;
+    osc.connect(gain);
+    for (let i = 0; i < 10; i++) {
+      const t = start + i * 0.5;
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.linearRampToValueAtTime(0.08, t + 0.02);
+      gain.gain.setValueAtTime(0.08, t + 0.22);
+      gain.gain.linearRampToValueAtTime(0.0001, t + 0.25);
+    }
+    osc.start(start);
+    osc.stop(start + 5.1);
+  }, [ensureAudioContext]);
+
+  useEffect(
+    () => () => {
+      void audioContextRef.current?.close();
+      audioContextRef.current = null;
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (now === null || !alertEnabled) return;
+    // The three open cells always share the same remaining time, so one
+    // trigger per rotation window covers every mode.
+    const openRemaining = Math.min(
+      ...MAPS.map((map) => calculateCountdowns(map.startTime, now).solo)
+    );
+    // 0 means the window just rolled over; the next window will trigger at
+    // its own threshold instead.
+    if (openRemaining <= 0 || openRemaining > alertSeconds) return;
+    const startOfDay = new Date(now * 1000).setUTCHours(0, 0, 0, 0) / 1000;
+    const dayIndex = Math.floor((now - startOfDay) / CYCLE);
+    const windowIndex = Math.floor(((now - startOfDay - 1) % CYCLE) / 180);
+    const key = `${dayIndex}:${windowIndex}`;
+    if (lastAlertKeyRef.current === key) return;
+    lastAlertKeyRef.current = key;
+    playAlert();
+  }, [now, alertEnabled, alertSeconds, playAlert]);
+
+  const handleAlertToggle = (enabled: boolean) => {
+    setAlertEnabled(enabled);
+    // Creating/resuming here keeps the later automatic alert inside the
+    // browser's user-gesture policy.
+    if (enabled) ensureAudioContext();
+  };
 
   useEffect(() => {
     const tick = () => setNow(Math.floor(Date.now() / 1000));
@@ -79,6 +155,10 @@ export default function DungeonTimerPage() {
   const openBackground = dark
     ? 'rgba(123, 216, 143, 0.12)'
     : 'rgba(46, 125, 50, 0.12)';
+  const alertColor = dark ? '#64b5f6' : '#1565c0';
+  const alertBackground = dark
+    ? 'rgba(100, 181, 246, 0.16)'
+    : 'rgba(21, 101, 192, 0.12)';
   const description = ut('ui.timer.description');
 
   return (
@@ -118,6 +198,42 @@ export default function DungeonTimerPage() {
         <div style={{ color: tokens.muted, fontSize: 12, marginTop: 4 }}>
           {ut('ui.timer.notice_caveat')}
         </div>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: 12,
+          background: tokens.surface,
+          borderRadius: 8,
+          padding: '10px 16px',
+          marginBottom: 16,
+        }}
+      >
+        <span style={{ color: tokens.text, fontWeight: 'bold', fontSize: 14 }}>
+          {ut('ui.timer.alert_toggle')}
+        </span>
+        <Switch
+          checked={alertEnabled}
+          onChange={handleAlertToggle}
+          aria-label={ut('ui.timer.alert_toggle')}
+        />
+        <InputNumber
+          min={5}
+          max={180}
+          value={alertSeconds}
+          disabled={!alertEnabled}
+          onChange={(value) => {
+            if (typeof value === 'number') setAlertSeconds(value);
+          }}
+          addonAfter={ut('ui.timer.alert_seconds')}
+          style={{ width: 120 }}
+        />
+        <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 240px' }}>
+          {ut('ui.timer.alert_hint')}
+        </span>
       </div>
 
       <div style={{ overflowX: 'auto' }}>
@@ -193,13 +309,19 @@ export default function DungeonTimerPage() {
                 {MODES.map((mode) => {
                   const seconds = countdowns?.[mode];
                   const open = seconds !== undefined && seconds < GREEN_BELOW;
+                  const inAlertWindow =
+                    alertEnabled && open && seconds <= alertSeconds;
+                  const highlightColor = inAlertWindow ? alertColor : openColor;
+                  const highlightBackground = inAlertWindow
+                    ? alertBackground
+                    : openBackground;
                   return (
                     <div
                       key={mode}
                       style={{
                         padding: '10px 6px',
                         textAlign: 'center',
-                        background: open ? openBackground : 'transparent',
+                        background: open ? highlightBackground : 'transparent',
                       }}
                     >
                       <div
@@ -207,7 +329,7 @@ export default function DungeonTimerPage() {
                           fontSize: 22,
                           fontWeight: 700,
                           fontVariantNumeric: 'tabular-nums',
-                          color: open ? openColor : tokens.text,
+                          color: open ? highlightColor : tokens.text,
                         }}
                       >
                         {seconds === undefined ? '--:--' : formatTime(seconds)}
@@ -215,11 +337,15 @@ export default function DungeonTimerPage() {
                       <div
                         style={{
                           fontSize: 11,
-                          color: open ? openColor : tokens.muted,
+                          color: open ? highlightColor : tokens.muted,
                           minHeight: 14,
                         }}
                       >
-                        {open ? ut('ui.timer.open') : ''}
+                        {inAlertWindow
+                          ? ut('ui.timer.final_window')
+                          : open
+                            ? ut('ui.timer.open')
+                            : ''}
                       </div>
                     </div>
                   );
