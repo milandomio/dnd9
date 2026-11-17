@@ -3645,7 +3645,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '查看三张地图在单人队列 / 双人队列 / 三人队列下的轮换倒计时',
     'ui.timer.title': '【轮换】地牢地图计时器',
     'ui.timer.description':
-      'Dark and Darker 地牢地图 9 分钟轮换倒计时：废墟、哥布林洞、冰图在单人队列、双人队列、三人队列下的开放时间。',
+      'Dark and Darker 地牢地图轮换倒计时：废墟、哥布林洞、冰图在单人队列、双人队列、三人队列下的开放时间；基础轮换默认 3 分钟，可选 3/4/5 分钟或自定义秒数。',
     'ui.timer.notice':
       '默认看单人队列：在轮换剩余约 20 秒时进入，高概率进入该地图。',
     'ui.timer.notice_caveat':
@@ -3663,13 +3663,21 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.clock_note':
       '倒计时按本机系统时间计算（UTC 基准），未与游戏服务器校时；本机时间有偏差时结果会同步偏移，必要时刷新页面。',
     'ui.timer.local_time': '本机时间',
-    'ui.timer.card_subtitle': '9 分钟轮换 · 三张地图 × 三种模式',
+    'ui.timer.card_subtitle': '三张地图 × 三种模式 · 可调基础轮换',
     'ui.timer.alert_toggle': '最后 N 秒提示',
     'ui.timer.alert_option.30': '30 秒',
     'ui.timer.alert_option.60': '1 分钟',
     'ui.timer.alert_option.120': '2 分钟',
     'ui.timer.alert_queue': '队列',
     'ui.timer.alert_map': '地图',
+    'ui.timer.rotation_label': '基础轮换',
+    'ui.timer.rotation_option.180': '3 分钟',
+    'ui.timer.rotation_option.240': '4 分钟',
+    'ui.timer.rotation_option.300': '5 分钟',
+    'ui.timer.rotation_custom': '自定义',
+    'ui.timer.rotation_seconds': '秒',
+    'ui.timer.rotation_hint':
+      '修改后立即按新的基础轮换时间重算三列倒计时；默认 3 分钟。',
     'ui.timer.popup_checkbox': '弹窗',
     'ui.timer.sound_checkbox': '提示音',
     'ui.timer.popup_title': '轮换提醒',
@@ -3766,7 +3774,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       'See the Solo / Duo / Trio queue rotation timers for all three maps',
     'ui.timer.title': 'Dungeon Map Rotation Timer',
     'ui.timer.description':
-      '9-minute Dark and Darker dungeon rotation timers for Ruins, Goblin Cave and Frost Mountain in Solo, Duo and Trio queues.',
+      'Dark and Darker dungeon rotation timers for Ruins, Goblin Cave and Frost Mountain in Solo, Duo and Trio queues; the base rotation defaults to 3 minutes and can be set to 3/4/5 minutes or custom seconds.',
     'ui.timer.notice':
       'Watch the Solo queue column by default: join with about 20 seconds left in the rotation for a high chance of that map.',
     'ui.timer.notice_caveat':
@@ -3784,13 +3792,21 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.clock_note':
       'Timers use the local system clock (UTC based) and are not synced with the game server; clock drift shifts the result. Refresh if needed.',
     'ui.timer.local_time': 'Local time',
-    'ui.timer.card_subtitle': '9-minute rotation · 3 maps × 3 modes',
+    'ui.timer.card_subtitle': '3 maps × 3 modes · adjustable base rotation',
     'ui.timer.alert_toggle': 'Last N seconds alert',
     'ui.timer.alert_option.30': '30 s',
     'ui.timer.alert_option.60': '1 min',
     'ui.timer.alert_option.120': '2 min',
     'ui.timer.alert_queue': 'Queue',
     'ui.timer.alert_map': 'Map',
+    'ui.timer.rotation_label': 'Base rotation',
+    'ui.timer.rotation_option.180': '3 min',
+    'ui.timer.rotation_option.240': '4 min',
+    'ui.timer.rotation_option.300': '5 min',
+    'ui.timer.rotation_custom': 'Custom',
+    'ui.timer.rotation_seconds': 's',
+    'ui.timer.rotation_hint':
+      'Recalculates all countdowns immediately; default 3 minutes.',
     'ui.timer.popup_checkbox': 'Popup',
     'ui.timer.sound_checkbox': 'Sound',
     'ui.timer.popup_title': 'Rotation alert',
@@ -3886,7 +3902,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '3マップのソロ / デュオ / トリオ待機列ローテーションタイマーを見る',
     'ui.timer.title': '【ローテーション】ダンジョンマップタイマー',
     'ui.timer.description':
-      'Dark and Darker のダンジョンは9分周期で入れ替わります。廃墟・ゴブリン洞窟・氷山のソロ・デュオ・トリオ待機列の開放時間を表示します。',
+      'Dark and Darker のダンジョンは基礎ローテーションごとに入れ替わります。廃墟・ゴブリン洞窟・氷山のソロ・デュオ・トリオ待機列の開放時間を表示します。既定は3分で、3/4/5分または秒数指定に変更できます。',
     'ui.timer.notice':
       '既定ではソロ待機列を見ます。ローテーション残り約20秒で入ると、そのマップに入りやすいです。',
     'ui.timer.notice_caveat':
@@ -3904,13 +3920,21 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.clock_note':
       'タイマーは端末のシステム時計（UTC基準）で計算され、ゲームサーバーとは同期していません。端末時刻がずれていると結果もずれます。必要なら再読み込みしてください。',
     'ui.timer.local_time': '端末時刻',
-    'ui.timer.card_subtitle': '9分周期 · 3マップ × 3モード',
+    'ui.timer.card_subtitle': '3マップ × 3モード · 基礎ローテーション調整可',
     'ui.timer.alert_toggle': '残りN秒の通知',
     'ui.timer.alert_option.30': '30秒',
     'ui.timer.alert_option.60': '1分',
     'ui.timer.alert_option.120': '2分',
     'ui.timer.alert_queue': '待機列',
     'ui.timer.alert_map': 'マップ',
+    'ui.timer.rotation_label': '基礎ローテーション',
+    'ui.timer.rotation_option.180': '3分',
+    'ui.timer.rotation_option.240': '4分',
+    'ui.timer.rotation_option.300': '5分',
+    'ui.timer.rotation_custom': 'カスタム',
+    'ui.timer.rotation_seconds': '秒',
+    'ui.timer.rotation_hint':
+      '変更すると三列のカウントダウンを新しい基礎ローテーションで即時再計算します。既定は3分です。',
     'ui.timer.popup_checkbox': 'ポップアップ',
     'ui.timer.sound_checkbox': '通知音',
     'ui.timer.popup_title': 'ローテーション通知',
@@ -4001,7 +4025,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '查看三張地圖在單人佇列 / 雙人佇列 / 三人佇列下的輪替倒數',
     'ui.timer.title': '【輪替】地牢地圖計時器',
     'ui.timer.description':
-      'Dark and Darker 地牢地圖 9 分鐘輪替倒數：廢墟、哥布林洞、冰圖在單人佇列、雙人佇列、三人佇列下的開放時間。',
+      'Dark and Darker 地牢地圖輪替倒數：廢墟、哥布林洞、冰圖在單人佇列、雙人佇列、三人佇列下的開放時間；基礎輪替預設 3 分鐘，可選 3/4/5 分鐘或自訂秒數。',
     'ui.timer.notice':
       '預設看單人佇列：在輪替剩餘約 20 秒時進入，高機率進入該地圖。',
     'ui.timer.notice_caveat':
@@ -4019,13 +4043,21 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.clock_note':
       '倒數依本機系統時間計算（UTC 基準），未與遊戲伺服器校時；本機時間有偏差時結果會同步偏移，必要時重新整理頁面。',
     'ui.timer.local_time': '本機時間',
-    'ui.timer.card_subtitle': '9 分鐘輪替 · 三張地圖 × 三種模式',
+    'ui.timer.card_subtitle': '三張地圖 × 三種模式 · 可調基礎輪替',
     'ui.timer.alert_toggle': '最後 N 秒提示',
     'ui.timer.alert_option.30': '30 秒',
     'ui.timer.alert_option.60': '1 分鐘',
     'ui.timer.alert_option.120': '2 分鐘',
     'ui.timer.alert_queue': '佇列',
     'ui.timer.alert_map': '地圖',
+    'ui.timer.rotation_label': '基礎輪替',
+    'ui.timer.rotation_option.180': '3 分鐘',
+    'ui.timer.rotation_option.240': '4 分鐘',
+    'ui.timer.rotation_option.300': '5 分鐘',
+    'ui.timer.rotation_custom': '自訂',
+    'ui.timer.rotation_seconds': '秒',
+    'ui.timer.rotation_hint':
+      '修改後立即依新的基礎輪替時間重算三列倒數；預設 3 分鐘。',
     'ui.timer.popup_checkbox': '彈窗',
     'ui.timer.sound_checkbox': '提示音',
     'ui.timer.popup_title': '輪替提醒',

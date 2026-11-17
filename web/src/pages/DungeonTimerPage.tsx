@@ -1,15 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Checkbox, Modal, Select } from 'antd';
+import { Checkbox, InputNumber, Modal, Select } from 'antd';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
 
-/** 9-minute cycle; the three modes are three 180 s phases on it. */
-const CYCLE = 540;
-const STEP = 180;
-/** Below this many seconds the countdown turns green = that map is open. */
-const GREEN_BELOW = 180;
+/** Base rotation options in seconds; the cycle is three of these windows. */
+const ROTATION_OPTIONS = [180, 240, 300] as const;
+const DEFAULT_ROTATION = 180;
 
 const MODES = ['solo', 'duo', 'trio'] as const;
 /** Fixed alert thresholds offered by the dropdown. */
@@ -19,36 +17,41 @@ type Mode = (typeof MODES)[number];
 interface MapDefinition {
   key: string;
   icon: string;
-  startTime: number;
+  /** How many rotation windows this map's phase is offset by. */
+  offsetWindows: number;
   color: string;
 }
 
-// Same startTime values as the upstream dad-map-timer MapGrid.vue.
 // Display order follows the Solo rotation: Goblin Cave -> Ruins -> Frost.
+// Offsets are the same phases as the upstream startTime values (0/180/360).
 const MAPS: MapDefinition[] = [
-  { key: 'goblin', icon: '👺', startTime: 0, color: '#AED581' },
-  { key: 'castle', icon: '🏰', startTime: 360, color: '#CE93D8' },
-  { key: 'frost', icon: '❄️', startTime: 180, color: '#81D4FA' },
+  { key: 'goblin', icon: '👺', offsetWindows: 0, color: '#AED581' },
+  { key: 'castle', icon: '🏰', offsetWindows: 2, color: '#CE93D8' },
+  { key: 'frost', icon: '❄️', offsetWindows: 1, color: '#81D4FA' },
 ];
 
 type Countdowns = Record<Mode, number>;
 
 /**
- * Mirror of Map.vue: elapsed seconds inside the 540 s cycle, then one
- * 180 s offset per mode. Date.now() is read every tick so waking the
- * machine from sleep cannot desync the clock the way the original does.
+ * Map.vue generalised to a configurable window: the cycle is three windows
+ * and each mode is offset by one window. Date.now() is read every tick so
+ * waking from sleep cannot desync the clock the way the original does.
  */
 function calculateCountdowns(
-  startTime: number,
-  nowSeconds: number
+  offsetWindows: number,
+  nowSeconds: number,
+  windowSeconds: number
 ): Countdowns {
+  const cycle = windowSeconds * 3;
   const startOfDay = new Date(nowSeconds * 1000).setUTCHours(0, 0, 0, 0) / 1000;
   const elapsed =
-    (((nowSeconds + startTime - startOfDay - 1) % CYCLE) + CYCLE) % CYCLE;
+    (((nowSeconds - startOfDay - 1 + offsetWindows * windowSeconds) % cycle) +
+      cycle) %
+    cycle;
   return {
-    solo: (CYCLE - elapsed) % CYCLE,
-    duo: (CYCLE - elapsed + STEP) % CYCLE,
-    trio: (CYCLE - elapsed + STEP * 2) % CYCLE,
+    solo: (cycle - elapsed) % cycle,
+    duo: (cycle - elapsed + windowSeconds) % cycle,
+    trio: (cycle - elapsed + windowSeconds * 2) % cycle,
   };
 }
 
@@ -74,6 +77,8 @@ export default function DungeonTimerPage() {
   const [popupEnabled, setPopupEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [alertSeconds, setAlertSeconds] = useState(30);
+  const [rotationSeconds, setRotationSeconds] = useState(DEFAULT_ROTATION);
+  const [rotationCustom, setRotationCustom] = useState(false);
   const [alertMode, setAlertMode] = useState<Mode>('solo');
   const [alertMapKey, setAlertMapKey] = useState('castle');
   const [popup, setPopup] = useState<{
@@ -137,9 +142,12 @@ export default function DungeonTimerPage() {
     if (now === null || (!popupEnabled && !soundEnabled)) return;
     // Alert only for the queue and map picked in the controls above.
     const selectedMap = MAPS.find((map) => map.key === alertMapKey) ?? MAPS[0];
-    const remaining = calculateCountdowns(selectedMap.startTime, now)[
-      alertMode
-    ];
+    const cycle = rotationSeconds * 3;
+    const remaining = calculateCountdowns(
+      selectedMap.offsetWindows,
+      now,
+      rotationSeconds
+    )[alertMode];
     // 0 means the window just rolled over; the next window will trigger at
     // its own threshold instead.
     if (remaining <= 0 || remaining > alertSeconds) return;
@@ -148,9 +156,11 @@ export default function DungeonTimerPage() {
     // second before 0:00 falls into the next cycle index and fires a second
     // alert at rotation end.
     const shifted = now - startOfDay - 1;
-    const cycleIndex = Math.floor(shifted / CYCLE);
-    const windowIndex = Math.floor((((shifted % CYCLE) + CYCLE) % CYCLE) / 180);
-    const key = `${cycleIndex}:${windowIndex}:${alertMode}:${alertMapKey}`;
+    const cycleIndex = Math.floor(shifted / cycle);
+    const windowIndex = Math.floor(
+      (((shifted % cycle) + cycle) % cycle) / rotationSeconds
+    );
+    const key = `${cycleIndex}:${windowIndex}:${alertMode}:${alertMapKey}:${rotationSeconds}`;
     if (lastAlertKeyRef.current === key) return;
     lastAlertKeyRef.current = key;
     if (soundEnabled) playAlert();
@@ -184,6 +194,7 @@ export default function DungeonTimerPage() {
     soundEnabled,
     alertSeconds,
     alertMode,
+    rotationSeconds,
     alertMapKey,
     playAlert,
     ut,
@@ -270,7 +281,11 @@ export default function DungeonTimerPage() {
       let previousKey: string | null = null;
       let previousValue = -1;
       for (const map of MAPS) {
-        const value = calculateCountdowns(map.startTime, now)[mode];
+        const value = calculateCountdowns(
+          map.offsetWindows,
+          now,
+          rotationSeconds
+        )[mode];
         if (value > previousValue) {
           previousValue = value;
           previousKey = map.key;
@@ -318,6 +333,65 @@ export default function DungeonTimerPage() {
         <div style={{ color: tokens.muted, fontSize: 12, marginTop: 4 }}>
           {ut('ui.timer.notice_caveat')}
         </div>
+      </div>
+
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: 12,
+          background: tokens.surface,
+          borderRadius: 8,
+          padding: '10px 16px',
+          marginBottom: 16,
+        }}
+      >
+        <span style={{ color: tokens.text, fontWeight: 'bold', fontSize: 14 }}>
+          {ut('ui.timer.rotation_label')}
+        </span>
+        <Select
+          value={
+            (ROTATION_OPTIONS as readonly number[]).includes(rotationSeconds)
+              ? rotationSeconds
+              : 0
+          }
+          onChange={(value) => {
+            if (value === 0) {
+              setRotationCustom(true);
+              return;
+            }
+            setRotationCustom(false);
+            setRotationSeconds(value);
+          }}
+          aria-label={ut('ui.timer.rotation_label')}
+          options={[
+            { value: 180, label: ut('ui.timer.rotation_option.180') },
+            { value: 240, label: ut('ui.timer.rotation_option.240') },
+            { value: 300, label: ut('ui.timer.rotation_option.300') },
+            { value: 0, label: ut('ui.timer.rotation_custom') },
+          ]}
+          style={{ width: 130 }}
+        />
+        {rotationCustom && (
+          <>
+            <InputNumber
+              min={1}
+              max={3600}
+              value={rotationSeconds}
+              onChange={(value) => {
+                if (typeof value === 'number') setRotationSeconds(value);
+              }}
+              style={{ width: 120 }}
+            />
+            <span style={{ color: tokens.muted, fontSize: 12 }}>
+              {ut('ui.timer.rotation_seconds')}
+            </span>
+          </>
+        )}
+        <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 240px' }}>
+          {ut('ui.timer.rotation_hint')}
+        </span>
       </div>
 
       <div
@@ -477,7 +551,9 @@ export default function DungeonTimerPage() {
 
           {MAPS.map((map) => {
             const countdowns =
-              now === null ? null : calculateCountdowns(map.startTime, now);
+              now === null
+                ? null
+                : calculateCountdowns(map.offsetWindows, now, rotationSeconds);
             return (
               <div
                 key={map.key}
@@ -511,7 +587,8 @@ export default function DungeonTimerPage() {
                 </div>
                 {MODES.map((mode) => {
                   const seconds = countdowns?.[mode];
-                  const open = seconds !== undefined && seconds < GREEN_BELOW;
+                  const open =
+                    seconds !== undefined && seconds < rotationSeconds;
                   const inAlertWindow =
                     (popupEnabled || soundEnabled) &&
                     open &&
