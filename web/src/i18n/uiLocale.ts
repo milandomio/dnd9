@@ -3679,6 +3679,10 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.rotation_hint':
       '修改后立即按新的基础轮换时间重算三列倒计时；默认 3 分钟。',
     'ui.timer.alert_seconds_label': '最后秒数',
+    'ui.timer.pause': '暂停',
+    'ui.timer.resume': '继续',
+    'ui.timer.paused_hint':
+      '已暂停：界面停留在当前时刻；点击继续后按实时时间重新计算。',
     'ui.timer.popup_checkbox': '弹窗',
     'ui.timer.sound_checkbox': '提示音',
     'ui.timer.popup_title': '轮换提醒',
@@ -3809,6 +3813,10 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.rotation_hint':
       'Recalculates all countdowns immediately; default 3 minutes.',
     'ui.timer.alert_seconds_label': 'Seconds',
+    'ui.timer.pause': 'Pause',
+    'ui.timer.resume': 'Resume',
+    'ui.timer.paused_hint':
+      'Paused: the display is frozen; resume to recalculate from the live clock.',
     'ui.timer.popup_checkbox': 'Popup',
     'ui.timer.sound_checkbox': 'Sound',
     'ui.timer.popup_title': 'Rotation alert',
@@ -3938,6 +3946,10 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.rotation_hint':
       '変更すると三列のカウントダウンを新しい基礎ローテーションで即時再計算します。既定は3分です。',
     'ui.timer.alert_seconds_label': '残り秒数',
+    'ui.timer.pause': '一時停止',
+    'ui.timer.resume': '再開',
+    'ui.timer.paused_hint':
+      '一時停止中：表示は現在の時刻で固定されています。「再開」でリアルタイムに再計算します。',
     'ui.timer.popup_checkbox': 'ポップアップ',
     'ui.timer.sound_checkbox': '通知音',
     'ui.timer.popup_title': 'ローテーション通知',
@@ -4062,6 +4074,10 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.rotation_hint':
       '修改後立即依新的基礎輪替時間重算三列倒數；預設 3 分鐘。',
     'ui.timer.alert_seconds_label': '最後秒數',
+    'ui.timer.pause': '暫停',
+    'ui.timer.resume': '繼續',
+    'ui.timer.paused_hint':
+      '已暫停：介面停留在目前時刻；點擊繼續後依即時時間重新計算。',
     'ui.timer.popup_checkbox': '彈窗',
     'ui.timer.sound_checkbox': '提示音',
     'ui.timer.popup_title': '輪替提醒',

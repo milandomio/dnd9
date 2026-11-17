@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { AutoComplete, Checkbox, InputNumber, Modal, Select } from 'antd';
+import {
+  AutoComplete,
+  Button,
+  Checkbox,
+  InputNumber,
+  Modal,
+  Select,
+} from 'antd';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
@@ -11,7 +18,7 @@ const DEFAULT_ROTATION = 180;
 
 const MODES = ['solo', 'duo', 'trio'] as const;
 /** Fixed alert thresholds offered by the dropdown. */
-const ALERT_OPTIONS = [30, 60, 120] as const;
+const ALERT_OPTIONS = [15, 30, 60, 120] as const;
 type Mode = (typeof MODES)[number];
 
 interface MapDefinition {
@@ -78,6 +85,7 @@ export default function DungeonTimerPage() {
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [alertSeconds, setAlertSeconds] = useState(15);
   const [alertSecondsText, setAlertSecondsText] = useState('15');
+  const [paused, setPaused] = useState(false);
   const [rotationSeconds, setRotationSeconds] = useState(DEFAULT_ROTATION);
   const [rotationCustom, setRotationCustom] = useState(false);
   const [alertMode, setAlertMode] = useState<Mode>('solo');
@@ -140,7 +148,7 @@ export default function DungeonTimerPage() {
   );
 
   useEffect(() => {
-    if (now === null || (!popupEnabled && !soundEnabled)) return;
+    if (now === null || paused || (!popupEnabled && !soundEnabled)) return;
     // Alert only for the queue and map picked in the controls above.
     const selectedMap = MAPS.find((map) => map.key === alertMapKey) ?? MAPS[0];
     const cycle = rotationSeconds * 3;
@@ -197,16 +205,19 @@ export default function DungeonTimerPage() {
     alertMode,
     rotationSeconds,
     alertMapKey,
+    paused,
     playAlert,
     ut,
   ]);
 
   useEffect(() => {
+    if (paused) return;
     const tick = () => setNow(Math.floor(Date.now() / 1000));
+    // Resuming ticks immediately, so the table jumps back to live values.
     tick();
     const timer = window.setInterval(tick, 1000);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [paused]);
 
   const syncNetworkTime = useCallback(async () => {
     const controller = new AbortController();
@@ -393,6 +404,17 @@ export default function DungeonTimerPage() {
         <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 240px' }}>
           {ut('ui.timer.rotation_hint')}
         </span>
+        <Button
+          autoInsertSpace={false}
+          onClick={() => setPaused((value) => !value)}
+        >
+          {paused ? ut('ui.timer.resume') : ut('ui.timer.pause')}
+        </Button>
+        {paused && (
+          <span style={{ color: tokens.muted, fontSize: 12 }}>
+            {ut('ui.timer.paused_hint')}
+          </span>
+        )}
       </div>
 
       <div
