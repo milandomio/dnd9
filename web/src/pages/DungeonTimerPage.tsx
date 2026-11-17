@@ -78,6 +78,7 @@ export default function DungeonTimerPage() {
   const [now, setNow] = useState<number | null>(null);
   const [popupEnabled, setPopupEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [backgroundMode, setBackgroundMode] = useState(false);
   const [alertSeconds, setAlertSeconds] = useState(15);
   const [alertSecondsText, setAlertSecondsText] = useState('15');
   const [paused, setPaused] = useState(false);
@@ -91,6 +92,10 @@ export default function DungeonTimerPage() {
     seconds: number;
   } | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const keepAliveRef = useRef<{
+    osc: OscillatorNode;
+    gain: GainNode;
+  } | null>(null);
   const lastAlertKeyRef = useRef('');
   const [networkOffsetMs, setNetworkOffsetMs] = useState<number | null>(null);
   const [networkStatus, setNetworkStatus] = useState<'idle' | 'ok' | 'error'>(
@@ -134,13 +139,64 @@ export default function DungeonTimerPage() {
     osc.stop(start + 2.1);
   }, [ensureAudioContext]);
 
+  // Nearly inaudible 20 kHz tone: keeps the tab in Chrome's "playing audio"
+  // state so background timer throttling does not stretch the 1 s tick to a
+  // minute. Gain is -74 dB, far below audible levels on normal hardware.
+  const startKeepAlive = useCallback(() => {
+    const ctx = ensureAudioContext();
+    if (!ctx) return;
+    void ctx.resume();
+    if (keepAliveRef.current) return;
+    const gain = ctx.createGain();
+    gain.gain.value = 0.0002;
+    const osc = ctx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.value = 20000;
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    keepAliveRef.current = { osc, gain };
+  }, [ensureAudioContext]);
+
+  const stopKeepAlive = useCallback(() => {
+    const node = keepAliveRef.current;
+    if (!node) return;
+    try {
+      node.osc.stop();
+    } catch {
+      // Already stopped; nothing to do.
+    }
+    node.osc.disconnect();
+    node.gain.disconnect();
+    keepAliveRef.current = null;
+  }, []);
+
+  useEffect(() => {
+    if (backgroundMode) startKeepAlive();
+    else stopKeepAlive();
+  }, [backgroundMode, startKeepAlive, stopKeepAlive]);
+
   useEffect(
     () => () => {
+      stopKeepAlive();
       void audioContextRef.current?.close();
       audioContextRef.current = null;
     },
-    []
+    [stopKeepAlive]
   );
+
+  // Returning to the foreground recomputes immediately instead of waiting for
+  // the next (possibly throttled) tick.
+  useEffect(() => {
+    if (paused) return;
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        setNow(Math.floor(Date.now() / 1000));
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, [paused]);
 
   useEffect(() => {
     if (now === null || paused || (!popupEnabled && !soundEnabled)) return;
@@ -512,6 +568,28 @@ export default function DungeonTimerPage() {
               if (checked) ensureAudioContext();
             }}
           />
+        </span>
+        <span
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            color: tokens.text,
+            fontSize: 14,
+          }}
+        >
+          {ut('ui.timer.background_label')}
+          <Switch
+            checked={backgroundMode}
+            onChange={(checked) => setBackgroundMode(checked)}
+          />
+        </span>
+        <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 320px' }}>
+          {ut(
+            backgroundMode
+              ? 'ui.timer.background_on_hint'
+              : 'ui.timer.background_off_hint'
+          )}
         </span>
         <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 240px' }}>
           {ut('ui.timer.alert_hint')}

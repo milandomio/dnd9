@@ -3685,6 +3685,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '已暂停：界面停留在当前时刻；点击继续后按实时时间重新计算。',
     'ui.timer.popup_checkbox': '弹窗',
     'ui.timer.sound_checkbox': '提示音',
+    'ui.timer.background_label': '后台模式',
+    'ui.timer.background_off_hint':
+      '未开启：请保持本页在浏览器前台显示，不要切换到其他标签页，否则提醒可能延迟。',
+    'ui.timer.background_on_hint':
+      '已开启：用无声音频保活，切到其他标签页也能尽量准点提醒；标签页可能显示音频图标。',
     'ui.timer.popup_title': '轮换提醒',
     'ui.timer.popup_body':
       '{queue}「{map}」剩余不足 {seconds} 秒，可以准备进入。',
@@ -3819,6 +3824,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       'Paused: the display is frozen; resume to recalculate from the live clock.',
     'ui.timer.popup_checkbox': 'Popup',
     'ui.timer.sound_checkbox': 'Sound',
+    'ui.timer.background_label': 'Background mode',
+    'ui.timer.background_off_hint':
+      'Off: keep this page visible in the browser and avoid switching tabs, or alerts may be delayed.',
+    'ui.timer.background_on_hint':
+      'On: a silent audio loop keeps the timer alive in the background; the tab may show an audio icon.',
     'ui.timer.popup_title': 'Rotation alert',
     'ui.timer.popup_body':
       '{queue} "{map}" has under {seconds} seconds left — get ready to enter.',
@@ -3952,6 +3962,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '一時停止中：表示は現在の時刻で固定されています。「再開」でリアルタイムに再計算します。',
     'ui.timer.popup_checkbox': 'ポップアップ',
     'ui.timer.sound_checkbox': '通知音',
+    'ui.timer.background_label': 'バックグラウンドモード',
+    'ui.timer.background_off_hint':
+      'オフ：このページをブラウザの前面に表示したままにしてください。他のタブに切り替えると通知が遅れることがあります。',
+    'ui.timer.background_on_hint':
+      'オン：無音オーディオでバックグラウンドでもタイマーを維持します。タブにオーディオアイコンが表示される場合があります。',
     'ui.timer.popup_title': 'ローテーション通知',
     'ui.timer.popup_body':
       '{queue}「{map}」は残り {seconds} 秒未満です。入場の準備をしてください。',
@@ -4080,6 +4095,11 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '已暫停：介面停留在目前時刻；點擊繼續後依即時時間重新計算。',
     'ui.timer.popup_checkbox': '彈窗',
     'ui.timer.sound_checkbox': '提示音',
+    'ui.timer.background_label': '後台模式',
+    'ui.timer.background_off_hint':
+      '未開啟：請保持本頁在瀏覽器前景顯示，不要切換到其他分頁，否則提醒可能延遲。',
+    'ui.timer.background_on_hint':
+      '已開啟：使用無聲音訊保持後台計時，切到其他分頁也能盡量準時提醒；分頁可能顯示音訊圖示。',
     'ui.timer.popup_title': '輪替提醒',
     'ui.timer.popup_body':
       '{queue}「{map}」剩餘不足 {seconds} 秒，可以準備進入。',
