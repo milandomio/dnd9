@@ -1,13 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import {
-  AutoComplete,
-  Button,
-  Checkbox,
-  InputNumber,
-  Modal,
-  Select,
-} from 'antd';
+import { AutoComplete, Button, InputNumber, Modal, Select, Switch } from 'antd';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
@@ -88,7 +81,7 @@ export default function DungeonTimerPage() {
   const [paused, setPaused] = useState(false);
   const [rotationSeconds, setRotationSeconds] = useState(DEFAULT_ROTATION);
   const [rotationCustom, setRotationCustom] = useState(false);
-  const [alertMode, setAlertMode] = useState<Mode>('solo');
+  const [alertMode, setAlertMode] = useState<Mode>('trio');
   const [alertMapKey, setAlertMapKey] = useState('castle');
   const [popup, setPopup] = useState<{
     mapKey: string;
@@ -447,35 +440,6 @@ export default function DungeonTimerPage() {
           }))}
           style={{ width: 120 }}
         />
-        <Checkbox
-          checked={popupEnabled}
-          onChange={(event) => {
-            setPopupEnabled(event.target.checked);
-            // Ask for permission inside the click gesture; if it is denied
-            // or unsupported the in-page modal remains the fallback.
-            if (
-              event.target.checked &&
-              typeof window !== 'undefined' &&
-              'Notification' in window &&
-              window.Notification.permission === 'default'
-            ) {
-              void window.Notification.requestPermission();
-            }
-          }}
-        >
-          {ut('ui.timer.popup_checkbox')}
-        </Checkbox>
-        <Checkbox
-          checked={soundEnabled}
-          onChange={(event) => {
-            setSoundEnabled(event.target.checked);
-            // Creating/resuming here keeps the later automatic alert inside
-            // the browser's user-gesture policy.
-            if (event.target.checked) ensureAudioContext();
-          }}
-        >
-          {ut('ui.timer.sound_checkbox')}
-        </Checkbox>
         <span style={{ color: tokens.text, fontSize: 14 }}>
           {ut('ui.timer.alert_seconds_label')}
         </span>
@@ -500,6 +464,53 @@ export default function DungeonTimerPage() {
           aria-label={ut('ui.timer.alert_seconds_label')}
           style={{ width: 110 }}
         />
+        <span
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            color: tokens.text,
+            fontSize: 14,
+          }}
+        >
+          {ut('ui.timer.popup_checkbox')}
+          <Switch
+            checked={popupEnabled}
+            onChange={(checked) => {
+              setPopupEnabled(checked);
+              // Ask for permission inside the click gesture; if it is denied
+              // or unsupported the in-page modal remains the fallback.
+              if (
+                checked &&
+                typeof window !== 'undefined' &&
+                'Notification' in window &&
+                window.Notification.permission === 'default'
+              ) {
+                void window.Notification.requestPermission();
+              }
+            }}
+          />
+        </span>
+        <span
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 8,
+            color: tokens.text,
+            fontSize: 14,
+          }}
+        >
+          {ut('ui.timer.sound_checkbox')}
+          <Switch
+            checked={soundEnabled}
+            onChange={(checked) => {
+              setSoundEnabled(checked);
+              // Creating/resuming here keeps the later automatic alert inside
+              // the browser's user-gesture policy.
+              if (checked) ensureAudioContext();
+            }}
+          />
+        </span>
         <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 240px' }}>
           {ut('ui.timer.alert_hint')}
         </span>
