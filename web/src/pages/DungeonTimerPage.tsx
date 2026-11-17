@@ -76,8 +76,8 @@ export default function DungeonTimerPage() {
   const [now, setNow] = useState<number | null>(null);
   const [popupEnabled, setPopupEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
-  const [alertSeconds, setAlertSeconds] = useState(30);
-  const [alertSecondsText, setAlertSecondsText] = useState('30');
+  const [alertSeconds, setAlertSeconds] = useState(15);
+  const [alertSecondsText, setAlertSecondsText] = useState('15');
   const [rotationSeconds, setRotationSeconds] = useState(DEFAULT_ROTATION);
   const [rotationCustom, setRotationCustom] = useState(false);
   const [alertMode, setAlertMode] = useState<Mode>('solo');
