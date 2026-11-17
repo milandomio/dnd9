@@ -3678,6 +3678,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.rotation_seconds': '秒',
     'ui.timer.rotation_hint':
       '修改后立即按新的基础轮换时间重算三列倒计时；默认 3 分钟。',
+    'ui.timer.alert_seconds_label': '最后秒数',
     'ui.timer.popup_checkbox': '弹窗',
     'ui.timer.sound_checkbox': '提示音',
     'ui.timer.popup_title': '轮换提醒',
@@ -3686,7 +3687,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': '知道了',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
-      '勾选弹窗或提示音后生效：到达所选队列与地图的最后 N 秒时提醒一次，随后自动取消勾选；允许通知时使用系统通知，否则显示页面弹窗。',
+      '勾选弹窗或提示音后生效：到达所选队列与地图的最后 N 秒时提醒一次，随后自动取消勾选；N 可下拉选择或直接输入秒数；允许通知时使用系统通知，否则显示页面弹窗。',
     'ui.timer.final_window': '准备进入',
     'ui.timer.network_time': '网络时间',
     'ui.timer.time_drift': '相差 {seconds} 秒，设备时间不准确',
@@ -3807,6 +3808,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.rotation_seconds': 's',
     'ui.timer.rotation_hint':
       'Recalculates all countdowns immediately; default 3 minutes.',
+    'ui.timer.alert_seconds_label': 'Seconds',
     'ui.timer.popup_checkbox': 'Popup',
     'ui.timer.sound_checkbox': 'Sound',
     'ui.timer.popup_title': 'Rotation alert',
@@ -3815,7 +3817,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': 'Got it',
     'ui.timer.alert_seconds': 's',
     'ui.timer.alert_hint':
-      'Check popup and/or sound to enable: alert once when the selected queue and map reach the last N seconds, then both checkboxes are cleared automatically; the popup uses a system notification when allowed, otherwise an in-page dialog.',
+      'Check popup and/or sound to enable: alert once when the selected queue and map reach the last N seconds, then both checkboxes are cleared automatically; N can be picked from the dropdown or typed in seconds; the popup uses a system notification when allowed, otherwise an in-page dialog.',
     'ui.timer.final_window': 'Get ready',
     'ui.timer.network_time': 'Network time',
     'ui.timer.time_drift': '{seconds}s off — device clock is inaccurate',
@@ -3935,6 +3937,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.rotation_seconds': '秒',
     'ui.timer.rotation_hint':
       '変更すると三列のカウントダウンを新しい基礎ローテーションで即時再計算します。既定は3分です。',
+    'ui.timer.alert_seconds_label': '残り秒数',
     'ui.timer.popup_checkbox': 'ポップアップ',
     'ui.timer.sound_checkbox': '通知音',
     'ui.timer.popup_title': 'ローテーション通知',
@@ -3943,7 +3946,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': '確認',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
-      'ポップアップまたは通知音をチェックすると有効になります：選択した待機列とマップが残りN秒になったときに1回通知し、その後チェックは自動的に解除されます。通知が許可されていればシステム通知、なければページ内ダイアログを表示します。',
+      'ポップアップまたは通知音をチェックすると有効になります：選択した待機列とマップが残りN秒になったときに1回通知し、その後チェックは自動的に解除されます。N はプルダウン選択または秒数の直接入力ができます。通知が許可されていればシステム通知、なければページ内ダイアログを表示します。',
     'ui.timer.final_window': 'まもなく入場',
     'ui.timer.network_time': 'ネットワーク時刻',
     'ui.timer.time_drift': '{seconds}秒ずれています（端末時刻が不正確）',
@@ -4058,6 +4061,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.rotation_seconds': '秒',
     'ui.timer.rotation_hint':
       '修改後立即依新的基礎輪替時間重算三列倒數；預設 3 分鐘。',
+    'ui.timer.alert_seconds_label': '最後秒數',
     'ui.timer.popup_checkbox': '彈窗',
     'ui.timer.sound_checkbox': '提示音',
     'ui.timer.popup_title': '輪替提醒',
@@ -4066,7 +4070,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': '知道了',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
-      '勾選彈窗或提示音後生效：到達所選佇列與地圖的最後 N 秒時提醒一次，隨後自動取消勾選；允許通知時使用系統通知，否則顯示頁面彈窗。',
+      '勾選彈窗或提示音後生效：到達所選佇列與地圖的最後 N 秒時提醒一次，隨後自動取消勾選；N 可下拉選擇或直接輸入秒數；允許通知時使用系統通知，否則顯示頁面彈窗。',
     'ui.timer.final_window': '準備進入',
     'ui.timer.network_time': '網路時間',
     'ui.timer.time_drift': '相差 {seconds} 秒，裝置時間不準確',

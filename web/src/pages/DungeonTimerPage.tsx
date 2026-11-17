@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Checkbox, InputNumber, Modal, Select } from 'antd';
+import { AutoComplete, Checkbox, InputNumber, Modal, Select } from 'antd';
 import { useTheme } from '../hooks/useTheme';
 import { useLocale } from '../i18n/useLocale';
 import { ssrLocalizedTitle } from '../i18n/ssrTitle';
@@ -77,6 +77,7 @@ export default function DungeonTimerPage() {
   const [popupEnabled, setPopupEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const [alertSeconds, setAlertSeconds] = useState(30);
+  const [alertSecondsText, setAlertSecondsText] = useState('30');
   const [rotationSeconds, setRotationSeconds] = useState(DEFAULT_ROTATION);
   const [rotationCustom, setRotationCustom] = useState(false);
   const [alertMode, setAlertMode] = useState<Mode>('solo');
@@ -464,18 +465,30 @@ export default function DungeonTimerPage() {
         >
           {ut('ui.timer.sound_checkbox')}
         </Checkbox>
-        <Select
-          value={alertSeconds}
+        <span style={{ color: tokens.text, fontSize: 14 }}>
+          {ut('ui.timer.alert_seconds_label')}
+        </span>
+        <AutoComplete
+          className="alert-seconds-input"
+          value={alertSecondsText}
           disabled={!popupEnabled && !soundEnabled}
-          onChange={setAlertSeconds}
-          showSearch
-          optionFilterProp="label"
-          aria-label={ut('ui.timer.alert_toggle')}
           options={ALERT_OPTIONS.map((value) => ({
-            value,
-            label: ut(`ui.timer.alert_option.${value}`),
+            value: String(value),
           }))}
-          style={{ width: 130 }}
+          onChange={(text) => {
+            const digits = text.replace(/\D/g, '');
+            setAlertSecondsText(digits);
+            const parsed = Number(digits);
+            if (digits && parsed > 0) setAlertSeconds(parsed);
+          }}
+          onBlur={() => {
+            setAlertSecondsText((text) => {
+              const parsed = Number(text);
+              return text && parsed > 0 ? String(parsed) : String(alertSeconds);
+            });
+          }}
+          aria-label={ut('ui.timer.alert_seconds_label')}
+          style={{ width: 110 }}
         />
         <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 240px' }}>
           {ut('ui.timer.alert_hint')}
