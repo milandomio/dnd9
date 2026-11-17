@@ -3647,7 +3647,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.description':
       'Dark and Darker 地牢地图轮换倒计时：废墟、哥布林洞、冰图在单人队列、双人队列、三人队列下的开放时间；基础轮换默认 3 分钟，可选 3/4/5 分钟或自定义秒数。',
     'ui.timer.notice':
-      '先在轮换剩余约 15 秒时多测几次，确认实际进入的是单人队列还是三人队列；确认后再按对应列观察。默认已选三人队列。',
+      '本页只提供计算，不保证准确。先在轮换剩余约 15 秒时多测几次，确认实际进入的是单人队列还是三人队列；确认后再按对应列观察。默认已选三人队列。',
     'ui.timer.notice_caveat':
       '属于经验策略，不保证成功；人数不足时，单人排队不一定分配到单人队列，请先按实际进入结果测试；房间模式与服务器匹配状态也可能改变结果。',
     'ui.timer.mode.solo': '单人队列',
@@ -3781,7 +3781,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.description':
       'Dark and Darker dungeon rotation timers for Ruins, Goblin Cave and Frost Mountain in Solo, Duo and Trio queues; the base rotation defaults to 3 minutes and can be set to 3/4/5 minutes or custom seconds.',
     'ui.timer.notice':
-      'Test a few times by joining with about 15 seconds left in the rotation, then confirm whether you actually enter the Solo or Trio queue; watch that column afterwards. The Trio queue is selected by default.',
+      'This page only provides calculations and does not guarantee accuracy. Test a few times by joining with about 15 seconds left in the rotation, then confirm whether you actually enter the Solo or Trio queue; watch that column afterwards. The Trio queue is selected by default.',
     'ui.timer.notice_caveat':
       'Practical heuristic, not a guarantee; with too few players a solo queue may not be placed in the solo room, so test against your actual entry results first; room mode and matchmaking state can also change the outcome.',
     'ui.timer.mode.solo': 'Solo queue',
@@ -3914,7 +3914,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.description':
       'Dark and Darker のダンジョンは基礎ローテーションごとに入れ替わります。廃墟・ゴブリン洞窟・氷山のソロ・デュオ・トリオ待機列の開放時間を表示します。既定は3分で、3/4/5分または秒数指定に変更できます。',
     'ui.timer.notice':
-      'ローテーション残り約15秒で何度か入場し、実際にソロ待機列とトリオ待機列のどちらに入るかを確認してください。確認後はその列を見てください。既定ではトリオ待機列を選択しています。',
+      'このページは計算結果のみを提供し、正確性は保証しません。ローテーション残り約15秒で何度か入場し、実際にソロ待機列とトリオ待機列のどちらに入るかを確認してください。確認後はその列を見てください。既定ではトリオ待機列を選択しています。',
     'ui.timer.notice_caveat':
       '経験則であり保証ではありません。人数が足りない場合、ソロ待機でもソロ部屋に割り当てられないことがあります。まず実際の入場結果で試してください。部屋モードやマッチング状況でも結果は変わります。',
     'ui.timer.mode.solo': 'ソロ待機列',
@@ -4042,7 +4042,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.description':
       'Dark and Darker 地牢地圖輪替倒數：廢墟、哥布林洞、冰圖在單人佇列、雙人佇列、三人佇列下的開放時間；基礎輪替預設 3 分鐘，可選 3/4/5 分鐘或自訂秒數。',
     'ui.timer.notice':
-      '先在輪替剩餘約 15 秒時多測幾次，確認實際進入的是單人佇列還是三人佇列；確認後再按對應列觀察。預設已選三人佇列。',
+      '本頁只提供計算，不保證準確。先在輪替剩餘約 15 秒時多測幾次，確認實際進入的是單人佇列還是三人佇列；確認後再按對應列觀察。預設已選三人佇列。',
     'ui.timer.notice_caveat':
       '屬於經驗策略，不保證成功；人數不足時，單人排隊不一定分配到單人佇列，請先依實際進入結果測試；房間模式與伺服器配對狀態也可能改變結果。',
     'ui.timer.mode.solo': '單人佇列',
