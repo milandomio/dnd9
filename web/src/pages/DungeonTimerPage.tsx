@@ -404,17 +404,6 @@ export default function DungeonTimerPage() {
         <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 240px' }}>
           {ut('ui.timer.rotation_hint')}
         </span>
-        <Button
-          autoInsertSpace={false}
-          onClick={() => setPaused((value) => !value)}
-        >
-          {paused ? ut('ui.timer.resume') : ut('ui.timer.pause')}
-        </Button>
-        {paused && (
-          <span style={{ color: tokens.muted, fontSize: 12 }}>
-            {ut('ui.timer.paused_hint')}
-          </span>
-        )}
       </div>
 
       <div
@@ -537,12 +526,33 @@ export default function DungeonTimerPage() {
             }}
           >
             <div style={{ padding: '10px 14px', lineHeight: 1.6 }}>
-              <div>
-                {ut('ui.timer.local_time')}:{' '}
-                <span style={{ color: tokens.accent }}>
-                  {now === null ? '--:--:--' : formatLocalClock(now)}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: 8,
+                }}
+              >
+                <span>
+                  {ut('ui.timer.local_time')}:{' '}
+                  <span style={{ color: tokens.accent }}>
+                    {now === null ? '--:--:--' : formatLocalClock(now)}
+                  </span>
                 </span>
+                <Button
+                  size="small"
+                  autoInsertSpace={false}
+                  onClick={() => setPaused((value) => !value)}
+                >
+                  {paused ? ut('ui.timer.resume') : ut('ui.timer.pause')}
+                </Button>
               </div>
+              {paused && (
+                <div style={{ color: tokens.muted, fontSize: 11 }}>
+                  {ut('ui.timer.paused_hint')}
+                </div>
+              )}
               <div>
                 {ut('ui.timer.network_time')}:{' '}
                 <span
