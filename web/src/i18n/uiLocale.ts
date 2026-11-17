@@ -3643,7 +3643,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.home.card_labels.dungeon_timer': '地图轮换',
     'ui.home.view_dungeon_timer':
       '查看三张地图在单人队列 / 双人队列 / 三人队列下的轮换倒计时',
-    'ui.timer.title': '【轮换】地牢地图计时器',
+    'ui.timer.title': '地图轮换计算器',
     'ui.timer.description':
       'Dark and Darker 地牢地图轮换倒计时：废墟、哥布林洞、冰图在单人队列、双人队列、三人队列下的开放时间；基础轮换默认 3 分钟，可选 3/4/5 分钟或自定义秒数。',
     'ui.timer.notice':
@@ -3777,7 +3777,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.home.card_labels.dungeon_timer': 'Rotation',
     'ui.home.view_dungeon_timer':
       'See the Solo / Duo / Trio queue rotation timers for all three maps',
-    'ui.timer.title': 'Dungeon Map Rotation Timer',
+    'ui.timer.title': 'Map Rotation Calculator',
     'ui.timer.description':
       'Dark and Darker dungeon rotation timers for Ruins, Goblin Cave and Frost Mountain in Solo, Duo and Trio queues; the base rotation defaults to 3 minutes and can be set to 3/4/5 minutes or custom seconds.',
     'ui.timer.notice':
@@ -3910,7 +3910,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.home.card_labels.dungeon_timer': 'ローテーション',
     'ui.home.view_dungeon_timer':
       '3マップのソロ / デュオ / トリオ待機列ローテーションタイマーを見る',
-    'ui.timer.title': '【ローテーション】ダンジョンマップタイマー',
+    'ui.timer.title': 'マップローテーション計算機',
     'ui.timer.description':
       'Dark and Darker のダンジョンは基礎ローテーションごとに入れ替わります。廃墟・ゴブリン洞窟・氷山のソロ・デュオ・トリオ待機列の開放時間を表示します。既定は3分で、3/4/5分または秒数指定に変更できます。',
     'ui.timer.notice':
@@ -4038,7 +4038,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.home.card_labels.dungeon_timer': '地圖輪替',
     'ui.home.view_dungeon_timer':
       '查看三張地圖在單人佇列 / 雙人佇列 / 三人佇列下的輪替倒數',
-    'ui.timer.title': '【輪替】地牢地圖計時器',
+    'ui.timer.title': '地圖輪替計算器',
     'ui.timer.description':
       'Dark and Darker 地牢地圖輪替倒數：廢墟、哥布林洞、冰圖在單人佇列、雙人佇列、三人佇列下的開放時間；基礎輪替預設 3 分鐘，可選 3/4/5 分鐘或自訂秒數。',
     'ui.timer.notice':
