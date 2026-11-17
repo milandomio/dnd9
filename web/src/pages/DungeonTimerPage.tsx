@@ -10,6 +10,8 @@ const ROTATION_OPTIONS = [180, 240, 300] as const;
 const DEFAULT_ROTATION = 180;
 
 const MODES = ['solo', 'duo', 'trio'] as const;
+/** Alert queue dropdown order: trio first, then duo, then solo. */
+const ALERT_MODE_OPTIONS = ['trio', 'duo', 'solo'] as const;
 /** Fixed alert thresholds offered by the dropdown. */
 const ALERT_OPTIONS = [15, 30, 60, 120] as const;
 type Mode = (typeof MODES)[number];
@@ -421,7 +423,7 @@ export default function DungeonTimerPage() {
           value={alertMode}
           onChange={setAlertMode}
           aria-label={ut('ui.timer.alert_queue')}
-          options={MODES.map((mode) => ({
+          options={ALERT_MODE_OPTIONS.map((mode) => ({
             value: mode,
             label: ut(`ui.timer.mode.${mode}`),
           }))}
