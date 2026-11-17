@@ -498,6 +498,7 @@ export default function DungeonTimerPage() {
           }))}
           style={{ width: 120 }}
         />
+        <span style={{ flexBasis: '100%', height: 0 }} />
         <span style={{ color: tokens.text, fontSize: 14 }}>
           {ut('ui.timer.alert_seconds_label')}
         </span>
@@ -591,7 +592,8 @@ export default function DungeonTimerPage() {
               : 'ui.timer.background_off_hint'
           )}
         </span>
-        <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 240px' }}>
+        <span style={{ flexBasis: '100%', height: 0 }} />
+        <span style={{ color: tokens.muted, fontSize: 12, flex: '1 1 100%' }}>
           {ut('ui.timer.alert_hint')}
         </span>
       </div>
