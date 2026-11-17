@@ -3658,7 +3658,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.map.frost': '冰图',
     'ui.timer.open': '当前开放',
     'ui.timer.legend':
-      '绿色 = 该模式下当前开放的地图；黄色 = 上一张图，仍可能中途加入（残留房间）。',
+      '绿色 = 当前开放；蓝色 = 最后 N 秒（准备进入）；黄色 = 上一张图，仍可能中途加入（残留房间）。',
     'ui.timer.previous_window': '中途加入（残留房间）',
     'ui.timer.clock_note':
       '倒计时按本机系统时间计算（UTC 基准），未与游戏服务器校时；本机时间有偏差时结果会同步偏移，必要时刷新页面。',
@@ -3687,7 +3687,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': '知道了',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
-      '勾选弹窗或提示音后生效：到达所选队列与地图的最后 N 秒时提醒一次，随后自动取消勾选；N 可下拉选择或直接输入秒数；允许通知时使用系统通知，否则显示页面弹窗。',
+      '最后 N 秒始终以蓝色显示“准备进入”；勾选弹窗或提示音后，到达该区间时提醒一次，随后自动取消勾选；N 可下拉选择或直接输入秒数；允许通知时使用系统通知，否则显示页面弹窗。',
     'ui.timer.final_window': '准备进入',
     'ui.timer.network_time': '网络时间',
     'ui.timer.time_drift': '相差 {seconds} 秒，设备时间不准确',
@@ -3788,7 +3788,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.map.frost': 'Frost Mountain',
     'ui.timer.open': 'Open now',
     'ui.timer.legend':
-      'Green = the map currently open in that mode; yellow = the previous map, which may still allow mid-run joins (leftover rooms).',
+      'Green = currently open; blue = last N seconds (get ready); yellow = previous map, which may still allow mid-run joins (leftover rooms).',
     'ui.timer.previous_window': 'Mid-run join (leftover room)',
     'ui.timer.clock_note':
       'Timers use the local system clock (UTC based) and are not synced with the game server; clock drift shifts the result. Refresh if needed.',
@@ -3817,7 +3817,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': 'Got it',
     'ui.timer.alert_seconds': 's',
     'ui.timer.alert_hint':
-      'Check popup and/or sound to enable: alert once when the selected queue and map reach the last N seconds, then both checkboxes are cleared automatically; N can be picked from the dropdown or typed in seconds; the popup uses a system notification when allowed, otherwise an in-page dialog.',
+      'The last N seconds are always highlighted in blue; check popup and/or sound to also get one alert when that window starts, after which both checkboxes clear automatically; N can be picked from the dropdown or typed in seconds; the popup uses a system notification when allowed, otherwise an in-page dialog.',
     'ui.timer.final_window': 'Get ready',
     'ui.timer.network_time': 'Network time',
     'ui.timer.time_drift': '{seconds}s off — device clock is inaccurate',
@@ -3917,7 +3917,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.map.frost': '氷山',
     'ui.timer.open': '現在開放中',
     'ui.timer.legend':
-      '緑 = そのモードで現在開放中のマップ；黄 = 前のマップ（残留ルームに途中参加できる場合があります）。',
+      '緑 = 現在開放中；青 = 残りN秒（入場準備）；黄 = 前のマップ（残留ルームに途中参加できる場合があります）。',
     'ui.timer.previous_window': '途中参加（残留ルーム）',
     'ui.timer.clock_note':
       'タイマーは端末のシステム時計（UTC基準）で計算され、ゲームサーバーとは同期していません。端末時刻がずれていると結果もずれます。必要なら再読み込みしてください。',
@@ -3946,7 +3946,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': '確認',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
-      'ポップアップまたは通知音をチェックすると有効になります：選択した待機列とマップが残りN秒になったときに1回通知し、その後チェックは自動的に解除されます。N はプルダウン選択または秒数の直接入力ができます。通知が許可されていればシステム通知、なければページ内ダイアログを表示します。',
+      '残りN秒は常に青色で表示されます。ポップアップまたは通知音をチェックすると、その区間に入ったときに1回通知し、その後チェックは自動的に解除されます。N はプルダウン選択または秒数の直接入力ができます。通知が許可されていればシステム通知、なければページ内ダイアログを表示します。',
     'ui.timer.final_window': 'まもなく入場',
     'ui.timer.network_time': 'ネットワーク時刻',
     'ui.timer.time_drift': '{seconds}秒ずれています（端末時刻が不正確）',
@@ -4041,7 +4041,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.map.frost': '冰圖',
     'ui.timer.open': '目前開放',
     'ui.timer.legend':
-      '綠色 = 該模式下目前開放的地圖；黃色 = 上一張地圖，仍可能中途加入（殘留房間）。',
+      '綠色 = 目前開放；藍色 = 最後 N 秒（準備進入）；黃色 = 上一張地圖，仍可能中途加入（殘留房間）。',
     'ui.timer.previous_window': '中途加入（殘留房間）',
     'ui.timer.clock_note':
       '倒數依本機系統時間計算（UTC 基準），未與遊戲伺服器校時；本機時間有偏差時結果會同步偏移，必要時重新整理頁面。',
@@ -4070,7 +4070,7 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
     'ui.timer.popup_close': '知道了',
     'ui.timer.alert_seconds': '秒',
     'ui.timer.alert_hint':
-      '勾選彈窗或提示音後生效：到達所選佇列與地圖的最後 N 秒時提醒一次，隨後自動取消勾選；N 可下拉選擇或直接輸入秒數；允許通知時使用系統通知，否則顯示頁面彈窗。',
+      '最後 N 秒始終以藍色顯示「準備進入」；勾選彈窗或提示音後，到達該區間時提醒一次，隨後自動取消勾選；N 可下拉選擇或直接輸入秒數；允許通知時使用系統通知，否則顯示頁面彈窗。',
     'ui.timer.final_window': '準備進入',
     'ui.timer.network_time': '網路時間',
     'ui.timer.time_drift': '相差 {seconds} 秒，裝置時間不準確',

@@ -471,7 +471,6 @@ export default function DungeonTimerPage() {
         <AutoComplete
           className="alert-seconds-input"
           value={alertSecondsText}
-          disabled={!popupEnabled && !soundEnabled}
           options={ALERT_OPTIONS.map((value) => ({
             value: String(value),
           }))}
@@ -603,9 +602,7 @@ export default function DungeonTimerPage() {
                   const open =
                     seconds !== undefined && seconds < rotationSeconds;
                   const inAlertWindow =
-                    (popupEnabled || soundEnabled) &&
-                    open &&
-                    seconds <= alertSeconds;
+                    open && seconds !== undefined && seconds <= alertSeconds;
                   const isPrevious = previousByMode[mode] === map.key;
                   const highlightColor = inAlertWindow
                     ? alertColor
