@@ -4,6 +4,18 @@
 
 ## 2026-11-18
 
+### feat: 提示音可选 Win11 风格音效或本地上传音频，并修正后台保活
+
+- **改动原因**：用户希望提示音可选多种 Windows 11 内置音效，并支持上传 mp3 等文件；同时要求上传文件只保存在本地浏览器（静态站不接收文件）。另外实测原 20 kHz、-74 dB 的保活音频被浏览器视为静音，标签页没有音频状态。
+- **变更文件**：web/src/pages/DungeonTimerPage.tsx、web/src/i18n/uiLocale.ts、docs/SESSION_CHANGES.md。
+- **关键逻辑/映射关系**：
+  1. 新增 soundPreset：default（保留原四连短音）、notify、chime、error、startup、custom；内置音效全部由 Web Audio 实时合成，不打包任何音频文件，用户无需下载额外资源。
+  2. 自定义音频通过文件选择读取，写入浏览器 IndexedDB（库 darkfind-timer、仓库 alert-sounds、键 custom），运行时用 object URL 播放；刷新后自动恢复，文件不会上传到服务器。
+  3. 音效选择与上次选择写入 localStorage（darkfind.timer.soundPreset），刷新后恢复；选择音效时自动开启提示音并即时试听。
+  4. 保活振荡器由 20 kHz / 0.0002 改为 19 kHz / 0.05，确保浏览器识别为真实音频流（标签页出现音频图标），同时常规扬声器基本听不到。
+  5. 提示文案更新：说明 19 kHz 保活会显示音频图标，上传文件仅存本机浏览器。
+- **验证**：Prettier、tsc、ESLint 通过；重新构建成功；Playwright 验证音效下拉选项、选择音效触发合成振荡器、上传后刷新仍保留文件名与自定义选项、后台模式创建 19 kHz 振荡器且 AudioContext 为 running。仅本地提交，未推送。
+
 ### style: 最后秒数起另起一行，提醒说明单独一行
 
 - **改动原因**：提醒行元素过多导致换行位置随机，排版混乱；用户要求「最后秒数」及其后内容另起一行，提醒说明再单独一行。

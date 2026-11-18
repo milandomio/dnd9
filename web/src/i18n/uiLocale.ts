@@ -3685,11 +3685,21 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '已暂停：界面停留在当前时刻；点击继续后按实时时间重新计算。',
     'ui.timer.popup_checkbox': '弹窗',
     'ui.timer.sound_checkbox': '提示音',
+    'ui.timer.sound_preset.default': '默认（当前音效）',
+    'ui.timer.sound_preset.notify': 'Windows 11 通知',
+    'ui.timer.sound_preset.chime': 'Windows 11 完成',
+    'ui.timer.sound_preset.error': 'Windows 11 错误',
+    'ui.timer.sound_preset.startup': 'Windows 11 启动',
+    'ui.timer.sound_preset.custom': '自定义音频',
+    'ui.timer.sound_upload': '上传音频',
+    'ui.timer.sound_no_file': '未选择文件',
+    'ui.timer.sound_upload_hint':
+      '支持 mp3 / wav / ogg 等浏览器可播放格式；文件只保存在本机浏览器（IndexedDB），不会上传，刷新后仍可使用。',
     'ui.timer.background_label': '后台模式',
     'ui.timer.background_off_hint':
       '未开启：请保持本页在浏览器前台显示，不要切换到其他标签页，否则提醒可能延迟。',
     'ui.timer.background_on_hint':
-      '已开启：用无声音频保活，切到其他标签页也能尽量准点提醒；标签页可能显示音频图标。',
+      '已开启：用 19 kHz 低幅音频保活，切到其他标签页也能尽量准点提醒；标签页会显示音频图标，通常听不到声音。',
     'ui.timer.popup_title': '轮换提醒',
     'ui.timer.popup_body':
       '{queue}「{map}」剩余不足 {seconds} 秒，可以准备进入。',
@@ -3824,11 +3834,21 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       'Paused: the display is frozen; resume to recalculate from the live clock.',
     'ui.timer.popup_checkbox': 'Popup',
     'ui.timer.sound_checkbox': 'Sound',
+    'ui.timer.sound_preset.default': 'Default (current)',
+    'ui.timer.sound_preset.notify': 'Windows 11 Notify',
+    'ui.timer.sound_preset.chime': 'Windows 11 Complete',
+    'ui.timer.sound_preset.error': 'Windows 11 Error',
+    'ui.timer.sound_preset.startup': 'Windows 11 Startup',
+    'ui.timer.sound_preset.custom': 'Custom audio',
+    'ui.timer.sound_upload': 'Upload audio',
+    'ui.timer.sound_no_file': 'No file selected',
+    'ui.timer.sound_upload_hint':
+      'Supports mp3 / wav / ogg and other browser-playable formats; the file is stored only in this browser (IndexedDB), never uploaded, and survives reloads.',
     'ui.timer.background_label': 'Background mode',
     'ui.timer.background_off_hint':
       'Off: keep this page visible in the browser and avoid switching tabs, or alerts may be delayed.',
     'ui.timer.background_on_hint':
-      'On: a silent audio loop keeps the timer alive in the background; the tab may show an audio icon.',
+      'On: a 19 kHz low-level tone keeps the timer alive in the background; the tab shows an audio icon and is normally inaudible.',
     'ui.timer.popup_title': 'Rotation alert',
     'ui.timer.popup_body':
       '{queue} "{map}" has under {seconds} seconds left — get ready to enter.',
@@ -3962,11 +3982,21 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '一時停止中：表示は現在の時刻で固定されています。「再開」でリアルタイムに再計算します。',
     'ui.timer.popup_checkbox': 'ポップアップ',
     'ui.timer.sound_checkbox': '通知音',
+    'ui.timer.sound_preset.default': '既定（現在の音）',
+    'ui.timer.sound_preset.notify': 'Windows 11 通知',
+    'ui.timer.sound_preset.chime': 'Windows 11 完了',
+    'ui.timer.sound_preset.error': 'Windows 11 エラー',
+    'ui.timer.sound_preset.startup': 'Windows 11 スタートアップ',
+    'ui.timer.sound_preset.custom': 'カスタム音声',
+    'ui.timer.sound_upload': '音声をアップロード',
+    'ui.timer.sound_no_file': 'ファイル未選択',
+    'ui.timer.sound_upload_hint':
+      'mp3 / wav / ogg などブラウザで再生できる形式に対応。ファイルはブラウザ内（IndexedDB）にのみ保存され、アップロードされません。再読み込み後も使用できます。',
     'ui.timer.background_label': 'バックグラウンドモード',
     'ui.timer.background_off_hint':
       'オフ：このページをブラウザの前面に表示したままにしてください。他のタブに切り替えると通知が遅れることがあります。',
     'ui.timer.background_on_hint':
-      'オン：無音オーディオでバックグラウンドでもタイマーを維持します。タブにオーディオアイコンが表示される場合があります。',
+      'オン：19 kHz の低レベル音でバックグラウンドでもタイマーを維持します。タブにオーディオアイコンが表示され、通常は聞こえません。',
     'ui.timer.popup_title': 'ローテーション通知',
     'ui.timer.popup_body':
       '{queue}「{map}」は残り {seconds} 秒未満です。入場の準備をしてください。',
@@ -4095,11 +4125,21 @@ const UI_EXTRA_LOCALE: Partial<Record<SupportedLang, UILocaleDict>> = {
       '已暫停：介面停留在目前時刻；點擊繼續後依即時時間重新計算。',
     'ui.timer.popup_checkbox': '彈窗',
     'ui.timer.sound_checkbox': '提示音',
+    'ui.timer.sound_preset.default': '預設（目前音效）',
+    'ui.timer.sound_preset.notify': 'Windows 11 通知',
+    'ui.timer.sound_preset.chime': 'Windows 11 完成',
+    'ui.timer.sound_preset.error': 'Windows 11 錯誤',
+    'ui.timer.sound_preset.startup': 'Windows 11 啟動',
+    'ui.timer.sound_preset.custom': '自訂音訊',
+    'ui.timer.sound_upload': '上傳音訊',
+    'ui.timer.sound_no_file': '未選擇檔案',
+    'ui.timer.sound_upload_hint':
+      '支援 mp3 / wav / ogg 等瀏覽器可播放格式；檔案僅儲存在本機瀏覽器（IndexedDB），不會上傳，重新整理後仍可使用。',
     'ui.timer.background_label': '後台模式',
     'ui.timer.background_off_hint':
       '未開啟：請保持本頁在瀏覽器前景顯示，不要切換到其他分頁，否則提醒可能延遲。',
     'ui.timer.background_on_hint':
-      '已開啟：使用無聲音訊保持後台計時，切到其他分頁也能盡量準時提醒；分頁可能顯示音訊圖示。',
+      '已開啟：使用 19 kHz 低幅音訊保持後台計時，切到其他分頁也能盡量準時提醒；分頁會顯示音訊圖示，通常聽不到聲音。',
     'ui.timer.popup_title': '輪替提醒',
     'ui.timer.popup_body':
       '{queue}「{map}」剩餘不足 {seconds} 秒，可以準備進入。',

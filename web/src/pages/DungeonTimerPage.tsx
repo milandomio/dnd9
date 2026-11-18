@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  type ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AutoComplete, Button, InputNumber, Modal, Select, Switch } from 'antd';
 import { useTheme } from '../hooks/useTheme';
@@ -14,7 +20,17 @@ const MODES = ['solo', 'duo', 'trio'] as const;
 const ALERT_MODE_OPTIONS = ['trio', 'duo', 'solo'] as const;
 /** Fixed alert thresholds offered by the dropdown. */
 const ALERT_OPTIONS = [15, 30, 60, 120] as const;
+/** Built-in alert sounds plus a user-uploaded audio file. */
+const SOUND_PRESETS = [
+  'default',
+  'notify',
+  'chime',
+  'error',
+  'startup',
+  'custom',
+] as const;
 type Mode = (typeof MODES)[number];
+type SoundPreset = (typeof SOUND_PRESETS)[number];
 
 interface MapDefinition {
   key: string;
@@ -70,6 +86,61 @@ function formatLocalClock(seconds: number): string {
     .join(':');
 }
 
+// Uploaded alert sounds stay in this browser (IndexedDB). The site is static
+// and never receives the file; an object URL is created at runtime.
+const SOUND_DB = 'darkfind-timer';
+const SOUND_STORE = 'alert-sounds';
+const SOUND_RECORD_KEY = 'custom';
+const SOUND_PRESET_STORAGE_KEY = 'darkfind.timer.soundPreset';
+
+interface StoredSound {
+  blob: Blob;
+  name: string;
+}
+
+function openSoundDb(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(SOUND_DB, 1);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(SOUND_STORE)) {
+        db.createObjectStore(SOUND_STORE);
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function saveStoredSound(sound: StoredSound): Promise<void> {
+  const db = await openSoundDb();
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(SOUND_STORE, 'readwrite');
+      tx.objectStore(SOUND_STORE).put(sound, SOUND_RECORD_KEY);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  } finally {
+    db.close();
+  }
+}
+
+async function loadStoredSound(): Promise<StoredSound | null> {
+  const db = await openSoundDb();
+  try {
+    return await new Promise<StoredSound | null>((resolve, reject) => {
+      const tx = db.transaction(SOUND_STORE, 'readonly');
+      const request = tx.objectStore(SOUND_STORE).get(SOUND_RECORD_KEY);
+      request.onsuccess = () =>
+        resolve((request.result as StoredSound | undefined) ?? null);
+      request.onerror = () => reject(request.error);
+    });
+  } finally {
+    db.close();
+  }
+}
+
 export default function DungeonTimerPage() {
   const { dark, tokens } = useTheme();
   const { ut } = useLocale();
@@ -78,6 +149,9 @@ export default function DungeonTimerPage() {
   const [now, setNow] = useState<number | null>(null);
   const [popupEnabled, setPopupEnabled] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [soundPreset, setSoundPreset] = useState<SoundPreset>('default');
+  const [customAudioUrl, setCustomAudioUrl] = useState<string | null>(null);
+  const [customAudioName, setCustomAudioName] = useState('');
   const [backgroundMode, setBackgroundMode] = useState(false);
   const [alertSeconds, setAlertSeconds] = useState(15);
   const [alertSecondsText, setAlertSecondsText] = useState('15');
@@ -97,6 +171,7 @@ export default function DungeonTimerPage() {
     gain: GainNode;
   } | null>(null);
   const lastAlertKeyRef = useRef('');
+  const soundFileInputRef = useRef<HTMLInputElement | null>(null);
   const [networkOffsetMs, setNetworkOffsetMs] = useState<number | null>(null);
   const [networkStatus, setNetworkStatus] = useState<'idle' | 'ok' | 'error'>(
     'idle'
@@ -117,41 +192,189 @@ export default function DungeonTimerPage() {
     return ctx;
   }, []);
 
-  const playAlert = useCallback(() => {
-    const ctx = ensureAudioContext();
-    if (!ctx) return;
-    // Four short pulses over two seconds, quiet enough not to startle.
-    const start = ctx.currentTime;
-    const gain = ctx.createGain();
-    gain.connect(ctx.destination);
-    const osc = ctx.createOscillator();
-    osc.type = 'square';
-    osc.frequency.value = 880;
-    osc.connect(gain);
-    for (let i = 0; i < 4; i++) {
-      const t = start + i * 0.5;
-      gain.gain.setValueAtTime(0.0001, t);
-      gain.gain.linearRampToValueAtTime(0.08, t + 0.02);
-      gain.gain.setValueAtTime(0.08, t + 0.22);
-      gain.gain.linearRampToValueAtTime(0.0001, t + 0.25);
-    }
-    osc.start(start);
-    osc.stop(start + 2.1);
-  }, [ensureAudioContext]);
+  const playSound = useCallback(
+    (preset: SoundPreset, url: string | null) => {
+      // User-uploaded files play through an <audio> element; everything else
+      // is synthesised with Web Audio so no media assets are bundled.
+      if (preset === 'custom' && url) {
+        const audio = new Audio(url);
+        void audio.play().catch(() => {
+          // Autoplay refused: fall back to a short synthesised ding.
+          const ctx = ensureAudioContext();
+          if (!ctx) return;
+          const gain = ctx.createGain();
+          gain.gain.value = 0.06;
+          gain.connect(ctx.destination);
+          const osc = ctx.createOscillator();
+          osc.frequency.value = 880;
+          osc.connect(gain);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.3);
+        });
+        return;
+      }
+      const ctx = ensureAudioContext();
+      if (!ctx) return;
+      const start = ctx.currentTime;
+      const tone = (
+        freq: number,
+        offset: number,
+        duration: number,
+        type: OscillatorType = 'sine',
+        peak = 0.07
+      ) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        const t = start + offset;
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.linearRampToValueAtTime(peak, t + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+        osc.start(t);
+        osc.stop(t + duration + 0.05);
+      };
 
-  // Nearly inaudible 20 kHz tone: keeps the tab in Chrome's "playing audio"
-  // state so background timer throttling does not stretch the 1 s tick to a
-  // minute. Gain is -74 dB, far below audible levels on normal hardware.
+      switch (preset) {
+        case 'notify':
+          // Windows 11 Notify: bright rising two-note bell.
+          tone(1046.5, 0, 0.18, 'sine', 0.08);
+          tone(2093, 0, 0.12, 'sine', 0.02);
+          tone(1318.5, 0.14, 0.5, 'sine', 0.07);
+          tone(2637, 0.14, 0.3, 'sine', 0.015);
+          break;
+        case 'chime':
+          // Windows 11 Complete: C-E-G-C arpeggio.
+          tone(523.25, 0, 0.4);
+          tone(659.25, 0.13, 0.4);
+          tone(783.99, 0.26, 0.45);
+          tone(1046.5, 0.39, 0.7);
+          break;
+        case 'error':
+          // Windows 11 Error: low descending double tone.
+          tone(392, 0, 0.16, 'triangle', 0.08);
+          tone(261.63, 0.2, 0.4, 'triangle', 0.08);
+          break;
+        case 'startup':
+          // Windows 11 Startup: short ascending four-note motif.
+          tone(392, 0, 0.22, 'sine', 0.06);
+          tone(523.25, 0.16, 0.22, 'sine', 0.06);
+          tone(659.25, 0.32, 0.22, 'sine', 0.06);
+          tone(783.99, 0.48, 0.6, 'sine', 0.06);
+          break;
+        default: {
+          // Original alert: four short square pulses.
+          const gain = ctx.createGain();
+          gain.connect(ctx.destination);
+          const osc = ctx.createOscillator();
+          osc.type = 'square';
+          osc.frequency.value = 880;
+          osc.connect(gain);
+          for (let i = 0; i < 4; i++) {
+            const t = start + i * 0.5;
+            gain.gain.setValueAtTime(0.0001, t);
+            gain.gain.linearRampToValueAtTime(0.08, t + 0.02);
+            gain.gain.setValueAtTime(0.08, t + 0.22);
+            gain.gain.linearRampToValueAtTime(0.0001, t + 0.25);
+          }
+          osc.start(start);
+          osc.stop(start + 2.1);
+        }
+      }
+    },
+    [ensureAudioContext]
+  );
+
+  const playAlert = useCallback(() => {
+    playSound(soundPreset, customAudioUrl);
+  }, [playSound, soundPreset, customAudioUrl]);
+
+  const handleSoundFile = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      if (customAudioUrl) URL.revokeObjectURL(customAudioUrl);
+      const url = URL.createObjectURL(file);
+      setCustomAudioUrl(url);
+      setCustomAudioName(file.name);
+      setSoundPreset('custom');
+      setSoundEnabled(true);
+      ensureAudioContext();
+      void saveStoredSound({ blob: file, name: file.name }).catch(() => {
+        // Storage unavailable (private mode/quota): keep session-only.
+      });
+      playSound('custom', url);
+      // Allow re-selecting the same file later.
+      event.target.value = '';
+    },
+    [customAudioUrl, ensureAudioContext, playSound]
+  );
+
+  useEffect(
+    () => () => {
+      if (customAudioUrl) URL.revokeObjectURL(customAudioUrl);
+    },
+    [customAudioUrl]
+  );
+
+  // Restore the stored sound and last selection from this browser.
+  const soundHydratedRef = useRef(false);
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      try {
+        const stored = await loadStoredSound();
+        if (cancelled) return;
+        if (stored) {
+          setCustomAudioName(stored.name);
+          setCustomAudioUrl(URL.createObjectURL(stored.blob));
+        }
+        const savedPreset = localStorage.getItem(
+          SOUND_PRESET_STORAGE_KEY
+        ) as SoundPreset | null;
+        if (
+          savedPreset &&
+          (SOUND_PRESETS as readonly string[]).includes(savedPreset) &&
+          (savedPreset !== 'custom' || stored)
+        ) {
+          setSoundPreset(savedPreset);
+        }
+      } catch {
+        // IndexedDB/localStorage unavailable: keep defaults.
+      } finally {
+        if (!cancelled) soundHydratedRef.current = true;
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!soundHydratedRef.current) return;
+    try {
+      localStorage.setItem(SOUND_PRESET_STORAGE_KEY, soundPreset);
+    } catch {
+      // Ignore quota/security errors.
+    }
+  }, [soundPreset]);
+
+  // 19 kHz tone at a moderate level: Chrome sees a real audio stream (tab
+  // speaker icon), while most speakers/headphones cannot reproduce it, so it
+  // is effectively silent. A near-zero gain was treated as silence and the
+  // tab was still throttled.
   const startKeepAlive = useCallback(() => {
     const ctx = ensureAudioContext();
     if (!ctx) return;
     void ctx.resume();
     if (keepAliveRef.current) return;
     const gain = ctx.createGain();
-    gain.gain.value = 0.0002;
+    gain.gain.value = 0.05;
     const osc = ctx.createOscillator();
     osc.type = 'sine';
-    osc.frequency.value = 20000;
+    osc.frequency.value = 19000;
     osc.connect(gain);
     gain.connect(ctx.destination);
     osc.start();
@@ -570,6 +793,50 @@ export default function DungeonTimerPage() {
             }}
           />
         </span>
+        <Select
+          value={soundPreset}
+          onChange={(value: SoundPreset) => {
+            setSoundPreset(value);
+            setSoundEnabled(true);
+            ensureAudioContext();
+            playSound(value, value === 'custom' ? customAudioUrl : null);
+          }}
+          aria-label={ut('ui.timer.sound_checkbox')}
+          options={SOUND_PRESETS.map((preset) => ({
+            value: preset,
+            label: ut(`ui.timer.sound_preset.${preset}`),
+          }))}
+          style={{ width: 150 }}
+        />
+        {soundPreset === 'custom' && (
+          <>
+            <Button
+              size="small"
+              onClick={() => soundFileInputRef.current?.click()}
+            >
+              {ut('ui.timer.sound_upload')}
+            </Button>
+            <input
+              ref={soundFileInputRef}
+              type="file"
+              accept="audio/*"
+              hidden
+              onChange={handleSoundFile}
+            />
+            <span style={{ color: tokens.muted, fontSize: 12 }}>
+              {customAudioName || ut('ui.timer.sound_no_file')}
+            </span>
+            <span
+              style={{
+                color: tokens.muted,
+                fontSize: 12,
+                flexBasis: '100%',
+              }}
+            >
+              {ut('ui.timer.sound_upload_hint')}
+            </span>
+          </>
+        )}
         <span
           style={{
             display: 'inline-flex',
