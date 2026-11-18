@@ -23,10 +23,10 @@ const ALERT_OPTIONS = [15, 30, 60, 120] as const;
 /** Built-in alert sounds plus a user-uploaded audio file. */
 const SOUND_PRESETS = [
   'default',
-  'notify',
-  'chime',
-  'error',
-  'startup',
+  'alarm-classic',
+  'alarm-digital',
+  'alarm-siren',
+  'alarm-bell',
   'custom',
 ] as const;
 type Mode = (typeof MODES)[number];
@@ -194,12 +194,11 @@ export default function DungeonTimerPage() {
 
   const playSound = useCallback(
     (preset: SoundPreset, url: string | null) => {
-      // User-uploaded files play through an <audio> element; everything else
-      // is synthesised with Web Audio so no media assets are bundled.
-      if (preset === 'custom' && url) {
+      if (preset === 'custom') {
+        if (!url) return;
         const audio = new Audio(url);
         void audio.play().catch(() => {
-          // Autoplay refused: fall back to a short synthesised ding.
+          // Autoplay refused or clip unavailable: short synthesised ding.
           const ctx = ensureAudioContext();
           if (!ctx) return;
           const gain = ctx.createGain();
@@ -213,15 +212,16 @@ export default function DungeonTimerPage() {
         });
         return;
       }
+
       const ctx = ensureAudioContext();
       if (!ctx) return;
       const start = ctx.currentTime;
-      const tone = (
+      const beep = (
         freq: number,
         offset: number,
         duration: number,
-        type: OscillatorType = 'sine',
-        peak = 0.07
+        type: OscillatorType = 'square',
+        peak = 0.08
       ) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
@@ -231,58 +231,56 @@ export default function DungeonTimerPage() {
         gain.connect(ctx.destination);
         const t = start + offset;
         gain.gain.setValueAtTime(0.0001, t);
-        gain.gain.linearRampToValueAtTime(peak, t + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+        gain.gain.linearRampToValueAtTime(peak, t + 0.015);
+        gain.gain.setValueAtTime(peak, t + duration - 0.04);
+        gain.gain.linearRampToValueAtTime(0.0001, t + duration);
         osc.start(t);
-        osc.stop(t + duration + 0.05);
+        osc.stop(t + duration + 0.02);
       };
 
-      switch (preset) {
-        case 'notify':
-          // Windows 11 Notify: bright rising two-note bell.
-          tone(1046.5, 0, 0.18, 'sine', 0.08);
-          tone(2093, 0, 0.12, 'sine', 0.02);
-          tone(1318.5, 0.14, 0.5, 'sine', 0.07);
-          tone(2637, 0.14, 0.3, 'sine', 0.015);
-          break;
-        case 'chime':
-          // Windows 11 Complete: C-E-G-C arpeggio.
-          tone(523.25, 0, 0.4);
-          tone(659.25, 0.13, 0.4);
-          tone(783.99, 0.26, 0.45);
-          tone(1046.5, 0.39, 0.7);
-          break;
-        case 'error':
-          // Windows 11 Error: low descending double tone.
-          tone(392, 0, 0.16, 'triangle', 0.08);
-          tone(261.63, 0.2, 0.4, 'triangle', 0.08);
-          break;
-        case 'startup':
-          // Windows 11 Startup: short ascending four-note motif.
-          tone(392, 0, 0.22, 'sine', 0.06);
-          tone(523.25, 0.16, 0.22, 'sine', 0.06);
-          tone(659.25, 0.32, 0.22, 'sine', 0.06);
-          tone(783.99, 0.48, 0.6, 'sine', 0.06);
-          break;
-        default: {
-          // Original alert: four short square pulses.
-          const gain = ctx.createGain();
-          gain.connect(ctx.destination);
-          const osc = ctx.createOscillator();
-          osc.type = 'square';
-          osc.frequency.value = 880;
-          osc.connect(gain);
-          for (let i = 0; i < 4; i++) {
-            const t = start + i * 0.5;
-            gain.gain.setValueAtTime(0.0001, t);
-            gain.gain.linearRampToValueAtTime(0.08, t + 0.02);
-            gain.gain.setValueAtTime(0.08, t + 0.22);
-            gain.gain.linearRampToValueAtTime(0.0001, t + 0.25);
-          }
-          osc.start(start);
-          osc.stop(start + 2.1);
+      // Three-second alarm patterns; no audio files are downloaded.
+      if (preset === 'alarm-classic') {
+        for (let i = 0; i < 10; i++) {
+          beep(i % 2 ? 880 : 1046, i * 0.3, 0.16);
         }
+        return;
       }
+      if (preset === 'alarm-digital') {
+        for (let i = 0; i < 12; i++) {
+          beep(1400, i * 0.24, 0.1, 'square', 0.07);
+        }
+        return;
+      }
+      if (preset === 'alarm-siren') {
+        for (let i = 0; i < 12; i++) {
+          beep(i % 2 ? 660 : 990, i * 0.25, 0.2, 'triangle', 0.08);
+        }
+        return;
+      }
+      if (preset === 'alarm-bell') {
+        for (let i = 0; i < 5; i++) {
+          beep(880, i * 0.6, 0.45, 'sine', 0.09);
+          beep(1760, i * 0.6, 0.25, 'sine', 0.03);
+        }
+        return;
+      }
+
+      // default: original four short square pulses.
+      const gain = ctx.createGain();
+      gain.connect(ctx.destination);
+      const osc = ctx.createOscillator();
+      osc.type = 'square';
+      osc.frequency.value = 880;
+      osc.connect(gain);
+      for (let i = 0; i < 4; i++) {
+        const t = start + i * 0.5;
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.linearRampToValueAtTime(0.08, t + 0.02);
+        gain.gain.setValueAtTime(0.08, t + 0.22);
+        gain.gain.linearRampToValueAtTime(0.0001, t + 0.25);
+      }
+      osc.start(start);
+      osc.stop(start + 2.1);
     },
     [ensureAudioContext]
   );

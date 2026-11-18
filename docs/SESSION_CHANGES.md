@@ -4,6 +4,16 @@
 
 ## 2026-11-18
 
+### feat: 预置提示音改为约 3 秒的闹钟式合成音
+
+- **改动原因**：用户认为开源短音效不如 Windows 提示音，要求改为类似闹钟、时长约 3 秒的提醒。
+- **变更文件**：web/src/pages/DungeonTimerPage.tsx、web/src/i18n/uiLocale.ts、docs/SESSION_CHANGES.md。
+- **关键逻辑/映射关系**：
+  1. SOUND_PRESETS 改为 default / alarm-classic / alarm-digital / alarm-siren / alarm-bell / custom，预置全部由 Web Audio 实时合成，长度约 3 秒，不打包音频文件、无外链请求。
+  2. 节奏：经典闹钟为 880/1046 Hz 交替 10 次；电子闹钟为 1400 Hz 短哔 12 次；双音警报为 660/990 Hz 交替 12 次；柔和铃声为 880 Hz 叠加 1760 Hz 泛音 5 次。
+  3. 自定义上传与 IndexedDB 本地持久化逻辑不变。
+- **验证**：Prettier、tsc、ESLint 通过；重新构建成功；Playwright 确认下拉为 6 项，选择各预置分别产生 10/12/12/10 个振荡器。仅本地提交，未推送。
+
 ### feat: 提示音可选 Win11 风格音效或本地上传音频，并修正后台保活
 
 - **改动原因**：用户希望提示音可选多种 Windows 11 内置音效，并支持上传 mp3 等文件；同时要求上传文件只保存在本地浏览器（静态站不接收文件）。另外实测原 20 kHz、-74 dB 的保活音频被浏览器视为静音，标签页没有音频状态。
