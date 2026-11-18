@@ -18,8 +18,11 @@ const DEFAULT_ROTATION = 180;
 const MODES = ['solo', 'duo', 'trio'] as const;
 /** Alert queue dropdown order: trio first, then duo, then solo. */
 const ALERT_MODE_OPTIONS = ['trio', 'duo', 'solo'] as const;
-/** Fixed alert thresholds offered by the dropdown. */
-const ALERT_OPTIONS = [15, 30, 60, 120] as const;
+/** Alert thresholds offered by the dropdown: every 15 s from 15 s to 5 min. */
+const ALERT_OPTIONS = Array.from(
+  { length: 20 },
+  (_, index) => (index + 1) * 15
+);
 /** Built-in alert sounds plus a user-uploaded audio file. */
 const SOUND_PRESETS = [
   'default',
