@@ -1,0 +1,145 @@
+{
+  "name": "Harpy",
+  "translation": "鹰身女妖",
+  "translation_key": "Text_DesignData_Monster_Monster_Harpy",
+  "coords": [
+    {
+      "x": -183.00000000000006,
+      "y": -1204.0,
+      "z": -443.99887,
+      "yaw": 95.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 667.0000000000001,
+      "y": 891.0,
+      "z": -518.99887,
+      "yaw": 95.0,
+      "map": "Ruins_BanditForest",
+      "file": "Ruins_BanditForest_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": -185.99998,
+      "y": -160.99997,
+      "z": 600.0,
+      "yaw": 180.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "Harpy"
+    },
+    {
+      "x": 189.0,
+      "y": 197.00003,
+      "z": 487.0001,
+      "yaw": 180.0,
+      "map": "Ruins_Chapel",
+      "file": "Ruins_Chapel_HR_D.json",
+      "version": "",
+      "label": "Harpy"
+    },
+    {
+      "x": 860.0,
+      "y": 589.99998,
+      "z": -434.9999,
+      "yaw": 180.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    },
+    {
+      "x": 684.9999999999999,
+      "y": -785.00002,
+      "z": -336.902,
+      "yaw": 235.0,
+      "map": "Ruins_Forest_06",
+      "file": "Ruins_Forest_06_HR_D.json",
+      "version": "",
+      "label": "Harpy",
+      "group_parent": "BP_GameSpawnerGroup_C_1",
+      "variant_count": 2,
+      "variant_names": []
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_Harpy",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_Harpy",
+      "translation": "鹰身女妖",
+      "translation_key": "Text_DesignData_Monster_Monster_Harpy",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "GemRing_6001",
+          "page": "GemRing",
+          "translation": "宝石戒指（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GemRing_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "Ruby_6001",
+          "page": "Ruby",
+          "translation": "红宝石（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_Ruby_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        },
+        {
+          "name": "GoldBand_6001",
+          "page": "GoldBand",
+          "translation": "金环（皇家）",
+          "translation_key": "Text_DesignData_Item_Item_GoldBand_6001",
+          "suffix": "6001",
+          "luck_grade": 6
+        }
+      ]
+    },
+    {
+      "id": "misc",
+      "kind": "misc",
+      "lootdrop_id": null,
+      "items": [
+        {
+          "name": "ThrowingKnife_4001",
+          "page": "ThrowingKnife",
+          "translation": "飞刀",
+          "translation_key": "Text_DesignData_Item_Item_ThrowingKnife_4001",
+          "suffix": "4001",
+          "luck_grade": 4
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "鹰身女妖",
+        "translation_key": "Text_DesignData_Monster_Monster_Harpy",
+        "spawn_rate": 100.0,
+        "drop_rates": {
+          "PVE": 25.0,
+          "普通": 25.0,
+          "豪客赛": 22.5,
+          "逆袭赛": 22.5
+        }
+      }
+    ]
+  }
+}

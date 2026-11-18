@@ -1,0 +1,68 @@
+{
+  "name": "MidnightStag",
+  "translation": "午夜雄鹿",
+  "translation_key": "Text_DesignData_Monster_Monster_MidnightStag",
+  "coords": [
+    {
+      "x": 1155.0,
+      "y": 175.0,
+      "z": 0.0,
+      "yaw": 270.0,
+      "map": "Ruins_Forest_02",
+      "file": "Ruins_Forest_02_HR_D.json",
+      "version": "",
+      "label": "MidnightStag"
+    }
+  ],
+  "loot_pools": [
+    {
+      "id": "ID_Lootdrop_Drop_MidnightStag",
+      "kind": "pool",
+      "lootdrop_id": "ID_Lootdrop_Drop_MidnightStag",
+      "translation": "午夜雄鹿",
+      "translation_key": "Text_DesignData_Monster_Monster_MidnightStag",
+      "sub_label": "",
+      "items": [
+        {
+          "name": "CrownoftheMidnightStag",
+          "page": "CrownoftheMidnightStag",
+          "translation": "午夜雄鹿之冠",
+          "translation_key": "Text_DesignData_Item_Item_CrownoftheMidnightStag",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "MidnightStagDisplay",
+          "page": "MidnightStagDisplay",
+          "translation": "午夜雄鹿之首",
+          "translation_key": "Text_DesignData_Item_Item_MidnightStagDisplay",
+          "suffix": null,
+          "luck_grade": 2
+        },
+        {
+          "name": "CorruptedHeart",
+          "page": "CorruptedHeart",
+          "translation": "腐化之心",
+          "translation_key": "Text_DesignData_Item_Item_CorruptedHeart",
+          "suffix": null,
+          "luck_grade": 2
+        }
+      ]
+    }
+  ],
+  "group_drop_info": {
+    "Ruins": [
+      {
+        "translation": "午夜雄鹿",
+        "translation_key": "Text_DesignData_Monster_Monster_MidnightStag",
+        "spawn_rate": 0.04,
+        "drop_rates": {
+          "PVE": 14.7619,
+          "普通": 14.7619,
+          "豪客赛": 22.619,
+          "逆袭赛": 20.0
+        }
+      }
+    ]
+  }
+}
